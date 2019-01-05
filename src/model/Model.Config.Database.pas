@@ -3,15 +3,16 @@ unit Model.Config.Database;
 interface
 
 uses
-  Model.Config.Types;
+  Ini.Section;
 
 type
+  [TSection('DATABASE')]
   TDatabase = class
   private
     FLogUpdateTime: UInt8;
     FMaxConnections: UInt8;
-    FDatabaseType: TDatabaseType;
-    FAccessType: TBDAccessType;
+    FDatabaseType: string;
+    FAccessType: string;
     FFetchLines: UInt32;
     FMinConnections: UInt8;
     FAlias: string;
@@ -24,11 +25,12 @@ type
     property DisconnectionTimeIdleConnection: UInt8 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
     property LogUpdateTime: UInt8 read FLogUpdateTime write FLogUpdateTime;
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
-    property AccessType: TBDAccessType read FAccessType write FAccessType default atSQLD;
-    property DatabaseType: TDatabaseType read FDatabaseType write FDatabaseType;
+    property AccessType: string read FAccessType write FAccessType;
+    property DatabaseType: string read FDatabaseType write FDatabaseType;
     property Alias: string read FAlias write FAlias;
   end;
 
 implementation
 
 end.
+

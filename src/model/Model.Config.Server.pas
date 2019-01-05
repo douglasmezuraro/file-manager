@@ -3,32 +3,53 @@ unit Model.Config.Server;
 interface
 
 uses
-  Model.Config.Types;
+  Ini.DataType,
+  Ini.Key,
+  Ini.Section;
 
 type
+  [TSection('SERVIDOR')]
   TServer = class
   private
     FName: string;
-    FConnectionType: TConnectionType;
+    FConnectionType: string;
     FServerExeName: string;
     FComputerName: string;
     FCanBalance: Boolean;
     FIntegrationManager: Boolean;
     FTimeOut: UInt16;
-    FGUID: TGUID;
+    FGUID: string;
     FIP: string;
   public
+    [TKey('NOMESERVIDOR', dtString)]
     property Name: string read FName write FName;
-    property GUID: TGUID read FGUID write FGUID;
+
+    [TKey('GUIDSERVIDOR', dtString)]
+    property GUID: string read FGUID write FGUID;
+
+    [TKey('NOMECOMPUTADOR', dtString)]
     property ComputerName: string read FComputerName write FComputerName;
+
+    [TKey('IPSERVIDOR', dtString)]
     property IP: string read FIP write FIP;
-    property ConnectionType: TConnectionType read FConnectionType write FConnectionType default ctSocket;
+
+    [TKey('TIPOCONEXAO', dtString)]
+    property ConnectionType: string read FConnectionType write FConnectionType;
+
+    [TKey('PODEBALANCEAR', dtBool)]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
+
+    [TKey('NOMEEXECUTAVELSERVIDOR', dtString)]
     property ServerExeName: string read FServerExeName write FServerExeName;
+
+    [TKey('TIMEOUTEXECUCAO', dtInteger)]
     property TimeOut: UInt16 read FTimeOut write FTimeOut;
+
+    [TKey('HABILITAGERENCIADORINTEGRACAO', dtBool)]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
   end;
 
 implementation
 
 end.
+

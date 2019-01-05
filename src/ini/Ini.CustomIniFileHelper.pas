@@ -16,7 +16,6 @@ type
   TCustomIniFileHelper = class Helper for TCustomIniFile
   private
     function GetSection(const Obj: TObject): string;
-    function GetKey(const Obj: TObject): TKey;
   public
     procedure Read(const Obj: TObject);
     procedure Write(const Obj: TObject);
@@ -26,36 +25,17 @@ implementation
 
 { TCustomIniFileHelper }
 
-function TCustomIniFileHelper.GetKey(const Obj: TObject): TKey;
-var
-  Context: TRttiContext;
-  Attribute: TCustomAttribute;
-begin
-  Result := nil;
-  Context := TRttiContext.Create;
-  try
-    for Attribute in Context.GetType(Obj).GetAttributes do
-    begin
-      if Attribute is TKey then
-      begin
-        Result := (Attribute as TKey);
-        Break;
-      end;
-    end;
-  finally
-    Context.Free;
-  end;
-end;
-
 function TCustomIniFileHelper.GetSection(const Obj: TObject): string;
 var
   Context: TRttiContext;
+  Typ: TRttiType;
   Attribute: TCustomAttribute;
 begin
   Result := string.Empty;
   Context := TRttiContext.Create;
   try
-    for Attribute in Context.GetType(Obj).GetAttributes do
+    Typ := Context.GetType(Obj.ClassType);
+    for Attribute in Typ.GetAttributes do
     begin
       if Attribute is TSection then
       begin
@@ -71,61 +51,69 @@ end;
 procedure TCustomIniFileHelper.Read(const Obj: TObject);
 var
   Context: TRttiContext;
+  Typ: TRttiType;
   Prop: TRttiProperty;
-  Key: TKey;
+  Attribute: TCustomAttribute;
   Value: TValue;
   Section: string;
 begin
   Context := TRttiContext.Create;
   try
-    Section := GetSection(Obj);
-    if Section.IsEmpty then
-      Exit;
-     
-    for Prop in Context.GetType(Obj).GetProperties do
+    Typ := Context.GetType(Obj.ClassType);
+    for Prop in typ.GetProperties do
     begin
       if Prop.Visibility <> mvPublic then
         Continue;
 
-      Key := GetKey(Obj);
-      if not Assigned(Key) then
+      if Prop.PropertyType.TypeKind = tkClass then
+      begin
+        Value := Prop.GetValue(Obj);
+        Read(Value.AsObject);
         Continue;
-
-      case Key.DataType of
-        dtBinaryStream:
-          begin
-            Exit;
-          end;
-        dtBool:
-          begin
-            Value := ReadBool(Section, Key.Name, False);
-          end;
-        dtDate:
-          begin
-            Value := ReadDate(Section, Key.Name, DateNull);
-          end;
-        dtDateTime:
-          begin
-            Value := ReadDateTime(Section, Key.Name, DateNull);
-          end;
-        dtFloat:
-          begin
-            Value := ReadFloat(Section, Key.Name, NumericNull);
-          end;
-        dtInteger:
-          begin
-            Value := ReadInteger(Section, Key.Name, NumericNull);
-          end;
-        dtString:
-          begin
-            Value := ReadString(Section, Key.Name, string.Empty);
-          end;
-        dtTime:
-          begin
-            Value := ReadTime(Section, Key.Name, DateNull);
-          end;
       end;
-      Prop.SetValue(Obj, Value);
+
+      for Attribute in Prop.GetAttributes do
+      begin
+        Section := GetSection(Obj);
+        if Section.IsEmpty then
+          Continue;
+
+        case (Attribute as TKey).DataType of
+          dtBinaryStream:
+            begin
+              Exit;
+            end;
+          dtBool:
+            begin
+              Value := ReadBool(Section, (Attribute as TKey).Name, False);
+            end;
+          dtDate:
+            begin
+              Value := ReadDate(Section, (Attribute as TKey).Name, DateNull);
+            end;
+          dtDateTime:
+            begin
+              Value := ReadDateTime(Section, (Attribute as TKey).Name, DateNull);
+            end;
+          dtFloat:
+            begin
+              Value := ReadFloat(Section, (Attribute as TKey).Name, NumericNull);
+            end;
+          dtInteger:
+            begin
+              Value := ReadInteger(Section, (Attribute as TKey).Name, NumericNull);
+            end;
+          dtString:
+            begin
+              Value := ReadString(Section, (Attribute as TKey).Name, string.Empty);
+            end;
+          dtTime:
+            begin
+              Value := ReadTime(Section, (Attribute as TKey).Name, DateNull);
+            end;
+        end;
+        Prop.SetValue(Obj, Value);
+      end;
     end;
   finally
     Context.Free;
@@ -135,60 +123,65 @@ end;
 procedure TCustomIniFileHelper.Write(const Obj: TObject);
 var
   Context: TRttiContext;
+  Typ: TRttiType;
   Prop: TRttiProperty;
-  Key: TKey;
+  Attribute: TCustomAttribute;
   Value: TValue;
   Section: string;
 begin
   Context := TRttiContext.Create;
   try
-    Section := GetSection(Obj);
-    if Section.IsEmpty then
-      Exit;
-     
-    for Prop in Context.GetType(Obj).GetProperties do
+    Typ := Context.GetType(Obj.ClassType);
+    for Prop in Typ.GetProperties do
     begin
       if Prop.Visibility <> mvPublic then
         Continue;
 
-      Key := GetKey(Obj);
-      if not Assigned(Key) then
+      Value := Prop.GetValue(Obj);
+
+      if Value.IsObject then
+        Write(Value.AsObject);
+
+      Section := GetSection(Obj);
+      if Section.IsEmpty then
         Continue;
 
-      Value := Prop.GetValue(Obj);
-      case Key.DataType of
-        dtBinaryStream:
-          begin
-            Exit;
-          end;
-        dtBool:
-          begin
-            WriteBool(Section, Key.Name, Value.AsBoolean);
-          end;
-        dtDate:
-          begin
-            WriteDate(Section, Key.Name, StrToDate(Value.AsString));
-          end;
-        dtDateTime:
-          begin
-            WriteDate(Section, Key.Name, StrToDateTime(Value.AsString));
-          end;
-        dtFloat:
-          begin
-            WriteFloat(Section, Key.Name, Value.AsExtended);
-          end;
-        dtInteger:
-          begin
-            WriteInteger(Section, Key.Name, Value.AsInteger);
-          end;
-        dtString:
-          begin
-            WriteString(Section, Key.Name, Value.AsString);
-          end;
-        dtTime:
-          begin
-            WriteTime(Section, Key.Name, StrToTime(Value.AsString));
-          end;
+      for Attribute in Prop.GetAttributes do
+      begin
+        case (Attribute as TKey).DataType of
+          dtBinaryStream:
+            begin
+              Exit;
+            end;
+          dtBool:
+            begin
+              WriteBool(Section, (Attribute as TKey).Name, Value.AsBoolean);
+            end;
+          dtDate:
+            begin
+              WriteDate(Section, (Attribute as TKey).Name, StrToDate(Value.AsString));
+            end;
+          dtDateTime:
+            begin
+              WriteDate(Section, (Attribute as TKey).Name, StrToDateTime(Value.AsString));
+            end;
+          dtFloat:
+            begin
+              WriteFloat(Section, (Attribute as TKey).Name, Value.AsExtended);
+            end;
+          dtInteger:
+            begin
+              WriteInteger(Section, (Attribute as TKey).Name, Value.AsInteger);
+            end;
+          dtString:
+            begin
+              WriteString(Section, (Attribute as TKey).Name, Value.AsString);
+            end;
+          dtTime:
+            begin
+              WriteTime(Section, (Attribute as TKey).Name, StrToTime(Value.AsString));
+            end;
+        end;
       end;
     end;
   finally

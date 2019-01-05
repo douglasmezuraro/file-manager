@@ -2,7 +2,11 @@ unit Model.Config.Application;
 
 interface
 
+uses
+  Ini.Section;
+
 type
+  [TSection('APLICACAO')]
   TApplication = class
   private
     FName: string;
@@ -13,3 +17,4 @@ type
 implementation
 
 end.
+

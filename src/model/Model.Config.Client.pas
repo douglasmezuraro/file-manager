@@ -2,7 +2,11 @@ unit Model.Config.Client;
 
 interface
 
+uses
+  Ini.Section;
+
 type
+  [TSection('CLIENTE')]
   TClient = class
   private
     FAutoLogin: Boolean;
@@ -17,3 +21,4 @@ type
 implementation
 
 end.
+

@@ -3,8 +3,21 @@ unit Form.Main;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.ComCtrls,
+  Vcl.StdCtrls,
+  Util.Constants,
+  System.IniFiles,
+  Ini.CustomIniFileHelper,
+  Model.Config;
 
 type
   TForm1 = class(TForm)
@@ -21,21 +34,22 @@ implementation
 
 {$R *.dfm}
 
-uses
-  System.IniFiles;
-
 procedure TForm1.Button1Click(Sender: TObject);
-//var
-//  INI: TIniFile;
+var
+  Ini: TIniFile;
+  Dir: string;
+  Obj: TConfig;
 begin
-//  INI.ReadString();
-//  INI.ReadInteger();
-//  INI.ReadBool();
-//  INI.ReadBinaryStream();
-//  INI.ReadDate();
-//  INI.ReadDateTime();
-//  INI.ReadFloat();
-//  INI.ReadTime();
+  Dir := ExtractFilePath(Application.ExeName) + IniFileName;
+  Ini := TIniFile.Create(Dir);
+  Obj := TConfig.Create;
+  try
+    Ini.Read(Obj);
+  finally
+    Obj.Free;
+    Ini.Free;
+  end;
 end;
 
 end.
+

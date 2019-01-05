@@ -2,7 +2,11 @@ unit Model.Config.Log;
 
 interface
 
+uses
+  Ini.Section;
+
 type
+  [TSection('LOG')]
   TLog = class
   private
     FRegisterLog: Boolean;
@@ -17,3 +21,4 @@ type
 implementation
 
 end.
+

@@ -2,7 +2,11 @@ unit Model.Config.SPP;
 
 interface
 
+uses
+  Ini.Section;
+
 type
+  [TSection('CLIENTESPP')]
   TSPP = class
   private
     FRegisterLog: Boolean;
@@ -23,3 +27,4 @@ type
 implementation
 
 end.
+

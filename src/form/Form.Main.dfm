@@ -23,6 +23,10 @@ object Form1: TForm1
     TabOrder = 0
     object TabSheetServer: TTabSheet
       Caption = 'Servidor'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Button1: TButton
         Left = 224
         Top = 64

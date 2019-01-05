@@ -34,6 +34,8 @@ type
     FServer: TServer;
     FClient: TClient;
   public
+    constructor Create;
+    destructor Destroy; override;
     property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
     property Application: TApplication read FApplication write FApplication;
     property Balancer: TBalancer read FBalancer write FBalancer;
@@ -51,4 +53,42 @@ type
 
 implementation
 
+{ TConfig }
+
+constructor TConfig.Create;
+begin
+  FWorkflow := TWorkflow.Create;
+  FMonitor := TMonitor.Create;
+  FSPP := TSPP.Create;
+  FDUnit := TDUnit.Create;
+  FBalancer := TBalancer.Create;
+  FScanner := TScanner.Create;
+  FLog := TLog.Create;
+  FDatabase := TDatabase.Create;
+  FAlternativeBalancer := TAlternativeBalancer.Create;
+  FUpdate := TUpdate.Create;
+  FApplication := TApplication.Create;
+  FServer := TServer.Create;
+  FClient := TClient.Create;
+end;
+
+destructor TConfig.Destroy;
+begin
+  FWorkflow.Free;
+  FMonitor.Free;
+  FSPP.Free;
+  FDUnit.Free;
+  FBalancer.Free;
+  FScanner.Free;
+  FLog.Free;
+  FDatabase.Free;
+  FAlternativeBalancer.Free;
+  FUpdate.Free;
+  FApplication.Free;
+  FServer.Free;
+  FClient.Free;
+  inherited;
+end;
+
 end.
+

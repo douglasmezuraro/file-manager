@@ -20,7 +20,6 @@ uses
   Model.Config.Scanner in 'src\model\Model.Config.Scanner.pas',
   Model.Config.Server in 'src\model\Model.Config.Server.pas',
   Model.Config.SPP in 'src\model\Model.Config.SPP.pas',
-  Model.Config.Types in 'src\model\Model.Config.Types.pas',
   Model.Config.Update in 'src\model\Model.Config.Update.pas',
   Model.Config.Workflow in 'src\model\Model.Config.Workflow.pas';
 
@@ -31,4 +30,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm1, Form1);
   Application.Run;
+
+  ReportMemoryLeaksOnShutdown := True;
 end.
+

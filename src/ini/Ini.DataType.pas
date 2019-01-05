@@ -4,6 +4,7 @@ interface
 
 type
   TDataType = (
+    dtUnknown,
     dtBinaryStream,
     dtBool,
     dtDate,
@@ -16,3 +17,4 @@ type
 implementation
 
 end.
+

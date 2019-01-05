@@ -2,7 +2,11 @@ unit Model.Config.Scanner;
 
 interface
 
+uses
+  Ini.Section;
+
 type
+  [TSection('SCANNER')]
   TScanner = class
   private
     FDetectFeederPaper: Boolean;
@@ -37,3 +41,4 @@ type
 implementation
 
 end.
+
