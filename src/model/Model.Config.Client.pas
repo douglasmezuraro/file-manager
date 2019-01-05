@@ -11,12 +11,12 @@ type
   [TSection('CLIENTE')]
   TClient = class
   private
-    FAutoLogin: Boolean;
+    FAutoLogin: string;
     FDisableMenuBackground: Boolean;
     FTimeOut: UInt8;
   public
     [TKey('LOGINAUTOMATICO', dtString)]
-    property AutoLogin: Boolean read FAutoLogin write FAutoLogin;
+    property AutoLogin: string read FAutoLogin write FAutoLogin;
 
     [TKey('TIMEOUTEXECUCAO', dtInteger)]
     property TimeOut: UInt8 read FTimeOut write FTimeOut;

@@ -36,7 +36,7 @@ type
     [TKey('TEMPOATUALIZACAOLOGCONEXOES', dtInteger)]
     property LogUpdateTime: UInt8 read FLogUpdateTime write FLogUpdateTime;
 
-    [TKey('NUMEROLINHASFETCH', dtString)]
+    [TKey('NUMEROLINHASFETCH', dtInteger)]
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
 
     [TKey('TIPOACESSOBD', dtString)]
