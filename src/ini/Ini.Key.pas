@@ -12,6 +12,8 @@ type
     FDataType: TDataType;
   public
     constructor Create(const Name: string; const DataType: TDataType);
+    property Name: string read FName;
+    property DataType: TDataType read FDataType;
   end;
 
 implementation

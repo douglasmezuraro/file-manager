@@ -25,17 +25,17 @@ uses
   System.IniFiles;
 
 procedure TForm1.Button1Click(Sender: TObject);
-var
-  INI: TIniFile;
+//var
+//  INI: TIniFile;
 begin
-  INI.ReadString();
-  INI.ReadInteger();
-  INI.ReadBool();
-  INI.ReadBinaryStream();
-  INI.ReadDate();
-  INI.ReadDateTime();
-  INI.ReadFloat();
-  INI.ReadTime();
+//  INI.ReadString();
+//  INI.ReadInteger();
+//  INI.ReadBool();
+//  INI.ReadBinaryStream();
+//  INI.ReadDate();
+//  INI.ReadDateTime();
+//  INI.ReadFloat();
+//  INI.ReadTime();
 end;
 
 end.

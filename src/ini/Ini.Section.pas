@@ -8,6 +8,7 @@ type
     FName: string;
   public
     constructor Create(const Name: string);
+    property Name: string read FName;
   end;
 
 implementation
