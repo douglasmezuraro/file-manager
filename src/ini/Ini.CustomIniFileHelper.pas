@@ -65,53 +65,30 @@ begin
       if Prop.Visibility <> mvPublic then
         Continue;
 
-      if Prop.PropertyType.TypeKind = tkClass then
+      Value := Prop.GetValue(Obj);
+      if Value.IsObject then
       begin
-        Value := Prop.GetValue(Obj);
         Read(Value.AsObject);
         Continue;
       end;
 
+      Section := GetSection(Obj);
+      if Section.IsEmpty then
+        Continue;
+
       for Attribute in Prop.GetAttributes do
       begin
-        Section := GetSection(Obj);
-        if Section.IsEmpty then
-          Continue;
-
         case (Attribute as TKey).DataType of
-          dtBinaryStream:
-            begin
-              Exit;
-            end;
-          dtBool:
-            begin
-              Value := ReadBool(Section, (Attribute as TKey).Name, False);
-            end;
-          dtDate:
-            begin
-              Value := ReadDate(Section, (Attribute as TKey).Name, DateNull);
-            end;
-          dtDateTime:
-            begin
-              Value := ReadDateTime(Section, (Attribute as TKey).Name, DateNull);
-            end;
-          dtFloat:
-            begin
-              Value := ReadFloat(Section, (Attribute as TKey).Name, NumericNull);
-            end;
-          dtInteger:
-            begin
-              Value := ReadInteger(Section, (Attribute as TKey).Name, NumericNull);
-            end;
-          dtString:
-            begin
-              Value := ReadString(Section, (Attribute as TKey).Name, string.Empty);
-            end;
-          dtTime:
-            begin
-              Value := ReadTime(Section, (Attribute as TKey).Name, DateNull);
-            end;
+          dtBinaryStream : Exit;
+          dtBool         : Value := ReadBool(Section, (Attribute as TKey).Name, False);
+          dtDate         : Value := ReadDate(Section, (Attribute as TKey).Name, DateNull);
+          dtDateTime     : Value := ReadDateTime(Section, (Attribute as TKey).Name, DateNull);
+          dtFloat        : Value := ReadFloat(Section, (Attribute as TKey).Name, NumericNull);
+          dtInteger      : Value := ReadInteger(Section, (Attribute as TKey).Name, NumericNull);
+          dtString       : Value := ReadString(Section, (Attribute as TKey).Name, string.Empty);
+          dtTime         : Value := ReadTime(Section, (Attribute as TKey).Name, DateNull);
         end;
+
         Prop.SetValue(Obj, Value);
       end;
     end;
@@ -138,9 +115,11 @@ begin
         Continue;
 
       Value := Prop.GetValue(Obj);
-
       if Value.IsObject then
+      begin
         Write(Value.AsObject);
+        Continue;
+      end;
 
       Section := GetSection(Obj);
       if Section.IsEmpty then
@@ -149,38 +128,14 @@ begin
       for Attribute in Prop.GetAttributes do
       begin
         case (Attribute as TKey).DataType of
-          dtBinaryStream:
-            begin
-              Exit;
-            end;
-          dtBool:
-            begin
-              WriteBool(Section, (Attribute as TKey).Name, Value.AsBoolean);
-            end;
-          dtDate:
-            begin
-              WriteDate(Section, (Attribute as TKey).Name, StrToDate(Value.AsString));
-            end;
-          dtDateTime:
-            begin
-              WriteDate(Section, (Attribute as TKey).Name, StrToDateTime(Value.AsString));
-            end;
-          dtFloat:
-            begin
-              WriteFloat(Section, (Attribute as TKey).Name, Value.AsExtended);
-            end;
-          dtInteger:
-            begin
-              WriteInteger(Section, (Attribute as TKey).Name, Value.AsInteger);
-            end;
-          dtString:
-            begin
-              WriteString(Section, (Attribute as TKey).Name, Value.AsString);
-            end;
-          dtTime:
-            begin
-              WriteTime(Section, (Attribute as TKey).Name, StrToTime(Value.AsString));
-            end;
+          dtBinaryStream : Exit;
+          dtBool         : WriteBool(Section, (Attribute as TKey).Name, Value.AsBoolean);
+          dtDate         : WriteDate(Section, (Attribute as TKey).Name, StrToDate(Value.AsString));
+          dtDateTime     : WriteDate(Section, (Attribute as TKey).Name, StrToDateTime(Value.AsString));
+          dtFloat        : WriteFloat(Section, (Attribute as TKey).Name, Value.AsExtended);
+          dtInteger      : WriteInteger(Section, (Attribute as TKey).Name, Value.AsInteger);
+          dtString       : WriteString(Section, (Attribute as TKey).Name, Value.AsString);
+          dtTime         : WriteTime(Section, (Attribute as TKey).Name, StrToTime(Value.AsString));
         end;
       end;
     end;
