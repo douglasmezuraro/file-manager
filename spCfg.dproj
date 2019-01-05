@@ -79,6 +79,7 @@
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_DcuOutput>\bin\dcu</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -95,7 +96,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="src\form\Form.Main.pas">
-            <Form>Form1</Form>
+            <Form>Main</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\ini\Ini.Section.pas"/>
@@ -103,6 +104,7 @@
         <DCCReference Include="src\ini\Ini.DataType.pas"/>
         <DCCReference Include="src\ini\Ini.CustomIniFileHelper.pas"/>
         <DCCReference Include="src\util\Util.Constants.pas"/>
+        <DCCReference Include="src\model\Model.Config.pas"/>
         <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
         <DCCReference Include="src\model\Model.Config.Application.pas"/>
         <DCCReference Include="src\model\Model.Config.Balancer.pas"/>
@@ -111,7 +113,6 @@
         <DCCReference Include="src\model\Model.Config.DUnit.pas"/>
         <DCCReference Include="src\model\Model.Config.Log.pas"/>
         <DCCReference Include="src\model\Model.Config.Monitor.pas"/>
-        <DCCReference Include="src\model\Model.Config.pas"/>
         <DCCReference Include="src\model\Model.Config.Scanner.pas"/>
         <DCCReference Include="src\model\Model.Config.Server.pas"/>
         <DCCReference Include="src\model\Model.Config.SPP.pas"/>

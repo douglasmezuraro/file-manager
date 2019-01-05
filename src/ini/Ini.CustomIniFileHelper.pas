@@ -31,6 +31,10 @@ var
   Attribute: TCustomAttribute;
 begin
   Result := nil;
+
+  if not Assigned(Obj) then
+    Exit;
+
   Context := TRttiContext.Create;
   try
     for Attribute in Context.GetType(Obj.ClassType).GetAttributes do
@@ -54,6 +58,9 @@ var
   Value: TValue;
   Section: TSection;
 begin
+  if not Assigned(Obj) then
+    Exit;
+
   Context := TRttiContext.Create;
   try
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
@@ -103,6 +110,9 @@ var
   Value: TValue;
   Section: TSection;
 begin
+  if not Assigned(Obj) then
+    Exit;
+
   Context := TRttiContext.Create;
   try
     for Prop in Context.GetType(Obj.ClassType).GetProperties do

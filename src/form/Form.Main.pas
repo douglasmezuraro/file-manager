@@ -20,21 +20,18 @@ uses
   Model.Config;
 
 type
-  TForm1 = class(TForm)
+  TMain = class(TForm)
     PageControlLayout: TPageControl;
     TabSheetServer: TTabSheet;
     Button1: TButton;
     procedure Button1Click(Sender: TObject);
   end;
 
-var
-  Form1: TForm1;
-
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TMain.Button1Click(Sender: TObject);
 var
   Ini: TIniFile;
   Dir: string;

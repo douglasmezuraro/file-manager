@@ -1,7 +1,7 @@
-object Form1: TForm1
+object Main: TMain
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'Main'
   ClientHeight = 299
   ClientWidth = 635
   Color = clBtnFace
@@ -23,10 +23,6 @@ object Form1: TForm1
     TabOrder = 0
     object TabSheetServer: TTabSheet
       Caption = 'Servidor'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Button1: TButton
         Left = 224
         Top = 64
