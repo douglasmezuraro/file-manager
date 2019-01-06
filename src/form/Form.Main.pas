@@ -17,35 +17,80 @@ uses
   Util.Constants,
   System.IniFiles,
   Ini.CustomIniFileHelper,
-  Model.Config;
+  Model.Config, Vcl.ExtCtrls, System.Actions, Vcl.ActnList, Vcl.Buttons;
 
 type
   TMain = class(TForm)
     PageControlLayout: TPageControl;
     TabSheetServer: TTabSheet;
-    Button1: TButton;
-    procedure Button1Click(Sender: TObject);
+    TabSheetDatabase: TTabSheet;
+    TabSheetClient: TTabSheet;
+    TabSheetLog: TTabSheet;
+    TabSheetMonitor: TTabSheet;
+    TabSheetUpdate: TTabSheet;
+    TabSheetSPP: TTabSheet;
+    TabSheetDUnit: TTabSheet;
+    TabSheetScanner: TTabSheet;
+    TabSheetWorkflow: TTabSheet;
+    PanelButtons: TPanel;
+    ButtonSave: TSpeedButton;
+    ButtonExit: TSpeedButton;
+    ActionList: TActionList;
+    ActionSave: TAction;
+    ActionExit: TAction;
+    procedure FormShow(Sender: TObject);
+    procedure ActionExitExecute(Sender: TObject);
+    procedure ActionSaveExecute(Sender: TObject);
+  private
+    FModel: TConfig;
+    procedure ViewToModel;
+    procedure ModelToView;
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
   end;
 
 implementation
 
 {$R *.dfm}
 
-procedure TMain.Button1Click(Sender: TObject);
-var
-  Ini: TIniFile;
-  Dir: string;
-  Obj: TConfig;
+procedure TMain.ActionExitExecute(Sender: TObject);
 begin
-  Dir := ExtractFilePath(Application.ExeName) + IniFileName;
-  Ini := TIniFile.Create(Dir);
-  Obj := TConfig.Create;
-  try
-    Ini.Read(Obj);
-  finally
-    Obj.Free;
-    Ini.Free;
-  end;
+  Self.Close;
+end;
+
+procedure TMain.ActionSaveExecute(Sender: TObject);
+begin
+  ViewToModel;
+  Exit; //TODO
+end;
+
+constructor TMain.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  FModel := TConfig.Create;
+end;
+
+destructor TMain.Destroy;
+begin
+  FModel.Free;
+  inherited;
+end;
+
+procedure TMain.FormShow(Sender: TObject);
+begin
+  PageControlLayout.ActivePage := TabSheetServer;
+  ModelToView;
+end;
+
+procedure TMain.ModelToView;
+begin
+  Exit; //TODO
+end;
+
+procedure TMain.ViewToModel;
+begin
+  Exit; //TODO
 end;
 
 end.

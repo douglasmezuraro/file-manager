@@ -86,7 +86,7 @@ begin
         begin
           case (Attribute as TKey).DataType of
             dtBinaryStream : Exit;
-            dtBool         : Value := TMethods.StrToBool(ReadString(Section.Name, (Attribute as TKey).Name, False));
+            dtBool         : Value := TMethods.StrToBool(ReadString(Section.Name, (Attribute as TKey).Name, TMethods.BoolToStr(False)));
             dtDate         : Value := ReadDate(Section.Name, (Attribute as TKey).Name, DateNull);
             dtDateTime     : Value := ReadDateTime(Section.Name, (Attribute as TKey).Name, DateNull);
             dtFloat        : Value := ReadFloat(Section.Name, (Attribute as TKey).Name, NumericNull);
