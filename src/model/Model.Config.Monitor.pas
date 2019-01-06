@@ -38,8 +38,8 @@ type
     FRegisterServerPoolAplicationMemory: Boolean;
     FAutoUpdateDependentMethods: Boolean;
     FMinTimeUnitForInactiveUser: string;
-    FMinTimeForInactiveUser: Boolean;
-    FMinTimeForDependentMethods: Boolean;
+    FMinTimeForInactiveUser: UInt32;
+    FMinTimeForDependentMethods: UInt32;
     FAutoRereadLog: Boolean;
     FLogTimer: UInt32;
   public
@@ -103,14 +103,14 @@ type
     [TKey('TEMPOMINIMOPARAANALISEDESEMPENHO', dtInteger)]
     property MinTimeForPerformanceAnalysis: UInt32 read FMinTimeForPerformanceAnalysis write FMinTimeForPerformanceAnalysis;
 
-    [TKey('TEMPOMINIMOPARAUSUARIOINATIVO', dtBool)]
-    property MinTimeForInactiveUser: Boolean read FMinTimeForInactiveUser write FMinTimeForInactiveUser;
+    [TKey('TEMPOMINIMOPARAUSUARIOINATIVO', dtInteger)]
+    property MinTimeForInactiveUser: UInt32 read FMinTimeForInactiveUser write FMinTimeForInactiveUser;
 
     [TKey('UNIDADETEMPOMINIMOPARAUSUARIOINATIVO', dtString)]
     property MinTimeUnitForInactiveUser: string read FMinTimeUnitForInactiveUser write FMinTimeUnitForInactiveUser;
 
-    [TKey('TEMPOMINIMOPARAMETODOSPENDENTES', dtBool)]
-    property MinTimeForDependentMethods: Boolean read FMinTimeForDependentMethods write FMinTimeForDependentMethods;
+    [TKey('TEMPOMINIMOPARAMETODOSPENDENTES', dtInteger)]
+    property MinTimeForDependentMethods: UInt32 read FMinTimeForDependentMethods write FMinTimeForDependentMethods;
 
     [TKey('REGISTRARMEMORIASERVIDORAPLICACAOPOOL', dtBool)]
     property RegisterServerPoolAplicationMemory: Boolean read FRegisterServerPoolAplicationMemory write FRegisterServerPoolAplicationMemory;

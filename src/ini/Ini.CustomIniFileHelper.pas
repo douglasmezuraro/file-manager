@@ -10,7 +10,8 @@ uses
   System.Rtti,
   System.SysUtils,
   System.TypInfo,
-  Util.Constants;
+  Util.Constants,
+  Util.Methods;
 
 type
   TCustomIniFileHelper = class Helper for TCustomIniFile
@@ -85,7 +86,7 @@ begin
         begin
           case (Attribute as TKey).DataType of
             dtBinaryStream : Exit;
-            dtBool         : Value := ReadBool(Section.Name, (Attribute as TKey).Name, False);
+            dtBool         : Value := TMethods.StrToBool(ReadString(Section.Name, (Attribute as TKey).Name, False));
             dtDate         : Value := ReadDate(Section.Name, (Attribute as TKey).Name, DateNull);
             dtDateTime     : Value := ReadDateTime(Section.Name, (Attribute as TKey).Name, DateNull);
             dtFloat        : Value := ReadFloat(Section.Name, (Attribute as TKey).Name, NumericNull);
@@ -137,7 +138,7 @@ begin
         begin
           case (Attribute as TKey).DataType of
             dtBinaryStream : Exit;
-            dtBool         : WriteBool(Section.Name, (Attribute as TKey).Name, Value.AsBoolean);
+            dtBool         : WriteString(Section.Name, (Attribute as TKey).Name, TMethods.BoolToStr(Value.AsBoolean));
             dtDate         : WriteDate(Section.Name, (Attribute as TKey).Name, StrToDate(Value.AsString));
             dtDateTime     : WriteDate(Section.Name, (Attribute as TKey).Name, StrToDateTime(Value.AsString));
             dtFloat        : WriteFloat(Section.Name, (Attribute as TKey).Name, Value.AsExtended);
