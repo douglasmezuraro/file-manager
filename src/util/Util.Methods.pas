@@ -11,6 +11,7 @@ type
   public
     class function BoolToStr(const Value: Boolean): string;
     class function StrToBool(const Value: string): Boolean;
+    class function GetIniPath(const AppExeName: string): string;
   end;
 
 implementation
@@ -22,6 +23,14 @@ const
   Map: array[Boolean] of string = (FlagFalse, FlagTrue);
 begin
   Result := Map[Value];
+end;
+
+class function TMethods.GetIniPath(const AppExeName: string): string;
+var
+  Path: string;
+begin
+  Path := ExtractFilePath(AppExeName);
+  Result := Path + IniFileName;
 end;
 
 class function TMethods.StrToBool(const Value: string): Boolean;

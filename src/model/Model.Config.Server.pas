@@ -13,13 +13,14 @@ type
   private
     FName: string;
     FConnectionType: string;
-    FServerExeName: string;
+    FExeName: string;
     FComputerName: string;
     FCanBalance: Boolean;
     FIntegrationManager: Boolean;
     FTimeOut: UInt16;
     FGUID: string;
-    FIP: string;
+    FIPServer: string;
+    FIPAddress: string;
   public
     [TKey('NOMESERVIDOR', dtString)]
     property Name: string read FName write FName;
@@ -31,7 +32,10 @@ type
     property ComputerName: string read FComputerName write FComputerName;
 
     [TKey('IPSERVIDOR', dtString)]
-    property IP: string read FIP write FIP;
+    property IPServer: string read FIPServer write FIPServer;
+
+    [TKey('ENDERECOIP', dtString)]
+    property IPAddress: string read FIPAddress write FIPAddress;
 
     [TKey('TIPOCONEXAO', dtString)]
     property ConnectionType: string read FConnectionType write FConnectionType;
@@ -40,7 +44,7 @@ type
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
     [TKey('NOMEEXECUTAVELSERVIDOR', dtString)]
-    property ServerExeName: string read FServerExeName write FServerExeName;
+    property ExeName: string read FExeName write FExeName;
 
     [TKey('TIMEOUTEXECUCAO', dtInteger)]
     property TimeOut: UInt16 read FTimeOut write FTimeOut;
