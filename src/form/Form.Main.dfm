@@ -22,7 +22,7 @@ object Main: TMain
     Top = 0
     Width = 600
     Height = 517
-    ActivePage = TabSheetServer
+    ActivePage = TabSheetDatabase
     Align = alClient
     TabOrder = 0
     object TabSheetServer: TTabSheet
@@ -97,7 +97,6 @@ object Main: TMain
         Height = 21
         Hint = 'ENDERECOIP'
         TabOrder = 4
-        Text = 'ComboBoxConnectionType'
       end
       object CheckBoxCanBalance: TCheckBox
         Left = 16
@@ -144,8 +143,130 @@ object Main: TMain
     object TabSheetDatabase: TTabSheet
       Caption = 'Database'
       ImageIndex = 1
-      ExplicitWidth = 627
-      ExplicitHeight = 271
+      ExplicitLeft = 7
+      ExplicitTop = 23
+      object LabelAccessType: TLabel
+        Left = 16
+        Top = 251
+        Width = 87
+        Height = 13
+        Caption = 'Tipo de acesso DB'
+      end
+      object LabelDatabaseType: TLabel
+        Left = 16
+        Top = 297
+        Width = 67
+        Height = 13
+        Caption = 'Tipo de banco'
+      end
+      object EditDatabaseSchema: TLabeledEdit
+        Left = 16
+        Top = 24
+        Width = 241
+        Height = 21
+        Hint = 'ESQUEMA'
+        EditLabel.Width = 43
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Esquema'
+        TabOrder = 0
+      end
+      object EditDatabaseMaxConnections: TLabeledEdit
+        Left = 16
+        Top = 64
+        Width = 241
+        Height = 21
+        Hint = 'NUMEROMAXIMOCONEXOES'
+        EditLabel.Width = 140
+        EditLabel.Height = 13
+        EditLabel.Caption = 'N'#250'mero m'#225'ximo de conex'#245'es'
+        NumbersOnly = True
+        TabOrder = 1
+      end
+      object EditDatabaseMinConnections: TLabeledEdit
+        Left = 16
+        Top = 104
+        Width = 241
+        Height = 21
+        Hint = 'NUMEROMINIMOCONEXOES'
+        EditLabel.Width = 136
+        EditLabel.Height = 13
+        EditLabel.Caption = 'N'#250'mero m'#237'nimo de conex'#245'es'
+        NumbersOnly = True
+        TabOrder = 2
+      end
+      object EditDatabaseDisconnectionTimeIdleConnection: TLabeledEdit
+        Left = 16
+        Top = 144
+        Width = 241
+        Height = 21
+        Hint = 'TEMPODESCONEXAOCONEXAOINATIVA'
+        EditLabel.Width = 202
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Tempo de desconex'#227'o de conex'#227'o inativa'
+        NumbersOnly = True
+        TabOrder = 3
+      end
+      object EditDatabaseConnectionLogUpdateTime: TLabeledEdit
+        Left = 16
+        Top = 184
+        Width = 241
+        Height = 21
+        Hint = 'TEMPOATUALIZACAOLOGCONEXOES'
+        EditLabel.Width = 200
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Tempo de atualiza'#231#227'o do log de conex'#245'es'
+        NumbersOnly = True
+        TabOrder = 4
+      end
+      object EditDatabaseFetchLines: TLabeledEdit
+        Left = 16
+        Top = 224
+        Width = 241
+        Height = 21
+        Hint = 'NUMEROLINHASFETCH'
+        EditLabel.Width = 110
+        EditLabel.Height = 13
+        EditLabel.Caption = 'N'#250'mero de linhas fetch'
+        TabOrder = 5
+      end
+      object ComboBoxAccessType: TComboBox
+        Left = 16
+        Top = 270
+        Width = 241
+        Height = 21
+        Hint = 'TIPOACESSOBD'
+        TabOrder = 6
+      end
+      object ComboBoxDatabaseType: TComboBox
+        Left = 16
+        Top = 316
+        Width = 241
+        Height = 21
+        Hint = 'TIPOBANCO'
+        TabOrder = 7
+      end
+      object EditDatabaseAlias: TLabeledEdit
+        Left = 16
+        Top = 359
+        Width = 241
+        Height = 21
+        Hint = 'ALIAS'
+        EditLabel.Width = 22
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Alias'
+        TabOrder = 8
+      end
+      object EditDatabaseServer: TLabeledEdit
+        Left = 16
+        Top = 402
+        Width = 241
+        Height = 21
+        Hint = 'SERVER'
+        EditLabel.Width = 32
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Server'
+        TabOrder = 9
+      end
     end
     object TabSheetClient: TTabSheet
       Caption = 'Cliente'

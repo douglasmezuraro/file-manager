@@ -3,6 +3,7 @@ unit Util.Constants;
 interface
 
 uses
+  System.SysUtils,
   Util.Types;
 
 const
@@ -19,7 +20,9 @@ const
   FlagFalse = 'N';
 
 { Enum-mapping }
-  ConnectionTypeMap: array[TConnectionType] of string = ('', 'Socket');
+  ConnectionTypeMap: array[TConnectionType] of string = (string.Empty, 'Socket');
+  AccessTypeMap: array[TAccessType] of string = (string.Empty, 'sqld', 'FireDAC');
+  DatabaseTypeMap: array[TDatabaseType] of string = (string.Empty, 'Oracle', 'SQLServer', 'DB2');
 
 implementation
 

@@ -11,30 +11,31 @@ type
   [TSection('DATABASE')]
   TDatabase = class
   private
-    FLogUpdateTime: UInt8;
-    FMaxConnections: UInt8;
+    FConnectionLogUpdateTime: UInt32;
+    FMaxConnections: UInt32;
     FDatabaseType: string;
     FAccessType: string;
     FFetchLines: UInt32;
-    FMinConnections: UInt8;
+    FMinConnections: UInt32;
     FAlias: string;
-    FDisconnectionTimeIdleConnection: UInt8;
+    FDisconnectionTimeIdleConnection: UInt32;
     FSchema: string;
+    FServer: string;
   public
     [TKey('ESQUEMA', dtString)]
     property Schema: string read FSchema write FSchema;
 
     [TKey('NUMEROMAXIMOCONEXOES', dtInteger)]
-    property MaxConnections: UInt8 read FMaxConnections write FMaxConnections;
+    property MaxConnections: UInt32 read FMaxConnections write FMaxConnections;
 
     [TKey('NUMEROMINIMOCONEXOES', dtInteger)]
-    property MinConnections: UInt8 read FMinConnections write FMinConnections;
+    property MinConnections: UInt32 read FMinConnections write FMinConnections;
 
     [TKey('TEMPODESCONEXAOCONEXAOINATIVA', dtInteger)]
-    property DisconnectionTimeIdleConnection: UInt8 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
+    property DisconnectionTimeIdleConnection: UInt32 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
     [TKey('TEMPOATUALIZACAOLOGCONEXOES', dtInteger)]
-    property LogUpdateTime: UInt8 read FLogUpdateTime write FLogUpdateTime;
+    property ConnectionLogUpdateTime: UInt32 read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
     [TKey('NUMEROLINHASFETCH', dtInteger)]
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
@@ -47,6 +48,9 @@ type
 
     [TKey('ALIAS', dtString)]
     property Alias: string read FAlias write FAlias;
+
+    [TKey('SERVER', dtString)]
+    property Server: string read FServer write FServer;
   end;
 
 implementation

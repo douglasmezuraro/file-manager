@@ -3,52 +3,66 @@ unit Form.Main;
 interface
 
 uses
-  System.Classes,
-  Vcl.Controls,
-  Vcl.Forms,
-  Vcl.ComCtrls,
-  Model.Config,
-  Ini.CustomIniFileHelper,
-  Vcl.ExtCtrls,
-  System.Actions,
-  System.IniFiles,
-  Vcl.ActnList,
-  Util.Methods,
-  Util.Constants,
   Helper.ComboBox,
+  Ini.CustomIniFileHelper,
+  Model.Config,
+  System.Actions,
+  System.Classes,
+  System.IniFiles,
   System.SysUtils,
-  Vcl.Buttons, Vcl.StdCtrls, Vcl.Mask, Vcl.Samples.Spin;
+  Util.Constants,
+  Util.Methods,
+  Vcl.ActnList,
+  Vcl.Buttons,
+  Vcl.ComCtrls,
+  Vcl.Controls,
+  Vcl.ExtCtrls,
+  Vcl.Forms,
+  Vcl.Mask,
+  Vcl.StdCtrls;
 
 type
   TMain = class(TForm)
-    PageControlLayout: TPageControl;
-    TabSheetServer: TTabSheet;
-    TabSheetDatabase: TTabSheet;
-    TabSheetClient: TTabSheet;
-    TabSheetLog: TTabSheet;
-    TabSheetMonitor: TTabSheet;
-    TabSheetUpdate: TTabSheet;
-    TabSheetSPP: TTabSheet;
-    TabSheetDUnit: TTabSheet;
-    TabSheetScanner: TTabSheet;
-    TabSheetWorkflow: TTabSheet;
-    PanelButtons: TPanel;
-    ButtonSave: TSpeedButton;
-    ButtonExit: TSpeedButton;
+    ActionExit: TAction;
     ActionList: TActionList;
     ActionSave: TAction;
-    ActionExit: TAction;
-    EditServerName: TLabeledEdit;
-    EditServerGUID: TMaskEdit;
-    LabelGUID: TLabel;
-    EditServerComputerName: TLabeledEdit;
-    EditIPAddress: TLabeledEdit;
-    ComboBoxConnectionType: TComboBox;
+    ButtonExit: TSpeedButton;
+    ButtonSave: TSpeedButton;
     CheckBoxCanBalance: TCheckBox;
-    LabelConnectionType: TLabel;
-    EditServerExeName: TLabeledEdit;
-    EditServerTimeOut: TLabeledEdit;
     CheckBoxIntegrationManager: TCheckBox;
+    ComboBoxAccessType: TComboBox;
+    ComboBoxConnectionType: TComboBox;
+    ComboBoxDatabaseType: TComboBox;
+    EditDatabaseAlias: TLabeledEdit;
+    EditDatabaseConnectionLogUpdateTime: TLabeledEdit;
+    EditDatabaseDisconnectionTimeIdleConnection: TLabeledEdit;
+    EditDatabaseFetchLines: TLabeledEdit;
+    EditDatabaseMaxConnections: TLabeledEdit;
+    EditDatabaseMinConnections: TLabeledEdit;
+    EditDatabaseSchema: TLabeledEdit;
+    EditDatabaseServer: TLabeledEdit;
+    EditIPAddress: TLabeledEdit;
+    EditServerComputerName: TLabeledEdit;
+    EditServerExeName: TLabeledEdit;
+    EditServerGUID: TMaskEdit;
+    EditServerName: TLabeledEdit;
+    EditServerTimeOut: TLabeledEdit;
+    LabelAccessType: TLabel;
+    LabelConnectionType: TLabel;
+    LabelDatabaseType: TLabel;
+    LabelGUID: TLabel;
+    PageControlLayout: TPageControl;
+    PanelButtons: TPanel;
+    TabSheetClient: TTabSheet;
+    TabSheetDatabase: TTabSheet;
+    TabSheetDUnit: TTabSheet;
+    TabSheetLog: TTabSheet;
+    TabSheetMonitor: TTabSheet;
+    TabSheetScanner: TTabSheet;
+    TabSheetServer: TTabSheet;
+    TabSheetSPP: TTabSheet;
+    TabSheetUpdate: TTabSheet;
+    TabSheetWorkflow: TTabSheet;
     procedure FormShow(Sender: TObject);
     procedure ActionExitExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
@@ -95,6 +109,8 @@ end;
 procedure TMain.Foo;
 begin
   ComboBoxConnectionType.Add(ConnectionTypeMap);
+  ComboBoxAccessType.Add(AccessTypeMap);
+  ComboBoxDatabaseType.Add(DatabaseTypeMap);
 end;
 
 procedure TMain.FormShow(Sender: TObject);
@@ -119,9 +135,24 @@ procedure TMain.ModelToView;
     CheckBoxIntegrationManager.Checked := FModel.Server.IntegrationManager;
   end;
 
+  procedure Database;
+  begin
+    EditDatabaseSchema.Text         := FModel.Database.Schema;
+    EditDatabaseMaxConnections.Text := FModel.Database.MaxConnections.ToString;
+    EditDatabaseMinConnections.Text := FModel.Database.MinConnections.ToString;
+    EditDatabaseDisconnectionTimeIdleConnection.Text := FModel.Database.DisconnectionTimeIdleConnection.ToString;
+    EditDatabaseConnectionLogUpdateTime.Text := FModel.Database.ConnectionLogUpdateTime.ToString;
+    EditDatabaseFetchLines.Text     := FModel.Database.FetchLines.ToString;
+    ComboBoxAccessType.ItemIndex    := ComboBoxAccessType.Items.IndexOf(FModel.Database.AccessType);
+    ComboBoxDatabaseType.ItemIndex  := ComboBoxDatabaseType.Items.IndexOf(FModel.Database.DatabaseType);
+    EditDatabaseAlias.Text          := FModel.Database.Alias;
+    EditDatabaseServer.Text         := FModel.Database.Server;
+  end;
+
 begin
   FIniFile.Read(FModel);
   Server;
+  Database;
 end;
 
 procedure TMain.ViewToModel;
@@ -139,8 +170,23 @@ procedure TMain.ViewToModel;
     FModel.Server.IntegrationManager := CheckBoxIntegrationManager.Checked;
   end;
 
+  procedure Database;
+  begin
+    FModel.Database.Schema         := EditDatabaseSchema.Text;
+    FModel.Database.MaxConnections := StrToInt(EditDatabaseMaxConnections.Text);
+    FModel.Database.MinConnections := StrToInt(EditDatabaseMinConnections.Text);
+    FModel.Database.DisconnectionTimeIdleConnection := StrToInt(EditDatabaseDisconnectionTimeIdleConnection.Text);
+    FModel.Database.ConnectionLogUpdateTime := StrToInt(EditDatabaseConnectionLogUpdateTime.Text);
+    FModel.Database.FetchLines     := StrToInt(EditDatabaseFetchLines.Text);
+    FModel.Database.AccessType     := ComboBoxAccessType.Text;
+    FModel.Database.DatabaseType   := ComboBoxDatabaseType.Text;
+    FModel.Database.Alias          := EditDatabaseAlias.Text;
+    FModel.Database.Server         := EditDatabaseServer.Text;
+  end;
+
 begin
   Server;
+  Database;
   FIniFile.Write(FModel);
 end;
 
