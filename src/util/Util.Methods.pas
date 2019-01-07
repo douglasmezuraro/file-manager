@@ -4,7 +4,8 @@ interface
 
 uses
   System.SysUtils,
-  Util.Constants;
+  Util.Constants,
+  System.RegularExpressions;
 
 type
   TMethods = class
@@ -12,6 +13,7 @@ type
     class function BoolToStr(const Value: Boolean): string;
     class function StrToBool(const Value: string): Boolean;
     class function GetIniPath(const AppExeName: string): string;
+    class function ValidateIP(const IP: string): Boolean;
   end;
 
 implementation
@@ -40,4 +42,21 @@ begin
     Result := True;
 end;
 
+class function TMethods.ValidateIP(const IP: string): Boolean;
+const
+  Pattern = '(\d{1,3}\.){3}\d{1,3}';
+  LocalHost = 'localhost';
+var
+  RegEx: TRegEx;
+begin
+  Result := True;
+
+  if IP.IsEmpty or SameText(IP, LocalHost) then
+    Exit;
+
+  RegEx := TRegEx.Create(Pattern, [roNotEmpty, roIgnoreCase]);
+  Result := RegEx.IsMatch(IP);
+end;
+
 end.
+

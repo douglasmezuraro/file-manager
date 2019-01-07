@@ -16,6 +16,7 @@ uses
   Vcl.Buttons,
   Vcl.ComCtrls,
   Vcl.Controls,
+  Vcl.Dialogs,
   Vcl.ExtCtrls,
   Vcl.Forms,
   Vcl.Mask,
@@ -66,6 +67,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure ActionExitExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
+    procedure EditIPAddressExit(Sender: TObject);
   private
     FModel: TConfig;
     FIniFile: TIniFile;
@@ -104,6 +106,15 @@ begin
   FIniFile.Free;
   FModel.Free;
   inherited;
+end;
+
+procedure TMain.EditIPAddressExit(Sender: TObject);
+begin
+  if not TMethods.ValidateIP((Sender as TLabeledEdit).Text) then
+  begin
+    ShowMessageFmt('O IP "%s" não é válido', [(Sender as TLabeledEdit).Text]);
+    (Sender as TLabeledEdit).SetFocus;
+  end;
 end;
 
 procedure TMain.Foo;

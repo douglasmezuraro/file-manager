@@ -22,7 +22,7 @@ object Main: TMain
     Top = 0
     Width = 600
     Height = 517
-    ActivePage = TabSheetDatabase
+    ActivePage = TabSheetServer
     Align = alClient
     TabOrder = 0
     object TabSheetServer: TTabSheet
@@ -89,6 +89,7 @@ object Main: TMain
         EditLabel.Height = 13
         EditLabel.Caption = 'Endere'#231'o IP'
         TabOrder = 3
+        OnExit = EditIPAddressExit
       end
       object ComboBoxConnectionType: TComboBox
         Left = 16
@@ -96,6 +97,7 @@ object Main: TMain
         Width = 241
         Height = 21
         Hint = 'ENDERECOIP'
+        Style = csDropDownList
         TabOrder = 4
       end
       object CheckBoxCanBalance: TCheckBox
@@ -235,6 +237,7 @@ object Main: TMain
         Width = 241
         Height = 21
         Hint = 'TIPOACESSOBD'
+        Style = csDropDownList
         TabOrder = 6
       end
       object ComboBoxDatabaseType: TComboBox
@@ -243,6 +246,7 @@ object Main: TMain
         Width = 241
         Height = 21
         Hint = 'TIPOBANCO'
+        Style = csDropDownList
         TabOrder = 7
       end
       object EditDatabaseAlias: TLabeledEdit
