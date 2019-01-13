@@ -146,20 +146,15 @@ begin
           else if Value.IsDate then
             WriteDate(Section.Name, (Attribute as TKey).Name, Value.AsDate)
           else if Value.IsDateTime then
-            WriteDateTime(Section.Name, (Attribute as TKey).Name, StrToDateTime(Value.AsString))
+            WriteDateTime(Section.Name, (Attribute as TKey).Name, Value.AsDateTime)
           else if Value.IsTime then
-            WriteTime(Section.Name, (Attribute as TKey).Name, StrToTime(Value.AsString))
+            WriteTime(Section.Name, (Attribute as TKey).Name, Value.AsTime)
           else if Value.IsFloat then
             WriteFloat(Section.Name, (Attribute as TKey).Name, Value.AsExtended)
           else if Value.IsNumeric then
             WriteInteger(Section.Name, (Attribute as TKey).Name, Value.AsInteger)
           else if Value.IsString then
-            WriteString(Section.Name, (Attribute as TKey).Name, TMethods.BoolToStr(Value.AsBoolean));
-
-          //byte
-          //cardinal
-
-
+            WriteString(Section.Name, (Attribute as TKey).Name, Value.AsString);
         end;
       end;
     end;

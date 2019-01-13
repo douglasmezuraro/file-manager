@@ -8,10 +8,18 @@ uses
 type
   TValueHelper = record Helper for TValue
   public
-    { AS }
+    function AsByte: Byte;
+    function AsCardinal: Cardinal;
     function AsDate: TDate;
+    function AsDateTime: TDateTime;
+    function AsDouble: Double;
+    function AsPointer: Pointer;
+    function AsShortInt: ShortInt;
     function AsSingle: Single;
-    { IS }
+    function AsSmallInt: SmallInt;
+    function AsTime: TTime;
+    function AsWord: Word;
+
     function IsBoolean: Boolean;
     function IsByte: Boolean;
     function IsCardinal: Boolean;
@@ -20,7 +28,6 @@ type
     function IsDateTime: Boolean;
     function IsDouble: Boolean;
     function IsFloat: Boolean;
-    function IsGUID: Boolean;
     function IsInt64: Boolean;
     function IsInteger: Boolean;
     function IsNumeric: Boolean;
@@ -39,14 +46,59 @@ implementation
 
 { TValueHelper }
 
+function TValueHelper.AsByte: Byte;
+begin
+  Result := AsType<Byte>;
+end;
+
+function TValueHelper.AsCardinal: Cardinal;
+begin
+  Result := AsType<Cardinal>;
+end;
+
 function TValueHelper.AsDate: TDate;
 begin
-  Result := 0;
+  Result := AsType<TDate>;
+end;
+
+function TValueHelper.AsDateTime: TDateTime;
+begin
+  Result := AsType<TDateTime>;
+end;
+
+function TValueHelper.AsDouble: Double;
+begin
+  Result := AsType<Double>;
+end;
+
+function TValueHelper.AsPointer: Pointer;
+begin
+  Result := AsType<Pointer>;
+end;
+
+function TValueHelper.AsShortInt: ShortInt;
+begin
+  Result := AsType<ShortInt>;
 end;
 
 function TValueHelper.AsSingle: Single;
 begin
   Result := AsType<Single>;
+end;
+
+function TValueHelper.AsSmallInt: SmallInt;
+begin
+  Result := AsType<SmallInt>;
+end;
+
+function TValueHelper.AsTime: TTime;
+begin
+  Result := AsType<TTime>;
+end;
+
+function TValueHelper.AsWord: Word;
+begin
+  Result := AsType<Word>;
 end;
 
 function TValueHelper.IsBoolean: Boolean;
@@ -87,11 +139,6 @@ end;
 function TValueHelper.IsFloat: Boolean;
 begin
   Result := Kind = tkFloat;
-end;
-
-function TValueHelper.IsGUID: Boolean;
-begin
-  Result := TypeInfo = System.TypeInfo(TGUID);
 end;
 
 function TValueHelper.IsInt64: Boolean;
