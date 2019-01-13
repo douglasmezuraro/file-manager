@@ -184,7 +184,7 @@ procedure TMain.ModelToView;
   end;
 
 begin
-  FIniFile.Read(FModel);
+  FIniFile.ReadObject(FModel);
   Server;
   Database;
   Client;
@@ -234,7 +234,7 @@ begin
   Server;
   Database;
   Client;
-  FIniFile.Write(FModel);
+  FIniFile.WriteObject(FModel);
 end;
 
 end.

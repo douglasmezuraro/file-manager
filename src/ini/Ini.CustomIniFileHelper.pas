@@ -4,6 +4,7 @@ interface
 
 uses
   Helper.Value,
+  Ini.Attribute,
   Ini.Key,
   Ini.Section,
   System.IniFiles,
@@ -15,34 +16,50 @@ uses
 
 type
   TCustomIniFileHelper = class Helper for TCustomIniFile
+  private type
+    TExecuteMode = (emRead, emWrite);
   private
-    function GetSection(const Obj: TObject): TSection;
+    procedure Execute(Obj: TObject; const Mode: TExecuteMode); overload;
+    procedure Execute(var Value: TValue; const Section, Key: string; const Mode: TExecuteMode); overload;
+    function GetSection(const Obj: TObject): string;
+    function GetKey(const Prop: TRttiProperty): string;
   public
-    procedure Read(const Obj: TObject);
-    procedure Write(const Obj: TObject);
+    procedure ReadObject(Obj: TObject);
+    procedure WriteObject(Obj: TObject);
   end;
 
 implementation
 
 { TCustomIniFileHelper }
 
-function TCustomIniFileHelper.GetSection(const Obj: TObject): TSection;
+function TCustomIniFileHelper.GetKey(const Prop: TRttiProperty): string;
+var
+  Attribute: TCustomAttribute;
+begin
+  Result := string.Empty;
+  for Attribute in Prop.GetAttributes do
+  begin
+    if Attribute is TKey then
+    begin
+      Result := (Attribute as TKey).Name;
+      Break;
+    end;
+  end;
+end;
+
+function TCustomIniFileHelper.GetSection(const Obj: TObject): string;
 var
   Context: TRttiContext;
   Attribute: TCustomAttribute;
 begin
-  Result := nil;
-
-  if not Assigned(Obj) then
-    Exit;
-
+  Result := string.Empty;
   Context := TRttiContext.Create;
   try
     for Attribute in Context.GetType(Obj.ClassType).GetAttributes do
     begin
       if Attribute is TSection then
       begin
-        Result := Attribute as TSection;
+        Result := (Attribute as TSection).Name;
         Break;
       end;
     end;
@@ -51,13 +68,12 @@ begin
   end;
 end;
 
-procedure TCustomIniFileHelper.Read(const Obj: TObject);
+procedure TCustomIniFileHelper.Execute(Obj: TObject; const Mode: TExecuteMode);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
-  Attribute: TCustomAttribute;
   Value: TValue;
-  Section: TSection;
+  Section, Key: string;
 begin
   if not Assigned(Obj) then
     Exit;
@@ -72,95 +88,74 @@ begin
       Value := Prop.GetValue(Obj);
       if Value.IsObject then
       begin
-        Read(Value.AsObject);
+        Execute(Value.AsObject, Mode);
         Continue;
       end;
 
       Section := GetSection(Obj);
-      if not Assigned(Section) then
+      Key := GetKey(Prop);
+
+      if Section.IsEmpty or Key.IsEmpty then
         Continue;
 
-      for Attribute in Prop.GetAttributes do
-      begin
-        if Attribute is TKey then
-        begin
-          if Value.IsBoolean then
-            Value := TMethods.StrToBool(ReadString(Section.Name, (Attribute as TKey).Name, TMethods.BoolToStr(False)))
-          else if Value.IsDate then
-            Value := ReadDate(Section.Name, (Attribute as TKey).Name, DateNull)
-          else if Value.IsDateTime then
-            Value := ReadDateTime(Section.Name, (Attribute as TKey).Name, DateNull)
-          else if Value.IsTime then
-            Value := ReadTime(Section.Name, (Attribute as TKey).Name, DateNull)
-          else if Value.IsFloat then
-             Value := ReadFloat(Section.Name, (Attribute as TKey).Name, NumericNull)
-          else if Value.IsNumeric then
-            Value := ReadInteger(Section.Name, (Attribute as TKey).Name, NumericNull)
-          else if Value.IsString then
-            Value := ReadString(Section.Name, (Attribute as TKey).Name, string.Empty);
-
-          Prop.SetValue(Obj, Value);
-        end;
-      end;
+      Execute(Value, Section, Key, Mode);
+      if Mode = emRead then
+        Prop.SetValue(Obj, Value);
     end;
   finally
     Context.Free;
   end;
 end;
 
-procedure TCustomIniFileHelper.Write(const Obj: TObject);
-var
-  Context: TRttiContext;
-  Prop: TRttiProperty;
-  Attribute: TCustomAttribute;
-  Value: TValue;
-  Section: TSection;
+procedure TCustomIniFileHelper.Execute(var Value: TValue; const Section,
+  Key: string; const Mode: TExecuteMode);
 begin
-  if not Assigned(Obj) then
-    Exit;
-
-  Context := TRttiContext.Create;
-  try
-    for Prop in Context.GetType(Obj.ClassType).GetProperties do
-    begin
-      if Prop.Visibility in [mvPrivate, mvProtected] then
-        Continue;
-
-      Value := Prop.GetValue(Obj);
-      if Value.IsObject then
+  case Mode of
+    emRead:
       begin
-        Write(Value.AsObject);
-        Continue;
+        if Value.IsBoolean then
+          Value := TMethods.StrToBool(ReadString(Section, Key, TMethods.BoolToStr(False)))
+        else if Value.IsDate then
+          Value := ReadDate(Section, Key, DateNull)
+        else if Value.IsDateTime then
+          Value := ReadDateTime(Section, Key, DateNull)
+        else if Value.IsTime then
+          Value := ReadTime(Section, Key, DateNull)
+        else if Value.IsFloat then
+           Value := ReadFloat(Section, Key, NumericNull)
+        else if Value.IsNumeric then
+          Value := ReadInteger(Section, Key, NumericNull)
+        else if Value.IsString then
+          Value := ReadString(Section, Key, string.Empty);
       end;
-
-      Section := GetSection(Obj);
-      if not Assigned(Section) then
-        Continue;
-
-      for Attribute in Prop.GetAttributes do
+    emWrite:
       begin
-        if Attribute is TKey then
-        begin
-          if Value.IsBoolean then
-            WriteString(Section.Name, (Attribute as TKey).Name, TMethods.BoolToStr(Value.AsBoolean))
-          else if Value.IsDate then
-            WriteDate(Section.Name, (Attribute as TKey).Name, Value.AsDate)
-          else if Value.IsDateTime then
-            WriteDateTime(Section.Name, (Attribute as TKey).Name, Value.AsDateTime)
-          else if Value.IsTime then
-            WriteTime(Section.Name, (Attribute as TKey).Name, Value.AsTime)
-          else if Value.IsFloat then
-            WriteFloat(Section.Name, (Attribute as TKey).Name, Value.AsExtended)
-          else if Value.IsNumeric then
-            WriteInteger(Section.Name, (Attribute as TKey).Name, Value.AsInteger)
-          else if Value.IsString then
-            WriteString(Section.Name, (Attribute as TKey).Name, Value.AsString);
-        end;
+        if Value.IsBoolean then
+          WriteString(Section, Key, TMethods.BoolToStr(Value.AsBoolean))
+        else if Value.IsDate then
+          WriteDate(Section, Key, Value.AsDate)
+        else if Value.IsDateTime then
+          WriteDateTime(Section, Key, Value.AsDateTime)
+        else if Value.IsTime then
+          WriteTime(Section, Key, Value.AsTime)
+        else if Value.IsFloat then
+          WriteFloat(Section, Key, Value.AsExtended)
+        else if Value.IsNumeric then
+          WriteInteger(Section, Key, Value.AsInteger)
+        else if Value.IsString then
+          WriteString(Section, Key, Value.AsString);
       end;
-    end;
-  finally
-    Context.Free;
   end;
+end;
+
+procedure TCustomIniFileHelper.ReadObject(Obj: TObject);
+begin
+  Execute(Obj, emRead);
+end;
+
+procedure TCustomIniFileHelper.WriteObject(Obj: TObject);
+begin
+  Execute(Obj, emWrite);
 end;
 
 end.

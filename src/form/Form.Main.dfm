@@ -27,6 +27,10 @@ object Main: TMain
     TabOrder = 0
     object TabSheetServer: TTabSheet
       Caption = 'Servidor'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object LabelGUID: TLabel
         Left = 16
         Top = 51
@@ -145,6 +149,8 @@ object Main: TMain
       ImageIndex = 1
       ExplicitLeft = 7
       ExplicitTop = 23
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object LabelAccessType: TLabel
         Left = 16
         Top = 251
@@ -274,6 +280,10 @@ object Main: TMain
     object TabSheetClient: TTabSheet
       Caption = 'Cliente'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBoxAutoLogin: TGroupBox
         Left = 16
         Top = 11
@@ -325,30 +335,58 @@ object Main: TMain
     object TabSheetLog: TTabSheet
       Caption = 'Log'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheetMonitor: TTabSheet
       Caption = 'Monitor'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheetUpdate: TTabSheet
       Caption = 'Update'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheetSPP: TTabSheet
       Caption = 'SPP'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheetDUnit: TTabSheet
       Caption = 'DUnit'
       ImageIndex = 7
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheetScanner: TTabSheet
       Caption = 'Scanner'
       ImageIndex = 8
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheetWorkflow: TTabSheet
       Caption = 'Fluxo de trabalho'
       ImageIndex = 9
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   object PanelButtons: TPanel

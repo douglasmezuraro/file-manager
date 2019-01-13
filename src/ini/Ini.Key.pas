@@ -2,24 +2,13 @@ unit Ini.Key;
 
 interface
 
+uses
+  Ini.Attribute;
+
 type
-  TKey = class(TCustomAttribute)
-  private
-    FName: string;
-  public
-    constructor Create(const Name: string);
-    property Name: string read FName;
-  end;
+  TKey = class(TIniAttribute);
 
 implementation
-
-{ TKey }
-
-constructor TKey.Create(const Name: string);
-begin
-  inherited Create;
-  FName := Name;
-end;
 
 end.
 

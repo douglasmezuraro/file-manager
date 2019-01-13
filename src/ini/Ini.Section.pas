@@ -2,24 +2,13 @@ unit Ini.Section;
 
 interface
 
+uses
+  Ini.Attribute;
+
 type
-  TSection = class(TCustomAttribute)
-  private
-    FName: string;
-  public
-    constructor Create(const Name: string);
-    property Name: string read FName;
-  end;
+  TSection = class(TIniAttribute);
 
 implementation
-
-{ TSection }
-
-constructor TSection.Create(const Name: string);
-begin
-  Inherited Create;
-  FName := Name;
-end;
 
 end.
 
