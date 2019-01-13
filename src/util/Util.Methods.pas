@@ -14,11 +14,20 @@ type
     class function StrToBool(const Value: string): Boolean;
     class function GetIniPath(const AppExeName: string): string;
     class function ValidateIP(const IP: string): Boolean;
+    class procedure Assign<T>(var A: array of T; const B: TArray<T>);
   end;
 
 implementation
 
 { TMethods }
+
+class procedure TMethods.Assign<T>(var A: array of T; const B: TArray<T>);
+var
+  Index: Integer;
+begin
+  for Index := Low(B) to High(B) do
+    A[Index] := B[Index];
+end;
 
 class function TMethods.BoolToStr(const Value: Boolean): string;
 const

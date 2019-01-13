@@ -22,13 +22,11 @@ object Main: TMain
     Top = 0
     Width = 600
     Height = 517
-    ActivePage = TabSheetServer
+    ActivePage = TabSheetClient
     Align = alClient
     TabOrder = 0
     object TabSheetServer: TTabSheet
       Caption = 'Servidor'
-      ExplicitLeft = 68
-      ExplicitTop = 23
       object LabelGUID: TLabel
         Left = 16
         Top = 51
@@ -248,6 +246,7 @@ object Main: TMain
         Hint = 'TIPOBANCO'
         Style = csDropDownList
         TabOrder = 7
+        OnExit = ComboBoxDatabaseTypeExit
       end
       object EditDatabaseAlias: TLabeledEdit
         Left = 16
@@ -275,50 +274,81 @@ object Main: TMain
     object TabSheetClient: TTabSheet
       Caption = 'Cliente'
       ImageIndex = 2
-      ExplicitWidth = 627
-      ExplicitHeight = 271
+      object GroupBoxAutoLogin: TGroupBox
+        Left = 16
+        Top = 11
+        Width = 561
+        Height = 70
+        Caption = 'Login autom'#225'tico'
+        TabOrder = 0
+        object EditClientAutoLoginUser: TLabeledEdit
+          Left = 16
+          Top = 32
+          Width = 225
+          Height = 21
+          EditLabel.Width = 36
+          EditLabel.Height = 13
+          EditLabel.Caption = 'Usu'#225'rio'
+          TabOrder = 0
+        end
+        object EditClientAutoLoginPassword: TLabeledEdit
+          Left = 247
+          Top = 32
+          Width = 225
+          Height = 21
+          EditLabel.Width = 30
+          EditLabel.Height = 13
+          EditLabel.Caption = 'Senha'
+          PasswordChar = '*'
+          TabOrder = 1
+        end
+      end
+      object EditClientTimeout: TLabeledEdit
+        Left = 16
+        Top = 104
+        Width = 241
+        Height = 21
+        EditLabel.Width = 102
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Timeout de execu'#231#227'o'
+        TabOrder = 1
+      end
+      object CheckBoxClientDisableMenuBackground: TCheckBox
+        Left = 16
+        Top = 131
+        Width = 241
+        Height = 17
+        Caption = 'Desabilitar fundo do menu'
+        TabOrder = 2
+      end
     end
     object TabSheetLog: TTabSheet
       Caption = 'Log'
       ImageIndex = 3
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheetMonitor: TTabSheet
       Caption = 'Monitor'
       ImageIndex = 4
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheetUpdate: TTabSheet
       Caption = 'Update'
       ImageIndex = 5
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheetSPP: TTabSheet
       Caption = 'SPP'
       ImageIndex = 6
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheetDUnit: TTabSheet
       Caption = 'DUnit'
       ImageIndex = 7
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheetScanner: TTabSheet
       Caption = 'Scanner'
       ImageIndex = 8
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheetWorkflow: TTabSheet
       Caption = 'Fluxo de trabalho'
       ImageIndex = 9
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
   end
   object PanelButtons: TPanel

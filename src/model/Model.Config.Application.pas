@@ -3,7 +3,6 @@ unit Model.Config.Application;
 interface
 
 uses
-  Ini.DataType,
   Ini.Key,
   Ini.Section;
 
@@ -13,7 +12,7 @@ type
   private
     FName: string;
   public
-    [TKey('NOMEAPLICACAOPARAMONITORAMENTO', dtString)]
+    [TKey('NOMEAPLICACAOPARAMONITORAMENTO')]
     property Name: string read FName write FName;
   end;
 

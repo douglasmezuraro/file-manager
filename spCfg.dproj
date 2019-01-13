@@ -101,7 +101,6 @@
         </DCCReference>
         <DCCReference Include="src\ini\Ini.Section.pas"/>
         <DCCReference Include="src\ini\Ini.Key.pas"/>
-        <DCCReference Include="src\ini\Ini.DataType.pas"/>
         <DCCReference Include="src\ini\Ini.CustomIniFileHelper.pas"/>
         <DCCReference Include="src\util\Util.Constants.pas"/>
         <DCCReference Include="src\model\Model.Config.pas"/>
@@ -118,6 +117,10 @@
         <DCCReference Include="src\model\Model.Config.SPP.pas"/>
         <DCCReference Include="src\model\Model.Config.Update.pas"/>
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
+        <DCCReference Include="src\util\Util.Methods.pas"/>
+        <DCCReference Include="src\util\Util.Types.pas"/>
+        <DCCReference Include="src\helper\Helper.ComboBox.pas"/>
+        <DCCReference Include="src\helper\Helper.Value.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -12,6 +12,7 @@ uses
   System.SysUtils,
   Util.Constants,
   Util.Methods,
+  Util.Types,
   Vcl.ActnList,
   Vcl.Buttons,
   Vcl.ComCtrls,
@@ -64,10 +65,16 @@ type
     TabSheetSPP: TTabSheet;
     TabSheetUpdate: TTabSheet;
     TabSheetWorkflow: TTabSheet;
+    GroupBoxAutoLogin: TGroupBox;
+    EditClientAutoLoginUser: TLabeledEdit;
+    EditClientAutoLoginPassword: TLabeledEdit;
+    EditClientTimeout: TLabeledEdit;
+    CheckBoxClientDisableMenuBackground: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure ActionExitExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure EditIPAddressExit(Sender: TObject);
+    procedure ComboBoxDatabaseTypeExit(Sender: TObject);
   private
     FModel: TConfig;
     FIniFile: TIniFile;
@@ -92,6 +99,11 @@ procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
   ViewToModel;
   ActionExit.Execute;
+end;
+
+procedure TMain.ComboBoxDatabaseTypeExit(Sender: TObject);
+begin
+  EditDatabaseServer.Enabled := TDatabaseType((Sender as TComboBox).ItemIndex) <> dtOracle;
 end;
 
 constructor TMain.Create(AOwner: TComponent);
@@ -160,10 +172,22 @@ procedure TMain.ModelToView;
     EditDatabaseServer.Text         := FModel.Database.Server;
   end;
 
+  procedure Client;
+  var
+    AutoLogin: array[TAutoLogin] of string;
+  begin
+    TMethods.Assign<string>(AutoLogin, FModel.Client.AutoLogin.Split([',']));
+    EditClientAutoLoginUser.Text := AutoLogin[alUser];
+    EditClientAutoLoginPassword.Text := AutoLogin[alPassword];
+    EditClientTimeout.Text := FModel.Client.TimeOut.ToString;
+    CheckBoxClientDisableMenuBackground.Checked := FModel.Client.DisableMenuBackground;
+  end;
+
 begin
   FIniFile.Read(FModel);
   Server;
   Database;
+  Client;
 end;
 
 procedure TMain.ViewToModel;
@@ -195,9 +219,21 @@ procedure TMain.ViewToModel;
     FModel.Database.Server         := EditDatabaseServer.Text;
   end;
 
+  procedure Client;
+  var
+    AutoLogin: array[TAutoLogin] of string;
+  begin
+    AutoLogin[alUser] := EditClientAutoLoginUser.Text;
+    AutoLogin[alPassword] := EditClientAutoLoginPassword.Text;
+    FModel.Client.AutoLogin := string.Join(',', AutoLogin);
+    FModel.Client.TimeOut := StrToInt(EditClientTimeout.Text);
+    FModel.Client.DisableMenuBackground := CheckBoxClientDisableMenuBackground.Checked;
+  end;
+
 begin
   Server;
   Database;
+  Client;
   FIniFile.Write(FModel);
 end;
 

@@ -3,7 +3,6 @@ unit Model.Config.Database;
 interface
 
 uses
-  Ini.DataType,
   Ini.Key,
   Ini.Section;
 
