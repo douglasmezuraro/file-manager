@@ -10,6 +10,7 @@ type
   public
     { AS }
     function AsDate: TDate;
+    function AsSingle: Single;
     { IS }
     function IsBoolean: Boolean;
     function IsByte: Boolean;
@@ -40,7 +41,12 @@ implementation
 
 function TValueHelper.AsDate: TDate;
 begin
-  Result := AsType<Date>;
+  Result := 0;
+end;
+
+function TValueHelper.AsSingle: Single;
+begin
+  Result := AsType<Single>;
 end;
 
 function TValueHelper.IsBoolean: Boolean;

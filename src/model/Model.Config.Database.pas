@@ -21,34 +21,34 @@ type
     FSchema: string;
     FServer: string;
   public
-    [TKey('ESQUEMA', dtString)]
+    [TKey('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
 
-    [TKey('NUMEROMAXIMOCONEXOES', dtInteger)]
+    [TKey('NUMEROMAXIMOCONEXOES')]
     property MaxConnections: UInt32 read FMaxConnections write FMaxConnections;
 
-    [TKey('NUMEROMINIMOCONEXOES', dtInteger)]
+    [TKey('NUMEROMINIMOCONEXOES')]
     property MinConnections: UInt32 read FMinConnections write FMinConnections;
 
-    [TKey('TEMPODESCONEXAOCONEXAOINATIVA', dtInteger)]
+    [TKey('TEMPODESCONEXAOCONEXAOINATIVA')]
     property DisconnectionTimeIdleConnection: UInt32 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
-    [TKey('TEMPOATUALIZACAOLOGCONEXOES', dtInteger)]
+    [TKey('TEMPOATUALIZACAOLOGCONEXOES')]
     property ConnectionLogUpdateTime: UInt32 read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
-    [TKey('NUMEROLINHASFETCH', dtInteger)]
+    [TKey('NUMEROLINHASFETCH')]
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
 
-    [TKey('TIPOACESSOBD', dtString)]
+    [TKey('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [TKey('TIPOBANCO', dtString)]
+    [TKey('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 
-    [TKey('ALIAS', dtString)]
+    [TKey('ALIAS')]
     property Alias: string read FAlias write FAlias;
 
-    [TKey('SERVER', dtString)]
+    [TKey('SERVER')]
     property Server: string read FServer write FServer;
   end;
 

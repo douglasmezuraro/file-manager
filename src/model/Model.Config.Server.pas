@@ -1,9 +1,8 @@
-unit Model.Config.Server;
+              unit Model.Config.Server;
 
 interface
 
 uses
-  Ini.DataType,
   Ini.Key,
   Ini.Section;
 
@@ -22,34 +21,34 @@ type
     FIPServer: string;
     FIPAddress: string;
   public
-    [TKey('NOMESERVIDOR', dtString)]
+    [TKey('NOMESERVIDOR')]
     property Name: string read FName write FName;
 
-    [TKey('GUIDSERVIDOR', dtString)]
+    [TKey('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
 
-    [TKey('NOMECOMPUTADOR', dtString)]
+    [TKey('NOMECOMPUTADOR')]
     property ComputerName: string read FComputerName write FComputerName;
 
-    [TKey('IPSERVIDOR', dtString)]
+    [TKey('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
 
-    [TKey('ENDERECOIP', dtString)]
+    [TKey('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
-    [TKey('TIPOCONEXAO', dtString)]
+    [TKey('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
 
-    [TKey('PODEBALANCEAR', dtBool)]
+    [TKey('PODEBALANCEAR')]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
-    [TKey('NOMEEXECUTAVELSERVIDOR', dtString)]
+    [TKey('NOMEEXECUTAVELSERVIDOR')]
     property ExeName: string read FExeName write FExeName;
 
-    [TKey('TIMEOUTEXECUCAO', dtInteger)]
+    [TKey('TIMEOUTEXECUCAO')]
     property TimeOut: UInt16 read FTimeOut write FTimeOut;
 
-    [TKey('HABILITAGERENCIADORINTEGRACAO', dtBool)]
+    [TKey('HABILITAGERENCIADORINTEGRACAO')]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
   end;
 

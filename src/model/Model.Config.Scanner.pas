@@ -3,7 +3,6 @@ unit Model.Config.Scanner;
 interface
 
 uses
-  Ini.DataType,
   Ini.Key,
   Ini.Section;
 
@@ -25,43 +24,43 @@ type
     FDocumentPerfil: UInt32;
     FScannerModel: UInt32;
   public
-    [TKey('GRAVARLOGPASTADIGITAL', dtInteger)]
+    [TKey('GRAVARLOGPASTADIGITAL')]
     property RegisterLogDigitalFolder: UInt8 read FRegisterLogDigitalFolder write FRegisterLogDigitalFolder;
 
-    [TKey('TEMPOESPERAEMMILISEGUNDOS', dtInteger)]
+    [TKey('TEMPOESPERAEMMILISEGUNDOS')]
     property WaitTimeMS: UInt32 read FWaitTimeMS write FWaitTimeMS;
 
-    [TKey('TEMPOESPERA', dtInteger)]
+    [TKey('TEMPOESPERA')]
     property WaitTime: Uint32 read FWaitTime write FWaitTime;
 
-    [TKey('DUPLEX', dtBool)]
+    [TKey('DUPLEX')]
     property Duplex: Boolean read FDuplex write FDuplex;
 
-    [TKey('ACQUIREFRAME', dtBool)]
+    [TKey('ACQUIREFRAME')]
     property AcquireFrame: Boolean read FAcquireFrame write FAcquireFrame;
 
-    [TKey('DETECTARPAPELALIMENTADOR', dtBool)]
+    [TKey('DETECTARPAPELALIMENTADOR')]
     property DetectFeederPaper: Boolean read FDetectFeederPaper write FDetectFeederPaper;
 
-    [TKey('TAMPAGINA', dtInteger)]
+    [TKey('TAMPAGINA')]
     property PageSize: Uint32 read FPageSize write FPageSize;
 
-    [TKey('RESOLUCAO', dtInteger)]
+    [TKey('RESOLUCAO')]
     property Resolution: UInt32 read FResolution write FResolution;
 
-    [TKey('RESOLUCAOCORES', dtInteger)]
+    [TKey('RESOLUCAOCORES')]
     property ColorResolution: UInt32 read FColorResolution write FColorResolution;
 
-    [TKey('MODELOSCANNER', dtInteger)]
+    [TKey('MODELOSCANNER')]
     property ScannerModel: UInt32 read FScannerModel write FScannerModel;
 
-    [TKey('PERFILDOC', dtInteger)]
+    [TKey('PERFILDOC')]
     property DocumentPerfil: UInt32 read FDocumentPerfil write FDocumentPerfil;
 
-    [TKey('LIMIARPRETOEBRANCO', dtInteger)]
+    [TKey('LIMIARPRETOEBRANCO')]
     property BlackAndWhiteThreshold: UInt32 read FBlackAndWhiteThreshold write FBlackAndWhiteThreshold;
 
-    [TKey('PROCESSAPRETOEBRANCO', dtBool)]
+    [TKey('PROCESSAPRETOEBRANCO')]
     property BlackAndWhiteProcessing: Boolean read FBlackAndWhiteProcessing write FBlackAndWhiteProcessing;
   end;
 

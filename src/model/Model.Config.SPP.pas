@@ -3,7 +3,6 @@ unit Model.Config.SPP;
 interface
 
 uses
-  Ini.DataType,
   Ini.Key,
   Ini.Section;
 
@@ -18,22 +17,22 @@ type
     FProcessBlock: UInt32;
     FSystemName: string;
   public
-    [TKey('USARSPP', dtBool)]
+    [TKey('USARSPP')]
     property UseSPP: Boolean read FUseSPP write FUseSPP;
 
-    [TKey('NOMESISTEMA', dtString)]
+    [TKey('NOMESISTEMA')]
     property SystemName: string read FSystemName write FSystemName;
 
-    [TKey('GRAVARLOG', dtBool)]
+    [TKey('GRAVARLOG')]
     property RegisterLog: Boolean read FRegisterLog write FRegisterLog;
 
-    [TKey('BLOCOPROCESSAMENTO', dtInteger)]
+    [TKey('BLOCOPROCESSAMENTO')]
     property ProcessBlock: UInt32 read FProcessBlock write FProcessBlock;
 
-    [TKey('BYTESBLOCOPROCESSAMENTO', dtInteger)]
+    [TKey('BYTESBLOCOPROCESSAMENTO')]
     property ProcessBlockSize: UInt32 read FProcessBlockSize write FProcessBlockSize;
 
-    [TKey('QTDEXECUCOESSEMPROCESSAMENTO', dtInteger)]
+    [TKey('QTDEXECUCOESSEMPROCESSAMENTO')]
     property ExecutionsWithoutProcess: UInt8 read FExecutionsWithoutProcess write FExecutionsWithoutProcess;
   end;
 
