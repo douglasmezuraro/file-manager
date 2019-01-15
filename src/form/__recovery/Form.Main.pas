@@ -127,7 +127,7 @@ procedure TMain.EditIPAddressExit(Sender: TObject);
 begin
   if not TMethods.ValidateIP((Sender as TLabeledEdit).Text) then
   begin
-    ShowMessageFmt('O IP "%s" n„o È v·lido', [(Sender as TLabeledEdit).Text]);
+    ShowMessageFmt('O IP "%s" n√£o √© v√°lido', [(Sender as TLabeledEdit).Text]);
     (Sender as TLabeledEdit).SetFocus;
   end;
 end;
@@ -235,9 +235,9 @@ procedure TMain.ViewToModel;
     AutoLogin: array[TAutoLogin] of string;
   begin
     AutoLogin[alUser] := EditClientAutoLoginUser.Text;
-    AutoLogin[alPassword] := EditClientAutoLoginPassword.Text;
-    FModel.Client.AutoLogin := string.Join(',', AutoLogin);
-    FModel.Client.TimeOut := StrToInt(EditClientTimeout.Text);
+    AutoLogin[alPassword]               := EditClientAutoLoginPassword.Text;
+    FModel.Client.AutoLogin             := string.Join(',', AutoLogin);
+    FModel.Client.TimeOut               := StrToInt(EditClientTimeout.Text);
     FModel.Client.DisableMenuBackground := CheckBoxClientDisableMenuBackground.Checked;
   end;
 

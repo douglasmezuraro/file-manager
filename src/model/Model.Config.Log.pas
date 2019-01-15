@@ -11,7 +11,7 @@ type
   TLog = class
   private
     FRegisterSQLLog: Boolean;
-    FRegisterSignatureLog: UInt32;
+    FRegisterSignatureLog: Boolean;
     FRegisterMethodLog: Boolean;
   public
     [TKey('REGISTRALOGMETODO')]
@@ -21,7 +21,7 @@ type
     property RegisterSQLLog: Boolean read FRegisterSQLLog write FRegisterSQLLog;
 
     [TKey('GRAVARLOGASSINATURA')]
-    property RegisterSignatureLog: UInt32 read FRegisterSignatureLog write FRegisterSignatureLog;
+    property RegisterSignatureLog: Boolean read FRegisterSignatureLog write FRegisterSignatureLog;
   end;
 
 implementation

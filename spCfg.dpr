@@ -24,7 +24,8 @@ uses
   Util.Methods in 'src\util\Util.Methods.pas',
   Util.Types in 'src\util\Util.Types.pas',
   Helper.ComboBox in 'src\helper\Helper.ComboBox.pas',
-  Helper.Value in 'src\helper\Helper.Value.pas';
+  Helper.Value in 'src\helper\Helper.Value.pas',
+  Ini.Attribute in 'src\ini\Ini.Attribute.pas';
 
 {$R *.res}
 
