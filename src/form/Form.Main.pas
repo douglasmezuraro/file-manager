@@ -30,11 +30,18 @@ type
     ActionSave: TAction;
     ButtonExit: TSpeedButton;
     ButtonSave: TSpeedButton;
-    CheckBoxCanBalance: TCheckBox;
-    CheckBoxIntegrationManager: TCheckBox;
-    ComboBoxAccessType: TComboBox;
-    ComboBoxConnectionType: TComboBox;
+    CheckBoxClientDisableMenuBackground: TCheckBox;
+    CheckBoxLogRegisterMethodLog: TCheckBox;
+    CheckBoxLogRegisterSignatureLog: TCheckBox;
+    CheckBoxLogRegisterSQLLog: TCheckBox;
+    CheckBoxServerCanBalance: TCheckBox;
+    CheckBoxServerIntegrationManager: TCheckBox;
+    ComboBoxDatabaseAccessType: TComboBox;
+    ComboBoxServerConnectionType: TComboBox;
     ComboBoxDatabaseType: TComboBox;
+    EditClientAutoLoginPassword: TLabeledEdit;
+    EditClientAutoLoginUser: TLabeledEdit;
+    EditClientTimeout: TLabeledEdit;
     EditDatabaseAlias: TLabeledEdit;
     EditDatabaseConnectionLogUpdateTime: TLabeledEdit;
     EditDatabaseDisconnectionTimeIdleConnection: TLabeledEdit;
@@ -43,12 +50,13 @@ type
     EditDatabaseMinConnections: TLabeledEdit;
     EditDatabaseSchema: TLabeledEdit;
     EditDatabaseServer: TLabeledEdit;
-    EditIPAddress: TLabeledEdit;
     EditServerComputerName: TLabeledEdit;
     EditServerExeName: TLabeledEdit;
     EditServerGUID: TMaskEdit;
+    EditServerIPAddress: TLabeledEdit;
     EditServerName: TLabeledEdit;
     EditServerTimeOut: TLabeledEdit;
+    GroupBoxAutoLogin: TGroupBox;
     LabelAccessType: TLabel;
     LabelConnectionType: TLabel;
     LabelDatabaseType: TLabel;
@@ -65,23 +73,15 @@ type
     TabSheetSPP: TTabSheet;
     TabSheetUpdate: TTabSheet;
     TabSheetWorkflow: TTabSheet;
-    GroupBoxAutoLogin: TGroupBox;
-    EditClientAutoLoginUser: TLabeledEdit;
-    EditClientAutoLoginPassword: TLabeledEdit;
-    EditClientTimeout: TLabeledEdit;
-    CheckBoxClientDisableMenuBackground: TCheckBox;
-    CheckBoxLogRegisterMethodLog: TCheckBox;
-    CheckBoxLogRegisterSQLLog: TCheckBox;
-    CheckBoxLogRegisterSignatureLog: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure ActionExitExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
-    procedure EditIPAddressExit(Sender: TObject);
+    procedure EditServerIPAddressExit(Sender: TObject);
     procedure ComboBoxDatabaseTypeExit(Sender: TObject);
   private
     FModel: TConfig;
     FIniFile: TIniFile;
-    procedure Foo;
+    procedure FillComboBoxes;
     procedure ViewToModel;
     procedure ModelToView;
   public
@@ -123,7 +123,7 @@ begin
   inherited;
 end;
 
-procedure TMain.EditIPAddressExit(Sender: TObject);
+procedure TMain.EditServerIPAddressExit(Sender: TObject);
 begin
   if not TMethods.ValidateIP((Sender as TLabeledEdit).Text) then
   begin
@@ -132,17 +132,17 @@ begin
   end;
 end;
 
-procedure TMain.Foo;
+procedure TMain.FillComboBoxes;
 begin
-  ComboBoxConnectionType.Add(ConnectionTypeMap);
-  ComboBoxAccessType.Add(AccessTypeMap);
+  ComboBoxServerConnectionType.Add(ConnectionTypeMap);
+  ComboBoxDatabaseAccessType.Add(AccessTypeMap);
   ComboBoxDatabaseType.Add(DatabaseTypeMap);
 end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
   PageControlLayout.ActivePage := TabSheetServer;
-  Foo;
+  FillComboBoxes;
   ModelToView;
 end;
 
@@ -150,29 +150,29 @@ procedure TMain.ModelToView;
 
   procedure Server;
   begin
-    EditServerName.Text                := FModel.Server.Name;
-    EditServerGUID.Text                := FModel.Server.GUID;
-    EditServerComputerName.Text        := FModel.Server.ComputerName;
-    EditIPAddress.Text                 := FModel.Server.IPAddress;
-    ComboBoxConnectionType.ItemIndex   := ComboBoxConnectionType.Items.IndexOf(FModel.Server.ConnectionType);
-    CheckBoxCanBalance.Checked         := FModel.Server.CanBalance;
-    EditServerExeName.Text             := FModel.Server.ExeName;
-    EditServerTimeOut.Text             := FModel.Server.TimeOut.ToString;
-    CheckBoxIntegrationManager.Checked := FModel.Server.IntegrationManager;
+    EditServerName.Text                      := FModel.Server.Name;
+    EditServerGUID.Text                      := FModel.Server.GUID;
+    EditServerComputerName.Text              := FModel.Server.ComputerName;
+    EditServerIPAddress.Text                 := FModel.Server.IPAddress;
+    ComboBoxServerConnectionType.ItemIndex   := ComboBoxServerConnectionType.Items.IndexOf(FModel.Server.ConnectionType);
+    CheckBoxServerCanBalance.Checked         := FModel.Server.CanBalance;
+    EditServerExeName.Text                   := FModel.Server.ExeName;
+    EditServerTimeOut.Text                   := FModel.Server.TimeOut.ToString;
+    CheckBoxServerIntegrationManager.Checked := FModel.Server.IntegrationManager;
   end;
 
   procedure Database;
   begin
-    EditDatabaseSchema.Text         := FModel.Database.Schema;
-    EditDatabaseMaxConnections.Text := FModel.Database.MaxConnections.ToString;
-    EditDatabaseMinConnections.Text := FModel.Database.MinConnections.ToString;
+    EditDatabaseSchema.Text                  := FModel.Database.Schema;
+    EditDatabaseMaxConnections.Text          := FModel.Database.MaxConnections.ToString;
+    EditDatabaseMinConnections.Text          := FModel.Database.MinConnections.ToString;
     EditDatabaseDisconnectionTimeIdleConnection.Text := FModel.Database.DisconnectionTimeIdleConnection.ToString;
     EditDatabaseConnectionLogUpdateTime.Text := FModel.Database.ConnectionLogUpdateTime.ToString;
-    EditDatabaseFetchLines.Text     := FModel.Database.FetchLines.ToString;
-    ComboBoxAccessType.ItemIndex    := ComboBoxAccessType.Items.IndexOf(FModel.Database.AccessType);
-    ComboBoxDatabaseType.ItemIndex  := ComboBoxDatabaseType.Items.IndexOf(FModel.Database.DatabaseType);
-    EditDatabaseAlias.Text          := FModel.Database.Alias;
-    EditDatabaseServer.Text         := FModel.Database.Server;
+    EditDatabaseFetchLines.Text              := FModel.Database.FetchLines.ToString;
+    ComboBoxDatabaseAccessType.ItemIndex     := ComboBoxDatabaseAccessType.Items.IndexOf(FModel.Database.AccessType);
+    ComboBoxDatabaseType.ItemIndex           := ComboBoxDatabaseType.Items.IndexOf(FModel.Database.DatabaseType);
+    EditDatabaseAlias.Text                   := FModel.Database.Alias;
+    EditDatabaseServer.Text                  := FModel.Database.Server;
   end;
 
   procedure Client;
@@ -180,16 +180,16 @@ procedure TMain.ModelToView;
     AutoLogin: array[TAutoLogin] of string;
   begin
     TMethods.Assign<string>(AutoLogin, FModel.Client.AutoLogin.Split([',']));
-    EditClientAutoLoginUser.Text := AutoLogin[alUser];
-    EditClientAutoLoginPassword.Text := AutoLogin[alPassword];
-    EditClientTimeout.Text := FModel.Client.TimeOut.ToString;
+    EditClientAutoLoginUser.Text                := AutoLogin[alUser];
+    EditClientAutoLoginPassword.Text            := AutoLogin[alPassword];
+    EditClientTimeout.Text                      := FModel.Client.TimeOut.ToString;
     CheckBoxClientDisableMenuBackground.Checked := FModel.Client.DisableMenuBackground;
   end;
 
   procedure Log;
   begin
-    CheckBoxLogRegisterMethodLog.Checked := FModel.Log.RegisterMethodLog;
-    CheckBoxLogRegisterSQLLog.Checked := FModel.Log.RegisterSQLLog;
+    CheckBoxLogRegisterMethodLog.Checked    := FModel.Log.RegisterMethodLog;
+    CheckBoxLogRegisterSQLLog.Checked       := FModel.Log.RegisterSQLLog;
     CheckBoxLogRegisterSignatureLog.Checked := FModel.Log.RegisterSignatureLog;
   end;
 
@@ -208,12 +208,12 @@ procedure TMain.ViewToModel;
     FModel.Server.Name               := EditServerName.Text;
     FModel.Server.GUID               := EditServerGUID.Text;
     FModel.Server.ComputerName       := EditServerComputerName.Text;
-    FModel.Server.IPAddress          := EditIPAddress.Text;
-    FModel.Server.ConnectionType     := ComboBoxConnectionType.Text;
-    FModel.Server.CanBalance         := CheckBoxCanBalance.Checked;
+    FModel.Server.IPAddress          := EditServerIPAddress.Text;
+    FModel.Server.ConnectionType     := ComboBoxServerConnectionType.Text;
+    FModel.Server.CanBalance         := CheckBoxServerCanBalance.Checked;
     FModel.Server.ExeName            := EditServerExeName.Text;
     FModel.Server.TimeOut            := StrToInt(EditServerTimeOut.Text);
-    FModel.Server.IntegrationManager := CheckBoxIntegrationManager.Checked;
+    FModel.Server.IntegrationManager := CheckBoxServerIntegrationManager.Checked;
   end;
 
   procedure Database;
@@ -224,7 +224,7 @@ procedure TMain.ViewToModel;
     FModel.Database.DisconnectionTimeIdleConnection := StrToInt(EditDatabaseDisconnectionTimeIdleConnection.Text);
     FModel.Database.ConnectionLogUpdateTime := StrToInt(EditDatabaseConnectionLogUpdateTime.Text);
     FModel.Database.FetchLines     := StrToInt(EditDatabaseFetchLines.Text);
-    FModel.Database.AccessType     := ComboBoxAccessType.Text;
+    FModel.Database.AccessType     := ComboBoxDatabaseAccessType.Text;
     FModel.Database.DatabaseType   := ComboBoxDatabaseType.Text;
     FModel.Database.Alias          := EditDatabaseAlias.Text;
     FModel.Database.Server         := EditDatabaseServer.Text;
@@ -234,17 +234,17 @@ procedure TMain.ViewToModel;
   var
     AutoLogin: array[TAutoLogin] of string;
   begin
-    AutoLogin[alUser] := EditClientAutoLoginUser.Text;
-    AutoLogin[alPassword] := EditClientAutoLoginPassword.Text;
-    FModel.Client.AutoLogin := string.Join(',', AutoLogin);
-    FModel.Client.TimeOut := StrToInt(EditClientTimeout.Text);
+    AutoLogin[alUser]                   := EditClientAutoLoginUser.Text;
+    AutoLogin[alPassword]               := EditClientAutoLoginPassword.Text;
+    FModel.Client.AutoLogin             := string.Join(',', AutoLogin);
+    FModel.Client.TimeOut               := StrToInt(EditClientTimeout.Text);
     FModel.Client.DisableMenuBackground := CheckBoxClientDisableMenuBackground.Checked;
   end;
 
   procedure Log;
   begin
-    FModel.Log.RegisterMethodLog := CheckBoxLogRegisterMethodLog.Checked;
-    FModel.Log.RegisterSQLLog := CheckBoxLogRegisterSQLLog.Checked;
+    FModel.Log.RegisterMethodLog    := CheckBoxLogRegisterMethodLog.Checked;
+    FModel.Log.RegisterSQLLog       := CheckBoxLogRegisterSQLLog.Checked;
     FModel.Log.RegisterSignatureLog := CheckBoxLogRegisterSignatureLog.Checked;
   end;
 

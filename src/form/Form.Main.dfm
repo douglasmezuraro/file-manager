@@ -22,7 +22,7 @@ object Main: TMain
     Top = 0
     Width = 600
     Height = 517
-    ActivePage = TabSheetLog
+    ActivePage = TabSheetDatabase
     Align = alClient
     TabOrder = 0
     object TabSheetServer: TTabSheet
@@ -41,7 +41,7 @@ object Main: TMain
         Width = 79
         Height = 13
         Caption = 'Tipo de conex'#227'o'
-        FocusControl = ComboBoxConnectionType
+        FocusControl = ComboBoxServerConnectionType
       end
       object EditServerName: TLabeledEdit
         Left = 16
@@ -77,7 +77,7 @@ object Main: TMain
         EditLabel.Caption = 'Nome do computador'
         TabOrder = 2
       end
-      object EditIPAddress: TLabeledEdit
+      object EditServerIPAddress: TLabeledEdit
         Left = 16
         Top = 152
         Width = 241
@@ -87,9 +87,9 @@ object Main: TMain
         EditLabel.Height = 13
         EditLabel.Caption = 'Endere'#231'o IP'
         TabOrder = 3
-        OnExit = EditIPAddressExit
+        OnExit = EditServerIPAddressExit
       end
-      object ComboBoxConnectionType: TComboBox
+      object ComboBoxServerConnectionType: TComboBox
         Left = 16
         Top = 198
         Width = 241
@@ -98,7 +98,7 @@ object Main: TMain
         Style = csDropDownList
         TabOrder = 4
       end
-      object CheckBoxCanBalance: TCheckBox
+      object CheckBoxServerCanBalance: TCheckBox
         Left = 16
         Top = 225
         Width = 241
@@ -130,7 +130,7 @@ object Main: TMain
         NumbersOnly = True
         TabOrder = 7
       end
-      object CheckBoxIntegrationManager: TCheckBox
+      object CheckBoxServerIntegrationManager: TCheckBox
         Left = 16
         Top = 331
         Width = 241
@@ -227,7 +227,7 @@ object Main: TMain
         EditLabel.Caption = 'N'#250'mero de linhas fetch'
         TabOrder = 5
       end
-      object ComboBoxAccessType: TComboBox
+      object ComboBoxDatabaseAccessType: TComboBox
         Left = 16
         Top = 270
         Width = 241
