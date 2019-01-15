@@ -147,112 +147,86 @@ begin
 end;
 
 procedure TMain.ModelToView;
-
-  procedure Server;
-  begin
-    EditServerName.Text                      := FModel.Server.Name;
-    EditServerGUID.Text                      := FModel.Server.GUID;
-    EditServerComputerName.Text              := FModel.Server.ComputerName;
-    EditServerIPAddress.Text                 := FModel.Server.IPAddress;
-    ComboBoxServerConnectionType.ItemIndex   := ComboBoxServerConnectionType.Items.IndexOf(FModel.Server.ConnectionType);
-    CheckBoxServerCanBalance.Checked         := FModel.Server.CanBalance;
-    EditServerExeName.Text                   := FModel.Server.ExeName;
-    EditServerTimeOut.Text                   := FModel.Server.TimeOut.ToString;
-    CheckBoxServerIntegrationManager.Checked := FModel.Server.IntegrationManager;
-  end;
-
-  procedure Database;
-  begin
-    EditDatabaseSchema.Text                  := FModel.Database.Schema;
-    EditDatabaseMaxConnections.Text          := FModel.Database.MaxConnections.ToString;
-    EditDatabaseMinConnections.Text          := FModel.Database.MinConnections.ToString;
-    EditDatabaseDisconnectionTimeIdleConnection.Text := FModel.Database.DisconnectionTimeIdleConnection.ToString;
-    EditDatabaseConnectionLogUpdateTime.Text := FModel.Database.ConnectionLogUpdateTime.ToString;
-    EditDatabaseFetchLines.Text              := FModel.Database.FetchLines.ToString;
-    ComboBoxDatabaseAccessType.ItemIndex     := ComboBoxDatabaseAccessType.Items.IndexOf(FModel.Database.AccessType);
-    ComboBoxDatabaseType.ItemIndex           := ComboBoxDatabaseType.Items.IndexOf(FModel.Database.DatabaseType);
-    EditDatabaseAlias.Text                   := FModel.Database.Alias;
-    EditDatabaseServer.Text                  := FModel.Database.Server;
-  end;
-
-  procedure Client;
-  var
-    AutoLogin: array[TAutoLogin] of string;
-  begin
-    TMethods.Assign<string>(AutoLogin, FModel.Client.AutoLogin.Split([',']));
-    EditClientAutoLoginUser.Text                := AutoLogin[alUser];
-    EditClientAutoLoginPassword.Text            := AutoLogin[alPassword];
-    EditClientTimeout.Text                      := FModel.Client.TimeOut.ToString;
-    CheckBoxClientDisableMenuBackground.Checked := FModel.Client.DisableMenuBackground;
-  end;
-
-  procedure Log;
-  begin
-    CheckBoxLogRegisterMethodLog.Checked    := FModel.Log.RegisterMethodLog;
-    CheckBoxLogRegisterSQLLog.Checked       := FModel.Log.RegisterSQLLog;
-    CheckBoxLogRegisterSignatureLog.Checked := FModel.Log.RegisterSignatureLog;
-  end;
-
+var
+  AutoLogin: array[TAutoLogin] of string;
 begin
   FIniFile.ReadObject(FModel);
-  Server;
-  Database;
-  Client;
-  Log;
+  TMethods.Assign<string>(AutoLogin, FModel.Client.AutoLogin.Split([',']));
+
+  { Server }
+  EditServerName.Text                         := FModel.Server.Name;
+  EditServerGUID.Text                         := FModel.Server.GUID;
+  EditServerComputerName.Text                 := FModel.Server.ComputerName;
+  EditServerIPAddress.Text                    := FModel.Server.IPAddress;
+  ComboBoxServerConnectionType.ItemIndex      := ComboBoxServerConnectionType.Items.IndexOf(FModel.Server.ConnectionType);
+  CheckBoxServerCanBalance.Checked            := FModel.Server.CanBalance;
+  EditServerExeName.Text                      := FModel.Server.ExeName;
+  EditServerTimeOut.Text                      := FModel.Server.TimeOut.ToString;
+  CheckBoxServerIntegrationManager.Checked    := FModel.Server.IntegrationManager;
+
+  { Database }
+  EditDatabaseSchema.Text                     := FModel.Database.Schema;
+  EditDatabaseMaxConnections.Text             := FModel.Database.MaxConnections.ToString;
+  EditDatabaseMinConnections.Text             := FModel.Database.MinConnections.ToString;
+  EditDatabaseDisconnectionTimeIdleConnection.Text := FModel.Database.DisconnectionTimeIdleConnection.ToString;
+  EditDatabaseConnectionLogUpdateTime.Text    := FModel.Database.ConnectionLogUpdateTime.ToString;
+  EditDatabaseFetchLines.Text                 := FModel.Database.FetchLines.ToString;
+  ComboBoxDatabaseAccessType.ItemIndex        := ComboBoxDatabaseAccessType.Items.IndexOf(FModel.Database.AccessType);
+  ComboBoxDatabaseType.ItemIndex              := ComboBoxDatabaseType.Items.IndexOf(FModel.Database.DatabaseType);
+  EditDatabaseAlias.Text                      := FModel.Database.Alias;
+  EditDatabaseServer.Text                     := FModel.Database.Server;
+
+  { Client }
+  EditClientAutoLoginUser.Text                := AutoLogin[alUser];
+  EditClientAutoLoginPassword.Text            := AutoLogin[alPassword];
+  EditClientTimeout.Text                      := FModel.Client.TimeOut.ToString;
+  CheckBoxClientDisableMenuBackground.Checked := FModel.Client.DisableMenuBackground;
+
+  { Log }
+  CheckBoxLogRegisterMethodLog.Checked        := FModel.Log.RegisterMethodLog;
+  CheckBoxLogRegisterSQLLog.Checked           := FModel.Log.RegisterSQLLog;
+  CheckBoxLogRegisterSignatureLog.Checked     := FModel.Log.RegisterSignatureLog;
 end;
 
 procedure TMain.ViewToModel;
-
-  procedure Server;
-  begin
-    FModel.Server.Name               := EditServerName.Text;
-    FModel.Server.GUID               := EditServerGUID.Text;
-    FModel.Server.ComputerName       := EditServerComputerName.Text;
-    FModel.Server.IPAddress          := EditServerIPAddress.Text;
-    FModel.Server.ConnectionType     := ComboBoxServerConnectionType.Text;
-    FModel.Server.CanBalance         := CheckBoxServerCanBalance.Checked;
-    FModel.Server.ExeName            := EditServerExeName.Text;
-    FModel.Server.TimeOut            := StrToInt(EditServerTimeOut.Text);
-    FModel.Server.IntegrationManager := CheckBoxServerIntegrationManager.Checked;
-  end;
-
-  procedure Database;
-  begin
-    FModel.Database.Schema         := EditDatabaseSchema.Text;
-    FModel.Database.MaxConnections := StrToInt(EditDatabaseMaxConnections.Text);
-    FModel.Database.MinConnections := StrToInt(EditDatabaseMinConnections.Text);
-    FModel.Database.DisconnectionTimeIdleConnection := StrToInt(EditDatabaseDisconnectionTimeIdleConnection.Text);
-    FModel.Database.ConnectionLogUpdateTime := StrToInt(EditDatabaseConnectionLogUpdateTime.Text);
-    FModel.Database.FetchLines     := StrToInt(EditDatabaseFetchLines.Text);
-    FModel.Database.AccessType     := ComboBoxDatabaseAccessType.Text;
-    FModel.Database.DatabaseType   := ComboBoxDatabaseType.Text;
-    FModel.Database.Alias          := EditDatabaseAlias.Text;
-    FModel.Database.Server         := EditDatabaseServer.Text;
-  end;
-
-  procedure Client;
-  var
-    AutoLogin: array[TAutoLogin] of string;
-  begin
-    AutoLogin[alUser]                   := EditClientAutoLoginUser.Text;
-    AutoLogin[alPassword]               := EditClientAutoLoginPassword.Text;
-    FModel.Client.AutoLogin             := string.Join(',', AutoLogin);
-    FModel.Client.TimeOut               := StrToInt(EditClientTimeout.Text);
-    FModel.Client.DisableMenuBackground := CheckBoxClientDisableMenuBackground.Checked;
-  end;
-
-  procedure Log;
-  begin
-    FModel.Log.RegisterMethodLog    := CheckBoxLogRegisterMethodLog.Checked;
-    FModel.Log.RegisterSQLLog       := CheckBoxLogRegisterSQLLog.Checked;
-    FModel.Log.RegisterSignatureLog := CheckBoxLogRegisterSignatureLog.Checked;
-  end;
-
+var
+  AutoLogin: array[TAutoLogin] of string;
 begin
-  Server;
-  Database;
-  Client;
-  Log;
+  { Server }
+  FModel.Server.Name                      := EditServerName.Text;
+  FModel.Server.GUID                      := EditServerGUID.Text;
+  FModel.Server.ComputerName              := EditServerComputerName.Text;
+  FModel.Server.IPAddress                 := EditServerIPAddress.Text;
+  FModel.Server.ConnectionType            := ComboBoxServerConnectionType.Text;
+  FModel.Server.CanBalance                := CheckBoxServerCanBalance.Checked;
+  FModel.Server.ExeName                   := EditServerExeName.Text;
+  FModel.Server.TimeOut                   := StrToInt(EditServerTimeOut.Text);
+  FModel.Server.IntegrationManager        := CheckBoxServerIntegrationManager.Checked;
+
+  { Database }
+  FModel.Database.Schema                  := EditDatabaseSchema.Text;
+  FModel.Database.MaxConnections          := StrToInt(EditDatabaseMaxConnections.Text);
+  FModel.Database.MinConnections          := StrToInt(EditDatabaseMinConnections.Text);
+  FModel.Database.DisconnectionTimeIdleConnection := StrToInt(EditDatabaseDisconnectionTimeIdleConnection.Text);
+  FModel.Database.ConnectionLogUpdateTime := StrToInt(EditDatabaseConnectionLogUpdateTime.Text);
+  FModel.Database.FetchLines              := StrToInt(EditDatabaseFetchLines.Text);
+  FModel.Database.AccessType              := ComboBoxDatabaseAccessType.Text;
+  FModel.Database.DatabaseType            := ComboBoxDatabaseType.Text;
+  FModel.Database.Alias                   := EditDatabaseAlias.Text;
+  FModel.Database.Server                  := EditDatabaseServer.Text;
+
+  { Client }
+  AutoLogin[alUser]                       := EditClientAutoLoginUser.Text;
+  AutoLogin[alPassword]                   := EditClientAutoLoginPassword.Text;
+  FModel.Client.AutoLogin                 := string.Join(',', AutoLogin);
+  FModel.Client.TimeOut                   := StrToInt(EditClientTimeout.Text);
+  FModel.Client.DisableMenuBackground     := CheckBoxClientDisableMenuBackground.Checked;
+
+  { Log }
+  FModel.Log.RegisterMethodLog            := CheckBoxLogRegisterMethodLog.Checked;
+  FModel.Log.RegisterSQLLog               := CheckBoxLogRegisterSQLLog.Checked;
+  FModel.Log.RegisterSignatureLog         := CheckBoxLogRegisterSignatureLog.Checked;
+
   FIniFile.WriteObject(FModel);
 end;
 
