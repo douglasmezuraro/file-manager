@@ -3,81 +3,37 @@ unit Form.Main;
 interface
 
 uses
-  Helper.ComboBox,
-  Ini.CustomIniFileHelper,
-  Model.Config,
-  System.Actions,
-  System.Classes,
-  System.IniFiles,
   System.SysUtils,
-  Util.Constants,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Dialogs,
+  FMX.Layouts,
+  FMX.Controls.Presentation,
+  FMX.StdCtrls,
+  System.Actions,
+  FMX.ActnList,
+  Model.Config,
   Util.Methods,
-  Util.Types,
-  Vcl.ActnList,
-  Vcl.Buttons,
-  Vcl.ComCtrls,
-  Vcl.Controls,
-  Vcl.Dialogs,
-  Vcl.ExtCtrls,
-  Vcl.Forms,
-  Vcl.Mask,
-  Vcl.StdCtrls;
+  Ini.CustomIniFileHelper,
+  System.IniFiles;
 
 type
   TMain = class(TForm)
-    ActionExit: TAction;
+    PanelButtons: TPanel;
+    ButtonCancel: TButton;
+    ButtonSave: TButton;
     ActionList: TActionList;
     ActionSave: TAction;
-    ButtonExit: TSpeedButton;
-    ButtonSave: TSpeedButton;
-    CheckBoxClientDisableMenuBackground: TCheckBox;
-    CheckBoxLogRegisterMethodLog: TCheckBox;
-    CheckBoxLogRegisterSignatureLog: TCheckBox;
-    CheckBoxLogRegisterSQLLog: TCheckBox;
-    CheckBoxServerCanBalance: TCheckBox;
-    CheckBoxServerIntegrationManager: TCheckBox;
-    ComboBoxDatabaseAccessType: TComboBox;
-    ComboBoxServerConnectionType: TComboBox;
-    ComboBoxDatabaseType: TComboBox;
-    EditClientAutoLoginPassword: TLabeledEdit;
-    EditClientAutoLoginUser: TLabeledEdit;
-    EditClientTimeout: TLabeledEdit;
-    EditDatabaseAlias: TLabeledEdit;
-    EditDatabaseConnectionLogUpdateTime: TLabeledEdit;
-    EditDatabaseDisconnectionTimeIdleConnection: TLabeledEdit;
-    EditDatabaseFetchLines: TLabeledEdit;
-    EditDatabaseMaxConnections: TLabeledEdit;
-    EditDatabaseMinConnections: TLabeledEdit;
-    EditDatabaseSchema: TLabeledEdit;
-    EditDatabaseServer: TLabeledEdit;
-    EditServerComputerName: TLabeledEdit;
-    EditServerExeName: TLabeledEdit;
-    EditServerGUID: TMaskEdit;
-    EditServerIPAddress: TLabeledEdit;
-    EditServerName: TLabeledEdit;
-    EditServerTimeOut: TLabeledEdit;
-    GroupBoxAutoLogin: TGroupBox;
-    LabelAccessType: TLabel;
-    LabelConnectionType: TLabel;
-    LabelDatabaseType: TLabel;
-    LabelGUID: TLabel;
-    PageControlLayout: TPageControl;
-    PanelButtons: TPanel;
-    TabSheetClient: TTabSheet;
-    TabSheetDatabase: TTabSheet;
-    TabSheetDUnit: TTabSheet;
-    TabSheetLog: TTabSheet;
-    TabSheetMonitor: TTabSheet;
-    TabSheetScanner: TTabSheet;
-    TabSheetServer: TTabSheet;
-    TabSheetSPP: TTabSheet;
-    TabSheetUpdate: TTabSheet;
-    TabSheetWorkflow: TTabSheet;
-    procedure FormShow(Sender: TObject);
-    procedure ActionExitExecute(Sender: TObject);
+    ActionCancel: TAction;
+    procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
-    procedure EditServerIPAddressExit(Sender: TObject);
-    procedure ComboBoxDatabaseTypeExit(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FModel: TConfig;
     FIniFile: TIniFile;
@@ -91,29 +47,25 @@ type
 
 implementation
 
-{$R *.dfm}
+{$R *.fmx}
 
-procedure TMain.ActionExitExecute(Sender: TObject);
+procedure TMain.ActionCancelExecute(Sender: TObject);
 begin
-  Self.Close;
+  ModalResult := mrCancel;
+  Close;
 end;
 
 procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
   ViewToModel;
-  ActionExit.Execute;
-end;
-
-procedure TMain.ComboBoxDatabaseTypeExit(Sender: TObject);
-begin
-  EditDatabaseServer.Enabled := TDatabaseType((Sender as TComboBox).ItemIndex) <> dtOracle;
+  ModalResult := mrOk;
 end;
 
 constructor TMain.Create(AOwner: TComponent);
 begin
-  inherited Create(AOwner);
+  inherited;
   FModel := TConfig.Create;
-  FIniFile := TIniFile.Create(TMethods.GetIniPath(Application.ExeName));
+  FIniFile := TIniFile.Create(TMethods.GetIniPath);
 end;
 
 destructor TMain.Destroy;
@@ -123,112 +75,25 @@ begin
   inherited;
 end;
 
-procedure TMain.EditServerIPAddressExit(Sender: TObject);
-begin
-  if not TMethods.ValidateIP((Sender as TLabeledEdit).Text) then
-  begin
-    ShowMessageFmt('O IP "%s" não é válido', [(Sender as TLabeledEdit).Text]);
-    (Sender as TLabeledEdit).SetFocus;
-  end;
-end;
-
 procedure TMain.FillComboBoxes;
 begin
-  ComboBoxServerConnectionType.Add(ConnectionTypeMap);
-  ComboBoxDatabaseAccessType.Add(AccessTypeMap);
-  ComboBoxDatabaseType.Add(DatabaseTypeMap);
+  Exit;
 end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
-  PageControlLayout.ActivePage := TabSheetServer;
   FillComboBoxes;
   ModelToView;
 end;
 
 procedure TMain.ModelToView;
-var
-  AutoLogin: array[TAutoLogin] of string;
 begin
   FIniFile.ReadObject(FModel);
-  TMethods.Assign<string>(AutoLogin, FModel.Client.AutoLogin.Split([',']));
-
-  { Server }
-  EditServerName.Text                         := FModel.Server.Name;
-  EditServerGUID.Text                         := FModel.Server.GUID;
-  EditServerComputerName.Text                 := FModel.Server.ComputerName;
-  EditServerIPAddress.Text                    := FModel.Server.IPAddress;
-  ComboBoxServerConnectionType.ItemIndex      := ComboBoxServerConnectionType.Items.IndexOf(FModel.Server.ConnectionType);
-  CheckBoxServerCanBalance.Checked            := FModel.Server.CanBalance;
-  EditServerExeName.Text                      := FModel.Server.ExeName;
-  EditServerTimeOut.Text                      := FModel.Server.TimeOut.ToString;
-  CheckBoxServerIntegrationManager.Checked    := FModel.Server.IntegrationManager;
-
-  { Database }
-  EditDatabaseSchema.Text                     := FModel.Database.Schema;
-  EditDatabaseMaxConnections.Text             := FModel.Database.MaxConnections.ToString;
-  EditDatabaseMinConnections.Text             := FModel.Database.MinConnections.ToString;
-  EditDatabaseDisconnectionTimeIdleConnection.Text := FModel.Database.DisconnectionTimeIdleConnection.ToString;
-  EditDatabaseConnectionLogUpdateTime.Text    := FModel.Database.ConnectionLogUpdateTime.ToString;
-  EditDatabaseFetchLines.Text                 := FModel.Database.FetchLines.ToString;
-  ComboBoxDatabaseAccessType.ItemIndex        := ComboBoxDatabaseAccessType.Items.IndexOf(FModel.Database.AccessType);
-  ComboBoxDatabaseType.ItemIndex              := ComboBoxDatabaseType.Items.IndexOf(FModel.Database.DatabaseType);
-  EditDatabaseAlias.Text                      := FModel.Database.Alias;
-  EditDatabaseServer.Text                     := FModel.Database.Server;
-
-  { Client }
-  EditClientAutoLoginUser.Text                := AutoLogin[alUser];
-  EditClientAutoLoginPassword.Text            := AutoLogin[alPassword];
-  EditClientTimeout.Text                      := FModel.Client.TimeOut.ToString;
-  CheckBoxClientDisableMenuBackground.Checked := FModel.Client.DisableMenuBackground;
-
-  { Log }
-  CheckBoxLogRegisterMethodLog.Checked        := FModel.Log.RegisterMethodLog;
-  CheckBoxLogRegisterSQLLog.Checked           := FModel.Log.RegisterSQLLog;
-  CheckBoxLogRegisterSignatureLog.Checked     := FModel.Log.RegisterSignatureLog;
 end;
 
 procedure TMain.ViewToModel;
-var
-  AutoLogin: array[TAutoLogin] of string;
 begin
-  { Server }
-  FModel.Server.Name                      := EditServerName.Text;
-  FModel.Server.GUID                      := EditServerGUID.Text;
-  FModel.Server.ComputerName              := EditServerComputerName.Text;
-  FModel.Server.IPAddress                 := EditServerIPAddress.Text;
-  FModel.Server.ConnectionType            := ComboBoxServerConnectionType.Text;
-  FModel.Server.CanBalance                := CheckBoxServerCanBalance.Checked;
-  FModel.Server.ExeName                   := EditServerExeName.Text;
-  FModel.Server.TimeOut                   := StrToInt(EditServerTimeOut.Text);
-  FModel.Server.IntegrationManager        := CheckBoxServerIntegrationManager.Checked;
-
-  { Database }
-  FModel.Database.Schema                  := EditDatabaseSchema.Text;
-  FModel.Database.MaxConnections          := StrToInt(EditDatabaseMaxConnections.Text);
-  FModel.Database.MinConnections          := StrToInt(EditDatabaseMinConnections.Text);
-  FModel.Database.DisconnectionTimeIdleConnection := StrToInt(EditDatabaseDisconnectionTimeIdleConnection.Text);
-  FModel.Database.ConnectionLogUpdateTime := StrToInt(EditDatabaseConnectionLogUpdateTime.Text);
-  FModel.Database.FetchLines              := StrToInt(EditDatabaseFetchLines.Text);
-  FModel.Database.AccessType              := ComboBoxDatabaseAccessType.Text;
-  FModel.Database.DatabaseType            := ComboBoxDatabaseType.Text;
-  FModel.Database.Alias                   := EditDatabaseAlias.Text;
-  FModel.Database.Server                  := EditDatabaseServer.Text;
-
-  { Client }
-  AutoLogin[alUser]                       := EditClientAutoLoginUser.Text;
-  AutoLogin[alPassword]                   := EditClientAutoLoginPassword.Text;
-  FModel.Client.AutoLogin                 := string.Join(',', AutoLogin);
-  FModel.Client.TimeOut                   := StrToInt(EditClientTimeout.Text);
-  FModel.Client.DisableMenuBackground     := CheckBoxClientDisableMenuBackground.Checked;
-
-  { Log }
-  FModel.Log.RegisterMethodLog            := CheckBoxLogRegisterMethodLog.Checked;
-  FModel.Log.RegisterSQLLog               := CheckBoxLogRegisterSQLLog.Checked;
-  FModel.Log.RegisterSignatureLog         := CheckBoxLogRegisterSignatureLog.Checked;
-
   FIniFile.WriteObject(FModel);
 end;
 
 end.
-

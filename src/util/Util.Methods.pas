@@ -12,7 +12,7 @@ type
   public
     class function BoolToStr(const Value: Boolean): string;
     class function StrToBool(const Value: string): Boolean;
-    class function GetIniPath(const AppExeName: string): string;
+    class function GetIniPath: string;
     class function ValidateIP(const IP: string): Boolean;
     class procedure Assign<T>(var A: array of T; const B: TArray<T>);
   end;
@@ -36,11 +36,11 @@ begin
   Result := Map[Value];
 end;
 
-class function TMethods.GetIniPath(const AppExeName: string): string;
+class function TMethods.GetIniPath: string;
 var
   Path: string;
 begin
-  Path := ExtractFilePath(AppExeName);
+  Path := IncludeTrailingPathDelimiter(GetCurrentDir);
   Result := Path + IniFileName;
 end;
 

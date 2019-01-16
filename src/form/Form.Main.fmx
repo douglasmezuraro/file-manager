@@ -1,0 +1,53 @@
+object Main: TMain
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 558
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object PanelButtons: TPanel
+    Align = Bottom
+    Position.Y = 435.000000000000000000
+    Size.Width = 558.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object ButtonCancel: TButton
+      Action = ActionCancel
+      Align = Right
+      Enabled = True
+      ImageIndex = -1
+      Position.X = 458.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 45.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+    end
+    object ButtonSave: TButton
+      Action = ActionSave
+      Align = Left
+      Enabled = True
+      ImageIndex = -1
+      Size.Width = 100.000000000000000000
+      Size.Height = 45.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+    end
+  end
+  object ActionList: TActionList
+    Left = 384
+    Top = 232
+    object ActionSave: TAction
+      Text = '&Salvar'
+      OnExecute = ActionSaveExecute
+    end
+    object ActionCancel: TAction
+      Text = '&Cancelar'
+      OnExecute = ActionCancelExecute
+    end
+  end
+end

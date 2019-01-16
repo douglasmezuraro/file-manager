@@ -1,8 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{42B35B16-1340-49E1-B0B9-EBD5DBA1F710}</ProjectGuid>
+        <ProjectGuid>{63E37D1A-13D3-405C-895F-4A132F06F7EF}</ProjectGuid>
         <ProjectVersion>18.5</ProjectVersion>
-        <FrameworkType>VCL</FrameworkType>
+        <FrameworkType>FMX</FrameworkType>
         <MainSource>spCfg.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
@@ -48,21 +48,21 @@
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
-        <DCC_UsePackage>RESTBackendComponents;CloudService;soaprtl;soapmidas;RESTComponents;emsclientfiredac;DataSnapFireDAC;FireDACIBDriver;emsclient;FireDACCommon;soapserver;FireDACCommonDriver;inet;FireDAC;FireDACSqliteDriver;$(DCC_UsePackage)</DCC_UsePackage>
-        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
-        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
-        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
+        <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <SanitizedProjectName>spCfg</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <DCC_UsePackage>DBXSqliteDriver;DBXDb2Driver;addictdb;dxExRw;smdCompletoDT;vclactnband;tb2k;vclFireDAC;RaveVCL;tethering;spFundamentals;FireDACADSDriver;SAXKWR;EQGrid;OXml_R;FireDACMSSQLDriver;vcltouch;sppCompleto;PKIPDFBBox;vcldb;dxsb;PGPMIMEBBox;SFTPBBoxSrv;svn;spOrpheus;spVCL;spCommonAPI;pg5Completo;PGPBBox;rbRTL1617;sgcCompleto;ASiCBBox;FireDACDBXDriver;dxExEL;vclx;spConsultas;DAVBBoxCli;cgoCompletoDT;ZIPBBox;EDIBBox;scmCompleto;VCLRESTComponents;rbTCUI1617;RvCore;pg5cPrettyLabel;Box;tbxrt;vclie;bindengine;addict;FireDACMySQLDriver;dxcomn;spVclPkg;SAMLBBoxSrv;smdCompleto;DataSnapClient;spAddict;bindcompdbx;DBXSybaseASEDriver;IndyIPServer;prcImpl;PngComponents;IndySystem;XMLBBox;spVCL_DT;dsnapcon;VirtualTreesR;DBPlannerPkg;FireDACMSAccDriver;fmxFireDAC;FireDACInfxDriver;vclimg;RvStandard;RvBarcode;spDados;Jcl;pg5cCompleto;spDxInspector;emshosting;ccpCompleto;RvReport;DsgnBBox;dxBarDBNavR;spCompletoDadosConsultas_DT;sasCompleto;spEmbeddedWB;DBXOdbcDriver;FireDACTDataDriver;FMXTee;DbxCommonDriver;intCompleto;xmlrtl;DataSnapNativeClient;fmxobj;spCompletoNew_DT;rtl;DbxClientDriver;DBXSybaseASADriver;dxDBEd;spCentralNotificacoes;appanalytics;spdxExpressBar;IndyIPClient;WPTAddict_DT;dxdbtr;bindcompvcl;vcldbx;TeeUI;dxELib;dxGrEd;HtmlLabelPkg;VclSmp;FireDACODBCDriver;spPatternsAPI;spVCLStylesEditor;DataSnapIndy10ServerTransport;BaseBBox;edtCompleto;DataSnapProviderClient;MailBBox;FireDACMongoDBDriver;spActiveDirectory;SFTPBBoxCli;PacotespPrinter;spCompleto_DT;DataSnapServerMidas;spGenesis;DBXInterBaseDriver;RvGraphics;PKIECtrl;SAMLBBox;svnui;rbIDE1617;TMSLabelsButtonsPkg;DAVBBoxSrv;dxBarExtDBItemsR;DBXMSSQLDriver;spQuickPDF;spUIDControlsDT;DatasnapConnectorsFreePascal;spViewPDF;rbBDE1617;bindcompfmx;SSHBBoxCli;DBXOracleDriver;spCommonStructures;inetdb;spVCLStyles;FmxTeeUI;emsedge;PDFBBox;fmx;fmxdae;SSHBBoxSrv;EQDBTL;spPatternsImpl;CloudBBox;spHTTP;wflCompleto;sajCompleto;PGPTLSBBox;digCompleto;dbexpress;IndyCore;smdPrettyListView;OfficeBBox;dsnap;DataSnapCommon;sggCompleto;bdertl;DataSnapConnectors;XDevice;SqlDir;EQTL;sarCompleto;rbRCL1617;SAXMSR;FTPSBBoxCli;EmbeddedWebBrowser;FireDACOracleDriver;DBXMySQLDriver;XFormat;ECQDBC;DBXFirebirdDriver;Json_RT;SOAPBBoxCli;FireDACCommonODBC;MIMEBBox;spZip;cgoCompleto;spImageEn;IndyIPCommon;ppWPToolsPack;vcl;XMLBBoxSec;FTPSBBoxSrv;FireDACDb2Driver;PBFolderDialog;spUtils;XLSSuit;PKIBBox;HTTPBBoxCli;aipCompleto;TeeDB;PKISSHBBox;dxForumLib;VCLZipDT;FireDACPgDriver;proCompleto;FireDACASADriver;dxObjIns;WPTools;spCompletoBase;Tee;DataSnapServer;vclwinx;FireDACDSDriver;dxIns;RvEngine;CustomIPTransport;vcldsnap;spCompletoNew;spDxInspector_DT;SMIMECAdESBBox;dxBarExtItemsR;bindcomp;DBXInformixDriver;SSLBBoxCli;dxBarR;SSLBBoxSrv;HTTPBBoxSrv;SMIMEBBox;aclCompleto;dbxcds;SAXR;PGPSSHBBox;adortl;pg5cPrettyListView;dxEdtr;spSecureBlackBox;ggpCompleto;rbTDBC1617;spCommonFunctions;dsnapxml;rbTC1617;dbrtl;inetdbxpress;IndyProtocols;LDAPBBox;spDUnit;SynEditR;spLockBox;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>DBXSqliteDriver;IndyIPCommon;RESTComponents;bindcompdbx;DBXInterBaseDriver;vcl;IndyIPServer;vclactnband;vclFireDAC;IndySystem;tethering;svnui;dsnapcon;FireDACADSDriver;FireDACMSAccDriver;fmxFireDAC;vclimg;FireDAC;vcltouch;vcldb;bindcompfmx;svn;FireDACSqliteDriver;FireDACPgDriver;inetdb;soaprtl;DbxCommonDriver;fmx;FireDACIBDriver;fmxdae;xmlrtl;soapmidas;fmxobj;vclwinx;rtl;DbxClientDriver;CustomIPTransport;vcldsnap;dbexpress;IndyCore;vclx;bindcomp;appanalytics;dsnap;FireDACCommon;IndyIPClient;bindcompvcl;RESTBackendComponents;VCLRESTComponents;soapserver;dbxcds;VclSmp;adortl;vclie;bindengine;DBXMySQLDriver;CloudService;dsnapxml;FireDACMySQLDriver;dbrtl;IndyProtocols;inetdbxpress;FireDACCommonODBC;FireDACCommonDriver;inet;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -75,11 +75,10 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <DCC_ExeOutput>.\bin\</DCC_ExeOutput>
-        <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <DCC_DcuOutput>\bin\dcu</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -89,7 +88,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
-        <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -97,13 +96,13 @@
         </DelphiCompile>
         <DCCReference Include="src\form\Form.Main.pas">
             <Form>Main</Form>
-            <FormType>dfm</FormType>
+            <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="src\ini\Ini.Section.pas"/>
-        <DCCReference Include="src\ini\Ini.Key.pas"/>
+        <DCCReference Include="src\helper\Helper.Value.pas"/>
+        <DCCReference Include="src\ini\Ini.Attribute.pas"/>
         <DCCReference Include="src\ini\Ini.CustomIniFileHelper.pas"/>
-        <DCCReference Include="src\util\Util.Constants.pas"/>
-        <DCCReference Include="src\model\Model.Config.pas"/>
+        <DCCReference Include="src\ini\Ini.Key.pas"/>
+        <DCCReference Include="src\ini\Ini.Section.pas"/>
         <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
         <DCCReference Include="src\model\Model.Config.Application.pas"/>
         <DCCReference Include="src\model\Model.Config.Balancer.pas"/>
@@ -112,16 +111,16 @@
         <DCCReference Include="src\model\Model.Config.DUnit.pas"/>
         <DCCReference Include="src\model\Model.Config.Log.pas"/>
         <DCCReference Include="src\model\Model.Config.Monitor.pas"/>
+        <DCCReference Include="src\model\Model.Config.pas"/>
         <DCCReference Include="src\model\Model.Config.Scanner.pas"/>
         <DCCReference Include="src\model\Model.Config.Server.pas"/>
         <DCCReference Include="src\model\Model.Config.SPP.pas"/>
+        <DCCReference Include="src\model\Model.Config.Types.pas"/>
         <DCCReference Include="src\model\Model.Config.Update.pas"/>
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
+        <DCCReference Include="src\util\Util.Constants.pas"/>
         <DCCReference Include="src\util\Util.Methods.pas"/>
         <DCCReference Include="src\util\Util.Types.pas"/>
-        <DCCReference Include="src\helper\Helper.ComboBox.pas"/>
-        <DCCReference Include="src\helper\Helper.Value.pas"/>
-        <DCCReference Include="src\ini\Ini.Attribute.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -148,7 +147,32 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="bin\spCfg.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="$(BDS)\Redist\osx64\libcgsqlite3.dylib" Class="DependencyModule">
+                    <Platform Name="OSX64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="iOSSimulator">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libpcre.dylib" Class="DependencyModule">
+                    <Platform Name="iOSSimulator">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgsqlite3.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\spCfg.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>spCfg.exe</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -163,7 +187,6 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="Win32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
                 </DeployClass>
@@ -299,6 +322,11 @@
                         <Operation>1</Operation>
                         <Extensions>.framework</Extensions>
                     </Platform>
+                    <Platform Name="OSX64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.framework</Extensions>
+                    </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
                     </Platform>
@@ -317,6 +345,11 @@
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="OSX64">
                         <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
@@ -344,6 +377,11 @@
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
+                    <Platform Name="OSX64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
                         <Extensions>.bpl</Extensions>
@@ -363,6 +401,10 @@
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="OSX64">
                         <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
@@ -513,15 +555,27 @@
                         <RemoteDir>..\</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
+                    <Platform Name="OSX64">
+                        <RemoteDir>..\</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXInfoPList">
                     <Platform Name="OSX32">
                         <RemoteDir>Contents</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
+                    <Platform Name="OSX64">
+                        <RemoteDir>Contents</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXResource">
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\Resources</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="OSX64">
                         <RemoteDir>Contents\Resources</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -544,6 +598,10 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="OSX64">
                         <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -590,7 +648,13 @@
                 <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
             </Deployment>
             <Platforms>
+                <Platform value="Android">False</Platform>
+                <Platform value="iOSDevice32">False</Platform>
+                <Platform value="iOSDevice64">False</Platform>
+                <Platform value="iOSSimulator">False</Platform>
+                <Platform value="OSX32">False</Platform>
                 <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
             </Platforms>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
