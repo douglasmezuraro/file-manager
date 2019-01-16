@@ -3,25 +3,21 @@ unit Form.Main;
 interface
 
 uses
-  System.SysUtils,
-  System.Types,
-  System.UITypes,
-  System.Classes,
-  System.Variants,
-  FMX.Types,
-  FMX.Controls,
-  FMX.Forms,
-  FMX.Graphics,
-  FMX.Dialogs,
-  FMX.Layouts,
-  FMX.Controls.Presentation,
-  FMX.StdCtrls,
-  System.Actions,
   FMX.ActnList,
-  Model.Config,
-  Util.Methods,
+  FMX.Controls,
+  FMX.Controls.Presentation,
+  FMX.Forms,
+  FMX.StdCtrls,
+  FMX.TabControl,
+  FMX.Types,
   Ini.CustomIniFileHelper,
-  System.IniFiles;
+  Model.Config,
+  System.Actions,
+  System.Classes,
+  System.IniFiles,
+  System.UITypes,
+  Util.Methods, FMX.Edit, Data.Bind.EngExt, Fmx.Bind.DBEngExt, System.Rtti,
+  System.Bindings.Outputs, Fmx.Bind.Editors, Data.Bind.Components;
 
 type
   TMain = class(TForm)
@@ -31,6 +27,12 @@ type
     ActionList: TActionList;
     ActionSave: TAction;
     ActionCancel: TAction;
+    TabControlWizard: TTabControl;
+    TabItemServer: TTabItem;
+    EditServerName: TEdit;
+    LabelServerName: TLabel;
+    EditServerGUID: TEdit;
+    LabelServerGUID: TLabel;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -65,7 +67,7 @@ constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
   FModel := TConfig.Create;
-  FIniFile := TIniFile.Create(TMethods.GetIniPath);
+  FIniFile := TIniFile.Create(Util.Methods.TMethods.GetIniPath);
 end;
 
 destructor TMain.Destroy;
@@ -89,11 +91,19 @@ end;
 procedure TMain.ModelToView;
 begin
   FIniFile.ReadObject(FModel);
+
+  { Server }
+  EditServerName.Text := FModel.Server.Name;
+  EditServerGUID.Text := FModel.Server.GUID;
 end;
 
 procedure TMain.ViewToModel;
 begin
   FIniFile.WriteObject(FModel);
+
+  { Server }
+  FModel.Server.Name := EditServerName.Text;
+  FModel.Server.GUID := EditServerGUID.Text;
 end;
 
 end.

@@ -38,6 +38,65 @@ object Main: TMain
       TabOrder = 0
     end
   end
+  object TabControlWizard: TTabControl
+    Align = Client
+    Size.Width = 558.000000000000000000
+    Size.Height = 435.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 2
+    TabPosition = PlatformDefault
+    Sizes = (
+      558s
+      409s)
+    object TabItemServer: TTabItem
+      CustomIcon = <>
+      IsSelected = True
+      Size.Width = 64.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Servidor'
+      object EditServerName: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Position.X = 16.000000000000000000
+        Position.Y = 30.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object LabelServerName: TLabel
+        FocusControl = EditServerName
+        Position.X = 16.000000000000000000
+        Position.Y = 14.000000000000000000
+        Size.Width = 249.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Nome'
+        TabOrder = 0
+      end
+      object EditServerGUID: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 3
+        Position.X = 16.000000000000000000
+        Position.Y = 78.000000000000000000
+        Size.Width = 249.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object LabelServerGUID: TLabel
+        Position.X = 16.000000000000000000
+        Position.Y = 62.000000000000000000
+        Size.Width = 249.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'GUID'
+        TabOrder = 2
+      end
+    end
+  end
   object ActionList: TActionList
     Left = 384
     Top = 232
