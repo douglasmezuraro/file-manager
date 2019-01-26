@@ -101,7 +101,7 @@
         <DCCReference Include="src\helper\Helper.Value.pas"/>
         <DCCReference Include="src\ini\Ini.Attribute.pas"/>
         <DCCReference Include="src\ini\Ini.CustomIniFileHelper.pas"/>
-        <DCCReference Include="src\ini\Ini.Key.pas"/>
+        <DCCReference Include="src\ini\Ini.Ident.pas"/>
         <DCCReference Include="src\ini\Ini.Section.pas"/>
         <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
         <DCCReference Include="src\model\Model.Config.Application.pas"/>
@@ -648,13 +648,7 @@
                 <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
             </Deployment>
             <Platforms>
-                <Platform value="Android">False</Platform>
-                <Platform value="iOSDevice32">False</Platform>
-                <Platform value="iOSDevice64">False</Platform>
-                <Platform value="iOSSimulator">False</Platform>
-                <Platform value="OSX32">False</Platform>
                 <Platform value="Win32">True</Platform>
-                <Platform value="Win64">False</Platform>
             </Platforms>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>

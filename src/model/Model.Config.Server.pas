@@ -3,7 +3,7 @@ unit Model.Config.Server;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -21,34 +21,34 @@ type
     FIPServer: string;
     FIPAddress: string;
   public
-    [TKey('NOMESERVIDOR')]
+    [TIdent('NOMESERVIDOR')]
     property Name: string read FName write FName;
 
-    [TKey('GUIDSERVIDOR')]
+    [TIdent('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
 
-    [TKey('NOMECOMPUTADOR')]
+    [TIdent('NOMECOMPUTADOR')]
     property ComputerName: string read FComputerName write FComputerName;
 
-    [TKey('IPSERVIDOR')]
+    [TIdent('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
 
-    [TKey('ENDERECOIP')]
+    [TIdent('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
-    [TKey('TIPOCONEXAO')]
+    [TIdent('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
 
-    [TKey('PODEBALANCEAR')]
+    [TIdent('PODEBALANCEAR')]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
-    [TKey('NOMEEXECUTAVELSERVIDOR')]
+    [TIdent('NOMEEXECUTAVELSERVIDOR')]
     property ExeName: string read FExeName write FExeName;
 
-    [TKey('TIMEOUTEXECUCAO')]
+    [TIdent('TIMEOUTEXECUCAO')]
     property TimeOut: UInt16 read FTimeOut write FTimeOut;
 
-    [TKey('HABILITAGERENCIADORINTEGRACAO')]
+    [TIdent('HABILITAGERENCIADORINTEGRACAO')]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
   end;
 

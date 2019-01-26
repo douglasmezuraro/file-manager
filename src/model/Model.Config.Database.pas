@@ -3,7 +3,7 @@ unit Model.Config.Database;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -21,34 +21,34 @@ type
     FSchema: string;
     FServer: string;
   public
-    [TKey('ESQUEMA')]
+    [TIdent('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
 
-    [TKey('NUMEROMAXIMOCONEXOES')]
+    [TIdent('NUMEROMAXIMOCONEXOES')]
     property MaxConnections: UInt32 read FMaxConnections write FMaxConnections;
 
-    [TKey('NUMEROMINIMOCONEXOES')]
+    [TIdent('NUMEROMINIMOCONEXOES')]
     property MinConnections: UInt32 read FMinConnections write FMinConnections;
 
-    [TKey('TEMPODESCONEXAOCONEXAOINATIVA')]
+    [TIdent('TEMPODESCONEXAOCONEXAOINATIVA')]
     property DisconnectionTimeIdleConnection: UInt32 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
-    [TKey('TEMPOATUALIZACAOLOGCONEXOES')]
+    [TIdent('TEMPOATUALIZACAOLOGCONEXOES')]
     property ConnectionLogUpdateTime: UInt32 read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
-    [TKey('NUMEROLINHASFETCH')]
+    [TIdent('NUMEROLINHASFETCH')]
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
 
-    [TKey('TIPOACESSOBD')]
+    [TIdent('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [TKey('TIPOBANCO')]
+    [TIdent('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 
-    [TKey('ALIAS')]
+    [TIdent('ALIAS')]
     property Alias: string read FAlias write FAlias;
 
-    [TKey('SERVER')]
+    [TIdent('SERVER')]
     property Server: string read FServer write FServer;
   end;
 

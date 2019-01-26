@@ -5,7 +5,7 @@ interface
 uses
   Helper.Value,
   Ini.Attribute,
-  Ini.Key,
+  Ini.Ident,
   Ini.Section,
   System.IniFiles,
   System.Rtti,
@@ -39,9 +39,9 @@ begin
   Result := string.Empty;
   for Attribute in Prop.GetAttributes do
   begin
-    if Attribute is TKey then
+    if Attribute is TIdent then
     begin
-      Result := (Attribute as TKey).Name;
+      Result := (Attribute as TIdent).Name;
       Break;
     end;
   end;

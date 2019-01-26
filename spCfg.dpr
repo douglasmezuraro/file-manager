@@ -7,7 +7,7 @@ uses
   Helper.Value in 'src\helper\Helper.Value.pas',
   Ini.Attribute in 'src\ini\Ini.Attribute.pas',
   Ini.CustomIniFileHelper in 'src\ini\Ini.CustomIniFileHelper.pas',
-  Ini.Key in 'src\ini\Ini.Key.pas',
+  Ini.Ident in 'src\ini\Ini.Ident.pas',
   Ini.Section in 'src\ini\Ini.Section.pas',
   Model.Config.AlternativeBalancer in 'src\model\Model.Config.AlternativeBalancer.pas',
   Model.Config.Application in 'src\model\Model.Config.Application.pas',

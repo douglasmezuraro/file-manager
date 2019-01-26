@@ -3,7 +3,7 @@ unit Model.Config.Scanner;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -24,43 +24,43 @@ type
     FDocumentPerfil: UInt32;
     FScannerModel: UInt32;
   public
-    [TKey('GRAVARLOGPASTADIGITAL')]
+    [TIdent('GRAVARLOGPASTADIGITAL')]
     property RegisterLogDigitalFolder: UInt8 read FRegisterLogDigitalFolder write FRegisterLogDigitalFolder;
 
-    [TKey('TEMPOESPERAEMMILISEGUNDOS')]
+    [TIdent('TEMPOESPERAEMMILISEGUNDOS')]
     property WaitTimeMS: UInt32 read FWaitTimeMS write FWaitTimeMS;
 
-    [TKey('TEMPOESPERA')]
+    [TIdent('TEMPOESPERA')]
     property WaitTime: Uint32 read FWaitTime write FWaitTime;
 
-    [TKey('DUPLEX')]
+    [TIdent('DUPLEX')]
     property Duplex: Boolean read FDuplex write FDuplex;
 
-    [TKey('ACQUIREFRAME')]
+    [TIdent('ACQUIREFRAME')]
     property AcquireFrame: Boolean read FAcquireFrame write FAcquireFrame;
 
-    [TKey('DETECTARPAPELALIMENTADOR')]
+    [TIdent('DETECTARPAPELALIMENTADOR')]
     property DetectFeederPaper: Boolean read FDetectFeederPaper write FDetectFeederPaper;
 
-    [TKey('TAMPAGINA')]
+    [TIdent('TAMPAGINA')]
     property PageSize: Uint32 read FPageSize write FPageSize;
 
-    [TKey('RESOLUCAO')]
+    [TIdent('RESOLUCAO')]
     property Resolution: UInt32 read FResolution write FResolution;
 
-    [TKey('RESOLUCAOCORES')]
+    [TIdent('RESOLUCAOCORES')]
     property ColorResolution: UInt32 read FColorResolution write FColorResolution;
 
-    [TKey('MODELOSCANNER')]
+    [TIdent('MODELOSCANNER')]
     property ScannerModel: UInt32 read FScannerModel write FScannerModel;
 
-    [TKey('PERFILDOC')]
+    [TIdent('PERFILDOC')]
     property DocumentPerfil: UInt32 read FDocumentPerfil write FDocumentPerfil;
 
-    [TKey('LIMIARPRETOEBRANCO')]
+    [TIdent('LIMIARPRETOEBRANCO')]
     property BlackAndWhiteThreshold: UInt32 read FBlackAndWhiteThreshold write FBlackAndWhiteThreshold;
 
-    [TKey('PROCESSAPRETOEBRANCO')]
+    [TIdent('PROCESSAPRETOEBRANCO')]
     property BlackAndWhiteProcessing: Boolean read FBlackAndWhiteProcessing write FBlackAndWhiteProcessing;
   end;
 

@@ -3,7 +3,7 @@ unit Model.Config.Monitor;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -42,97 +42,97 @@ type
     FAutoRereadLog: Boolean;
     FLogTimer: UInt32;
   public
-    [TKey('TIMERLOG')]
+    [TIdent('TIMERLOG')]
     property LogTimer: UInt32 read FLogTimer write FLogTimer;
 
-    [TKey('TIMERUSUARIOS')]
+    [TIdent('TIMERUSUARIOS')]
     property UserTimer: UInt32 read FUserTimer write FUserTimer;
 
-    [TKey('RELEITURAAUTOMATICALOG')]
+    [TIdent('RELEITURAAUTOMATICALOG')]
     property AutoRereadLog: Boolean read FAutoRereadLog write FAutoRereadLog;
 
-    [TKey('AVALIATRAVAMENTOAUTOMATICO')]
+    [TIdent('AVALIATRAVAMENTOAUTOMATICO')]
     property AutoEvalueCrash: Boolean read FAutoEvalueCrash write FAutoEvalueCrash;
 
-    [TKey('POSICIONAULTIMOLOGAUTOMATICO')]
+    [TIdent('POSICIONAULTIMOLOGAUTOMATICO')]
     property AutoGotoLastLog: Boolean read FAutoGotoLastLog write FAutoGotoLastLog;
 
-    [TKey('ATUALIZACAOAUTOMATICAUSUARIOS')]
+    [TIdent('ATUALIZACAOAUTOMATICAUSUARIOS')]
     property AutoUpdateUsers: Boolean read FAutoUpdateUsers write FAutoUpdateUsers;
 
-    [TKey('CARREGARLOGMAISRECENTE')]
+    [TIdent('CARREGARLOGMAISRECENTE')]
     property LoadLatestLog: Boolean read FLoadLatestLog write FLoadLatestLog;
 
-    [TKey('DIRETORIOLOG')]
+    [TIdent('DIRETORIOLOG')]
     property LogPath: string read FLogPath write FLogPath;
 
-    [TKey('TIMERMETODOSPENDENTES')]
+    [TIdent('TIMERMETODOSPENDENTES')]
     property DependentMethodTimer: Integer read FDependentMethodTimer write FDependentMethodTimer;
 
-    [TKey('ATUALIZACAOAUTOMATICAMETODOSPENDENTES')]
+    [TIdent('ATUALIZACAOAUTOMATICAMETODOSPENDENTES')]
     property AutoUpdateDependentMethods: Boolean read FAutoUpdateDependentMethods write FAutoUpdateDependentMethods;
 
-    [TKey('TIMERSECOESCRITICAS')]
+    [TIdent('TIMERSECOESCRITICAS')]
     property CriticalSectionTimer: Integer read FCriticalSectionTimer write FCriticalSectionTimer;
 
-    [TKey('ATUALIZACAOAUTOMATICASECOESCRITICAS')]
+    [TIdent('ATUALIZACAOAUTOMATICASECOESCRITICAS')]
     property AutoUpdateCriticalSections: Boolean read FAutoUpdateCriticalSections write FAutoUpdateCriticalSections;
 
-    [TKey('TIMERPOOL')]
+    [TIdent('TIMERPOOL')]
     property PoolTimer: Integer read FPoolTimer write FPoolTimer;
 
-    [TKey('ATUALIZACAOAUTOMATICAPOOL')]
+    [TIdent('ATUALIZACAOAUTOMATICAPOOL')]
     property AutoUpdatePool: Boolean read FAutoUpdatePool write FAutoUpdatePool;
 
-    [TKey('JANELASEMPRENOTOPO')]
+    [TIdent('JANELASEMPRENOTOPO')]
     property WindowsAlwaysOnTop: Boolean read FWindowsAlwaysOnTop write FWindowsAlwaysOnTop;
 
-    [TKey('POSICIONAULTIMOLOG')]
+    [TIdent('POSICIONAULTIMOLOG')]
     property GotoLastLog: Boolean read FGotoLastLog write FGotoLastLog;
 
-    [TKey('IGNORARLOGEXTRA')]
+    [TIdent('IGNORARLOGEXTRA')]
     property IgnoreExtraLog: Boolean read FIgnoreExtraLog write FIgnoreExtraLog;
 
-    [TKey('CARREGARSOMENTELINHASLOGNIVELZERO')]
+    [TIdent('CARREGARSOMENTELINHASLOGNIVELZERO')]
     property LoadOnlyLevelZeroLogs: Boolean read FLoadOnlyLevelZeroLogs write FLoadOnlyLevelZeroLogs;
 
-    [TKey('UTILIZAREXPRESSOESREGULARESFILTROSQL')]
+    [TIdent('UTILIZAREXPRESSOESREGULARESFILTROSQL')]
     property UseRegExFilters: Boolean read FUseRegExFilters write FUseRegExFilters;
 
-    [TKey('TEMPOMINIMOPARAANALISEDESEMPENHO')]
+    [TIdent('TEMPOMINIMOPARAANALISEDESEMPENHO')]
     property MinTimeForPerformanceAnalysis: UInt32 read FMinTimeForPerformanceAnalysis write FMinTimeForPerformanceAnalysis;
 
-    [TKey('TEMPOMINIMOPARAUSUARIOINATIVO')]
+    [TIdent('TEMPOMINIMOPARAUSUARIOINATIVO')]
     property MinTimeForInactiveUser: UInt32 read FMinTimeForInactiveUser write FMinTimeForInactiveUser;
 
-    [TKey('UNIDADETEMPOMINIMOPARAUSUARIOINATIVO')]
+    [TIdent('UNIDADETEMPOMINIMOPARAUSUARIOINATIVO')]
     property MinTimeUnitForInactiveUser: string read FMinTimeUnitForInactiveUser write FMinTimeUnitForInactiveUser;
 
-    [TKey('TEMPOMINIMOPARAMETODOSPENDENTES')]
+    [TIdent('TEMPOMINIMOPARAMETODOSPENDENTES')]
     property MinTimeForDependentMethods: UInt32 read FMinTimeForDependentMethods write FMinTimeForDependentMethods;
 
-    [TKey('REGISTRARMEMORIASERVIDORAPLICACAOPOOL')]
+    [TIdent('REGISTRARMEMORIASERVIDORAPLICACAOPOOL')]
     property RegisterServerPoolAplicationMemory: Boolean read FRegisterServerPoolAplicationMemory write FRegisterServerPoolAplicationMemory;
 
-    [TKey('CORINICIALDESEMPENHO')]
+    [TIdent('CORINICIALDESEMPENHO')]
     property InitialPerformanceColor: UInt32 read FInitialPerformanceColor write FInitialPerformanceColor;
 
-    [TKey('CORFINALDESEMPENHO')]
+    [TIdent('CORFINALDESEMPENHO')]
     property FinalPerformanceColor: UInt32 read FFinalPerformanceColor write FFinalPerformanceColor;
 
-    [TKey('UTILIZARCORESERROTRAVADO')]
+    [TIdent('UTILIZARCORESERROTRAVADO')]
     property UseCrashErrorColor: Boolean read FUseCrashErrorColor write FUseCrashErrorColor;
 
-    [TKey('CORERRO')]
+    [TIdent('CORERRO')]
     property ErrorColor: UInt32 read FErrorColor write FErrorColor;
 
-    [TKey('CORTRANSACAOABERTA')]
+    [TIdent('CORTRANSACAOABERTA')]
     property OpenTransactionColor: UInt32 read FOpenTransactionColor write FOpenTransactionColor;
 
-    [TKey('INDENTARAUTOMATICAMENTESQLS')]
+    [TIdent('INDENTARAUTOMATICAMENTESQLS')]
     property AutoIndentSQL: Boolean read FAutoIndentSQL write FAutoIndentSQL;
 
-    [TKey('COLUNASVISIVEISLOGMETODOS')]
+    [TIdent('COLUNASVISIVEISLOGMETODOS')]
     property VisibleColumns: string read FVisibleColumns write FVisibleColumns;
   end;
 

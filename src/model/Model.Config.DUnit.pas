@@ -3,7 +3,7 @@ unit Model.Config.DUnit;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -18,25 +18,25 @@ type
     FPassword: string;
     FUser: string;
   public
-    [TKey('USUARIO')]
+    [TIdent('USUARIO')]
     property User: string read FUser write FUser;
 
-    [TKey('SENHA')]
+    [TIdent('SENHA')]
     property Password: string read FPassword write FPassword;
 
-    [TKey('BUILD')]
+    [TIdent('BUILD')]
     property BuildType: string read FBuildType write FBuildType;
 
-    [TKey('METODOTEST')]
+    [TIdent('METODOTEST')]
     property TestMethod: string read FTestMethod write FTestMethod;
 
-    [TKey('SUITE')]
+    [TIdent('SUITE')]
     property Suit: string read FSuit write FSuit;
 
-    [TKey('TEST_MANAGER_URL')]
+    [TIdent('TEST_MANAGER_URL')]
     property TestManagerURL: string read FTestManagerURL write FTestManagerURL;
 
-    [TKey('TEST_RECORD')]
+    [TIdent('TEST_RECORD')]
     property TestRecord: string read FTestRecord write FTestRecord;
   end;
 

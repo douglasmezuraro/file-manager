@@ -3,7 +3,7 @@ unit Model.Config.Client;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -14,13 +14,13 @@ type
     FDisableMenuBackground: Boolean;
     FTimeOut: UInt8;
   public
-    [TKey('LOGINAUTOMATICO')]
+    [TIdent('LOGINAUTOMATICO')]
     property AutoLogin: string read FAutoLogin write FAutoLogin;
 
-    [TKey('TIMEOUTEXECUCAO')]
+    [TIdent('TIMEOUTEXECUCAO')]
     property TimeOut: UInt8 read FTimeOut write FTimeOut;
 
-    [TKey('DESABILITAFUNDOMENU')]
+    [TIdent('DESABILITAFUNDOMENU')]
     property DisableMenuBackground: Boolean read FDisableMenuBackground write FDisableMenuBackground;
   end;
 

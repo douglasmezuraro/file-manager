@@ -3,7 +3,7 @@ unit Model.Config.Update;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -15,16 +15,16 @@ type
     FLocalUpdate: UInt32;
     FSystemCode: UInt32;
   public
-    [TKey('TIPOSERVIDOR')]
+    [TIdent('TIPOSERVIDOR')]
     property ServidorType: string read FServidorType write FServidorType;
 
-    [TKey('CDSISTEMA')]
+    [TIdent('CDSISTEMA')]
     property SystemCode: UInt32 read FSystemCode write FSystemCode;
 
-    [TKey('PODEATUALIZAR')]
+    [TIdent('PODEATUALIZAR')]
     property CanUpdate: Boolean read FCanUpdate write FCanUpdate;
 
-    [TKey('LOCALUPDATE')]
+    [TIdent('LOCALUPDATE')]
     property LocalUpdate: UInt32 read FLocalUpdate write FLocalUpdate;
   end;
 

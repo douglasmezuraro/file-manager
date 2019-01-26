@@ -3,7 +3,7 @@ unit Model.Config.Workflow;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -12,7 +12,7 @@ type
   private
     FCanChangeCurrentVersion: Boolean;
   public
-    [TKey('PODEALTERARVERSAOATUALFLUXO')]
+    [TIdent('PODEALTERARVERSAOATUALFLUXO')]
     property CanChangeCurrentVersion: Boolean read FCanChangeCurrentVersion write FCanChangeCurrentVersion;
   end;
 

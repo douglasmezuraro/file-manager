@@ -3,7 +3,7 @@ unit Model.Config.Log;
 interface
 
 uses
-  Ini.Key,
+  Ini.Ident,
   Ini.Section;
 
 type
@@ -14,13 +14,13 @@ type
     FRegisterSignatureLog: Boolean;
     FRegisterMethodLog: Boolean;
   public
-    [TKey('REGISTRALOGMETODO')]
+    [TIdent('REGISTRALOGMETODO')]
     property RegisterMethodLog: Boolean read FRegisterMethodLog write FRegisterMethodLog;
 
-    [TKey('REGISTRALOGSQL')]
+    [TIdent('REGISTRALOGSQL')]
     property RegisterSQLLog: Boolean read FRegisterSQLLog write FRegisterSQLLog;
 
-    [TKey('GRAVARLOGASSINATURA')]
+    [TIdent('GRAVARLOGASSINATURA')]
     property RegisterSignatureLog: Boolean read FRegisterSignatureLog write FRegisterSignatureLog;
   end;
 
