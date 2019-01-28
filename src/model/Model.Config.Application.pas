@@ -3,15 +3,15 @@ unit Model.Config.Application;
 interface
 
 uses
-  Ini.Ident,
-  Ini.Section;
+  Attribute.Caption,
+  Attribute.Ident;
 
 type
-  [TSection('APLICACAO')]
   TApplication = class
   private
     FName: string;
   public
+    [TCaption('Nome de aplicação para monitoramento')]
     [TIdent('NOMEAPLICACAOPARAMONITORAMENTO')]
     property Name: string read FName write FName;
   end;

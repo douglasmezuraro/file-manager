@@ -99,10 +99,10 @@
             <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="src\helper\Helper.Value.pas"/>
-        <DCCReference Include="src\ini\Ini.Attribute.pas"/>
-        <DCCReference Include="src\ini\Ini.CustomIniFileHelper.pas"/>
-        <DCCReference Include="src\ini\Ini.Ident.pas"/>
-        <DCCReference Include="src\ini\Ini.Section.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Ini.pas"/>
+        <DCCReference Include="src\helper\Helper.Ini.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Ident.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Section.pas"/>
         <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
         <DCCReference Include="src\model\Model.Config.Application.pas"/>
         <DCCReference Include="src\model\Model.Config.Balancer.pas"/>
@@ -115,12 +115,12 @@
         <DCCReference Include="src\model\Model.Config.Scanner.pas"/>
         <DCCReference Include="src\model\Model.Config.Server.pas"/>
         <DCCReference Include="src\model\Model.Config.SPP.pas"/>
-        <DCCReference Include="src\model\Model.Config.Types.pas"/>
         <DCCReference Include="src\model\Model.Config.Update.pas"/>
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
         <DCCReference Include="src\util\Util.Constants.pas"/>
         <DCCReference Include="src\util\Util.Methods.pas"/>
         <DCCReference Include="src\util\Util.Types.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Caption.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -172,7 +172,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win32\Debug\spCfg.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="bin\spCfg.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>spCfg.exe</RemoteName>
                         <Overwrite>true</Overwrite>

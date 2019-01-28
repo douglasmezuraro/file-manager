@@ -3,15 +3,15 @@ unit Model.Config.Workflow;
 interface
 
 uses
-  Ini.Ident,
-  Ini.Section;
+  Attribute.Caption,
+  Attribute.Ident;
 
 type
-  [TSection('FLUXOTRABALHO')]
   TWorkflow = class
   private
     FCanChangeCurrentVersion: Boolean;
   public
+    [TCaption('Pode alterar o fluxo?')]
     [TIdent('PODEALTERARVERSAOATUALFLUXO')]
     property CanChangeCurrentVersion: Boolean read FCanChangeCurrentVersion write FCanChangeCurrentVersion;
   end;

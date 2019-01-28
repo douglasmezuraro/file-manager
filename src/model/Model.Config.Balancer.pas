@@ -2,11 +2,7 @@ unit Model.Config.Balancer;
 
 interface
 
-uses
-  Ini.Section;
-
 type
-  [TSection('SPBALANCEADOR')]
   TBalancer = class
   private
     FGUID: TGUID;

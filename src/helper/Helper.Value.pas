@@ -42,6 +42,11 @@ type
     function IsWord: Boolean;
   end;
 
+  TRttiPropertyHelper = class Helper for TRttiProperty
+  public
+    function GetAtribute<T: class>: T;
+  end;
+
 implementation
 
 { TValueHelper }
@@ -199,6 +204,23 @@ end;
 function TValueHelper.IsWord: Boolean;
 begin
   Result := TypeInfo = System.TypeInfo(Word);
+end;
+
+{ TRttiPropertyHelper }
+
+function TRttiPropertyHelper.GetAtribute<T>: T;
+var
+  Attribute: TCustomAttribute;
+begin
+  Result := nil;
+  for Attribute in Self.GetAttributes do
+  begin
+    if Attribute is T then
+    begin
+      Result := Attribute as T;
+      Break;
+    end;
+  end;
 end;
 
 end.

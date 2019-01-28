@@ -5,8 +5,9 @@ interface
 type
   TConnectionType = (ctUndefined, ctSocket);
   TAccessType = (atUndefined, atSQLD, atFireDAC);
-  TDatabaseType = (dtUndefined, dtOracle, dtSQLServer, dtDB2);
-  TAutoLogin = (alUser, alPassword);
+  TDataBaseType = (dbtUndefined, dbtOracle, dbtSQLServer, dbtDB2);
+  TServidorType = (stUndefined, stLocal);
+  TBuildType = (btUndefined, btDelphi);
 
 implementation
 

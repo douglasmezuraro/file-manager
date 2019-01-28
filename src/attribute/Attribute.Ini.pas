@@ -1,4 +1,4 @@
-unit Ini.Attribute;
+unit Attribute.Ini;
 
 interface
 
@@ -7,7 +7,7 @@ type
   private
     FName: string;
   public
-    constructor Create(const Name: string);
+    constructor Create(const Name: string); overload;
     property Name: string read FName;
   end;
 

@@ -1,9 +1,9 @@
-unit Ini.Ident;
+unit Attribute.Ident;
 
 interface
 
 uses
-  Ini.Attribute;
+  Attribute.Ini;
 
 type
   TIdent = class(TIniAttribute);

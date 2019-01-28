@@ -1,12 +1,12 @@
-unit Ini.CustomIniFileHelper;
+unit Helper.Ini;
 
 interface
 
 uses
   Helper.Value,
-  Ini.Attribute,
-  Ini.Ident,
-  Ini.Section,
+  Attribute.Ident,
+  Attribute.Ini,
+  Attribute.Section,
   System.IniFiles,
   System.Rtti,
   System.SysUtils,
@@ -15,14 +15,14 @@ uses
   Util.Methods;
 
 type
-  TCustomIniFileHelper = class Helper for TCustomIniFile
+  TIniFileHelper = class Helper for TIniFile
   private type
     TExecuteMode = (emRead, emWrite);
   private
-    procedure Execute(Obj: TObject; const Mode: TExecuteMode); overload;
+    procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: string); overload;
     procedure Execute(var Value: TValue; const Section, Key: string; const Mode: TExecuteMode); overload;
-    function GetSection(const Obj: TObject): string;
-    function GetKey(const Prop: TRttiProperty): string;
+    function GetSection(const Prop: TRttiProperty): string;
+    function GetIdent(const Prop: TRttiProperty): string;
   public
     procedure ReadObject(Obj: TObject);
     procedure WriteObject(Obj: TObject);
@@ -30,50 +30,35 @@ type
 
 implementation
 
-{ TCustomIniFileHelper }
+{ TIniFileHelper }
 
-function TCustomIniFileHelper.GetKey(const Prop: TRttiProperty): string;
+function TIniFileHelper.GetIdent(const Prop: TRttiProperty): string;
 var
-  Attribute: TCustomAttribute;
+  Ident: TIdent;
 begin
   Result := string.Empty;
-  for Attribute in Prop.GetAttributes do
-  begin
-    if Attribute is TIdent then
-    begin
-      Result := (Attribute as TIdent).Name;
-      Break;
-    end;
-  end;
+  Ident := Prop.GetAtribute<TIdent>;
+  if Assigned(Ident) then
+    Result := Ident.Name;
 end;
 
-function TCustomIniFileHelper.GetSection(const Obj: TObject): string;
+function TIniFileHelper.GetSection(const Prop: TRttiProperty): string;
 var
-  Context: TRttiContext;
-  Attribute: TCustomAttribute;
+  Section: TSection;
 begin
   Result := string.Empty;
-  Context := TRttiContext.Create;
-  try
-    for Attribute in Context.GetType(Obj.ClassType).GetAttributes do
-    begin
-      if Attribute is TSection then
-      begin
-        Result := (Attribute as TSection).Name;
-        Break;
-      end;
-    end;
-  finally
-    Context.Free;
-  end;
+  Section := Prop.GetAtribute<TSection>;
+  if Assigned(Section) then
+    Result := Section.Name;
 end;
 
-procedure TCustomIniFileHelper.Execute(Obj: TObject; const Mode: TExecuteMode);
+procedure TIniFileHelper.Execute(Obj: TObject; const Mode: TExecuteMode;
+  Section: string);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
   Value: TValue;
-  Section, Key: string;
+  Ident: string;
 begin
   if not Assigned(Obj) then
     Exit;
@@ -88,17 +73,17 @@ begin
       Value := Prop.GetValue(Obj);
       if Value.IsObject then
       begin
-        Execute(Value.AsObject, Mode);
+        Section := GetSection(Prop);
+        Execute(Value.AsObject, Mode, Section);
         Continue;
       end;
 
-      Section := GetSection(Obj);
-      Key := GetKey(Prop);
+      Ident := GetIdent(Prop);
 
-      if Section.IsEmpty or Key.IsEmpty then
+      if Section.IsEmpty or Ident.IsEmpty then
         Continue;
 
-      Execute(Value, Section, Key, Mode);
+      Execute(Value, Section, Ident, Mode);
       if Mode = emRead then
         Prop.SetValue(Obj, Value);
     end;
@@ -107,7 +92,7 @@ begin
   end;
 end;
 
-procedure TCustomIniFileHelper.Execute(var Value: TValue; const Section,
+procedure TIniFileHelper.Execute(var Value: TValue; const Section,
   Key: string; const Mode: TExecuteMode);
 begin
   case Mode of
@@ -148,14 +133,14 @@ begin
   end;
 end;
 
-procedure TCustomIniFileHelper.ReadObject(Obj: TObject);
+procedure TIniFileHelper.ReadObject(Obj: TObject);
 begin
-  Execute(Obj, emRead);
+  Execute(Obj, emRead, '');
 end;
 
-procedure TCustomIniFileHelper.WriteObject(Obj: TObject);
+procedure TIniFileHelper.WriteObject(Obj: TObject);
 begin
-  Execute(Obj, emWrite);
+  Execute(Obj, emWrite, '');
 end;
 
 end.

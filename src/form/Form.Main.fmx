@@ -46,23 +46,6 @@ object Main: TMain
     TabIndex = 0
     TabOrder = 2
     TabPosition = PlatformDefault
-    Sizes = (
-      558s
-      409s)
-    object TabItemServer: TTabItem
-      CustomIcon = <
-        item
-        end>
-      IsSelected = True
-      Size.Width = 64.000000000000000000
-      Size.Height = 26.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = ''
-      TabOrder = 0
-      Text = 'Servidor'
-      ExplicitSize.cx = 64.000000000000000000
-      ExplicitSize.cy = 26.000000000000000000
-    end
   end
   object ActionList: TActionList
     Left = 384

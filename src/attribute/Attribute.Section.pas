@@ -1,9 +1,9 @@
-unit Ini.Section;
+unit Attribute.Section;
 
 interface
 
 uses
-  Ini.Attribute;
+  Attribute.Ini;
 
 type
   TSection = class(TIniAttribute);

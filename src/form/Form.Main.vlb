@@ -1,9 +1,6 @@
 ﻿[ActionList]
 Coordinates=13,77,64,33
 
-[TabItemServer]
-Coordinates=101,71,85,33
-
 [ActionCancel]
 Coordinates=267,133,80,33
 
@@ -30,5 +27,5 @@ Coordinates=224,10,71,51
 Coordinates=113,10,101,51
 
 []
-Coordinates=162,167,82,33
+Coordinates=101,71,85,33
 

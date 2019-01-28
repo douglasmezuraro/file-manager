@@ -2,11 +2,7 @@ unit Model.Config.AlternativeBalancer;
 
 interface
 
-uses
-  Ini.Section;
-
 type
-  [TSection('BALANCEADORALTERNATIVO')]
   TAlternativeBalancer = class
   private
     FKey: string;

@@ -20,9 +20,9 @@ const
   FlagFalse = 'N';
 
 { Enum-mapping }
-  ConnectionTypeMap: array[TConnectionType] of string = (string.Empty, 'Socket');
-  AccessTypeMap: array[TAccessType] of string = (string.Empty, 'sqld', 'FireDAC');
-  DatabaseTypeMap: array[TDatabaseType] of string = (string.Empty, 'Oracle', 'SQLServer', 'DB2');
+  ConnectionTypeMap: TArray<string> = [string.Empty, 'Socket'];
+  AccessTypeMap: TArray<string> = [string.Empty, 'sqld', 'FireDAC'];
+  const DatabaseTypeMap: array[TDataBaseType] of string = (string.Empty, 'Oracle', 'SQLServer', 'DB2');
 
 implementation
 

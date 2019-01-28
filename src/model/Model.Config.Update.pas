@@ -3,11 +3,10 @@ unit Model.Config.Update;
 interface
 
 uses
-  Ini.Ident,
-  Ini.Section;
+  Attribute.Caption,
+  Attribute.Ident;
 
 type
-  [TSection('SPUPDATE')]
   TUpdate = class
   private
     FCanUpdate: Boolean;
@@ -15,15 +14,19 @@ type
     FLocalUpdate: UInt32;
     FSystemCode: UInt32;
   public
+    [TCaption('Tipo')]
     [TIdent('TIPOSERVIDOR')]
     property ServidorType: string read FServidorType write FServidorType;
 
+    [TCaption('Código do sistema')]
     [TIdent('CDSISTEMA')]
     property SystemCode: UInt32 read FSystemCode write FSystemCode;
 
+    [TCaption('Pode atualizar?')]
     [TIdent('PODEATUALIZAR')]
     property CanUpdate: Boolean read FCanUpdate write FCanUpdate;
 
+    [TCaption('Update local')]
     [TIdent('LOCALUPDATE')]
     property LocalUpdate: UInt32 read FLocalUpdate write FLocalUpdate;
   end;

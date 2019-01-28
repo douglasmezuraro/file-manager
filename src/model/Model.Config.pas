@@ -15,7 +15,10 @@ uses
   Model.Config.Server,
   Model.Config.SPP,
   Model.Config.Update,
-  Model.Config.Workflow;
+  Model.Config.Workflow,
+
+  Attribute.Section,
+  Attribute.Caption;
 
 type
   TConfig = class
@@ -36,18 +39,57 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
+    [TCaption('Balanceador alternativo')]
+    [TSection('BALANCEADORALTERNATIVO')]
     property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
+
+    [TCaption('Aplicação')]
+    [TSection('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
+
+    [TCaption('Balanceador')]
+    [TSection('SPBALANCEADOR')]
     property Balancer: TBalancer read FBalancer write FBalancer;
+
+    [TCaption('Cliente')]
+    [TSection('CLIENTE')]
     property Client: TClient read FClient write FClient;
+
+    [TCaption('Database')]
+    [TSection('DATABASE')]
     property Database: TDatabase read FDatabase write FDatabase;
+
+    [TCaption('DUnit')]
+    [TSection('DUNIT')]
     property DUnit: TDUnit read FDUnit write FDUnit;
+
+    [TCaption('LOG')]
+    [TSection('LOG')]
     property Log: TLog read FLog write FLog;
+
+    [TCaption('Monitor')]
+    [TSection('SPMONITOR')]
     property Monitor: TMonitor read FMonitor write FMonitor;
+
+    [TCaption('Scanner')]
+    [TSection('SCANNER')]
     property Scanner: TScanner read FScanner write FScanner;
+
+    [TCaption('Servidor')]
+    [TSection('SERVIDOR')]
     property Server: TServer read FServer write FServer;
+
+    [TCaption('SPP')]
+    [TSection('CLIENTESPP')]
     property SPP: TSPP read FSPP write FSPP;
+
+    [TCaption('Update')]
+    [TSection('SPUPDATE')]
     property Update: TUpdate read FUpdate write FUpdate;
+
+    [TCaption('Fluxo de trabalho')]
+    [TSection('FLUXOTRABALHO')]
     property Workflow: TWorkflow read FWorkflow write FWorkflow;
   end;
 
