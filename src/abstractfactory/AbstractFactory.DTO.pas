@@ -3,6 +3,8 @@ unit AbstractFactory.DTO;
 interface
 
 uses
+  Attribute.Ident,
+  Attribute.Caption,
   FMX.Types,
   System.Classes,
   System.Rtti;
@@ -12,19 +14,19 @@ type
   private
     FParent: TFmxObject;
     FOwner: TComponent;
-    FText: string;
-    FValues: TArray<string>;
     FX: Single;
     FY: Single;
     FValue: TValue;
+    FCaption: TCaption;
+    FIdent: TIdent;
   public
     property Owner: TComponent read FOwner write FOwner;
     property Parent: TFmxObject read FParent write FParent;
     property X: Single read FX write FX;
     property Y: Single read FY write FY;
-    property Text: string read FText write FText;
     property Value: TValue read FValue write FValue;
-    property Values: TArray<string> read FValues write FValues;
+    property Ident: TIdent read FIdent write FIdent;
+    property Caption: TCaption read FCaption write FCaption;
   end;
 
 implementation

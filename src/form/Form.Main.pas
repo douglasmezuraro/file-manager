@@ -88,6 +88,7 @@ var
   Context: TRttiContext;
   Prop: TRttiProperty;
   Value: TValue;
+  Ident: TIdent;
   Caption: TCaption;
   Factory: IAbstractFactory;
   DTO: TDTO;
@@ -115,19 +116,20 @@ begin
       end;
 
       Caption := Prop.GetAtribute<TCaption>();
+      Ident := Prop.GetAtribute<TIdent>();
 
-      if not Assigned(Caption) then
+      if not Assigned(Caption) or not Assigned(Ident) then
         Continue;
 
-      DTO.Owner    := Self;
-      DTO.Parent   := Tab;
-      DTO.Value    := Value;
-      DTO.Text     := Caption.Text;
-      DTO.Values   := Caption.Values;
+      DTO.Owner   := Self;
+      DTO.Parent  := Tab;
+      DTO.Value   := Value;
+      DTO.Caption := Caption;
+      DTO.Ident   := Ident;
 
       if Value.IsBoolean then
         Factory := TCheckBoxFactory.Create
-      else if Length(DTO.Values) > 0 then
+      else if Length(DTO.Caption.Values) > 0 then
         Factory := TComboBoxFactory.Create
       else
         Factory := TEditFactory.Create;

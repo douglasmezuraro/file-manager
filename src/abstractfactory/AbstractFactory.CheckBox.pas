@@ -30,8 +30,9 @@ begin
   CheckBox.Parent     := DTO.Parent;
   CheckBox.Position.X := DTO.X;
   CheckBox.Position.Y := DTO.Y;
-  CheckBox.IsChecked  := DTO.Value.AsBoolean;
-  CheckBox.Text       := DTO.Text;
+  CheckBox.Data       := DTO.Value;
+  CheckBox.Text       := DTO.Caption.Text;
+  CheckBox.TagString  := DTO.Ident.Name;
   CheckBox.Width      := CheckBox.Canvas.TextWidth(CheckBox.Text) + 25;
   
   DTO.Y := DTO.Y + CheckBox.Height + 10;

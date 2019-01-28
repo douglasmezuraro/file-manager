@@ -32,7 +32,7 @@ var
 begin
   Caption            := TLabel.Create(DTO.Owner);
   Caption.Parent     := DTO.Parent;
-  Caption.Text       := DTO.Text;
+  Caption.Text       := DTO.Caption.Text;
   Caption.Position.X := DTO.X;
   Caption.Position.Y := DTO.Y;
 
@@ -43,8 +43,9 @@ begin
   Edit.Parent     := DTO.Parent;
   Edit.Position.X := DTO.X;
   Edit.Position.Y := DTO.Y;
-  Edit.Text       := DTO.Value.TryAsString;
-  Edit.Width      := Edit.Canvas.TextWidth(Edit.Text) + 25;
+  Edit.Data       := DTO.Value;
+  Edit.TagString  := DTO.Ident.Name;
+  Edit.Width      := 400;
 
   DTO.Y := DTO.Y + Edit.Height + 10;
 

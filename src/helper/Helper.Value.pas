@@ -21,8 +21,6 @@ type
     function AsTime: TTime;
     function AsWord: Word;
 
-    function TryAsString: string;
-
     function IsBoolean: Boolean;
     function IsByte: Boolean;
     function IsCardinal: Boolean;
@@ -97,14 +95,6 @@ end;
 function TValueHelper.AsSmallInt: SmallInt;
 begin
   Result := AsType<SmallInt>;
-end;
-
-function TValueHelper.TryAsString: string;
-begin
-  if IsNumeric then
-    Result := AsExtended.ToString
-  else
-    Result := AsString;
 end;
 
 function TValueHelper.AsTime: TTime;
