@@ -18,9 +18,17 @@ uses
   System.UITypes,
   Attribute.Caption,
   FMX.Graphics,
+  Helper.FMX,
+  System.Types,
+  AbstractFactory.CheckBox,
+  AbstractFactory.ComboBox,
+  AbstractFactory.Edit,
+  AbstractFactory.DTO,
+  AbstractFactory.API,
   Util.Methods, FMX.Edit, Data.Bind.EngExt, Fmx.Bind.DBEngExt, System.Rtti,
   Attribute.Section, Attribute.Ident, System.SysUtils,
-  System.Bindings.Outputs, Fmx.Bind.Editors, Data.Bind.Components, Helper.Value;
+  System.Bindings.Outputs, Fmx.Bind.Editors, Data.Bind.Components, Helper.Value,
+  FMX.ListBox;
 
 type
   TMain = class(TForm)
@@ -37,7 +45,6 @@ type
   private
     FModel: TConfig;
     FIniFile: TIniFile;
-    procedure FillComboBoxes;
     procedure ViewToModel;
     procedure ModelToView;
     procedure Foo(Obj: TObject; Tab: TTabItem);
@@ -76,11 +83,6 @@ begin
   inherited;
 end;
 
-procedure TMain.FillComboBoxes;
-begin
-  Exit;
-end;
-
 procedure TMain.Foo(Obj: TObject; Tab: TTabItem);
 var
   Context: TRttiContext;
@@ -88,53 +90,11 @@ var
   Value: TValue;
   X, Y: Single;
   Caption: TCaption;
-
-  procedure AddCheckBox;
-  var
-    CheckBox: TCheckBox;
-  begin
-    CheckBox := TCheckBox.Create(Self);
-    CheckBox.Parent := Tab;
-    CheckBox.IsChecked := Value.AsBoolean;
-    CheckBox.Position.X := X;
-    CheckBox.Position.Y := Y;
-    Caption := Prop.GetAtribute<TCaption>;
-    if Assigned(Caption) then
-        CheckBox.Text := (Caption as TCaption).Text;
-    CheckBox.Width := CheckBox.Canvas.TextWidth(CheckBox.Text) + 25;
-    Y := Y + CheckBox.Height + 10;
-  end;
-  
-  procedure AddEdit;
-  var
-    Edit: TEdit;
-    Lab: TLabel;
-  begin
-    Lab := TLabel.Create(Self);
-    Lab.Parent := Tab;
-    Caption := Prop.GetAtribute<TCaption>;
-    if Assigned(Caption) then
-        Lab.Text := Caption.Text;
-    Lab.Position.X := X;
-    Lab.Position.Y := Y;
-    
-    Y := Y + Lab.Height + 5;
-    Edit := TEdit.Create(Self);
-    Edit.Parent := Tab;
-    if Value.IsString then
-      Edit.Text := Value.AsString
-    else
-      Edit.Text := Value.AsInteger.ToString;
-    Edit.Position.X := X;
-    Edit.Position.Y := Y;
-    Edit.Width := 400;
-    Lab.FocusControl := Edit;
-    Lab.Width := Edit.Width;
-    Y := Y + Edit.Height + 10;
-  end;
-
+  Factory: IAbstractFactory;
+  DTO: TDTO;
 begin
-  X := 10; Y := 10;
+  X := 10;
+  Y := 10;
   Context := TRttiContext.Create;
   try
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
@@ -155,10 +115,27 @@ begin
         Continue;
       end;
 
+      Caption := Prop.GetAtribute<TCaption>();
+
+      if not Assigned(Caption) then
+        Continue;
+
+      DTO.Owner    := Self;
+      DTO.Parent   := Tab;
+      DTO.Value    := Value;
+      DTO.X        := X;
+      DTO.Y        := Y;
+      DTO.Text     := Caption.Text;
+      DTO.Values   := Caption.Values;
+
       if Value.IsBoolean then
-        AddCheckBox
-      else if Value.IsString or Value.IsNumeric then
-        AddEdit;
+        Factory := TCheckBoxFactory.Create
+      else if Length(DTO.Values) > 0 then
+        Factory := TComboBoxFactory.Create
+      else
+        Factory := TEditFactory.Create;
+
+      Factory.New(DTO);
     end;
   finally
     Context.Free;
@@ -167,7 +144,6 @@ end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
-  FillComboBoxes;
   ModelToView;
   Foo(FModel, nil);
 end;

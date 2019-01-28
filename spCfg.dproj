@@ -119,8 +119,13 @@
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
         <DCCReference Include="src\util\Util.Constants.pas"/>
         <DCCReference Include="src\util\Util.Methods.pas"/>
-        <DCCReference Include="src\util\Util.Types.pas"/>
         <DCCReference Include="src\attribute\Attribute.Caption.pas"/>
+        <DCCReference Include="src\helper\Helper.FMX.pas"/>
+        <DCCReference Include="src\abstractfactory\AbstractFactory.API.pas"/>
+        <DCCReference Include="src\abstractfactory\AbstractFactory.CheckBox.pas"/>
+        <DCCReference Include="src\abstractfactory\AbstractFactory.DTO.pas"/>
+        <DCCReference Include="src\abstractfactory\AbstractFactory.ComboBox.pas"/>
+        <DCCReference Include="src\abstractfactory\AbstractFactory.Edit.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
