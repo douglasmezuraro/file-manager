@@ -18,21 +18,21 @@ uses
 type
   TEditFactory = class(TInterfacedObject, IAbstractFactory)
   public
-    function New(DTO: TDTO): TControl;
+    function New(var DTO: TDTO): TControl;
   end;
 
 implementation
 
 { TEditFactory }
 
-function TEditFactory.New(DTO: TDTO): TControl;
+function TEditFactory.New(var DTO: TDTO): TControl;
 var
   Caption: TLabel;
   Edit: TEdit;
 begin
   Caption            := TLabel.Create(DTO.Owner);
   Caption.Parent     := DTO.Parent;
-  Caption.Text       := Caption.Text;
+  Caption.Text       := DTO.Text;
   Caption.Position.X := DTO.X;
   Caption.Position.Y := DTO.Y;
 
@@ -52,3 +52,4 @@ begin
 end;
 
 end.
+

@@ -6,6 +6,7 @@ uses
   AbstractFactory.API,
   AbstractFactory.DTO,
   FMX.Controls,
+  FMX.Graphics,
   FMX.StdCtrls,
   FMX.Types,
   Helper.Value,
@@ -14,14 +15,14 @@ uses
 type
   TCheckBoxFactory = class(TInterfacedObject, IAbstractFactory)
   public
-    function New(DTO: TDTO): TControl;
+    function New(var DTO: TDTO): TControl;
   end;
 
 implementation
 
 { TCheckBoxFactory }
 
-function TCheckBoxFactory.New(DTO: TDTO): TControl;
+function TCheckBoxFactory.New(var DTO: TDTO): TControl;
 var
   CheckBox: TCheckBox;
 begin
@@ -33,9 +34,10 @@ begin
   CheckBox.Text       := DTO.Text;
   CheckBox.Width      := CheckBox.Canvas.TextWidth(CheckBox.Text) + 25;
   
-  DTO.Y := DTO.Y + 10;
+  DTO.Y := DTO.Y + CheckBox.Height + 10;
   
   Result := CheckBox;
 end;
 
 end.
+

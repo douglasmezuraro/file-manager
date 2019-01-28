@@ -6,6 +6,7 @@ uses
   AbstractFactory.API,
   AbstractFactory.DTO,
   FMX.Controls,
+  FMX.Graphics,
   FMX.ListBox,
   FMX.StdCtrls,
   FMX.Types,
@@ -17,21 +18,21 @@ uses
 type
   TComboBoxFactory = class(TInterfacedObject, IAbstractFactory)
   public
-    function New(DTO: TDTO): TControl;
+    function New(var DTO: TDTO): TControl;
   end;
 
 implementation
 
 { TComboBoxFactory }
 
-function TComboBoxFactory.New(DTO: TDTO): TControl;
+function TComboBoxFactory.New(var DTO: TDTO): TControl;
 var
   Caption: TLabel;
   ComboBox: TComboBox;
 begin
   Caption            := TLabel.Create(DTO.Owner);
   Caption.Parent     := DTO.Parent;
-  Caption.Text       := Caption.Text;
+  Caption.Text       := DTO.Text;
   Caption.Position.X := DTO.X;
   Caption.Position.Y := DTO.Y;
 
@@ -52,3 +53,4 @@ begin
 end;
 
 end.
+

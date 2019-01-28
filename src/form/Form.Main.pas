@@ -88,13 +88,12 @@ var
   Context: TRttiContext;
   Prop: TRttiProperty;
   Value: TValue;
-  X, Y: Single;
   Caption: TCaption;
   Factory: IAbstractFactory;
   DTO: TDTO;
 begin
-  X := 10;
-  Y := 10;
+  DTO.X := 10;
+  DTO.Y := 10;
   Context := TRttiContext.Create;
   try
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
@@ -123,8 +122,6 @@ begin
       DTO.Owner    := Self;
       DTO.Parent   := Tab;
       DTO.Value    := Value;
-      DTO.X        := X;
-      DTO.Y        := Y;
       DTO.Text     := Caption.Text;
       DTO.Values   := Caption.Values;
 
