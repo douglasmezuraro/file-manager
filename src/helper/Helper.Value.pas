@@ -199,6 +199,8 @@ begin
     Self := Value.ForceAsType<Word>();
     Exit;
   end;
+
+  raise Exception.Create('Unknown type.');
 end;
 
 function TValueHelper.AsSingle: Single;

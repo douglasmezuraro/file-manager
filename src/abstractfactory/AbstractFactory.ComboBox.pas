@@ -11,9 +11,7 @@ uses
   FMX.StdCtrls,
   FMX.Types,
   Helper.FMX,
-  Helper.Value,
-  System.Rtti,
-  System.Types;
+  System.Rtti;
 
 type
   TComboBoxFactory = class(TInterfacedObject, IAbstractFactory)

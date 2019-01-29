@@ -3,8 +3,8 @@ unit AbstractFactory.DTO;
 interface
 
 uses
-  Attribute.Ident,
   Attribute.Caption,
+  Attribute.Ident,
   FMX.Types,
   System.Classes,
   System.Rtti;

@@ -8,9 +8,8 @@ uses
   FMX.Controls,
   FMX.Graphics,
   FMX.StdCtrls,
-  FMX.Types,
   FMX.TabControl,
-  Helper.Value,
+  FMX.Types,
   System.Rtti;
 
 type

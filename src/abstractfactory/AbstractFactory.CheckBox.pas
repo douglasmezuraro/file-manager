@@ -9,7 +9,6 @@ uses
   FMX.Graphics,
   FMX.StdCtrls,
   FMX.Types,
-  Helper.Value,
   System.Rtti;
 
 type

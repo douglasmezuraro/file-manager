@@ -3,6 +3,14 @@ unit Form.Main;
 interface
 
 uses
+  AbstractFactory.API,
+  AbstractFactory.CheckBox,
+  AbstractFactory.ComboBox,
+  AbstractFactory.DTO,
+  AbstractFactory.Edit,
+  AbstractFactory.TabItem,
+  Attribute.Caption,
+  Attribute.Ident,
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
@@ -11,26 +19,14 @@ uses
   FMX.TabControl,
   FMX.Types,
   Helper.Ini,
+  Helper.Value,
   Model.Config,
   System.Actions,
   System.Classes,
   System.IniFiles,
+  System.Rtti,
   System.UITypes,
-  Attribute.Caption,
-  FMX.Graphics,
-  Helper.FMX,
-  System.Variants,
-  System.Types,
-  AbstractFactory.TabItem,
-  AbstractFactory.CheckBox,
-  AbstractFactory.ComboBox,
-  AbstractFactory.Edit,
-  AbstractFactory.DTO,
-  AbstractFactory.API,
-  Util.Methods, FMX.Edit, Data.Bind.EngExt, Fmx.Bind.DBEngExt, System.Rtti,
-  Attribute.Section, Attribute.Ident, System.SysUtils,
-  System.Bindings.Outputs, Fmx.Bind.Editors, Data.Bind.Components, Helper.Value,
-  FMX.ListBox;
+  Util.Methods;
 
 type
   TMain = class(TForm)
@@ -47,10 +43,19 @@ type
   private
     FModel: TConfig;
     FIniFile: TIniFile;
-    procedure ViewToModel;
-    procedure ModelToView;
-    procedure Foo(Obj: TObject; Parent: TControl);
-    procedure Doo(Obj: TObject);
+    
+    { ViewToModel }
+    procedure ViewToModel; overload;
+    procedure ViewToModel(Obj: TObject); overload;
+
+    { ModelToView }
+    procedure ModelToView; overload;
+    procedure ModelToView(Obj: TObject; Parent: TControl); overload;
+
+    { Read/Write }
+    procedure ReadObject;
+    procedure WriteObject;
+    { Utils }
     function GetValue(const Tag: string): TValue;
   public
     constructor Create(AOwner: TComponent); override;
@@ -70,6 +75,7 @@ end;
 procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
   ViewToModel;
+  WriteObject;
   ModalResult := mrOk;
   Close;
 end;
@@ -88,7 +94,7 @@ begin
   inherited;
 end;
 
-procedure TMain.Doo(Obj: TObject);
+procedure TMain.ViewToModel(Obj: TObject);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
@@ -102,7 +108,7 @@ begin
       Value := Prop.GetValue(Obj);
       if Value.IsObject then
       begin
-        Doo(Value.AsObject);
+        ViewToModel(Value.AsObject);
         Continue;
       end;
 
@@ -115,7 +121,12 @@ begin
   end;
 end;
 
-procedure TMain.Foo(Obj: TObject; Parent: TControl);
+procedure TMain.WriteObject;
+begin
+  FIniFile.WriteObject(FModel);
+end;
+
+procedure TMain.ModelToView(Obj: TObject; Parent: TControl);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
@@ -148,15 +159,21 @@ begin
       if not DTO.Value.IsObject then
         Continue;
 
-      Foo(DTO.Value.AsObject, Control);
+      ModelToView(DTO.Value.AsObject, Control);
     end;
   finally
     Context.Free;
   end;
 end;
 
+procedure TMain.ReadObject;
+begin
+  FIniFile.ReadObject(FModel);
+end;
+
 procedure TMain.FormShow(Sender: TObject);
 begin
+  ReadObject;
   ModelToView;
 end;
 
@@ -182,17 +199,12 @@ end;
 
 procedure TMain.ModelToView;
 begin
-  FIniFile.ReadObject(FModel);
-  Foo(FModel, TabControlWizard);
+  ModelToView(FModel, TabControlWizard);
 end;
 
 procedure TMain.ViewToModel;
 begin
-  try
-    Doo(FModel);
-  finally
-    FIniFile.WriteObject(FModel);
-  end;
+  ViewToModel(FModel);
 end;
 
 end.

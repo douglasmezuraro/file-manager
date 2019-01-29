@@ -4,8 +4,7 @@ interface
 
 uses
   System.SysUtils,
-  Util.Constants,
-  System.RegularExpressions;
+  Util.Constants;
 
 type
   TMethods = class
@@ -26,19 +25,19 @@ begin
   Result := Map[Value];
 end;
 
+class function TMethods.StrToBool(const Value: string): Boolean;
+begin
+  Result := False;
+  if SameText(Value, FlagTrue) then
+    Result := True;
+end;
+
 class function TMethods.GetIniPath: string;
 var
   Path: string;
 begin
   Path := IncludeTrailingPathDelimiter(GetCurrentDir);
   Result := Path + IniFileName;
-end;
-
-class function TMethods.StrToBool(const Value: string): Boolean;
-begin
-  Result := False;
-  if SameText(Value, FlagTrue) then
-    Result := True;
 end;
 
 end.

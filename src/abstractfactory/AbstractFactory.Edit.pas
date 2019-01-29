@@ -10,10 +10,7 @@ uses
   FMX.Graphics,
   FMX.StdCtrls,
   FMX.Types,
-  Helper.FMX,
-  Helper.Value,
-  System.Rtti,
-  System.Types;
+  System.Rtti;
 
 type
   TEditFactory = class(TInterfacedObject, IAbstractFactory)
