@@ -35,6 +35,7 @@ begin
   Caption.Text       := DTO.Caption.Text;
   Caption.Position.X := DTO.X;
   Caption.Position.Y := DTO.Y;
+  Caption.Width      := 400;
 
   DTO.Y := DTO.Y + Caption.Height + 5;
 

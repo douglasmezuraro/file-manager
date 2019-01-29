@@ -20,6 +20,7 @@ type
     FCaption: TCaption;
     FIdent: TIdent;
   public
+    constructor Create(const X, Y: Single);
     property Owner: TComponent read FOwner write FOwner;
     property Parent: TFmxObject read FParent write FParent;
     property X: Single read FX write FX;
@@ -30,6 +31,14 @@ type
   end;
 
 implementation
+
+{ TDTO }
+
+constructor TDTO.Create(const X, Y: Single);
+begin
+  FX := X;
+  FY := Y;
+end;
 
 end.
 

@@ -41,6 +41,9 @@ type
     function IsUInt64: Boolean;
     function IsVariant: Boolean;
     function IsWord: Boolean;
+
+    procedure Assign(Value: TValue);
+    function ForceAsType<T>: T;
   end;
 
   TRttiPropertyHelper = class Helper for TRttiProperty
@@ -54,57 +57,173 @@ implementation
 
 function TValueHelper.AsByte: Byte;
 begin
-  Result := AsType<Byte>;
+  TryAsType<Byte>(Result);
 end;
 
 function TValueHelper.AsCardinal: Cardinal;
 begin
-  Result := AsType<Cardinal>;
+  TryAsType<Cardinal>(Result);
 end;
 
 function TValueHelper.AsDate: TDate;
 begin
-  Result := AsType<TDate>;
+  TryAsType<TDate>(Result);
 end;
 
 function TValueHelper.AsDateTime: TDateTime;
 begin
-  Result := AsType<TDateTime>;
+  TryAsType<TDateTime>(Result);
 end;
 
 function TValueHelper.AsDouble: Double;
 begin
-  Result := AsType<Double>;
+  TryAsType<Double>(Result);
 end;
 
 function TValueHelper.AsPointer: Pointer;
 begin
-  Result := AsType<Pointer>;
+  TryAsType<Pointer>(Result);
 end;
 
 function TValueHelper.AsShortInt: ShortInt;
 begin
-  Result := AsType<ShortInt>;
+  TryAsType<ShortInt>(Result);
+end;
+
+procedure TValueHelper.Assign(Value: TValue);
+begin
+  if IsBoolean then
+  begin
+    Self := Value.ForceAsType<Boolean>();
+    Exit;
+  end;
+
+  if IsByte then
+  begin
+    Self := Value.ForceAsType<Byte>();
+    Exit;
+  end;
+
+  if IsCardinal then
+  begin
+    Self := Value.ForceAsType<Cardinal>();
+    Exit;
+  end;
+
+  if IsCurrency then
+  begin
+    Self := Value.ForceAsType<Currency>();
+    Exit;
+  end;
+
+  if IsDate then
+  begin
+    Self := Value.ForceAsType<TDate>();
+    Exit;
+  end;
+
+  if IsDateTime then
+  begin
+    Self := Value.ForceAsType<TDateTime>();
+    Exit;
+  end;
+
+  if IsDouble then
+  begin
+    Self := Value.ForceAsType<Double>();
+    Exit;
+  end;
+
+  if IsInt64 then
+  begin
+    Self := Value.ForceAsType<Int64>();
+    Exit;
+  end;
+
+  if IsInteger then
+  begin
+    Self := Value.ForceAsType<Integer>();
+    Exit;
+  end;
+
+  if IsPointer then
+  begin
+    Self := Value.ForceAsType<Pointer>();
+    Exit;
+  end;
+
+  if IsShortInt then
+  begin
+    Self := Value.ForceAsType<ShortInt>();
+    Exit;
+  end;
+
+  if IsSingle then
+  begin
+    Self := Value.ForceAsType<Single>();
+    Exit;
+  end;
+
+  if IsSmallInt then
+  begin
+    Self := Value.ForceAsType<SmallInt>();
+    Exit;
+  end;
+
+  if IsString then
+  begin
+    Self := Value.ForceAsType<String>();
+    Exit;
+  end;
+
+  if IsTime then
+  begin
+    Self := Value.ForceAsType<TTime>();
+    Exit;
+  end;
+
+  if IsUInt64 then
+  begin
+    Self := Value.ForceAsType<UInt64>();
+    Exit;
+  end;
+
+//  if IsVariant then
+//  begin
+//    Self := Value.ForceAsType<Variant>();
+//    Exit;
+//  end;
+
+  if IsWord then
+  begin
+    Self := Value.ForceAsType<Word>();
+    Exit;
+  end;
 end;
 
 function TValueHelper.AsSingle: Single;
 begin
-  Result := AsType<Single>;
+  TryAsType<Single>(Result);
 end;
 
 function TValueHelper.AsSmallInt: SmallInt;
 begin
-  Result := AsType<SmallInt>;
+  TryAsType<SmallInt>(Result);
 end;
 
 function TValueHelper.AsTime: TTime;
 begin
-  Result := AsType<TTime>;
+  TryAsType<TTime>(Result);
 end;
 
 function TValueHelper.AsWord: Word;
 begin
-  Result := AsType<Word>;
+  TryAsType<Word>(Result);
+end;
+
+function TValueHelper.ForceAsType<T>: T;
+begin
+  TryAsType<T>(Result);
 end;
 
 function TValueHelper.IsBoolean: Boolean;

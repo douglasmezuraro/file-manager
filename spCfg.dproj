@@ -126,6 +126,7 @@
         <DCCReference Include="src\abstractfactory\AbstractFactory.DTO.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.ComboBox.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.Edit.pas"/>
+        <DCCReference Include="src\abstractfactory\AbstractFactory.TabItem.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

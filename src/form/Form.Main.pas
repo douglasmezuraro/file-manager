@@ -19,7 +19,9 @@ uses
   Attribute.Caption,
   FMX.Graphics,
   Helper.FMX,
+  System.Variants,
   System.Types,
+  AbstractFactory.TabItem,
   AbstractFactory.CheckBox,
   AbstractFactory.ComboBox,
   AbstractFactory.Edit,
@@ -47,7 +49,9 @@ type
     FIniFile: TIniFile;
     procedure ViewToModel;
     procedure ModelToView;
-    procedure Foo(Obj: TObject; Tab: TTabItem);
+    procedure Foo(Obj: TObject; Parent: TControl);
+    procedure Doo(Obj: TObject);
+    function GetValue(const Tag: string): TValue;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -67,6 +71,7 @@ procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
   ViewToModel;
   ModalResult := mrOk;
+  Close;
 end;
 
 constructor TMain.Create(AOwner: TComponent);
@@ -83,58 +88,67 @@ begin
   inherited;
 end;
 
-procedure TMain.Foo(Obj: TObject; Tab: TTabItem);
+procedure TMain.Doo(Obj: TObject);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
   Value: TValue;
-  Ident: TIdent;
-  Caption: TCaption;
-  Factory: IAbstractFactory;
-  DTO: TDTO;
+  Ident: string;
 begin
-  DTO.X := 10;
-  DTO.Y := 10;
   Context := TRttiContext.Create;
   try
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
-    begin
+    begin 
       Value := Prop.GetValue(Obj);
-
       if Value.IsObject then
       begin
-        Caption := Prop.GetAtribute<TCaption>;
-
-        if not Assigned(Caption) then
-          Continue;
-
-        Tab := TabControlWizard.Add;
-        Tab.Text := Caption.Text;
-
-        Foo(Value.AsObject, Tab);
+        Doo(Value.AsObject);
         Continue;
       end;
 
-      Caption := Prop.GetAtribute<TCaption>();
-      Ident := Prop.GetAtribute<TIdent>();
+      Ident := Prop.GetAtribute<TIdent>().Name;
+      Value.Assign(GetValue(Ident));
+      Prop.SetValue(Obj, Value);
+    end;
+  finally
+    Context.Free;
+  end;
+end;
 
-      if not Assigned(Caption) or not Assigned(Ident) then
-        Continue;
-
+procedure TMain.Foo(Obj: TObject; Parent: TControl);
+var
+  Context: TRttiContext;
+  Prop: TRttiProperty;
+  Factory: IAbstractFactory;
+  DTO: TDTO;
+  Control: TControl;
+begin
+  Context := TRttiContext.Create;
+  try
+    DTO := TDTO.Create(10, 10);
+    for Prop in Context.GetType(Obj.ClassType).GetProperties do
+    begin
       DTO.Owner   := Self;
-      DTO.Parent  := Tab;
-      DTO.Value   := Value;
-      DTO.Caption := Caption;
-      DTO.Ident   := Ident;
+      DTO.Parent  := Parent;
+      DTO.Value   := Prop.GetValue(Obj);
+      DTO.Caption := Prop.GetAtribute<TCaption>();
+      DTO.Ident   := Prop.GetAtribute<TIdent>();
 
-      if Value.IsBoolean then
+      if DTO.Value.IsObject then
+        Factory := TTabItemFactory.Create
+      else if DTO.Value.IsBoolean then
         Factory := TCheckBoxFactory.Create
       else if Length(DTO.Caption.Values) > 0 then
         Factory := TComboBoxFactory.Create
       else
         Factory := TEditFactory.Create;
 
-      Factory.New(DTO);
+      Control := Factory.New(DTO);
+
+      if not DTO.Value.IsObject then
+        Continue;
+
+      Foo(DTO.Value.AsObject, Control);
     end;
   finally
     Context.Free;
@@ -144,21 +158,42 @@ end;
 procedure TMain.FormShow(Sender: TObject);
 begin
   ModelToView;
-  Foo(FModel, nil);
+end;
+
+function TMain.GetValue(const Tag: string): TValue;
+var
+  Index: Integer;
+  FMXObject: TFmxObject;
+begin
+  Result.Empty;
+  for Index := 0 to Pred(ComponentCount) do
+  begin
+    if not (Components[Index] is TFmxObject) then
+      Continue;
+
+    FMXObject := Components[Index] as TFmxObject;
+    if FMXObject.TagString = Tag then
+    begin
+      Result := FMXObject.Data;
+      Break;
+    end;
+  end;
 end;
 
 procedure TMain.ModelToView;
 begin
   FIniFile.ReadObject(FModel);
+  Foo(FModel, TabControlWizard);
 end;
 
 procedure TMain.ViewToModel;
 begin
   try
-
+    Doo(FModel);
   finally
     FIniFile.WriteObject(FModel);
   end;
 end;
 
 end.
+

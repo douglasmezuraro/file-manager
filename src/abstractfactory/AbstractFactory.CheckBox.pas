@@ -33,7 +33,7 @@ begin
   CheckBox.Data       := DTO.Value;
   CheckBox.Text       := DTO.Caption.Text;
   CheckBox.TagString  := DTO.Ident.Name;
-  CheckBox.Width      := CheckBox.Canvas.TextWidth(CheckBox.Text) + 25;
+  CheckBox.Width      := 400;
   
   DTO.Y := DTO.Y + CheckBox.Height + 10;
   

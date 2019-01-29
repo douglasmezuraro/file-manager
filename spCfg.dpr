@@ -31,7 +31,8 @@ uses
   AbstractFactory.CheckBox in 'src\abstractfactory\AbstractFactory.CheckBox.pas',
   AbstractFactory.DTO in 'src\abstractfactory\AbstractFactory.DTO.pas',
   AbstractFactory.ComboBox in 'src\abstractfactory\AbstractFactory.ComboBox.pas',
-  AbstractFactory.Edit in 'src\abstractfactory\AbstractFactory.Edit.pas';
+  AbstractFactory.Edit in 'src\abstractfactory\AbstractFactory.Edit.pas',
+  AbstractFactory.TabItem in 'src\abstractfactory\AbstractFactory.TabItem.pas';
 
 {$R *.res}
 
