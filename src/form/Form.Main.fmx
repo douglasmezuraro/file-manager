@@ -7,6 +7,7 @@ object Main: TMain
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnKeyUp = FormKeyUp
   OnShow = FormShow
   DesignerMasterStyle = 0
   object PanelButtons: TPanel
@@ -36,12 +37,6 @@ object Main: TMain
       Size.Height = 45.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
-    end
-    object Button1: TSpeedButton
-      Position.X = 320.000000000000000000
-      Position.Y = 8.000000000000000000
-      Text = 'Button1'
-      OnClick = Button1Click
     end
   end
   object TabControlWizard: TTabControl

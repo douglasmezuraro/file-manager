@@ -25,7 +25,6 @@ begin
   FReceiver := Receiver;
 end;
 
-
 procedure TUndoableCommand.Execute;
 begin
   FReceiver.Key.Data := FReceiver.Value;

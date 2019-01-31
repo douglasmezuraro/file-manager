@@ -40,14 +40,11 @@ begin
 end;
 
 procedure TCommandManager.Execute;
-var
-  Command: ICommand;
 begin
   if FUndo.Count = 0 then
     Exit;
 
-  Command := FUndo.Pop;
-  Command.Execute;
+  FUndo.Pop.Execute;
 end;
 
 end.

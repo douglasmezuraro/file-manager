@@ -42,16 +42,15 @@ type
     ActionSave: TAction;
     ActionCancel: TAction;
     TabControlWizard: TTabControl;
-    Button1: TSpeedButton;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
+      Shift: TShiftState);
   private
     FModel: TConfig;
     FIniFile: TIniFile;
     FDic: TDictionary<TFmxObject, TValue>;
-
     FInvoker: TCommandManager;
 
     { ViewToModel }
@@ -110,11 +109,6 @@ begin
   FDic.AddOrSetValue(Obj, Obj.Value);
 end;
 
-procedure TMain.Button1Click(Sender: TObject);
-begin
-  FInvoker.Execute;
-end;
-
 constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
@@ -166,6 +160,19 @@ begin
 end;
 
 procedure TMain.ModelToView(Obj: TObject; Parent: TControl);
+
+  function CreateFactory(DTO: TDTO): IAbstractFactory;
+  begin
+    if DTO.Value.IsObject then
+      Result := TTabItemFactory.Create
+    else if DTO.Value.IsBoolean then
+      Result := TCheckBoxFactory.Create
+    else if Length(DTO.Control.Values) > 0 then
+      Result := TComboBoxFactory.Create
+    else
+      Result := TEditFactory.Create;
+  end;
+
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
@@ -185,18 +192,10 @@ begin
       DTO.Ident    := Prop.GetAtribute<Attribute.Ident.TIdent>();
       DTO.OnChange := Notify;
 
-      if DTO.Value.IsObject then
-        Factory := TTabItemFactory.Create
-      else if DTO.Value.IsBoolean then
-        Factory := TCheckBoxFactory.Create
-      else if Length(DTO.Control.Values) > 0 then
-        Factory := TComboBoxFactory.Create
-      else
-        Factory := TEditFactory.Create;
+      Factory := CreateFactory(DTO);
 
       Control := Factory.New(DTO);
       FDic.Add(Control, Control.Value);
-      //FInvoker.Add(TUndoableCommand.Create(TReceiver.Create(Control, Control.Value)));
 
       if not DTO.Value.IsObject then
         Continue;
@@ -211,6 +210,13 @@ end;
 procedure TMain.ReadObject;
 begin
   FIniFile.ReadObject(FModel);
+end;
+
+procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
+  Shift: TShiftState);
+begin
+  if (Shift = [ssCtrl]) and (Key in [vkZ, vkU]) then
+    FInvoker.Execute;
 end;
 
 procedure TMain.FormShow(Sender: TObject);

@@ -27,9 +27,6 @@ Coordinates=224,10,81,58
 Coordinates=113,10,101,51
 
 []
-Coordinates=78,1,44,58
-Visible=True
-
-[Button1]
 Coordinates=0,0,59,58
+Visible=True
 
