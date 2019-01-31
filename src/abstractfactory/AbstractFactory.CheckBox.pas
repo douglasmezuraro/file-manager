@@ -34,7 +34,7 @@ begin
   CheckBox.Text       := DTO.Control.Text;
   CheckBox.TagString  := DTO.Ident.Name;
   CheckBox.Width      := 400;
-  CheckBox.OnExit   := DTO.OnExit;
+  CheckBox.OnExit   := DTO.OnChange;
   
   DTO.Y := DTO.Y + CheckBox.Height + 10;
   

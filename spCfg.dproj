@@ -127,6 +127,10 @@
         <DCCReference Include="src\abstractfactory\AbstractFactory.ComboBox.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.Edit.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.TabItem.pas"/>
+        <DCCReference Include="src\command\Command.Manager.pas"/>
+        <DCCReference Include="src\command\Command.Undoable.pas"/>
+        <DCCReference Include="src\command\Command.Receiver.pas"/>
+        <DCCReference Include="src\command\Command.API.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -11,6 +11,9 @@ uses
   AbstractFactory.TabItem,
   Attribute.Control,
   Attribute.Ident,
+  Command.Manager,
+  Command.Receiver,
+  Command.Undoable,
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
@@ -28,7 +31,7 @@ uses
   System.IniFiles,
   System.Rtti,
   System.UITypes,
-  Util.Methods;
+  Util.Methods, FMX.Edit;
 
 type
   TMain = class(TForm)
@@ -44,16 +47,12 @@ type
     procedure ActionSaveExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
-  private type
-    TValuePair = TPair<TFmxObject, TValue>;
-    TValueStack = TStack<TValuePair>;
-    TValueDic = TDictionary<TFmxObject, TValue>;
   private
     FModel: TConfig;
     FIniFile: TIniFile;
-    FStack: TValueStack;
-    FPrev: TValueDic;
-    FInitial: TValueDic;
+    FDic: TDictionary<TFmxObject, TValue>;
+
+    FInvoker: TCommandManager;
 
     { ViewToModel }
     procedure ViewToModel; overload;
@@ -96,47 +95,24 @@ end;
 procedure TMain.Notify(Sender: TObject);
 var
   Obj: TFmxObject;
+  Receiver: TReceiver;
 begin
-  if not (Sender is TFmxObject) then
-    Exit;
-
   Obj := Sender as TFmxObject;
 
-  if not FPrev.ContainsKey(Obj) then
+  if not FDic.ContainsKey(Obj) then
     Exit;
 
-  if FPrev.Items[Obj].Equals(Obj.Value) then
+  if FDic.Items[Obj].Equals(Obj.Value) then
     Exit;
 
-  if FInitial.Items[Obj].Equals(Obj.Value) then
-    Exit;
-
-  FStack.Push(TValuePair.Create(Obj, FPrev.Items[Obj]));
-  FPrev.AddOrSetValue(Obj, Obj.Value);
+  Receiver := TReceiver.Create(Obj, FDic.Items[Obj]);
+  FInvoker.Add(TUndoableCommand.Create(Receiver));
+  FDic.AddOrSetValue(Obj, Obj.Value);
 end;
 
 procedure TMain.Button1Click(Sender: TObject);
-var
-  Index: Integer;
-  Pair: TValuePair;
-  Obj: TFmxObject;
 begin
-  if FStack.Count = 0 then
-    Exit;
-
-  Pair := FStack.Pop;
-  for Index := 0 to Pred(ComponentCount) do
-  begin
-    if not (Components[Index] is TFmxObject) then
-      Continue;
-
-    Obj := Components[Index] as TFmxObject;
-
-    if not Pair.Key.Equals(Obj) then
-      Continue;
-
-    Obj.Value := Pair.Value;
-  end;
+  FInvoker.Execute;
 end;
 
 constructor TMain.Create(AOwner: TComponent);
@@ -144,18 +120,16 @@ begin
   inherited;
   FModel := TConfig.Create;
   FIniFile := TIniFile.Create(Util.Methods.TMethods.GetIniPath);
-  FStack := TValueStack.Create;
-  FPrev := TValueDic.Create;
-  FInitial := TValueDic.Create;
+  FInvoker := TCommandManager.Create;
+  FDic := TDictionary<TFmxObject, TValue>.Create();
 end;
 
 destructor TMain.Destroy;
 begin
   FIniFile.Free;
   FModel.Free;
-  FStack.Free;
-  FPrev.Free;
-  FInitial.Free;
+  FInvoker.Free;
+  FDic.Free;
   inherited;
 end;
 
@@ -204,12 +178,12 @@ begin
     DTO := TDTO.Create(10, 10);
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
     begin
-      DTO.Owner   := Self;
-      DTO.Parent  := Parent;
-      DTO.Value   := Prop.GetValue(Obj);
-      DTO.Control := Prop.GetAtribute<Attribute.Control.TControl>();
-      DTO.Ident   := Prop.GetAtribute<Attribute.Ident.TIdent>();
-      DTO.OnExit  := Notify;
+      DTO.Owner    := Self;
+      DTO.Parent   := Parent;
+      DTO.Value    := Prop.GetValue(Obj);
+      DTO.Control  := Prop.GetAtribute<Attribute.Control.TControl>();
+      DTO.Ident    := Prop.GetAtribute<Attribute.Ident.TIdent>();
+      DTO.OnChange := Notify;
 
       if DTO.Value.IsObject then
         Factory := TTabItemFactory.Create
@@ -221,8 +195,8 @@ begin
         Factory := TEditFactory.Create;
 
       Control := Factory.New(DTO);
-      FPrev.Add(Control, Control.Value);
-      FInitial.Add(Control, Control.Value);
+      FDic.Add(Control, Control.Value);
+      //FInvoker.Add(TUndoableCommand.Create(TReceiver.Create(Control, Control.Value)));
 
       if not DTO.Value.IsObject then
         Continue;

@@ -19,7 +19,7 @@ type
     FValue: TValue;
     FControl: TControl;
     FIdent: TIdent;
-    FOnExit: TNotifyEvent;
+    FOnChange: TNotifyEvent;
   public
     constructor Create(const X, Y: Single);
     property Owner: TComponent read FOwner write FOwner;
@@ -29,7 +29,7 @@ type
     property Value: TValue read FValue write FValue;
     property Ident: TIdent read FIdent write FIdent;
     property Control: TControl read FControl write FControl;
-    property OnExit: TNotifyEvent read FOnExit write FOnExit;
+    property OnChange: TNotifyEvent read FOnChange write FOnChange;
   end;
 
 implementation

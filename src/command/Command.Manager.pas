@@ -3,21 +3,52 @@ unit Command.Manager;
 interface
 
 uses
-  Command;
+  Command.API,
+  System.Generics.Collections;
 
 type
   TCommandManager = class
+  private type
+    TCommandStack = TStack<ICommand>;
+  private
+    FUndo: TCommandStack;
   public
-    procedure Execute(const Command: TCommand);
+    constructor Create;
+    destructor Destroy; override;
+    procedure Add(const Command: ICommand);
+    procedure Execute;
   end;
 
 implementation
 
 { TCommandManager }
 
-procedure TCommandManager.Execute(const Command: TCommand);
+procedure TCommandManager.Add(const Command: ICommand);
 begin
+  FUndo.Push(Command);
+end;
 
+constructor TCommandManager.Create;
+begin
+  FUndo := TCommandStack.Create;
+end;
+
+destructor TCommandManager.Destroy;
+begin
+  FUndo.Free;
+  inherited Destroy;
+end;
+
+procedure TCommandManager.Execute;
+var
+  Command: ICommand;
+begin
+  if FUndo.Count = 0 then
+    Exit;
+
+  Command := FUndo.Pop;
+  Command.Execute;
 end;
 
 end.
+

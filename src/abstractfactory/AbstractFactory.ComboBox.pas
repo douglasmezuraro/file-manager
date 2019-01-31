@@ -45,7 +45,7 @@ begin
   ComboBox.Values     := DTO.Control.Values;
   ComboBox.Value      := DTO.Value.AsString;
   ComboBox.TagString  := DTO.Ident.Name;
-  ComboBox.OnExit     := DTO.OnExit;
+  ComboBox.OnExit     := DTO.OnChange;
   ComboBox.Width      := 400;
 
   DTO.Y := DTO.Y + ComboBox.Height + 10;
