@@ -3,7 +3,7 @@ unit Model.Config.Log;
 interface
 
 uses
-  Attribute.Caption,
+  Attribute.Control,
   Attribute.Ident;
 
 type
@@ -13,15 +13,15 @@ type
     FRegisterSignatureLog: Boolean;
     FRegisterMethodLog: Boolean;
   public
-    [TCaption('Registar log de métodos?')]
+    [TControl('Registar log de métodos?')]
     [TIdent('REGISTRALOGMETODO')]
     property RegisterMethodLog: Boolean read FRegisterMethodLog write FRegisterMethodLog;
 
-    [TCaption('Registrar log de SQLs?')]
+    [TControl('Registrar log de SQLs?')]
     [TIdent('REGISTRALOGSQL')]
     property RegisterSQLLog: Boolean read FRegisterSQLLog write FRegisterSQLLog;
 
-    [TCaption('Registrar log de assinaturas?')]
+    [TControl('Registrar log de assinaturas?')]
     [TIdent('GRAVARLOGASSINATURA')]
     property RegisterSignatureLog: Boolean read FRegisterSignatureLog write FRegisterSignatureLog;
   end;

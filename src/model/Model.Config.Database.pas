@@ -3,7 +3,7 @@ unit Model.Config.Database;
 interface
 
 uses
-  Attribute.Caption,
+  Attribute.Control,
   Attribute.Ident,
   Util.Constants;
 
@@ -21,43 +21,43 @@ type
     FSchema: string;
     FServer: string;
   public
-    [TCaption('Esquema')]
+    [TControl('Esquema')]
     [TIdent('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
 
-    [TCaption('Número máximo de conexões')]
+    [TControl('Número máximo de conexões')]
     [TIdent('NUMEROMAXIMOCONEXOES')]
     property MaxConnections: UInt32 read FMaxConnections write FMaxConnections;
 
-    [TCaption('Número mínimo de conexões')]
+    [TControl('Número mínimo de conexões')]
     [TIdent('NUMEROMINIMOCONEXOES')]
     property MinConnections: UInt32 read FMinConnections write FMinConnections;
 
-    [TCaption('Tempo de desconexçai de conexão inativa')]
+    [TControl('Tempo de desconexçai de conexão inativa')]
     [TIdent('TEMPODESCONEXAOCONEXAOINATIVA')]
     property DisconnectionTimeIdleConnection: UInt32 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
-    [TCaption('Tempo de atualização de log de conexões')]
+    [TControl('Tempo de atualização de log de conexões')]
     [TIdent('TEMPOATUALIZACAOLOGCONEXOES')]
     property ConnectionLogUpdateTime: UInt32 read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
-    [TCaption('Número de linhas para fetch')]
+    [TControl('Número de linhas para fetch')]
     [TIdent('NUMEROLINHASFETCH')]
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
 
-    [TCaption('Tipo de acesso')]
+    [TControl('Tipo de acesso', ';SQLd;FireDAC')]
     [TIdent('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [TCaption('Tipo de banco')]
+    [TControl('Tipo de banco', ';Oracle;SQLServer;DB2')]
     [TIdent('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 
-    [TCaption('Alias')]
+    [TControl('Alias')]
     [TIdent('ALIAS')]
     property Alias: string read FAlias write FAlias;
 
-    [TCaption('Server')]
+    [TControl('Server')]
     [TIdent('SERVER')]
     property Server: string read FServer write FServer;
   end;

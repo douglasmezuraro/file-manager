@@ -3,7 +3,7 @@ unit Model.Config.Server;
 interface
 
 uses
-  Attribute.Caption,
+  Attribute.Control,
   Attribute.Ident;
 
 type
@@ -20,43 +20,43 @@ type
     FIPServer: string;
     FIPAddress: string;
   public
-    [TCaption('Nome')]
+    [TControl('Nome')]
     [TIdent('NOMESERVIDOR')]
     property Name: string read FName write FName;
 
-    [TCaption('GUID')]
+    [TControl('GUID')]
     [TIdent('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
 
-    [TCaption('Nome do computador')]
+    [TControl('Nome do computador')]
     [TIdent('NOMECOMPUTADOR')]
     property ComputerName: string read FComputerName write FComputerName;
 
-    [TCaption('IP')]
+    [TControl('IP')]
     [TIdent('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
 
-    [TCaption('Endereço de IP')]
+    [TControl('Endereço de IP')]
     [TIdent('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
-    [TCaption('Tipo de conexão', ';Socket')]
+    [TControl('Tipo de conexão', ';Socket')]
     [TIdent('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
 
-    [TCaption('Pode balancear?')]
+    [TControl('Pode balancear?')]
     [TIdent('PODEBALANCEAR')]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
-    [TCaption('Nome do executável')]
+    [TControl('Nome do executável')]
     [TIdent('NOMEEXECUTAVELSERVIDOR')]
     property ExeName: string read FExeName write FExeName;
 
-    [TCaption('Timeout de execução')]
+    [TControl('Timeout de execução')]
     [TIdent('TIMEOUTEXECUCAO')]
     property TimeOut: UInt16 read FTimeOut write FTimeOut;
 
-    [TCaption('Habilitar gerenciador de integração?')]
+    [TControl('Habilitar gerenciador de integração?')]
     [TIdent('HABILITAGERENCIADORINTEGRACAO')]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
   end;

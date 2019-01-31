@@ -30,7 +30,7 @@ var
 begin
   Caption            := TLabel.Create(DTO.Owner);
   Caption.Parent     := DTO.Parent;
-  Caption.Text       := DTO.Caption.Text;
+  Caption.Text       := DTO.Control.Text;
   Caption.Position.X := DTO.X;
   Caption.Position.Y := DTO.Y;
   Caption.Width      := 400;
@@ -42,9 +42,10 @@ begin
   ComboBox.Parent     := DTO.Parent;
   ComboBox.Position.X := DTO.X;
   ComboBox.Position.Y := DTO.Y;
-  ComboBox.Values     := DTO.Caption.Values;
-  ComboBox.Text       := DTO.Value.AsString;
+  ComboBox.Values     := DTO.Control.Values;
+  ComboBox.Value      := DTO.Value.AsString;
   ComboBox.TagString  := DTO.Ident.Name;
+  ComboBox.OnExit     := DTO.OnExit;
   ComboBox.Width      := 400;
 
   DTO.Y := DTO.Y + ComboBox.Height + 10;

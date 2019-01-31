@@ -10,6 +10,7 @@ uses
   FMX.Graphics,
   FMX.StdCtrls,
   FMX.Types,
+  Helper.FMX,
   System.Rtti;
 
 type
@@ -29,7 +30,7 @@ var
 begin
   Caption            := TLabel.Create(DTO.Owner);
   Caption.Parent     := DTO.Parent;
-  Caption.Text       := DTO.Caption.Text;
+  Caption.Text       := DTO.Control.Text;
   Caption.Position.X := DTO.X;
   Caption.Position.Y := DTO.Y;
   Caption.Width      := 400;
@@ -41,9 +42,10 @@ begin
   Edit.Parent     := DTO.Parent;
   Edit.Position.X := DTO.X;
   Edit.Position.Y := DTO.Y;
-  Edit.Data       := DTO.Value;
+  Edit.Value      := DTO.Value;
   Edit.TagString  := DTO.Ident.Name;
   Edit.Width      := 400;
+  Edit.OnExit := DTO.OnExit;
 
   DTO.Y := DTO.Y + Edit.Height + 10;
 

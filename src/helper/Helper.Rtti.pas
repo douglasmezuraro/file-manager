@@ -1,4 +1,4 @@
-unit Helper.Value;
+unit Helper.Rtti;
 
 interface
 
@@ -44,6 +44,7 @@ type
 
     procedure Assign(Value: TValue);
     function ForceAsType<T>: T;
+    function Equals(const Value: TValue): Boolean;
   end;
 
   TRttiPropertyHelper = class Helper for TRttiProperty
@@ -92,6 +93,12 @@ end;
 
 procedure TValueHelper.Assign(Value: TValue);
 begin
+  if TypeInfo = nil then
+  begin
+    Self := Value;
+    Exit;
+  end;
+
   if IsBoolean then
   begin
     Self := Value.ForceAsType<Boolean>();
@@ -221,6 +228,11 @@ end;
 function TValueHelper.AsWord: Word;
 begin
   TryAsType<Word>(Result);
+end;
+
+function TValueHelper.Equals(const Value: TValue): Boolean;
+begin
+  Result := SameText(Self.ToString, Value.ToString);
 end;
 
 function TValueHelper.ForceAsType<T>: T;

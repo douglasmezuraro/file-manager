@@ -98,7 +98,7 @@
             <Form>Main</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="src\helper\Helper.Value.pas"/>
+        <DCCReference Include="src\helper\Helper.Rtti.pas"/>
         <DCCReference Include="src\attribute\Attribute.Ini.pas"/>
         <DCCReference Include="src\helper\Helper.Ini.pas"/>
         <DCCReference Include="src\attribute\Attribute.Ident.pas"/>
@@ -119,7 +119,7 @@
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
         <DCCReference Include="src\util\Util.Constants.pas"/>
         <DCCReference Include="src\util\Util.Methods.pas"/>
-        <DCCReference Include="src\attribute\Attribute.Caption.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <DCCReference Include="src\helper\Helper.FMX.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.API.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.CheckBox.pas"/>

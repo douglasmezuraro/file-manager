@@ -3,7 +3,7 @@ unit Model.Config.Application;
 interface
 
 uses
-  Attribute.Caption,
+  Attribute.Control,
   Attribute.Ident;
 
 type
@@ -11,7 +11,7 @@ type
   private
     FName: string;
   public
-    [TCaption('Nome de aplicação para monitoramento')]
+    [TControl('Nome de aplicação para monitoramento')]
     [TIdent('NOMEAPLICACAOPARAMONITORAMENTO')]
     property Name: string read FName write FName;
   end;

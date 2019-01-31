@@ -3,7 +3,7 @@ unit AbstractFactory.DTO;
 interface
 
 uses
-  Attribute.Caption,
+  Attribute.Control,
   Attribute.Ident,
   FMX.Types,
   System.Classes,
@@ -17,8 +17,9 @@ type
     FX: Single;
     FY: Single;
     FValue: TValue;
-    FCaption: TCaption;
+    FControl: TControl;
     FIdent: TIdent;
+    FOnExit: TNotifyEvent;
   public
     constructor Create(const X, Y: Single);
     property Owner: TComponent read FOwner write FOwner;
@@ -27,7 +28,8 @@ type
     property Y: Single read FY write FY;
     property Value: TValue read FValue write FValue;
     property Ident: TIdent read FIdent write FIdent;
-    property Caption: TCaption read FCaption write FCaption;
+    property Control: TControl read FControl write FControl;
+    property OnExit: TNotifyEvent read FOnExit write FOnExit;
   end;
 
 implementation

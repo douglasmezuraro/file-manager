@@ -18,7 +18,7 @@ uses
   Model.Config.Workflow,
 
   Attribute.Section,
-  Attribute.Caption;
+  Attribute.Control;
 
 type
   TConfig = class
@@ -40,55 +40,55 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    [TCaption('Balanceador alternativo')]
+    [TControl('Balanceador alternativo')]
     [TSection('BALANCEADORALTERNATIVO')]
     property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
 
-    [TCaption('Aplicação')]
+    [TControl('Aplicação')]
     [TSection('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
 
-    [TCaption('Balanceador')]
+    [TControl('Balanceador')]
     [TSection('SPBALANCEADOR')]
     property Balancer: TBalancer read FBalancer write FBalancer;
 
-    [TCaption('Cliente')]
+    [TControl('Cliente')]
     [TSection('CLIENTE')]
     property Client: TClient read FClient write FClient;
 
-    [TCaption('Database')]
+    [TControl('Database')]
     [TSection('DATABASE')]
     property Database: TDatabase read FDatabase write FDatabase;
 
-    [TCaption('DUnit')]
+    [TControl('DUnit')]
     [TSection('DUNIT')]
     property DUnit: TDUnit read FDUnit write FDUnit;
 
-    [TCaption('LOG')]
+    [TControl('LOG')]
     [TSection('LOG')]
     property Log: TLog read FLog write FLog;
 
-    [TCaption('Monitor')]
+    [TControl('Monitor')]
     [TSection('SPMONITOR')]
     property Monitor: TMonitor read FMonitor write FMonitor;
 
-    [TCaption('Scanner')]
+    [TControl('Scanner')]
     [TSection('SCANNER')]
     property Scanner: TScanner read FScanner write FScanner;
 
-    [TCaption('Servidor')]
+    [TControl('Servidor')]
     [TSection('SERVIDOR')]
     property Server: TServer read FServer write FServer;
 
-    [TCaption('SPP')]
+    [TControl('SPP')]
     [TSection('CLIENTESPP')]
     property SPP: TSPP read FSPP write FSPP;
 
-    [TCaption('Update')]
+    [TControl('Update')]
     [TSection('SPUPDATE')]
     property Update: TUpdate read FUpdate write FUpdate;
 
-    [TCaption('Fluxo de trabalho')]
+    [TControl('Fluxo de trabalho')]
     [TSection('FLUXOTRABALHO')]
     property Workflow: TWorkflow read FWorkflow write FWorkflow;
   end;

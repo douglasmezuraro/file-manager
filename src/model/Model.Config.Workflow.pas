@@ -3,7 +3,7 @@ unit Model.Config.Workflow;
 interface
 
 uses
-  Attribute.Caption,
+  Attribute.Control,
   Attribute.Ident;
 
 type
@@ -11,7 +11,7 @@ type
   private
     FCanChangeCurrentVersion: Boolean;
   public
-    [TCaption('Pode alterar o fluxo?')]
+    [TControl('Pode alterar o fluxo?')]
     [TIdent('PODEALTERARVERSAOATUALFLUXO')]
     property CanChangeCurrentVersion: Boolean read FCanChangeCurrentVersion write FCanChangeCurrentVersion;
   end;

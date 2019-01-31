@@ -1,4 +1,4 @@
-unit Attribute.Caption;
+unit Attribute.Control;
 
 interface
 
@@ -6,7 +6,7 @@ uses
   System.SysUtils;
 
 type
-  TCaption = class(TCustomAttribute)
+  TControl = class(TCustomAttribute)
   private
     FText: string;
     FValues: TArray<string>;
@@ -18,12 +18,13 @@ type
 
 implementation
 
-{ TCaption }
+{ TControl }
 
-constructor TCaption.Create(const Text, Values: string);
+constructor TControl.Create(const Text, Values: string);
 begin
   FText := Text;
   FValues := Values.Split([';']);
 end;
 
 end.
+

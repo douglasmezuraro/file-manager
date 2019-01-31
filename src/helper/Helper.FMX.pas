@@ -3,37 +3,34 @@ unit Helper.FMX;
 interface
 
 uses
-  FMX.ListBox;
+  FMX.ListBox,
+  FMX.Types,
+  System.Rtti;
 
 type
+  TFmxObjectHelper = class Helper for TFmxObject
+  private
+    function GetValue: TValue;
+    procedure SetValue(const Value: TValue);
+  public
+    property Value: TValue read GetValue write SetValue;
+  end;
+
   TComboBoxHelper = class Helper for TComboBox
   private
-    function GetText: string;
-    procedure SetSext(const Value: string);
     function GetValues: TArray<string>;
     procedure SetValues(const Values: TArray<string>);
   public
     property Values: TArray<string> read GetValues write SetValues;
-    property Text: string read GetText write SetSext;
   end;
 
 implementation
 
 { TComboBoxHelper }
 
-function TComboBoxHelper.GetText: string;
-begin
-  Result := Items.Strings[ItemIndex];
-end;
-
 function TComboBoxHelper.GetValues: TArray<string>;
 begin
   Result := Items.ToStringArray;
-end;
-
-procedure TComboBoxHelper.SetSext(const Value: string);
-begin
-  ItemIndex := Items.IndexOf(Value);
 end;
 
 procedure TComboBoxHelper.SetValues(const Values: TArray<string>);
@@ -43,6 +40,26 @@ begin
   Items.Clear;
   for Value in Values do
     Items.Add(Value);
+end;
+
+{ TFmxObjectHelper }
+
+function TFmxObjectHelper.GetValue: TValue;
+begin
+  if Self is TComboBox then
+  begin
+    Result := (Self as TComboBox).Items.Strings[(Self as TComboBox).ItemIndex];
+    Exit;
+  end;
+  Result := Data;
+end;
+
+procedure TFmxObjectHelper.SetValue(const Value: TValue);
+begin
+  if Self is TComboBox then
+    (Self as TComboBox).ItemIndex := (Self as TComboBox).Items.IndexOf(Value.AsString);
+
+  Data := Value;
 end;
 
 end.

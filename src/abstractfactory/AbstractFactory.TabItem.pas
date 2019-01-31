@@ -30,7 +30,7 @@ begin
   if DTO.Parent is TTabControl then
   begin
     TabItem := (DTO.Parent as TTabControl).Add;
-    TabItem.Text := DTO.Caption.Text;
+    TabItem.Text := DTO.Control.Text;
     Result := TabItem;
   end;
 end;

@@ -6,7 +6,7 @@ uses
   Attribute.Ident,
   Attribute.Ini,
   Attribute.Section,
-  Helper.Value,
+  Helper.Rtti,
   System.IniFiles,
   System.Rtti,
   System.SysUtils,
