@@ -33,9 +33,8 @@ uses
   AbstractFactory.ComboBox in 'src\abstractfactory\AbstractFactory.ComboBox.pas',
   AbstractFactory.Edit in 'src\abstractfactory\AbstractFactory.Edit.pas',
   AbstractFactory.TabItem in 'src\abstractfactory\AbstractFactory.TabItem.pas',
-  Command.Manager in 'src\command\Command.Manager.pas',
+  Command.Invoker in 'src\command\Command.Invoker.pas',
   Command.Undoable in 'src\command\Command.Undoable.pas',
-  Command.Receiver in 'src\command\Command.Receiver.pas',
   Command.API in 'src\command\Command.API.pas';
 
 {$R *.res}

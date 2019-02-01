@@ -1,4 +1,4 @@
-unit Command.Manager;
+unit Command.Invoker;
 
 interface
 
@@ -7,44 +7,49 @@ uses
   System.Generics.Collections;
 
 type
-  TCommandManager = class
+  TCommandInvoker = class
   private type
     TCommandStack = TStack<ICommand>;
   private
     FUndo: TCommandStack;
+    function GetIsEmpty: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Add(const Command: ICommand);
     procedure Execute;
+    property IsEmpty: Boolean read GetIsEmpty;
   end;
 
 implementation
 
-{ TCommandManager }
+{ TCommandInvoker }
 
-procedure TCommandManager.Add(const Command: ICommand);
+procedure TCommandInvoker.Add(const Command: ICommand);
 begin
   FUndo.Push(Command);
 end;
 
-constructor TCommandManager.Create;
+constructor TCommandInvoker.Create;
 begin
   FUndo := TCommandStack.Create;
 end;
 
-destructor TCommandManager.Destroy;
+destructor TCommandInvoker.Destroy;
 begin
   FUndo.Free;
   inherited Destroy;
 end;
 
-procedure TCommandManager.Execute;
+procedure TCommandInvoker.Execute;
 begin
-  if FUndo.Count = 0 then
-    Exit;
+  if not IsEmpty then
+    FUndo.Pop.Execute;
+end;
 
-  FUndo.Pop.Execute;
+function TCommandInvoker.GetIsEmpty: Boolean;
+begin
+  Result := FUndo.Count = 0;
 end;
 
 end.

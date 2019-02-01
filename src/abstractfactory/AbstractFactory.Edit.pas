@@ -43,9 +43,10 @@ begin
   Edit.Position.X := DTO.X;
   Edit.Position.Y := DTO.Y;
   Edit.Value      := DTO.Value;
-  Edit.TagString  := DTO.Ident.Name;
+  Edit.OldValue   := DTO.Value;
+  Edit.TagObject  := DTO.Ident;
   Edit.Width      := 400;
-  Edit.OnExit   := DTO.OnChange;
+  Edit.OnExit     := DTO.OnChange;
 
   DTO.Y := DTO.Y + Edit.Height + 10;
 

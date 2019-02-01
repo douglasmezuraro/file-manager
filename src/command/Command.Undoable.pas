@@ -4,15 +4,17 @@ interface
 
 uses
   Command.API,
-  Command.Receiver,
-  FMX.Types;
+  FMX.Controls,
+  Helper.FMX,
+  System.Rtti;
 
 type
   TUndoableCommand = class(TInterfacedObject, ICommand)
   private
-    FReceiver: TReceiver;
+    FControl: TControl;
+    FValue: TValue;
   public
-    constructor Create(const Receiver: TReceiver);
+    constructor Create(const Control: TControl);
     procedure Execute;
   end;
 
@@ -20,14 +22,15 @@ implementation
 
 { TUndoableCommand }
 
-constructor TUndoableCommand.Create(const Receiver: TReceiver);
+constructor TUndoableCommand.Create(const Control: TControl);
 begin
-  FReceiver := Receiver;
+  FControl := Control;
+  FValue := Control.OldValue;
 end;
 
 procedure TUndoableCommand.Execute;
 begin
-  FReceiver.Key.Data := FReceiver.Value;
+  FControl.Value := FValue;
 end;
 
 end.

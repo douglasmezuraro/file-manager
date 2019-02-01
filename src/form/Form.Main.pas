@@ -11,8 +11,7 @@ uses
   AbstractFactory.TabItem,
   Attribute.Control,
   Attribute.Ident,
-  Command.Manager,
-  Command.Receiver,
+  Command.Invoker,
   Command.Undoable,
   FMX.ActnList,
   FMX.Controls,
@@ -21,6 +20,7 @@ uses
   FMX.StdCtrls,
   FMX.TabControl,
   FMX.Types,
+  FMX.DialogService,
   Helper.FMX,
   Helper.Ini,
   Helper.Rtti,
@@ -50,8 +50,7 @@ type
   private
     FModel: TConfig;
     FIniFile: TIniFile;
-    FDic: TDictionary<TFmxObject, TValue>;
-    FInvoker: TCommandManager;
+    FInvoker: TCommandInvoker;
 
     { ViewToModel }
     procedure ViewToModel; overload;
@@ -66,7 +65,8 @@ type
     procedure WriteObject;
 
     { Utils }
-    function GetValue(const Tag: string): TValue;
+    function GetValue(const Tag: TObject): TValue;
+    function SaveChanges: Boolean;
     procedure Notify(Sender: TObject);
   public
     constructor Create(AOwner: TComponent); override;
@@ -77,45 +77,12 @@ implementation
 
 {$R *.fmx}
 
-procedure TMain.ActionCancelExecute(Sender: TObject);
-begin
-  ModalResult := mrCancel;
-  Close;
-end;
-
-procedure TMain.ActionSaveExecute(Sender: TObject);
-begin
-  ViewToModel;
-  WriteObject;
-  ModalResult := mrOk;
-  Close;
-end;
-
-procedure TMain.Notify(Sender: TObject);
-var
-  Obj: TFmxObject;
-  Receiver: TReceiver;
-begin
-  Obj := Sender as TFmxObject;
-
-  if not FDic.ContainsKey(Obj) then
-    Exit;
-
-  if FDic.Items[Obj].Equals(Obj.Value) then
-    Exit;
-
-  Receiver := TReceiver.Create(Obj, FDic.Items[Obj]);
-  FInvoker.Add(TUndoableCommand.Create(Receiver));
-  FDic.AddOrSetValue(Obj, Obj.Value);
-end;
-
 constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
   FModel := TConfig.Create;
   FIniFile := TIniFile.Create(Util.Methods.TMethods.GetIniPath);
-  FInvoker := TCommandManager.Create;
-  FDic := TDictionary<TFmxObject, TValue>.Create();
+  FInvoker := TCommandInvoker.Create;
 end;
 
 destructor TMain.Destroy;
@@ -123,40 +90,60 @@ begin
   FIniFile.Free;
   FModel.Free;
   FInvoker.Free;
-  FDic.Free;
   inherited;
 end;
 
-procedure TMain.ViewToModel(Obj: TObject);
-var
-  Context: TRttiContext;
-  Prop: TRttiProperty;
-  Value: TValue;
-  Ident: string;
+procedure TMain.ActionCancelExecute(Sender: TObject);
 begin
-  Context := TRttiContext.Create;
-  try
-    for Prop in Context.GetType(Obj.ClassType).GetProperties do
-    begin
-      Value := Prop.GetValue(Obj);
-      if Value.IsObject then
-      begin
-        ViewToModel(Value.AsObject);
-        Continue;
-      end;
+  if SaveChanges then ActionSave.Execute;
+  Close;
+end;
 
-      Ident := Prop.GetAtribute<TIdent>().Name;
-      Value.Assign(GetValue(Ident));
-      Prop.SetValue(Obj, Value);
-    end;
-  finally
-    Context.Free;
+procedure TMain.ActionSaveExecute(Sender: TObject);
+begin
+  ViewToModel;
+  WriteObject;
+  Close;
+end;
+
+procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
+  Shift: TShiftState);
+begin
+  if (Shift = [ssCtrl]) and (Key in [vkZ, vkU]) then
+  begin
+    FInvoker.Execute;
   end;
 end;
 
-procedure TMain.WriteObject;
+procedure TMain.FormShow(Sender: TObject);
 begin
-  FIniFile.WriteObject(FModel);
+  ReadObject;
+  ModelToView;
+end;
+
+function TMain.GetValue(const Tag: TObject): TValue;
+var
+  Index: Integer;
+  Control: TControl;
+begin
+  Result.Empty;
+  for Index := 0 to Pred(ComponentCount) do
+  begin
+    if Components[Index] is TControl then
+    begin
+      Control := Components[Index] as TControl;
+      if Tag.Equals(Control.TagObject)  then
+      begin
+        Result := Control.Value;
+        Break;
+      end;
+    end;
+  end;
+end;
+
+procedure TMain.ModelToView;
+begin
+  ModelToView(FModel, TabControlWizard);
 end;
 
 procedure TMain.ModelToView(Obj: TObject; Parent: TControl);
@@ -195,7 +182,6 @@ begin
       Factory := CreateFactory(DTO);
 
       Control := Factory.New(DTO);
-      FDic.Add(Control, Control.Value);
 
       if not DTO.Value.IsObject then
         Continue;
@@ -207,52 +193,78 @@ begin
   end;
 end;
 
+procedure TMain.Notify(Sender: TObject);
+var
+  Control: TControl;
+begin
+  Control := Sender as TControl;
+
+  if not Control.HasChanges then
+    Exit;
+
+  FInvoker.Add(TUndoableCommand.Create(Control));
+  Control.OldValue := Control.Value.ToString;
+end;
+
 procedure TMain.ReadObject;
 begin
   FIniFile.ReadObject(FModel);
 end;
 
-procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
-  Shift: TShiftState);
-begin
-  if (Shift = [ssCtrl]) and (Key in [vkZ, vkU]) then
-    FInvoker.Execute;
-end;
-
-procedure TMain.FormShow(Sender: TObject);
-begin
-  ReadObject;
-  ModelToView;
-end;
-
-function TMain.GetValue(const Tag: string): TValue;
+function TMain.SaveChanges: Boolean;
 var
-  Index: Integer;
-  FMXObject: TFmxObject;
+  ModalResult: TModalResult;
 begin
-  Result.Empty;
-  for Index := 0 to Pred(ComponentCount) do
+  Result := False;
+  if not FInvoker.IsEmpty then
   begin
-    if not (Components[Index] is TFmxObject) then
-      Continue;
-
-    FMXObject := Components[Index] as TFmxObject;
-    if FMXObject.TagString = Tag then
-    begin
-      Result := FMXObject.Value;
-      Break;
-    end;
+    TDialogService.MessageDialog(
+      'Deseja salvar as alterações?',
+      TMsgDlgType.mtConfirmation,
+      [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo],
+      TMsgDlgBtn.mbYes, 0,
+      procedure(const AResult: TModalResult)
+      begin
+        ModalResult := AResult;
+      end);
+    Result := ModalResult = mrYes;
   end;
-end;
-
-procedure TMain.ModelToView;
-begin
-  ModelToView(FModel, TabControlWizard);
 end;
 
 procedure TMain.ViewToModel;
 begin
   ViewToModel(FModel);
+end;
+
+procedure TMain.ViewToModel(Obj: TObject);
+var
+  Context: TRttiContext;
+  Prop: TRttiProperty;
+  Value: TValue;
+  Ident: TIdent;
+begin
+  Context := TRttiContext.Create;
+  try
+    for Prop in Context.GetType(Obj.ClassType).GetProperties do
+    begin
+      Value := Prop.GetValue(Obj);
+      if Value.IsObject then
+        ViewToModel(Value.AsObject)
+      else
+      begin
+        Ident := Prop.GetAtribute<TIdent>();
+        Value.Assign(GetValue(Ident));
+        Prop.SetValue(Obj, Value);
+      end;
+    end;
+  finally
+    Context.Free;
+  end;
+end;
+
+procedure TMain.WriteObject;
+begin
+  FIniFile.WriteObject(FModel);
 end;
 
 end.
