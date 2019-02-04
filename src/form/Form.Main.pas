@@ -67,7 +67,8 @@ type
 
     { Utils }
     function GetModelValue(const Control: TControl): TValue;
-    procedure UpdateModel(const Control: TControl);
+    procedure SetModelValue(const Control: TControl);
+    
     function SaveChanges: Boolean;
     procedure Notify(Sender: TObject);
   public
@@ -125,10 +126,15 @@ begin
 end;
 
 function TMain.GetModelValue(const Control: TControl): TValue;
+var
+  Binding: TBinding;
 begin
   Result.Empty;
   if FDic.ContainsKey(Control) then
-    Result := FDIc.Items[Control].Value.GetValue(FDic.Items[Control].Key);
+  begin
+    Binding := FDic.Items[Control];
+    Result := Binding.Value.GetValue(Binding.Key);
+  end;
 end;
 
 procedure TMain.ModelToView;
@@ -199,7 +205,7 @@ begin
     
   Receiver := TReceiver.Create(Control, OldValue);
   FInvoker.Add(TUndoableCommand.Create(Receiver));
-  UpdateModel(Control);
+  SetModelValue(Control);
 end;
 
 procedure TMain.ReadObject;
@@ -227,19 +233,17 @@ begin
   end;
 end;
 
-procedure TMain.UpdateModel(const Control: TControl);
+procedure TMain.SetModelValue(const Control: TControl);
 var
   Binding: TBinding;
-  V1, V2: TValue;
+  Value: TValue;
 begin
-  if not FDic.ContainsKey(Control) then
-    Exit;
-
-  Binding := FDic.Items[Control];
-  V1 := Binding.Value.GetValue(Binding.Key);
-  V2 := Control.Data;
-
-  Binding.Value.SetValue(Binding.Key, V1.Assign(V2));
+  if FDic.ContainsKey(Control) then
+  begin
+    Binding := FDic.Items[Control];
+    Value := Binding.Value.GetValue(Binding.Key);
+    Binding.Value.SetValue(Binding.Key, Value.Assign(Control.Value));
+  end;
 end;
 
 procedure TMain.WriteObject;
