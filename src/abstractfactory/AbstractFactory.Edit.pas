@@ -42,8 +42,7 @@ begin
   Edit.Parent     := DTO.Parent;
   Edit.Position.X := DTO.X;
   Edit.Position.Y := DTO.Y;
-  Edit.Data      := DTO.Value;
-  Edit.OldValue   := DTO.Value;
+  Edit.Value      := DTO.Value;
   Edit.TagObject  := DTO.Ident;
   Edit.Width      := 400;
   Edit.OnExit     := DTO.OnChange;

@@ -14,14 +14,9 @@ type
   TControlHelper = class Helper for TControl
   private
     function GetValue: TValue;
-    procedure SetValue(const NewValue: TValue);
-    function GetOldValue: TValue;
-    procedure SetOldValue(const Value: TValue);
-    function GetHasChanges: Boolean;
+    procedure SetValue(const Value: TValue);
   public
     property Value: TValue read GetValue write SetValue;
-    property OldValue: TValue read GetOldValue write SetOldValue;
-    property HasChanges: Boolean read GetHasChanges;
   end;
 
   TComboBoxHelper = class Helper for TComboBox
@@ -52,29 +47,14 @@ end;
 
 { TControlHelper }
 
-function TControlHelper.GetHasChanges: Boolean;
-begin
-  Result := not Value.Equals(OldValue);
-end;
-
-function TControlHelper.GetOldValue: TValue;
-begin
-  Result := TagString;
-end;
-
 function TControlHelper.GetValue: TValue;
 begin
   Result := Data;
 end;
 
-procedure TControlHelper.SetOldValue(const Value: TValue);
+procedure TControlHelper.SetValue(const Value: TValue);
 begin
-  TagString := Value.ToString;
-end;
-
-procedure TControlHelper.SetValue(const NewValue: TValue);
-begin
-  Data := NewValue;
+  Data := Value;
 end;
 
 end.

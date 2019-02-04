@@ -31,7 +31,6 @@ begin
   CheckBox.Position.X := DTO.X;
   CheckBox.Position.Y := DTO.Y;
   CheckBox.Value      := DTO.Value;
-  CheckBox.OldValue   := DTO.Value;
   CheckBox.Text       := DTO.Control.Text;
   CheckBox.TagObject  := DTO.Ident;
   CheckBox.Width      := 400;
