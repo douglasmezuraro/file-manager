@@ -12,6 +12,7 @@ uses
   Attribute.Control,
   Attribute.Ident,
   Command.Invoker,
+  Command.Receiver,
   Command.Undoable,
   FMX.ActnList,
   FMX.Controls,
@@ -65,6 +66,7 @@ type
     procedure WriteObject;
 
     { Utils }
+    function GetModelValue(const Control: TControl): TValue;
     procedure UpdateModel(const Control: TControl);
     function SaveChanges: Boolean;
     procedure Notify(Sender: TObject);
@@ -120,6 +122,13 @@ procedure TMain.FormShow(Sender: TObject);
 begin
   ReadObject;
   ModelToView;
+end;
+
+function TMain.GetModelValue(const Control: TControl): TValue;
+begin
+  Result.Empty;
+  if FDic.ContainsKey(Control) then
+    Result := FDIc.Items[Control].Value.GetValue(FDic.Items[Control].Key);
 end;
 
 procedure TMain.ModelToView;
@@ -178,15 +187,19 @@ end;
 procedure TMain.Notify(Sender: TObject);
 var
   Control: TControl;
+  Receiver: TReceiver;
+  OldValue: TValue;
 begin
   Control := Sender as TControl;
 
-  if not Control.HasChanges then
+  OldValue := GetModelValue(Control);
+  
+  if Control.Value.Equals(OldValue) then
     Exit;
-
-  FInvoker.Add(TUndoableCommand.Create(Control));
+    
+  Receiver := TReceiver.Create(Control, OldValue);
+  FInvoker.Add(TUndoableCommand.Create(Receiver));
   UpdateModel(Control);
-  Control.OldValue := Control.Value.ToString;
 end;
 
 procedure TMain.ReadObject;
