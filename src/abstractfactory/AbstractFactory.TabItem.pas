@@ -28,7 +28,6 @@ begin
   if DTO.Parent is TTabControl then
   begin
     Control      := (DTO.Parent as TTabControl).Add;
-    Control.Name := Format('%s_%s', [DTO.Parent.GetObject.Name, DTO.IniAttribute.Name]).ToUpper;
     Control.Text := DTO.ControlAttribute.Text;
     Result       := Control;
   end;

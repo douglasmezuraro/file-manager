@@ -26,7 +26,6 @@ var
   Control: TCheckBox;
 begin
   Control            := TCheckBox.Create(DTO.Owner);
-  Control.Name       := Format('%s_%s', [DTO.Parent.GetObject.Name, DTO.IniAttribute.Name]).ToUpper;
   Control.Parent     := DTO.Parent.GetObject;
   Control.Position.X := DTO.X;
   Control.Position.Y := DTO.Y;
