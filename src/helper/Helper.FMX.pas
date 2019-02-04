@@ -40,9 +40,9 @@ procedure TComboBoxHelper.SetValues(const Values: TArray<string>);
 var
   Value: string;
 begin
-  Items.Clear;
+  Self.Items.Clear;
   for Value in Values do
-    Items.Add(Value);
+    Self.Items.Add(Value);
 end;
 
 { TControlHelper }
@@ -50,11 +50,15 @@ end;
 function TControlHelper.GetValue: TValue;
 begin
   Result := Data;
+  if Self is TComboBox then
+    Result := (Self as TComboBox).Selected.Text;
 end;
 
 procedure TControlHelper.SetValue(const Value: TValue);
 begin
   Data := Value;
+  if Self is TComboBox then
+    (Self as TComboBox).ItemIndex := (Self as TComboBox).Items.IndexOf(Value.AsString);
 end;
 
 end.

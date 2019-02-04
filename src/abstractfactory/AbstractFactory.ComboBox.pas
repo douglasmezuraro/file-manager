@@ -38,15 +38,15 @@ begin
   DTO.Y := DTO.Y + Caption.Height + 5;
 
   { ComboBox }
-  ComboBox            := TComboBox.Create(DTO.Owner);
-  ComboBox.Parent     := DTO.Parent;
-  ComboBox.Position.X := DTO.X;
-  ComboBox.Position.Y := DTO.Y;
-  ComboBox.Values     := DTO.Control.Values;
-  ComboBox.Value      := DTO.Value;
-  ComboBox.TagObject  := DTO.Ident;
-  ComboBox.OnExit     := DTO.OnChange;
-  ComboBox.Width      := 400;
+  ComboBox              := TComboBox.Create(DTO.Owner);
+  ComboBox.Parent       := DTO.Parent;
+  ComboBox.Position.X   := DTO.X;
+  ComboBox.Position.Y   := DTO.Y;
+  ComboBox.Values       := DTO.Control.Values;
+  ComboBox.Value        := DTO.Value;
+  ComboBox.TagObject    := DTO.Ident;
+  ComboBox.OnExit       := DTO.OnChange;
+  ComboBox.Width        := 400;
 
   DTO.Y := DTO.Y + ComboBox.Height + 10;
 
