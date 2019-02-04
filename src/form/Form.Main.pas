@@ -32,6 +32,7 @@ uses
   System.Generics.Collections,
   System.IniFiles,
   System.Rtti,
+  System.SysUtils,
   System.UITypes,
   Util.Methods, FMX.Edit;
 
@@ -59,19 +60,15 @@ type
     FInvoker: TCommandInvoker;
 
     { ModelToView }
-    procedure ModelToView; overload;
-    procedure ModelToView(Obj: TObject; Parent: TControl); overload;
-
-    { Read/Write }
-    procedure ReadObject;
-    procedure WriteObject;
+    procedure ModelToView(Obj: TObject; Parent: TControl);
 
     { Utils }
     function GetModelValue(const Control: TControl): TValue;
     procedure SetModelValue(const Control: TControl);
-    
+
     function SaveChanges: Boolean;
     procedure Notify(Sender: TObject);
+    procedure ExecuteWithDisabledContols(Proc: TProc);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -87,7 +84,7 @@ begin
   FModel := TConfig.Create;
   FIniFile := TIniFile.Create(Util.Methods.TMethods.GetIniPath);
   FInvoker := TCommandInvoker.Create;
-  FDic := TDic.Create();
+  FDic := TDic.Create;
 end;
 
 destructor TMain.Destroy;
@@ -99,6 +96,19 @@ begin
   inherited;
 end;
 
+procedure TMain.ExecuteWithDisabledContols(Proc: TProc);
+var
+  Control: TControl;
+begin
+  for Control in FDic.Keys do
+    Control.OnExit := nil;
+
+  Proc;
+
+  for Control in FDic.Keys do
+    Control.OnExit := Notify;
+end;
+
 procedure TMain.ActionCancelExecute(Sender: TObject);
 begin
   if SaveChanges then ActionSave.Execute;
@@ -107,7 +117,7 @@ end;
 
 procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
-  WriteObject;
+  FIniFile.WriteObject(FModel);
   Close;
 end;
 
@@ -116,15 +126,18 @@ procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
 begin
   if (Shift = [ssCtrl]) and (Key in [vkZ, vkU]) then
   begin
-    Self.Notify(TControl(GetFocused));
-    FInvoker.Execute;
+    ExecuteWithDisabledContols(
+      procedure
+      begin
+        FInvoker.Execute;
+      end);
   end;
 end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
-  ReadObject;
-  ModelToView;
+  FIniFile.ReadObject(FModel);
+  ModelToView(FModel, TabControlWizard);
 end;
 
 function TMain.GetModelValue(const Control: TControl): TValue;
@@ -137,11 +150,6 @@ begin
     Binding := FDic.Items[Control];
     Result := Binding.Value.GetValue(Binding.Key);
   end;
-end;
-
-procedure TMain.ModelToView;
-begin
-  ModelToView(FModel, TabControlWizard);
 end;
 
 procedure TMain.ModelToView(Obj: TObject; Parent: TControl);
@@ -210,29 +218,9 @@ begin
   SetModelValue(Control);
 end;
 
-procedure TMain.ReadObject;
-begin
-  FIniFile.ReadObject(FModel);
-end;
-
 function TMain.SaveChanges: Boolean;
-var
-  ModalResult: TModalResult;
 begin
   Result := False;
-  if not FInvoker.IsEmpty then
-  begin
-    TDialogService.MessageDialog(
-      'Deseja salvar as alterações?',
-      TMsgDlgType.mtConfirmation,
-      [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo],
-      TMsgDlgBtn.mbYes, 0,
-      procedure(const AResult: TModalResult)
-      begin
-        ModalResult := AResult;
-      end);
-    Result := ModalResult = mrYes;
-  end;
 end;
 
 procedure TMain.SetModelValue(const Control: TControl);
@@ -246,11 +234,6 @@ begin
     Value := Binding.Value.GetValue(Binding.Key);
     Binding.Value.SetValue(Binding.Key, Value.Assign(Control.Value));
   end;
-end;
-
-procedure TMain.WriteObject;
-begin
-  FIniFile.WriteObject(FModel);
 end;
 
 end.
