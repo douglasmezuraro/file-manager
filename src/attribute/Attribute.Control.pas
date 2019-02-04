@@ -6,7 +6,7 @@ uses
   System.SysUtils;
 
 type
-  TControl = class(TCustomAttribute)
+  TControlAttribute = class(TCustomAttribute)
   private
     FText: string;
     FValues: TArray<string>;
@@ -20,7 +20,7 @@ implementation
 
 { TControl }
 
-constructor TControl.Create(const Text, Values: string);
+constructor TControlAttribute.Create(const Text, Values: string);
 begin
   FText := Text;
   FValues := Values.Split([';']);

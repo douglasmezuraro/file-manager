@@ -10,7 +10,6 @@ uses
   AbstractFactory.Edit,
   AbstractFactory.TabItem,
   Attribute.Control,
-  Attribute.Ident,
   Attribute.Ini,
   Command.Invoker,
   Command.Receiver,
@@ -22,7 +21,6 @@ uses
   FMX.StdCtrls,
   FMX.TabControl,
   FMX.Types,
-  FMX.DialogService,
   Helper.FMX,
   Helper.Ini,
   Helper.Rtti,
@@ -34,7 +32,8 @@ uses
   System.Rtti,
   System.SysUtils,
   System.UITypes,
-  Util.Methods, FMX.Edit;
+  Util.Methods,
+  Util.Types;
 
 type
   TMain = class(TForm)
@@ -50,17 +49,14 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
       Shift: TShiftState);
-  private type
-    TBinding = TPair<TObject, TRttiProperty>;
-    TDic = TDictionary<TControl, TBinding>;
   private
-    FDic: TDic;
+    FControlBinding: TControlBinding;
     FModel: TConfig;
     FIniFile: TIniFile;
     FInvoker: TCommandInvoker;
 
     { ModelToView }
-    procedure ModelToView(Obj: TObject; Parent: TControl);
+    procedure ModelToView(Obj: TObject; Parent: IControl);
 
     { Utils }
     function GetModelValue(const Control: TControl): TValue;
@@ -68,7 +64,7 @@ type
 
     function SaveChanges: Boolean;
     procedure Notify(Sender: TObject);
-    procedure ExecuteWithDisabledContols(Proc: TProc);
+    procedure ExecuteWithDisabledControls(Proc: TProc);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -84,7 +80,7 @@ begin
   FModel := TConfig.Create;
   FIniFile := TIniFile.Create(Util.Methods.TMethods.GetIniPath);
   FInvoker := TCommandInvoker.Create;
-  FDic := TDic.Create;
+  FControlBinding := TControlBinding.Create;
 end;
 
 destructor TMain.Destroy;
@@ -92,26 +88,27 @@ begin
   FIniFile.Free;
   FModel.Free;
   FInvoker.Free;
-  FDic.Free;
+  FControlBinding.Free;
   inherited;
 end;
 
-procedure TMain.ExecuteWithDisabledContols(Proc: TProc);
+procedure TMain.ExecuteWithDisabledControls(Proc: TProc);
 var
-  Control: TControl;
+  Control: IControl;
 begin
-  for Control in FDic.Keys do
-    Control.OnExit := nil;
+  for Control in FControlBinding.Keys do
+    TControl(Control).OnExit := nil;
 
   Proc;
 
-  for Control in FDic.Keys do
-    Control.OnExit := Notify;
+  for Control in FControlBinding.Keys do
+     TControl(Control).OnExit:= Notify;
 end;
 
 procedure TMain.ActionCancelExecute(Sender: TObject);
 begin
-  if SaveChanges then ActionSave.Execute;
+  if SaveChanges then
+    ActionSave.Execute;
   Close;
 end;
 
@@ -124,13 +121,9 @@ end;
 procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
   Shift: TShiftState);
 begin
-  if (Shift = [ssCtrl]) and (Key in [vkZ, vkU]) then
+  if (Shift = [ssCtrl]) and (Key = vkZ) then
   begin
-    ExecuteWithDisabledContols(
-      procedure
-      begin
-        FInvoker.Execute;
-      end);
+    ExecuteWithDisabledControls(FInvoker.Execute);
   end;
 end;
 
@@ -142,17 +135,17 @@ end;
 
 function TMain.GetModelValue(const Control: TControl): TValue;
 var
-  Binding: TBinding;
+  Binding: TPropertyBinding;
 begin
   Result.Empty;
-  if FDic.ContainsKey(Control) then
+  if FControlBinding.ContainsKey(Control) then
   begin
-    Binding := FDic.Items[Control];
+    Binding := FControlBinding.Items[Control];
     Result := Binding.Value.GetValue(Binding.Key);
   end;
 end;
 
-procedure TMain.ModelToView(Obj: TObject; Parent: TControl);
+procedure TMain.ModelToView(Obj: TObject; Parent: IControl);
 
   function CreateFactory(DTO: TDTO): IAbstractFactory;
   begin
@@ -160,7 +153,7 @@ procedure TMain.ModelToView(Obj: TObject; Parent: TControl);
       Result := TTabItemFactory.Create
     else if DTO.Value.IsBoolean then
       Result := TCheckBoxFactory.Create
-    else if Length(DTO.Control.Values) > 0 then
+    else if Length(DTO.ControlAttribute.Values) > 0 then
       Result := TComboBoxFactory.Create
     else
       Result := TEditFactory.Create;
@@ -171,24 +164,24 @@ var
   Prop: TRttiProperty;
   Factory: IAbstractFactory;
   DTO: TDTO;
-  Control: TControl;
+  Control: IControl;
 begin
   Context := TRttiContext.Create;
   try
     DTO := TDTO.Create(10, 10);
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
     begin
-      DTO.Owner    := Self;
-      DTO.Parent   := Parent;
-      DTO.Value    := Prop.GetValue(Obj);
-      DTO.Control  := Prop.GetAtribute<Attribute.Control.TControl>();
-      DTO.Ident    := Prop.GetAtribute<Attribute.Ini.TIniAttribute>();
-      DTO.OnChange := Notify;
+      DTO.Owner            := Self;
+      DTO.Parent           := Parent;
+      DTO.Value            := Prop.GetValue(Obj);
+      DTO.ControlAttribute := Prop.GetAtribute<TControlAttribute>();
+      DTO.IniAttribute     := Prop.GetAtribute<TIniAttribute>();
+      DTO.OnNotify         := Notify;
 
       Factory := CreateFactory(DTO);
 
-      Control := Factory.New(DTO);
-      FDic.Add(Control, TBinding.Create(Obj, Prop));
+      Control := Factory.Fabricate(DTO);
+      FControlBinding.Add(Control, TPropertyBinding.Create(Obj, Prop));
 
       if not DTO.Value.IsObject then
         Continue;
@@ -209,10 +202,10 @@ begin
   Control := Sender as TControl;
 
   OldValue := GetModelValue(Control);
-  
+
   if Control.Value.Equals(OldValue) then
     Exit;
-    
+
   Receiver := TReceiver.Create(Control, OldValue);
   FInvoker.Add(TUndoableCommand.Create(Receiver));
   SetModelValue(Control);
@@ -225,12 +218,12 @@ end;
 
 procedure TMain.SetModelValue(const Control: TControl);
 var
-  Binding: TBinding;
+  Binding: TPropertyBinding;
   Value: TValue;
 begin
-  if FDic.ContainsKey(Control) then
+  if FControlBinding.ContainsKey(Control) then
   begin
-    Binding := FDic.Items[Control];
+    Binding := FControlBinding.Items[Control];
     Value := Binding.Value.GetValue(Binding.Key);
     Binding.Value.SetValue(Binding.Key, Value.Assign(Control.Value));
   end;

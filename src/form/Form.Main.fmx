@@ -3,7 +3,7 @@ object Main: TMain
   Top = 0
   Caption = 'Form1'
   ClientHeight = 480
-  ClientWidth = 578
+  ClientWidth = 603
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -13,7 +13,7 @@ object Main: TMain
   object PanelButtons: TPanel
     Align = Bottom
     Position.Y = 435.000000000000000000
-    Size.Width = 578.000000000000000000
+    Size.Width = 603.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
@@ -22,7 +22,7 @@ object Main: TMain
       Align = Right
       Enabled = True
       ImageIndex = -1
-      Position.X = 478.000000000000000000
+      Position.X = 503.000000000000000000
       Size.Width = 100.000000000000000000
       Size.Height = 45.000000000000000000
       Size.PlatformDefault = False
@@ -41,10 +41,11 @@ object Main: TMain
   end
   object TabControlWizard: TTabControl
     Align = Client
-    Size.Width = 578.000000000000000000
+    FullSize = False
+    Size.Width = 603.000000000000000000
     Size.Height = 435.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 0
+    StyleLookup = 'TabControlWizardStyle1'
     TabOrder = 2
     TabPosition = PlatformDefault
   end

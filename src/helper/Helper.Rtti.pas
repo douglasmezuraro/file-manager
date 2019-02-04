@@ -48,7 +48,7 @@ type
 
   TRttiPropertyHelper = class Helper for TRttiProperty
   public
-    function GetAtribute<T: class>: T;
+    function GetAtribute<T: class>(): T;
   end;
 
 implementation
@@ -263,7 +263,7 @@ end;
 
 { TRttiPropertyHelper }
 
-function TRttiPropertyHelper.GetAtribute<T>: T;
+function TRttiPropertyHelper.GetAtribute<T>(): T;
 var
   Attribute: TCustomAttribute;
 begin

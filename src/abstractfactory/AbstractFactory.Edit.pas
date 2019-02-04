@@ -7,31 +7,29 @@ uses
   AbstractFactory.DTO,
   FMX.Controls,
   FMX.Edit,
-  FMX.Graphics,
   FMX.StdCtrls,
   FMX.Types,
   Helper.FMX,
-  System.Rtti,
   System.SysUtils;
 
 type
   TEditFactory = class(TInterfacedObject, IAbstractFactory)
   public
-    function New(var DTO: TDTO): TControl;
+    function Fabricate(var DTO: TDTO): IControl;
   end;
 
 implementation
 
 { TEditFactory }
 
-function TEditFactory.New(var DTO: TDTO): TControl;
+function TEditFactory.Fabricate(var DTO: TDTO): IControl;
 var
   Caption: TLabel;
   Control: TEdit;
 begin
   Caption            := TLabel.Create(DTO.Owner);
-  Caption.Parent     := DTO.Parent;
-  Caption.Text       := DTO.Control.Text;
+  Caption.Parent     := DTO.Parent.GetObject;
+  Caption.Text       := DTO.ControlAttribute.Text;
   Caption.Position.X := DTO.X;
   Caption.Position.Y := DTO.Y;
   Caption.Width      := 400;
@@ -40,14 +38,13 @@ begin
 
   { Edit }
   Control            := TEdit.Create(DTO.Owner);
-  Control.Name       := Format('%s_%s', [DTO.Parent.Name, DTO.Ident.Name]).ToUpper;
-  Control.Parent     := DTO.Parent;
+  Control.Name       := Format('%s_%s', [DTO.Parent.GetObject.Name, DTO.IniAttribute.Name]).ToUpper;
+  Control.Parent     := DTO.Parent.GetObject;
   Control.Position.X := DTO.X;
   Control.Position.Y := DTO.Y;
   Control.Value      := DTO.Value;
-  Control.TagObject  := DTO.Ident;
   Control.Width      := 400;
-  Control.OnExit     := DTO.OnChange;
+  Control.OnExit     := DTO.OnNotify;
 
   DTO.Y := DTO.Y + Control.Height + 10;
 

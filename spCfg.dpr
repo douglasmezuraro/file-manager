@@ -36,7 +36,8 @@ uses
   Command.Invoker in 'src\command\Command.Invoker.pas',
   Command.Undoable in 'src\command\Command.Undoable.pas',
   Command.API in 'src\command\Command.API.pas',
-  Command.Receiver in 'src\command\Command.Receiver.pas';
+  Command.Receiver in 'src\command\Command.Receiver.pas',
+  Util.Types in 'src\util\Util.Types.pas';
 
 {$R *.res}
 

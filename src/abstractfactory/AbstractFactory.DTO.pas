@@ -12,24 +12,24 @@ uses
 type
   TDTO = record
   private
-    FParent: TFmxObject;
+    FParent: IControl;
     FOwner: TComponent;
     FX: Single;
     FY: Single;
     FValue: TValue;
-    FControl: TControl;
+    FControl: TControlAttribute;
+    FOnNotify: TNotifyEvent;
     FIniAttribute: TIniAttribute;
-    FOnChange: TNotifyEvent;
   public
     constructor Create(const X, Y: Single);
     property Owner: TComponent read FOwner write FOwner;
-    property Parent: TFmxObject read FParent write FParent;
+    property Parent: IControl read FParent write FParent;
     property X: Single read FX write FX;
     property Y: Single read FY write FY;
     property Value: TValue read FValue write FValue;
-    property Ident: TIniAttribute read FIniAttribute write FIniAttribute;
-    property Control: TControl read FControl write FControl;
-    property OnChange: TNotifyEvent read FOnChange write FOnChange;
+    property ControlAttribute: TControlAttribute read FControl write FControl;
+    property OnNotify: TNotifyEvent read FOnNotify write FOnNotify;
+    property IniAttribute: TIniAttribute read FIniAttribute write FIniAttribute;
   end;
 
 implementation

@@ -6,37 +6,34 @@ uses
   AbstractFactory.API,
   AbstractFactory.DTO,
   FMX.Controls,
-  FMX.Graphics,
   FMX.StdCtrls,
   FMX.Types,
   Helper.FMX,
-  System.Rtti,
   System.SysUtils;
 
 type
   TCheckBoxFactory = class(TInterfacedObject, IAbstractFactory)
   public
-    function New(var DTO: TDTO): TControl;
+    function Fabricate(var DTO: TDTO): IControl;
   end;
 
 implementation
 
 { TCheckBoxFactory }
 
-function TCheckBoxFactory.New(var DTO: TDTO): TControl;
+function TCheckBoxFactory.Fabricate(var DTO: TDTO): IControl;
 var
   Control: TCheckBox;
 begin
   Control            := TCheckBox.Create(DTO.Owner);
-  Control.Name       := Format('%s_%s', [DTO.Parent.Name, DTO.Ident.Name]).ToUpper;
-  Control.Parent     := DTO.Parent;
+  Control.Name       := Format('%s_%s', [DTO.Parent.GetObject.Name, DTO.IniAttribute.Name]).ToUpper;
+  Control.Parent     := DTO.Parent.GetObject;
   Control.Position.X := DTO.X;
   Control.Position.Y := DTO.Y;
   Control.Value      := DTO.Value;
-  Control.Text       := DTO.Control.Text;
-  Control.TagObject  := DTO.Ident;
+  Control.Text       := DTO.ControlAttribute.Text;
   Control.Width      := 400;
-  Control.OnExit     := DTO.OnChange;
+  Control.OnExit     := DTO.OnNotify;
 
   DTO.Y := DTO.Y + Control.Height + 10;
 
