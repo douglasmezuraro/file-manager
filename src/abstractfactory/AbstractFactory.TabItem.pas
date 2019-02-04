@@ -10,7 +10,8 @@ uses
   FMX.StdCtrls,
   FMX.TabControl,
   FMX.Types,
-  System.Rtti;
+  System.Rtti,
+  System.SysUtils;
 
 type
   TTabItemFactory = class(TInterfacedObject, IAbstractFactory)
@@ -24,14 +25,15 @@ implementation
 
 function TTabItemFactory.New(var DTO: TDTO): TControl;
 var
-  TabItem: TTabItem;
+  Control: TTabItem;
 begin
   Result := nil;
   if DTO.Parent is TTabControl then
   begin
-    TabItem := (DTO.Parent as TTabControl).Add;
-    TabItem.Text := DTO.Control.Text;
-    Result := TabItem;
+    Control      := (DTO.Parent as TTabControl).Add;
+    Control.Name := Format('%s_%s', [DTO.Parent.Name, DTO.Ident.Name]).ToUpper;
+    Control.Text := DTO.Control.Text;
+    Result       := Control;
   end;
 end;
 

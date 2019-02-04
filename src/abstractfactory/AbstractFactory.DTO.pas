@@ -4,7 +4,7 @@ interface
 
 uses
   Attribute.Control,
-  Attribute.Ident,
+  Attribute.Ini,
   FMX.Types,
   System.Classes,
   System.Rtti;
@@ -18,7 +18,7 @@ type
     FY: Single;
     FValue: TValue;
     FControl: TControl;
-    FIdent: TIdent;
+    FIniAttribute: TIniAttribute;
     FOnChange: TNotifyEvent;
   public
     constructor Create(const X, Y: Single);
@@ -27,7 +27,7 @@ type
     property X: Single read FX write FX;
     property Y: Single read FY write FY;
     property Value: TValue read FValue write FValue;
-    property Ident: TIdent read FIdent write FIdent;
+    property Ident: TIniAttribute read FIniAttribute write FIniAttribute;
     property Control: TControl read FControl write FControl;
     property OnChange: TNotifyEvent read FOnChange write FOnChange;
   end;

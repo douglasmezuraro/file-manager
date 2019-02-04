@@ -11,7 +11,8 @@ uses
   FMX.StdCtrls,
   FMX.Types,
   Helper.FMX,
-  System.Rtti;
+  System.Rtti,
+  System.SysUtils;
 
 type
   TComboBoxFactory = class(TInterfacedObject, IAbstractFactory)
@@ -26,7 +27,7 @@ implementation
 function TComboBoxFactory.New(var DTO: TDTO): TControl;
 var
   Caption: TLabel;
-  ComboBox: TComboBox;
+  Control: TComboBox;
 begin
   Caption            := TLabel.Create(DTO.Owner);
   Caption.Parent     := DTO.Parent;
@@ -38,19 +39,20 @@ begin
   DTO.Y := DTO.Y + Caption.Height + 5;
 
   { ComboBox }
-  ComboBox              := TComboBox.Create(DTO.Owner);
-  ComboBox.Parent       := DTO.Parent;
-  ComboBox.Position.X   := DTO.X;
-  ComboBox.Position.Y   := DTO.Y;
-  ComboBox.Values       := DTO.Control.Values;
-  ComboBox.Value        := DTO.Value;
-  ComboBox.TagObject    := DTO.Ident;
-  ComboBox.OnExit       := DTO.OnChange;
-  ComboBox.Width        := 400;
+  Control              := TComboBox.Create(DTO.Owner);
+  Control.Name         := Format('%s_%s', [DTO.Parent.Name, DTO.Ident.Name]).ToUpper;
+  Control.Parent       := DTO.Parent;
+  Control.Position.X   := DTO.X;
+  Control.Position.Y   := DTO.Y;
+  Control.Values       := DTO.Control.Values;
+  Control.Value        := DTO.Value;
+  Control.TagObject    := DTO.Ident;
+  Control.OnExit       := DTO.OnChange;
+  Control.Width        := 400;
 
-  DTO.Y := DTO.Y + ComboBox.Height + 10;
+  DTO.Y := DTO.Y + Control.Height + 10;
 
-  Result := ComboBox;
+  Result := Control;
 end;
 
 end.

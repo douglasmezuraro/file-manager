@@ -10,7 +10,8 @@ uses
   FMX.StdCtrls,
   FMX.Types,
   Helper.FMX,
-  System.Rtti;
+  System.Rtti,
+  System.SysUtils;
 
 type
   TCheckBoxFactory = class(TInterfacedObject, IAbstractFactory)
@@ -24,21 +25,22 @@ implementation
 
 function TCheckBoxFactory.New(var DTO: TDTO): TControl;
 var
-  CheckBox: TCheckBox;
+  Control: TCheckBox;
 begin
-  CheckBox            := TCheckBox.Create(DTO.Owner);
-  CheckBox.Parent     := DTO.Parent;
-  CheckBox.Position.X := DTO.X;
-  CheckBox.Position.Y := DTO.Y;
-  CheckBox.Value      := DTO.Value;
-  CheckBox.Text       := DTO.Control.Text;
-  CheckBox.TagObject  := DTO.Ident;
-  CheckBox.Width      := 400;
-  CheckBox.OnExit     := DTO.OnChange;
-  
-  DTO.Y := DTO.Y + CheckBox.Height + 10;
-  
-  Result := CheckBox;
+  Control            := TCheckBox.Create(DTO.Owner);
+  Control.Name       := Format('%s_%s', [DTO.Parent.Name, DTO.Ident.Name]).ToUpper;
+  Control.Parent     := DTO.Parent;
+  Control.Position.X := DTO.X;
+  Control.Position.Y := DTO.Y;
+  Control.Value      := DTO.Value;
+  Control.Text       := DTO.Control.Text;
+  Control.TagObject  := DTO.Ident;
+  Control.Width      := 400;
+  Control.OnExit     := DTO.OnChange;
+
+  DTO.Y := DTO.Y + Control.Height + 10;
+
+  Result := Control;
 end;
 
 end.

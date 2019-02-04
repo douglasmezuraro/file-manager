@@ -11,6 +11,7 @@ uses
   AbstractFactory.TabItem,
   Attribute.Control,
   Attribute.Ident,
+  Attribute.Ini,
   Command.Invoker,
   Command.Receiver,
   Command.Undoable,
@@ -115,6 +116,7 @@ procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
 begin
   if (Shift = [ssCtrl]) and (Key in [vkZ, vkU]) then
   begin
+    Self.Notify(TControl(GetFocused));
     FInvoker.Execute;
   end;
 end;
@@ -172,7 +174,7 @@ begin
       DTO.Parent   := Parent;
       DTO.Value    := Prop.GetValue(Obj);
       DTO.Control  := Prop.GetAtribute<Attribute.Control.TControl>();
-      DTO.Ident    := Prop.GetAtribute<Attribute.Ident.TIdent>();
+      DTO.Ident    := Prop.GetAtribute<Attribute.Ini.TIniAttribute>();
       DTO.OnChange := Notify;
 
       Factory := CreateFactory(DTO);

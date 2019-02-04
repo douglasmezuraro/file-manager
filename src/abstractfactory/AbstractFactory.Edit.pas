@@ -11,7 +11,8 @@ uses
   FMX.StdCtrls,
   FMX.Types,
   Helper.FMX,
-  System.Rtti;
+  System.Rtti,
+  System.SysUtils;
 
 type
   TEditFactory = class(TInterfacedObject, IAbstractFactory)
@@ -26,7 +27,7 @@ implementation
 function TEditFactory.New(var DTO: TDTO): TControl;
 var
   Caption: TLabel;
-  Edit: TEdit;
+  Control: TEdit;
 begin
   Caption            := TLabel.Create(DTO.Owner);
   Caption.Parent     := DTO.Parent;
@@ -38,18 +39,19 @@ begin
   DTO.Y := DTO.Y + Caption.Height + 5;
 
   { Edit }
-  Edit            := TEdit.Create(DTO.Owner);
-  Edit.Parent     := DTO.Parent;
-  Edit.Position.X := DTO.X;
-  Edit.Position.Y := DTO.Y;
-  Edit.Value      := DTO.Value;
-  Edit.TagObject  := DTO.Ident;
-  Edit.Width      := 400;
-  Edit.OnExit     := DTO.OnChange;
+  Control            := TEdit.Create(DTO.Owner);
+  Control.Name       := Format('%s_%s', [DTO.Parent.Name, DTO.Ident.Name]).ToUpper;
+  Control.Parent     := DTO.Parent;
+  Control.Position.X := DTO.X;
+  Control.Position.Y := DTO.Y;
+  Control.Value      := DTO.Value;
+  Control.TagObject  := DTO.Ident;
+  Control.Width      := 400;
+  Control.OnExit     := DTO.OnChange;
 
-  DTO.Y := DTO.Y + Edit.Height + 10;
+  DTO.Y := DTO.Y + Control.Height + 10;
 
-  Result := Edit;
+  Result := Control;
 end;
 
 end.
