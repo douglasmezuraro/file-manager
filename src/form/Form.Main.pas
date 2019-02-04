@@ -47,14 +47,14 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
       Shift: TShiftState);
+  private type
+    TBinding = TPair<TObject, TRttiProperty>;
+    TDic = TDictionary<TControl, TBinding>;
   private
+    FDic: TDic;
     FModel: TConfig;
     FIniFile: TIniFile;
     FInvoker: TCommandInvoker;
-
-    { ViewToModel }
-    procedure ViewToModel; overload;
-    procedure ViewToModel(Obj: TObject); overload;
 
     { ModelToView }
     procedure ModelToView; overload;
@@ -65,7 +65,7 @@ type
     procedure WriteObject;
 
     { Utils }
-    function GetValue(const Tag: TObject): TValue;
+    procedure UpdateModel(const Control: TControl);
     function SaveChanges: Boolean;
     procedure Notify(Sender: TObject);
   public
@@ -83,6 +83,7 @@ begin
   FModel := TConfig.Create;
   FIniFile := TIniFile.Create(Util.Methods.TMethods.GetIniPath);
   FInvoker := TCommandInvoker.Create;
+  FDic := TDic.Create();
 end;
 
 destructor TMain.Destroy;
@@ -90,6 +91,7 @@ begin
   FIniFile.Free;
   FModel.Free;
   FInvoker.Free;
+  FDic.Free;
   inherited;
 end;
 
@@ -101,7 +103,6 @@ end;
 
 procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
-  ViewToModel;
   WriteObject;
   Close;
 end;
@@ -119,26 +120,6 @@ procedure TMain.FormShow(Sender: TObject);
 begin
   ReadObject;
   ModelToView;
-end;
-
-function TMain.GetValue(const Tag: TObject): TValue;
-var
-  Index: Integer;
-  Control: TControl;
-begin
-  Result.Empty;
-  for Index := 0 to Pred(ComponentCount) do
-  begin
-    if Components[Index] is TControl then
-    begin
-      Control := Components[Index] as TControl;
-      if Tag.Equals(Control.TagObject)  then
-      begin
-        Result := Control.Value;
-        Break;
-      end;
-    end;
-  end;
 end;
 
 procedure TMain.ModelToView;
@@ -182,6 +163,7 @@ begin
       Factory := CreateFactory(DTO);
 
       Control := Factory.New(DTO);
+      FDic.Add(Control, TBinding.Create(Obj, Prop));
 
       if not DTO.Value.IsObject then
         Continue;
@@ -203,6 +185,7 @@ begin
     Exit;
 
   FInvoker.Add(TUndoableCommand.Create(Control));
+  UpdateModel(Control);
   Control.OldValue := Control.Value.ToString;
 end;
 
@@ -231,35 +214,19 @@ begin
   end;
 end;
 
-procedure TMain.ViewToModel;
-begin
-  ViewToModel(FModel);
-end;
-
-procedure TMain.ViewToModel(Obj: TObject);
+procedure TMain.UpdateModel(const Control: TControl);
 var
-  Context: TRttiContext;
-  Prop: TRttiProperty;
-  Value: TValue;
-  Ident: TIdent;
+  Binding: TBinding;
+  V1, V2: TValue;
 begin
-  Context := TRttiContext.Create;
-  try
-    for Prop in Context.GetType(Obj.ClassType).GetProperties do
-    begin
-      Value := Prop.GetValue(Obj);
-      if Value.IsObject then
-        ViewToModel(Value.AsObject)
-      else
-      begin
-        Ident := Prop.GetAtribute<TIdent>();
-        Value.Assign(GetValue(Ident));
-        Prop.SetValue(Obj, Value);
-      end;
-    end;
-  finally
-    Context.Free;
-  end;
+  if not FDic.ContainsKey(Control) then
+    Exit;
+
+  Binding := FDic.Items[Control];
+  V1 := Binding.Value.GetValue(Binding.Key);
+  V2 := Control.Data;
+
+  Binding.Value.SetValue(Binding.Key, V1.Assign(V2));
 end;
 
 procedure TMain.WriteObject;

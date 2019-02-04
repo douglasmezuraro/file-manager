@@ -42,9 +42,8 @@ type
     function IsVariant: Boolean;
     function IsWord: Boolean;
 
-    procedure Assign(Value: TValue);
-    function ForceAsType<T>: T;
     function Equals(const Value: TValue): Boolean;
+    function Assign(const Value: TValue): TValue;
   end;
 
   TRttiPropertyHelper = class Helper for TRttiProperty
@@ -91,125 +90,6 @@ begin
   TryAsType<ShortInt>(Result);
 end;
 
-procedure TValueHelper.Assign(Value: TValue);
-begin
-  if TypeInfo = nil then
-  begin
-    Self := Value;
-    Exit;
-  end;
-
-  if IsBoolean then
-  begin
-    Self := Value.ForceAsType<Boolean>();
-    Exit;
-  end;
-
-  if IsByte then
-  begin
-    Self := Value.ForceAsType<Byte>();
-    Exit;
-  end;
-
-  if IsCardinal then
-  begin
-    Self := Value.ForceAsType<Cardinal>();
-    Exit;
-  end;
-
-  if IsCurrency then
-  begin
-    Self := Value.ForceAsType<Currency>();
-    Exit;
-  end;
-
-  if IsDate then
-  begin
-    Self := Value.ForceAsType<TDate>();
-    Exit;
-  end;
-
-  if IsDateTime then
-  begin
-    Self := Value.ForceAsType<TDateTime>();
-    Exit;
-  end;
-
-  if IsDouble then
-  begin
-    Self := Value.ForceAsType<Double>();
-    Exit;
-  end;
-
-  if IsInt64 then
-  begin
-    Self := Value.ForceAsType<Int64>();
-    Exit;
-  end;
-
-  if IsInteger then
-  begin
-    Self := Value.ForceAsType<Integer>();
-    Exit;
-  end;
-
-  if IsPointer then
-  begin
-    Self := Value.ForceAsType<Pointer>();
-    Exit;
-  end;
-
-  if IsShortInt then
-  begin
-    Self := Value.ForceAsType<ShortInt>();
-    Exit;
-  end;
-
-  if IsSingle then
-  begin
-    Self := Value.ForceAsType<Single>();
-    Exit;
-  end;
-
-  if IsSmallInt then
-  begin
-    Self := Value.ForceAsType<SmallInt>();
-    Exit;
-  end;
-
-  if IsString then
-  begin
-    Self := Value.ForceAsType<String>();
-    Exit;
-  end;
-
-  if IsTime then
-  begin
-    Self := Value.ForceAsType<TTime>();
-    Exit;
-  end;
-
-  if IsUInt64 then
-  begin
-    Self := Value.ForceAsType<UInt64>();
-    Exit;
-  end;
-
-//  if IsVariant then
-//  begin
-//    Self := Value.ForceAsType<Variant>();
-//    Exit;
-//  end;
-
-  if IsWord then
-  begin
-    Self := Value.ForceAsType<Word>();
-    Exit;
-  end;
-
-  raise Exception.Create('Unknown type.');
-end;
-
 function TValueHelper.AsSingle: Single;
 begin
   TryAsType<Single>(Result);
@@ -233,11 +113,6 @@ end;
 function TValueHelper.Equals(const Value: TValue): Boolean;
 begin
   Result := SameText(Self.ToString, Value.ToString);
-end;
-
-function TValueHelper.ForceAsType<T>: T;
-begin
-  TryAsType<T>(Result);
 end;
 
 function TValueHelper.IsBoolean: Boolean;
@@ -338,6 +213,52 @@ end;
 function TValueHelper.IsWord: Boolean;
 begin
   Result := TypeInfo = System.TypeInfo(Word);
+end;
+
+function TValueHelper.Assign(const Value: TValue): TValue;
+var
+  sValue: string;
+begin
+  sValue := Value.ToString;
+
+  if Self.IsBoolean then
+    Self := sValue.ToBoolean
+  else if Self.IsByte then
+    Self := StrToIntDef(sValue, 0)
+  else if Self.IsCardinal then
+    Self := StrToUIntDef(sValue, 0)
+  else if Self.IsCurrency then
+    Self := StrToCurrDef(sValue, 0)
+  else if Self.IsDate then
+    Self := StrToDateDef(sValue, 0)
+  else if Self.IsDateTime then
+    Self := strToDateTimeDef(sValue, 0)
+  else if Self.IsDouble then
+    Self := StrToFloatDef(sValue, 0)
+  else if Self.IsInt64 then
+    Self := StrToInt64Def(sValue, 0)
+  else if Self.IsInteger then
+    Self := StrToIntDef(sValue, 0)
+  else if Self.IsPointer then
+    Self := &sValue
+  else if Self.IsShortInt then
+    Self := StrToIntDef(sValue, 0)
+  else if Self.IsSingle then
+    Self := StrToFloatDef(sValue, 0)
+  else if Self.IsSmallInt then
+    Self := StrToIntDef(sValue, 0)
+  else if Self.IsString then
+    Self := sValue
+  else if Self.IsTime then
+    Self := StrToTimeDef(sValue, 0)
+  else if Self.IsUInt64 then
+    Self := StrToUInt64Def(sValue, 0)
+  else if Self.IsVariant then
+    Self := sValue
+  else if Self.IsWord then
+    Self := StrToUIntDef(sValue, 0);
+
+  Result := Self;
 end;
 
 { TRttiPropertyHelper }

@@ -5,14 +5,16 @@ interface
 uses
   FMX.Controls,
   FMX.ListBox,
+  FMX.Edit,
   Helper.Rtti,
-  System.Rtti;
+  System.Rtti,
+  System.SysUtils;
 
 type
   TControlHelper = class Helper for TControl
   private
     function GetValue: TValue;
-    procedure SetValue(const Value: TValue);
+    procedure SetValue(const NewValue: TValue);
     function GetOldValue: TValue;
     procedure SetOldValue(const Value: TValue);
     function GetHasChanges: Boolean;
@@ -62,11 +64,6 @@ end;
 
 function TControlHelper.GetValue: TValue;
 begin
-  if Self is TComboBox then
-  begin
-    Result := (Self as TComboBox).Items.Strings[(Self as TComboBox).ItemIndex];
-    Exit;
-  end;
   Result := Data;
 end;
 
@@ -75,12 +72,9 @@ begin
   TagString := Value.ToString;
 end;
 
-procedure TControlHelper.SetValue(const Value: TValue);
+procedure TControlHelper.SetValue(const NewValue: TValue);
 begin
-  if Self is TComboBox then
-    (Self as TComboBox).ItemIndex := (Self as TComboBox).Items.IndexOf(Value.AsString);
-
-  Data := Value;
+  Data := NewValue;
 end;
 
 end.
