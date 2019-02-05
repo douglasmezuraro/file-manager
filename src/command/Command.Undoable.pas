@@ -28,7 +28,8 @@ end;
 procedure TUndoableCommand.Execute;
 begin
   FReceiver.Key.Value := FReceiver.Value;
-  FReceiver.Key.SetFocus;
+  if FReceiver.Key.CanFocus then
+    FReceiver.Key.SetFocus;
 end;
 
 end.

@@ -52,15 +52,15 @@ type
     FInvoker: TCommandInvoker;
 
     { ModelToView }
-    procedure ModelToView(Obj: TObject; Parent: IControl);
+    procedure ModelToView(const Obj: TObject; const Parent: IControl);
 
     { Utils }
-    function GetModelValue(const Control: TControl): TValue;
-    procedure SetModelValue(const Control: TControl);
+    function GetModelValue(const Control: IControl): TValue;
+    procedure SetModelValue(const Control: IControl);
 
     function SaveChanges: Boolean;
     procedure Notify(Sender: TObject);
-    procedure ExecuteWithDisabledControls(Proc: TProc);
+    procedure ExecuteWithDisabledControls(const Proc: TProc);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -88,17 +88,17 @@ begin
   inherited;
 end;
 
-procedure TMain.ExecuteWithDisabledControls(Proc: TProc);
+procedure TMain.ExecuteWithDisabledControls(const Proc: TProc);
 var
   Control: IControl;
 begin
   for Control in FControlBinding.Keys do
-    TControl(Control).OnExit := nil;
+    (Control as TControl).OnExit := nil;
 
   Proc;
 
   for Control in FControlBinding.Keys do
-     TControl(Control).OnExit:= Notify;
+     (Control as TControl).OnExit := Notify;
 end;
 
 procedure TMain.ActionCancelExecute(Sender: TObject);
@@ -129,7 +129,7 @@ begin
   ModelToView(FModel, TabControlWizard);
 end;
 
-function TMain.GetModelValue(const Control: TControl): TValue;
+function TMain.GetModelValue(const Control: IControl): TValue;
 var
   Binding: TPropertyBinding;
 begin
@@ -141,7 +141,7 @@ begin
   end;
 end;
 
-procedure TMain.ModelToView(Obj: TObject; Parent: IControl);
+procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
@@ -166,10 +166,8 @@ begin
       Control := Factory.Fabricate(DTO);
       FControlBinding.Add(Control, TPropertyBinding.Create(Obj, Prop));
 
-      if not DTO.Value.IsObject then
-        Continue;
-
-      ModelToView(DTO.Value.AsObject, Control);
+      if DTO.Value.IsObject then
+        ModelToView(DTO.Value.AsObject, Control);
     end;
   finally
     Context.Free;
@@ -199,7 +197,7 @@ begin
   Result := False;
 end;
 
-procedure TMain.SetModelValue(const Control: TControl);
+procedure TMain.SetModelValue(const Control: IControl);
 var
   Binding: TPropertyBinding;
   Value: TValue;
@@ -208,7 +206,7 @@ begin
   begin
     Binding := FControlBinding.Items[Control];
     Value := Binding.Value.GetValue(Binding.Key);
-    Binding.Value.SetValue(Binding.Key, Value.Assign(Control.Value));
+    Binding.Value.SetValue(Binding.Key, Value.Assign(TControl(Control).Value));
   end;
 end;
 
