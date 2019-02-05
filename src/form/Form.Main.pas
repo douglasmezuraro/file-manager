@@ -4,11 +4,7 @@ interface
 
 uses
   AbstractFactory.API,
-  AbstractFactory.CheckBox,
-  AbstractFactory.ComboBox,
-  AbstractFactory.DTO,
-  AbstractFactory.Edit,
-  AbstractFactory.TabItem,
+  AbstractFactory.Control,
   Attribute.Control,
   Attribute.Ini,
   Command.Invoker,
@@ -146,19 +142,6 @@ begin
 end;
 
 procedure TMain.ModelToView(Obj: TObject; Parent: IControl);
-
-  function CreateFactory(DTO: TDTO): IAbstractFactory;
-  begin
-    if DTO.Value.IsObject then
-      Result := TTabItemFactory.Create
-    else if DTO.Value.IsBoolean then
-      Result := TCheckBoxFactory.Create
-    else if Length(DTO.ControlAttribute.Values) > 0 then
-      Result := TComboBoxFactory.Create
-    else
-      Result := TEditFactory.Create;
-  end;
-
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
@@ -178,7 +161,7 @@ begin
       DTO.IniAttribute     := Prop.GetAtribute<TIniAttribute>();
       DTO.OnNotify         := Notify;
 
-      Factory := CreateFactory(DTO);
+      Factory := TControlFactory.Create;
 
       Control := Factory.Fabricate(DTO);
       FControlBinding.Add(Control, TPropertyBinding.Create(Obj, Prop));

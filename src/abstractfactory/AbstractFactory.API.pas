@@ -3,8 +3,8 @@ unit AbstractFactory.API;
 interface
 
 uses
-  AbstractFactory.DTO,
-  FMX.Types;
+  FMX.Types,
+  Util.Types;
 
 type
   IAbstractFactory = interface

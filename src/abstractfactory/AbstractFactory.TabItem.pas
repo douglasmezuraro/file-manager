@@ -4,11 +4,11 @@ interface
 
 uses
   AbstractFactory.API,
-  AbstractFactory.DTO,
   FMX.Controls,
   FMX.TabControl,
   FMX.Types,
-  System.SysUtils;
+  System.SysUtils,
+  Util.Types;
 
 type
   TTabItemFactory = class(TInterfacedObject, IAbstractFactory)

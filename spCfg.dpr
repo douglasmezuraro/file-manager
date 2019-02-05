@@ -29,7 +29,6 @@ uses
   Helper.FMX in 'src\helper\Helper.FMX.pas',
   AbstractFactory.API in 'src\abstractfactory\AbstractFactory.API.pas',
   AbstractFactory.CheckBox in 'src\abstractfactory\AbstractFactory.CheckBox.pas',
-  AbstractFactory.DTO in 'src\abstractfactory\AbstractFactory.DTO.pas',
   AbstractFactory.ComboBox in 'src\abstractfactory\AbstractFactory.ComboBox.pas',
   AbstractFactory.Edit in 'src\abstractfactory\AbstractFactory.Edit.pas',
   AbstractFactory.TabItem in 'src\abstractfactory\AbstractFactory.TabItem.pas',
@@ -37,7 +36,8 @@ uses
   Command.Undoable in 'src\command\Command.Undoable.pas',
   Command.API in 'src\command\Command.API.pas',
   Command.Receiver in 'src\command\Command.Receiver.pas',
-  Util.Types in 'src\util\Util.Types.pas';
+  Util.Types in 'src\util\Util.Types.pas',
+  AbstractFactory.Control in 'src\abstractfactory\AbstractFactory.Control.pas';
 
 {$R *.res}
 

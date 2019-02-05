@@ -4,12 +4,12 @@ interface
 
 uses
   AbstractFactory.API,
-  AbstractFactory.DTO,
   FMX.Controls,
   FMX.StdCtrls,
   FMX.Types,
   Helper.FMX,
-  System.SysUtils;
+  System.SysUtils,
+  Util.Types;
 
 type
   TCheckBoxFactory = class(TInterfacedObject, IAbstractFactory)
@@ -27,14 +27,14 @@ var
 begin
   Control            := TCheckBox.Create(DTO.Owner);
   Control.Parent     := DTO.Parent.GetObject;
-  Control.Position.X := DTO.X;
-  Control.Position.Y := DTO.Y;
+  Control.Position.X := DTO.Position.X;
+  Control.Position.Y := DTO.Position.Y;
   Control.Value      := DTO.Value;
   Control.Text       := DTO.ControlAttribute.Text;
   Control.Width      := 400;
   Control.OnExit     := DTO.OnNotify;
 
-  DTO.Y := DTO.Y + Control.Height + 10;
+  DTO.Position.Y := DTO.Position.Y + Control.Height + 10;
 
   Result := Control;
 end;

@@ -123,7 +123,6 @@
         <DCCReference Include="src\helper\Helper.FMX.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.API.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.CheckBox.pas"/>
-        <DCCReference Include="src\abstractfactory\AbstractFactory.DTO.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.ComboBox.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.Edit.pas"/>
         <DCCReference Include="src\abstractfactory\AbstractFactory.TabItem.pas"/>
@@ -132,6 +131,7 @@
         <DCCReference Include="src\command\Command.API.pas"/>
         <DCCReference Include="src\command\Command.Receiver.pas"/>
         <DCCReference Include="src\util\Util.Types.pas"/>
+        <DCCReference Include="src\abstractfactory\AbstractFactory.Control.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
