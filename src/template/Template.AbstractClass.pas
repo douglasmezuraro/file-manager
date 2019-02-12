@@ -22,7 +22,7 @@ type
     procedure IncHeight(const Height: Single);
   public
     function Fabricate: IControl; virtual; abstract;
-    constructor Create(const  DTO: TDTO);
+    property DTO: TDTO read FDTO write FDTO;
   end;
 
 implementation
@@ -41,11 +41,6 @@ begin
   Caption.Width      := Self.GetWidth;
 
   Self.IncHeight(Caption.Height);
-end;
-
-constructor TControlTemplate.Create(const DTO: TDTO);
-begin
-  FDTO := DTO;
 end;
 
 function TControlTemplate.GetCaption: string;

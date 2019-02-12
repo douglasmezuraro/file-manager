@@ -4,8 +4,7 @@ interface
 
 uses
   Attribute.Control,
-  Attribute.Ident,
-  Util.Constants;
+  Attribute.Ident;
 
 type
   TDatabase = class

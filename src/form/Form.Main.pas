@@ -3,14 +3,10 @@ unit Form.Main;
 interface
 
 uses
-  Attribute.Control,
-  Attribute.Ini,
   Command.Invoker,
   Command.Receiver,
   Command.Undoable,
   FactoryMethod.Factory,
-  Template.AbstractClass,
-  Template.TabItem,
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
@@ -29,6 +25,8 @@ uses
   System.Rtti,
   System.SysUtils,
   System.UITypes,
+  Template.AbstractClass,
+  Template.TabItem,
   Util.Methods,
   Util.Types;
 
@@ -47,7 +45,7 @@ type
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
       Shift: TShiftState);
   private
-    FControlBinding: TControlBinding;
+    FBinding: TBinding;
     FModel: TConfig;
     FIniFile: TIniFile;
     FInvoker: TCommandInvoker;
@@ -56,9 +54,6 @@ type
     procedure ModelToView(const Obj: TObject; const Parent: IControl);
 
     { Utils }
-    function GetModelValue(const Control: IControl): TValue;
-    procedure SetModelValue(const Control: IControl);
-
     function SaveChanges: Boolean;
     procedure Notify(Sender: TObject);
     procedure ExecuteWithDisabledControls(const Proc: TProc);
@@ -77,7 +72,7 @@ begin
   FModel := TConfig.Create;
   FIniFile := TIniFile.Create(Util.Methods.TMethods.GetIniPath);
   FInvoker := TCommandInvoker.Create;
-  FControlBinding := TControlBinding.Create;
+  FBinding := TBinding.Create;
 end;
 
 destructor TMain.Destroy;
@@ -85,7 +80,7 @@ begin
   FIniFile.Free;
   FModel.Free;
   FInvoker.Free;
-  FControlBinding.Free;
+  FBinding.Free;
   inherited;
 end;
 
@@ -93,12 +88,12 @@ procedure TMain.ExecuteWithDisabledControls(const Proc: TProc);
 var
   Control: IControl;
 begin
-  for Control in FControlBinding.Keys do
+  for Control in FBinding.Keys do
     (Control as TControl).OnExit := nil;
 
   Proc;
 
-  for Control in FControlBinding.Keys do
+  for Control in FBinding.Keys do
      (Control as TControl).OnExit := Notify;
 end;
 
@@ -130,18 +125,6 @@ begin
   ModelToView(FModel, TabControlWizard);
 end;
 
-function TMain.GetModelValue(const Control: IControl): TValue;
-var
-  Binding: TPropertyBinding;
-begin
-  Result.Empty;
-  if FControlBinding.ContainsKey(Control) then
-  begin
-    Binding := FControlBinding.Items[Control];
-    Result := Binding.Value.GetValue(Binding.Key);
-  end;
-end;
-
 procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
 var
   Context: TRttiContext;
@@ -161,14 +144,16 @@ begin
       DTO.OnNotify := Notify;
       DTO.Model    := Obj;
 
-      Template := TFactoryMethod.Fabricate(DTO);
+      Template := TFactoryMethod.Fabricate(Obj, Prop);
       try
+        Template.DTO := DTO;
         Control := Template.Fabricate;
+        DTO := Template.DTO;
       finally
         Template.Free;
       end;
 
-      FControlBinding.Add(Control, TPropertyBinding.Create(Obj, Prop));
+      FBinding.Add(Obj, Prop, Control);
 
       if Template is TTabItemTemplate then
         ModelToView(Prop.GetValue(Obj).AsObject, Control);
@@ -186,32 +171,19 @@ var
 begin
   Control := Sender as TControl;
 
-  OldValue := GetModelValue(Control);
+  OldValue := FBinding.Values[Control];
 
   if Control.Value.Equals(OldValue) then
     Exit;
 
   Receiver := TReceiver.Create(Control, OldValue);
   FInvoker.Add(TUndoableCommand.Create(Receiver));
-  SetModelValue(Control);
+  FBinding.Values[Control] := Control.Value;
 end;
 
 function TMain.SaveChanges: Boolean;
 begin
   Result := False;
-end;
-
-procedure TMain.SetModelValue(const Control: IControl);
-var
-  Binding: TPropertyBinding;
-  Value: TValue;
-begin
-  if FControlBinding.ContainsKey(Control) then
-  begin
-    Binding := FControlBinding.Items[Control];
-    Value := Binding.Value.GetValue(Binding.Key);
-    Binding.Value.SetValue(Binding.Key, Value.Assign(TControl(Control).Value));
-  end;
 end;
 
 end.

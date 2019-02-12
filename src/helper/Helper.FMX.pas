@@ -3,13 +3,13 @@ unit Helper.FMX;
 interface
 
 uses
-  FMX.Controls,
   FMX.ListBox,
+  FMX.Types,
   Helper.Rtti,
   System.Rtti;
 
 type
-  TControlHelper = class Helper for TControl
+  TFmxObjectHelper = class Helper for TFmxObject
   private
     function GetValue: TValue;
     procedure SetValue(const Value: TValue);
@@ -43,16 +43,16 @@ begin
     Self.Items.Add(Value);
 end;
 
-{ TControlHelper }
+{ TFmxObjectHelper }
 
-function TControlHelper.GetValue: TValue;
+function TFmxObjectHelper.GetValue: TValue;
 begin
   Result := Data;
   if Self is TComboBox then
     Result := (Self as TComboBox).Selected.Text;
 end;
 
-procedure TControlHelper.SetValue(const Value: TValue);
+procedure TFMXObjectHelper.SetValue(const Value: TValue);
 begin
   Data := Value;
   if Self is TComboBox then

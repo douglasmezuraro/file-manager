@@ -10,39 +10,43 @@ uses
   Template.Edit,
   Template.TabItem,
   Helper.Rtti,
-  Util.Types;
+  System.Rtti;
 
 type
   TFactoryMethod = class
   public
-    class function Fabricate(var DTO: TDTO): TControlTemplate;
+    class function Fabricate(const Obj: TObject; const Prop: TRttiProperty): TControlTemplate;
   end;
 
 implementation
 
 { TFactory }
 
-class function TFactoryMethod.Fabricate(var DTO: TDTO): TControlTemplate;
+class function TFactoryMethod.Fabricate(const Obj: TObject; const Prop: TRttiProperty): TControlTemplate;
+var
+  Value: TValue;
 begin
-  if DTO.Prop.GetValue(DTO.Model).IsBoolean then
+  Value := Prop.GetValue(Obj);
+
+  if Value.IsBoolean then
   begin
-    Result := TCheckBoxTemplate.Create(DTO);
+    Result := TCheckBoxTemplate.Create;
     Exit;
   end;
 
-  if DTO.Prop.GetValue(DTO.Model).IsObject then
+  if Value.IsObject then
   begin
-    Result := TTabItemTemplate.Create(DTO);
+    Result := TTabItemTemplate.Create;
     Exit;
   end;
 
-  if Length(DTO.Prop.GetAtribute<TControlAttribute>.Values) > 0 then
+  if Length(Prop.GetAtribute<TControlAttribute>.Values) > 0 then
   begin
-    Result := TComboBoxTemplate.Create(DTO);
+    Result := TComboBoxTemplate.Create;
     Exit;
   end;
 
-  Result := TEditTemplate.Create(DTO);
+  Result := TEditTemplate.Create;
 end;
 
 end.
