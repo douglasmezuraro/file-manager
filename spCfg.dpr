@@ -27,17 +27,17 @@ uses
   Util.Methods in 'src\util\Util.Methods.pas',
   Attribute.Control in 'src\attribute\Attribute.Control.pas',
   Helper.FMX in 'src\helper\Helper.FMX.pas',
-  AbstractFactory.API in 'src\abstractfactory\AbstractFactory.API.pas',
-  AbstractFactory.CheckBox in 'src\abstractfactory\AbstractFactory.CheckBox.pas',
-  AbstractFactory.ComboBox in 'src\abstractfactory\AbstractFactory.ComboBox.pas',
-  AbstractFactory.Edit in 'src\abstractfactory\AbstractFactory.Edit.pas',
-  AbstractFactory.TabItem in 'src\abstractfactory\AbstractFactory.TabItem.pas',
+  Template.CheckBox in 'src\template\Template.CheckBox.pas',
+  Template.ComboBox in 'src\template\Template.ComboBox.pas',
+  Template.Edit in 'src\template\Template.Edit.pas',
+  Template.TabItem in 'src\template\Template.TabItem.pas',
   Command.Invoker in 'src\command\Command.Invoker.pas',
   Command.Undoable in 'src\command\Command.Undoable.pas',
   Command.API in 'src\command\Command.API.pas',
   Command.Receiver in 'src\command\Command.Receiver.pas',
   Util.Types in 'src\util\Util.Types.pas',
-  AbstractFactory.Control in 'src\abstractfactory\AbstractFactory.Control.pas';
+  Template.AbstractClass in 'src\template\Template.AbstractClass.pas',
+  FactoryMethod.Factory in 'src\factorymethod\FactoryMethod.Factory.pas';
 
 {$R *.res}
 

@@ -20,13 +20,12 @@ type
   end;
 
   TDTO = record
-    ControlAttribute: TControlAttribute;
-    IniAttribute: TIniAttribute;
     OnNotify: TNotifyEvent;
     Owner: TComponent;
     Parent: IControl;
     Position: TPosition;
-    Value: TValue;
+    Prop: TRttiProperty;
+    Model: TObject;
     constructor Create(const X, Y: Single);
   end;
 

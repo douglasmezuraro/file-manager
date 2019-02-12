@@ -3,13 +3,14 @@ unit Form.Main;
 interface
 
 uses
-  AbstractFactory.API,
-  AbstractFactory.Control,
   Attribute.Control,
   Attribute.Ini,
   Command.Invoker,
   Command.Receiver,
   Command.Undoable,
+  FactoryMethod.Factory,
+  Template.AbstractClass,
+  Template.TabItem,
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
@@ -145,29 +146,32 @@ procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
-  Factory: IAbstractFactory;
   DTO: TDTO;
   Control: IControl;
+  Template: TControlTemplate;
 begin
   Context := TRttiContext.Create;
   try
     DTO := TDTO.Create(10, 10);
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
     begin
-      DTO.Owner            := Self;
-      DTO.Parent           := Parent;
-      DTO.Value            := Prop.GetValue(Obj);
-      DTO.ControlAttribute := Prop.GetAtribute<TControlAttribute>();
-      DTO.IniAttribute     := Prop.GetAtribute<TIniAttribute>();
-      DTO.OnNotify         := Notify;
+      DTO.Owner    := Self;
+      DTO.Parent   := Parent;
+      DTO.Prop     := Prop;
+      DTO.OnNotify := Notify;
+      DTO.Model    := Obj;
 
-      Factory := TControlFactory.Create;
+      Template := TFactoryMethod.Fabricate(DTO);
+      try
+        Control := Template.Fabricate;
+      finally
+        Template.Free;
+      end;
 
-      Control := Factory.Fabricate(DTO);
       FControlBinding.Add(Control, TPropertyBinding.Create(Obj, Prop));
 
-      if DTO.Value.IsObject then
-        ModelToView(DTO.Value.AsObject, Control);
+      if Template is TTabItemTemplate then
+        ModelToView(Prop.GetValue(Obj).AsObject, Control);
     end;
   finally
     Context.Free;

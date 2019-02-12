@@ -121,17 +121,17 @@
         <DCCReference Include="src\util\Util.Methods.pas"/>
         <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <DCCReference Include="src\helper\Helper.FMX.pas"/>
-        <DCCReference Include="src\abstractfactory\AbstractFactory.API.pas"/>
-        <DCCReference Include="src\abstractfactory\AbstractFactory.CheckBox.pas"/>
-        <DCCReference Include="src\abstractfactory\AbstractFactory.ComboBox.pas"/>
-        <DCCReference Include="src\abstractfactory\AbstractFactory.Edit.pas"/>
-        <DCCReference Include="src\abstractfactory\AbstractFactory.TabItem.pas"/>
+        <DCCReference Include="src\template\Template.CheckBox.pas"/>
+        <DCCReference Include="src\template\Template.ComboBox.pas"/>
+        <DCCReference Include="src\template\Template.Edit.pas"/>
+        <DCCReference Include="src\template\Template.TabItem.pas"/>
         <DCCReference Include="src\command\Command.Invoker.pas"/>
         <DCCReference Include="src\command\Command.Undoable.pas"/>
         <DCCReference Include="src\command\Command.API.pas"/>
         <DCCReference Include="src\command\Command.Receiver.pas"/>
         <DCCReference Include="src\util\Util.Types.pas"/>
-        <DCCReference Include="src\abstractfactory\AbstractFactory.Control.pas"/>
+        <DCCReference Include="src\template\Template.AbstractClass.pas"/>
+        <DCCReference Include="src\factorymethod\FactoryMethod.Factory.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
