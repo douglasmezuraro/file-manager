@@ -5,6 +5,7 @@ interface
 uses
   FMX.Types,
   Helper.FMX,
+  Helper.Rtti,
   System.Classes,
   System.Generics.Collections,
   System.Rtti;
@@ -94,13 +95,16 @@ procedure TBinding.SetValue(const Control: IControl; const Value: TValue);
 var
   Prop: TRttiProperty;
   Obj: TObject;
+  NewValue: TValue;
 begin
   if FDic.ContainsKey(Control) then
   begin
     Obj := FDic.Items[Control].Key;
     Prop := FDic.Items[Control].Value;
 
-    Prop.SetValue(Obj, Control.GetObject.Value);
+    NewValue := Prop.GetValue(Obj);
+
+    Prop.SetValue(Obj, NewValue.Assign(Control.GetObject.Value));
   end;
 end;
 
