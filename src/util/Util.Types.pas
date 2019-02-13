@@ -8,7 +8,8 @@ uses
   Helper.Rtti,
   System.Classes,
   System.Generics.Collections,
-  System.Rtti;
+  System.Rtti,
+  System.Types;
 
 type
   TBinding = class
@@ -28,16 +29,11 @@ type
     property Values[const Control: IControl]: TValue read GetValue write SetValue;
   end;
 
-  TPosition = record
-    X: Single;
-    Y: Single;
-  end;
-
   TDTO = record
     OnNotify: TNotifyEvent;
     Owner: TComponent;
     Parent: IControl;
-    Position: TPosition;
+    Position: TPointF;
     Prop: TRttiProperty;
     Model: TObject;
     constructor Create(const X, Y: Single);

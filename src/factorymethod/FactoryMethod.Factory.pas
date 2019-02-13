@@ -10,7 +10,8 @@ uses
   Template.Edit,
   Template.TabItem,
   Helper.Rtti,
-  System.Rtti;
+  System.Rtti,
+  System.SysUtils;
 
 type
   TFactoryMethod = class
@@ -40,7 +41,7 @@ begin
     Exit;
   end;
 
-  if Length(Prop.GetAtribute<TControlAttribute>.Values) > 0 then
+  if not Prop.GetAtribute<TControlAttribute>.Items.IsEmpty then
   begin
     Result := TComboBoxTemplate.Create;
     Exit;
@@ -50,3 +51,4 @@ begin
 end;
 
 end.
+

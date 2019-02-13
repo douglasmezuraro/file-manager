@@ -138,11 +138,11 @@ begin
     DTO := TDTO.Create(10, 10);
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
     begin
+      DTO.Model    := Obj;
+      DTO.OnNotify := Notify;
       DTO.Owner    := Self;
       DTO.Parent   := Parent;
       DTO.Prop     := Prop;
-      DTO.OnNotify := Notify;
-      DTO.Model    := Obj;
 
       Template := TFactoryMethod.Fabricate(Obj, Prop);
       try

@@ -44,11 +44,11 @@ type
     [TIdent('NUMEROLINHASFETCH')]
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
 
-    [TControl('Tipo de acesso', ';SQLd;FireDAC')]
+    [TControl('Tipo de acesso', ',SQLd,FireDAC')]
     [TIdent('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [TControl('Tipo de banco', ';Oracle;SQLServer;DB2')]
+    [TControl('Tipo de banco', ',Oracle,SQLServer,DB2')]
     [TIdent('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 

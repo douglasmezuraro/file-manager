@@ -40,7 +40,7 @@ type
     [TIdent('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
-    [TControl('Tipo de conexão', ';Socket')]
+    [TControl('Tipo de conexão', ',Socket')]
     [TIdent('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
 

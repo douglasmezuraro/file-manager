@@ -33,7 +33,7 @@ begin
   Control.Width      := Self.GetWidth;
   Control.OnExit     := FDTO.OnNotify;
 
-  Self.IncHeight(Control.Height);
+  Self.Offset(Control);
 
   Result := Control;
 end;

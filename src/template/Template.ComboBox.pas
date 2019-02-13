@@ -28,16 +28,16 @@ var
 begin
   Self.Caption;
 
-  Control              := TComboBox.Create(FDTO.Owner);
-  Control.Parent       := FDTO.Parent.GetObject;
-  Control.Position.X   := FDTO.Position.X;
-  Control.Position.Y   := FDTO.Position.Y;
-  Control.Values       := FDTO.Prop.GetAtribute<TControlAttribute>().Values;
-  Control.Value        := Self.GetValue;
-  Control.OnExit       := FDTO.OnNotify;
-  Control.Width        := Self.GetWidth;
+  Control                 := TComboBox.Create(FDTO.Owner);
+  Control.Parent          := FDTO.Parent.GetObject;
+  Control.Position.X      := FDTO.Position.X;
+  Control.Position.Y      := FDTO.Position.Y;
+  Control.Items.CommaText := FDTO.Prop.GetAtribute<TControlAttribute>.Items;
+  Control.Value           := Self.GetValue;
+  Control.OnExit          := FDTO.OnNotify;
+  Control.Width           := Self.GetWidth;
 
-  Self.IncHeight(Control.Height);
+  Self.Offset(Control);
 
   Result := Control;
 end;

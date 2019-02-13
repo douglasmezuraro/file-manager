@@ -11,7 +11,7 @@ type
   private type
     TCommandStack = TStack<ICommand>;
   private
-    FUndo: TCommandStack;
+    FUndoStack: TCommandStack;
     function GetIsEmpty: Boolean;
   public
     constructor Create;
@@ -27,29 +27,29 @@ implementation
 
 procedure TCommandInvoker.Add(const Command: ICommand);
 begin
-  FUndo.Push(Command);
+  FUndoStack.Push(Command);
 end;
 
 constructor TCommandInvoker.Create;
 begin
-  FUndo := TCommandStack.Create;
+  FUndoStack := TCommandStack.Create;
 end;
 
 destructor TCommandInvoker.Destroy;
 begin
-  FUndo.Free;
+  FUndoStack.Free;
   inherited Destroy;
 end;
 
 procedure TCommandInvoker.Execute;
 begin
   if not IsEmpty then
-    FUndo.Pop.Execute;
+    FUndoStack.Pop.Execute;
 end;
 
 function TCommandInvoker.GetIsEmpty: Boolean;
 begin
-  Result := FUndo.Count = 0;
+  Result := FUndoStack.Count = 0;
 end;
 
 end.

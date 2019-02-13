@@ -4,6 +4,7 @@ interface
 
 uses
   Attribute.Control,
+  FMX.Controls,
   FMX.StdCtrls,
   FMX.Types,
   Helper.Rtti,
@@ -19,7 +20,7 @@ type
     function GetValue: TValue;
     function GetWidth: Single;
     procedure Caption;
-    procedure IncHeight(const Height: Single);
+    procedure OffSet(const Control: TControl);
   public
     function Fabricate: IControl; virtual; abstract;
     property DTO: TDTO read FDTO write FDTO;
@@ -40,7 +41,7 @@ begin
   Caption.Position.Y := FDTO.Position.Y;
   Caption.Width      := Self.GetWidth;
 
-  Self.IncHeight(Caption.Height);
+  Self.OffSet(Caption);
 end;
 
 function TControlTemplate.GetCaption: string;
@@ -64,9 +65,9 @@ begin
   Result := 400;
 end;
 
-procedure TControlTemplate.IncHeight(const Height: Single);
+procedure TControlTemplate.OffSet(const Control: TControl);
 begin
-  FDTO.Position.Y := FDTO.Position.Y + Height + 5;
+  FDTO.Position.Offset(0, Control.Height + 5);
 end;
 
 end.
