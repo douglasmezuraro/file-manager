@@ -3,6 +3,7 @@ unit Util.Types;
 interface
 
 uses
+  FMX.Controls,
   FMX.Types,
   Helper.FMX,
   Helper.Rtti,
@@ -100,7 +101,7 @@ begin
   Prop := FDic.Items[Control].Value;
 
   PropValue := Prop.GetValue(Obj);
-  Prop.SetValue(Obj, PropValue.Assign(Control.GetObject.Value));
+  Prop.SetValue(Obj, PropValue.Assign(Value));
 end;
 
 end.

@@ -58,11 +58,8 @@ end;
 { TUtils.TMethods }
 
 class function TUtils.TMethods.IniPath: string;
-var
-  Path: string;
 begin
-  Path := IncludeTrailingPathDelimiter(GetCurrentDir);
-  Result := Path + Constants.IniFileName;
+  Result := IncludeTrailingPathDelimiter(GetCurrentDir) + Constants.IniFileName;
 end;
 
 end.

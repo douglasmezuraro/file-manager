@@ -201,109 +201,109 @@ begin
   if Self.IsBoolean then
   begin
     Self := Text.ToBoolean;
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsByte then
   begin
     Self := StrToIntDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsCardinal then
   begin
     Self := StrToUIntDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsCurrency then
   begin
     Self := StrToCurrDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsDate then
   begin
     Self := StrToDateDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsDateTime then
   begin
     Self := strToDateTimeDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsDouble then
   begin
     Self := StrToFloatDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsInt64 then
   begin
     Self := StrToInt64Def(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsInteger then
   begin
     Self := StrToIntDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsPointer then
   begin
     Self := &Text;
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsShortInt then
   begin
     Self := StrToIntDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsSingle then
   begin
     Self := StrToFloatDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsSmallInt then
   begin
     Self := StrToIntDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsString then
   begin
     Self := Text;
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsTime then
   begin
     Self := StrToTimeDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsUInt64 then
   begin
     Self := StrToUInt64Def(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsVariant then
   begin
     Self := Text;
-    Exit;
+    Exit(Self);
   end;
 
   if Self.IsWord then
   begin
     Self := StrToUIntDef(Text, 0);
-    Exit;
+    Exit(Self);
   end;
 
   Result := Self;
