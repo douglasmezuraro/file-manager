@@ -8,10 +8,10 @@ uses
   FMX.StdCtrls,
   FMX.Types,
   Helper.Rtti,
-  Util.Types,
   System.Rtti,
   System.SysUtils,
-  System.Types;
+  System.Types,
+  Util.Types;
 
 type
   TControlTemplate = class abstract

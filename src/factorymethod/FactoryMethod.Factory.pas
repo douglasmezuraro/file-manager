@@ -4,14 +4,14 @@ interface
 
 uses
   Attribute.Control,
+  Helper.Rtti,
+  System.Rtti,
+  System.SysUtils,
   Template.AbstractClass,
   Template.CheckBox,
   Template.ComboBox,
   Template.Edit,
-  Template.TabItem,
-  Helper.Rtti,
-  System.Rtti,
-  System.SysUtils;
+  Template.TabItem;
 
 type
   TFactoryMethod = class

@@ -28,7 +28,7 @@ uses
   Template.AbstractClass,
   Template.TabItem,
   Util.Methods,
-  Util.Types, FMX.Layouts, FMX.Edit;
+  Util.Types;
 
 type
   TMain = class(TForm)

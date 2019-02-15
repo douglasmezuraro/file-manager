@@ -19,17 +19,9 @@ type
     function Assign(const Value: TValue): TValue;
 
     { As-Functions }
-    function AsByte: Byte;
-    function AsCardinal: Cardinal;
     function AsDate: TDate;
     function AsDateTime: TDateTime;
-    function AsDouble: Double;
-    function AsPointer: Pointer;
-    function AsShortInt: ShortInt;
-    function AsSingle: Single;
-    function AsSmallInt: SmallInt;
     function AsTime: TTime;
-    function AsWord: Word;
 
     { Is-Functions }
     function IsBoolean: Boolean;
@@ -39,19 +31,20 @@ type
     function IsDate: Boolean;
     function IsDateTime: Boolean;
     function IsDouble: Boolean;
-    function IsFloat: Boolean;
     function IsInt64: Boolean;
     function IsInteger: Boolean;
-    function IsNumeric: Boolean;
     function IsPointer: Boolean;
     function IsShortInt: Boolean;
     function IsSingle: Boolean;
     function IsSmallInt: Boolean;
-    function IsString: Boolean;
     function IsTime: Boolean;
     function IsUInt64: Boolean;
     function IsVariant: Boolean;
     function IsWord: Boolean;
+
+    function IsFloat: Boolean;
+    function IsString: Boolean;
+    function IsNumeric: Boolean;
   end;
 
 implementation
@@ -75,59 +68,19 @@ end;
 
 { TValueHelper }
 
-function TValueHelper.AsByte: Byte;
-begin
-  TryAsType<Byte>(Result);
-end;
-
-function TValueHelper.AsCardinal: Cardinal;
-begin
-  TryAsType<Cardinal>(Result);
-end;
-
 function TValueHelper.AsDate: TDate;
 begin
-  TryAsType<TDate>(Result);
+  Result := AsType<TDate>;
 end;
 
 function TValueHelper.AsDateTime: TDateTime;
 begin
-  TryAsType<TDateTime>(Result);
-end;
-
-function TValueHelper.AsDouble: Double;
-begin
-  TryAsType<Double>(Result);
-end;
-
-function TValueHelper.AsPointer: Pointer;
-begin
-  TryAsType<Pointer>(Result);
-end;
-
-function TValueHelper.AsShortInt: ShortInt;
-begin
-  TryAsType<ShortInt>(Result);
-end;
-
-function TValueHelper.AsSingle: Single;
-begin
-  TryAsType<Single>(Result);
-end;
-
-function TValueHelper.AsSmallInt: SmallInt;
-begin
-  TryAsType<SmallInt>(Result);
+  Result := AsType<TDateTime>;
 end;
 
 function TValueHelper.AsTime: TTime;
 begin
-  TryAsType<TTime>(Result);
-end;
-
-function TValueHelper.AsWord: Word;
-begin
-  TryAsType<Word>(Result);
+  Result := AsType<TTime>;
 end;
 
 function TValueHelper.Equals(const Value: TValue): Boolean;
@@ -241,46 +194,117 @@ end;
 
 function TValueHelper.Assign(const Value: TValue): TValue;
 var
-  sValue: string;
+  Text: string;
 begin
-  sValue := Value.ToString;
+  Text := Value.ToString;
 
   if Self.IsBoolean then
-    Self := sValue.ToBoolean
-  else if Self.IsByte then
-    Self := StrToIntDef(sValue, 0)
-  else if Self.IsCardinal then
-    Self := StrToUIntDef(sValue, 0)
-  else if Self.IsCurrency then
-    Self := StrToCurrDef(sValue, 0)
-  else if Self.IsDate then
-    Self := StrToDateDef(sValue, 0)
-  else if Self.IsDateTime then
-    Self := strToDateTimeDef(sValue, 0)
-  else if Self.IsDouble then
-    Self := StrToFloatDef(sValue, 0)
-  else if Self.IsInt64 then
-    Self := StrToInt64Def(sValue, 0)
-  else if Self.IsInteger then
-    Self := StrToIntDef(sValue, 0)
-  else if Self.IsPointer then
-    Self := &sValue
-  else if Self.IsShortInt then
-    Self := StrToIntDef(sValue, 0)
-  else if Self.IsSingle then
-    Self := StrToFloatDef(sValue, 0)
-  else if Self.IsSmallInt then
-    Self := StrToIntDef(sValue, 0)
-  else if Self.IsString then
-    Self := sValue
-  else if Self.IsTime then
-    Self := StrToTimeDef(sValue, 0)
-  else if Self.IsUInt64 then
-    Self := StrToUInt64Def(sValue, 0)
-  else if Self.IsVariant then
-    Self := sValue
-  else if Self.IsWord then
-    Self := StrToUIntDef(sValue, 0);
+  begin
+    Self := Text.ToBoolean;
+    Exit;
+  end;
+
+  if Self.IsByte then
+  begin
+    Self := StrToIntDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsCardinal then
+  begin
+    Self := StrToUIntDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsCurrency then
+  begin
+    Self := StrToCurrDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsDate then
+  begin
+    Self := StrToDateDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsDateTime then
+  begin
+    Self := strToDateTimeDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsDouble then
+  begin
+    Self := StrToFloatDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsInt64 then
+  begin
+    Self := StrToInt64Def(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsInteger then
+  begin
+    Self := StrToIntDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsPointer then
+  begin
+    Self := &Text;
+    Exit;
+  end;
+
+  if Self.IsShortInt then
+  begin
+    Self := StrToIntDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsSingle then
+  begin
+    Self := StrToFloatDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsSmallInt then
+  begin
+    Self := StrToIntDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsString then
+  begin
+    Self := Text;
+    Exit;
+  end;
+
+  if Self.IsTime then
+  begin
+    Self := StrToTimeDef(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsUInt64 then
+  begin
+    Self := StrToUInt64Def(Text, 0);
+    Exit;
+  end;
+
+  if Self.IsVariant then
+  begin
+    Self := Text;
+    Exit;
+  end;
+
+  if Self.IsWord then
+  begin
+    Self := StrToUIntDef(Text, 0);
+    Exit;
+  end;
 
   Result := Self;
 end;

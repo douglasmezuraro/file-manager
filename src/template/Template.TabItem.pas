@@ -26,7 +26,6 @@ begin
   if FDTO.Parent is TTabControl then
   begin
     Control      := (FDTO.Parent as TTabControl).Add;
-    (FDTO.Parent as TTabControl).Align := TAlignLayout.Client;
     Control.Text := Self.GetCaption;
     Result       := Control;
   end;

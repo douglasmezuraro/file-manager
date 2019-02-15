@@ -3,12 +3,10 @@ unit Template.ComboBox;
 interface
 
 uses
-  Attribute.Control,
   FMX.Controls,
   FMX.ListBox,
   FMX.Types,
   Helper.FMX,
-  Helper.Rtti,
   Template.AbstractClass,
   Util.Types;
 
