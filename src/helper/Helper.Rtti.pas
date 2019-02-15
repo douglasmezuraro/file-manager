@@ -7,8 +7,18 @@ uses
   System.SysUtils;
 
 type
+  TRttiPropertyHelper = class Helper for TRttiProperty
+  public
+    function GetAtribute<T: class>: T;
+  end;
+
   TValueHelper = record Helper for TValue
   public
+    { Other useful methods }
+    function Equals(const Value: TValue): Boolean;
+    function Assign(const Value: TValue): TValue;
+
+    { As-Functions }
     function AsByte: Byte;
     function AsCardinal: Cardinal;
     function AsDate: TDate;
@@ -21,6 +31,7 @@ type
     function AsTime: TTime;
     function AsWord: Word;
 
+    { Is-Functions }
     function IsBoolean: Boolean;
     function IsByte: Boolean;
     function IsCardinal: Boolean;
@@ -41,17 +52,26 @@ type
     function IsUInt64: Boolean;
     function IsVariant: Boolean;
     function IsWord: Boolean;
-
-    function Equals(const Value: TValue): Boolean;
-    function Assign(const Value: TValue): TValue;
-  end;
-
-  TRttiPropertyHelper = class Helper for TRttiProperty
-  public
-    function GetAtribute<T: class>(): T;
   end;
 
 implementation
+
+{ TRttiPropertyHelper }
+
+function TRttiPropertyHelper.GetAtribute<T>: T;
+var
+  Attribute: TCustomAttribute;
+begin
+  Result := nil;
+  for Attribute in Self.GetAttributes do
+  begin
+    if Attribute is T then
+    begin
+      Result := Attribute as T;
+      Break;
+    end;
+  end;
+end;
 
 { TValueHelper }
 
@@ -166,8 +186,10 @@ begin
 end;
 
 function TValueHelper.IsNumeric: Boolean;
+const
+  NumericTypeKind = [tkChar, tkEnumeration, tkFloat, tkInt64, tkInteger, tkWChar];
 begin
-  Result := Kind in [tkChar, tkEnumeration, tkFloat, tkInt64, tkInteger, tkWChar];
+  Result := Kind in NumericTypeKind;
 end;
 
 function TValueHelper.IsPointer: Boolean;
@@ -191,8 +213,10 @@ begin
 end;
 
 function TValueHelper.IsString: Boolean;
+const
+  StringTypeKind = [tkChar, tkLString, tkString, tkUString, tkWChar, tkWString];
 begin
-  Result := Kind in [tkChar, tkLString, tkString, tkUString, tkWChar, tkWString];
+  Result := Kind in StringTypeKind;
 end;
 
 function TValueHelper.IsTime: Boolean;
@@ -259,23 +283,6 @@ begin
     Self := StrToUIntDef(sValue, 0);
 
   Result := Self;
-end;
-
-{ TRttiPropertyHelper }
-
-function TRttiPropertyHelper.GetAtribute<T>(): T;
-var
-  Attribute: TCustomAttribute;
-begin
-  Result := nil;
-  for Attribute in Self.GetAttributes do
-  begin
-    if Attribute is T then
-    begin
-      Result := Attribute as T;
-      Break;
-    end;
-  end;
 end;
 
 end.

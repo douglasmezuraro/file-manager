@@ -91,17 +91,16 @@ procedure TBinding.SetValue(const Control: IControl; const Value: TValue);
 var
   Prop: TRttiProperty;
   Obj: TObject;
-  NewValue: TValue;
+  PropValue: TValue;
 begin
-  if FDic.ContainsKey(Control) then
-  begin
-    Obj := FDic.Items[Control].Key;
-    Prop := FDic.Items[Control].Value;
+  if not FDic.ContainsKey(Control) then
+    Exit;
 
-    NewValue := Prop.GetValue(Obj);
+  Obj := FDic.Items[Control].Key;
+  Prop := FDic.Items[Control].Value;
 
-    Prop.SetValue(Obj, NewValue.Assign(Control.GetObject.Value));
-  end;
+  PropValue := Prop.GetValue(Obj);
+  Prop.SetValue(Obj, PropValue.Assign(Control.GetObject.Value));
 end;
 
 end.

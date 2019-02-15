@@ -10,7 +10,8 @@ uses
   Helper.Rtti,
   Util.Types,
   System.Rtti,
-  System.SysUtils;
+  System.SysUtils,
+  System.Types;
 
 type
   TControlTemplate = class abstract
@@ -19,6 +20,7 @@ type
     function GetCaption: string;
     function GetValue: TValue;
     function GetWidth: Single;
+    function GetItems: string;
     procedure Caption;
     procedure OffSet(const Control: TControl);
   public
@@ -55,6 +57,17 @@ begin
     Result := Attribute.Text;
 end;
 
+function TControlTemplate.GetItems: string;
+var
+  Attribute: TControlAttribute;
+begin
+  Attribute := FDTO.Prop.GetAtribute<TControlAttribute>();
+
+  Result := string.Empty;
+  if Assigned(Attribute) then
+    Result := Attribute.Items;
+end;
+
 function TControlTemplate.GetValue: TValue;
 begin
   Result := FDTO.Prop.GetValue(FDTO.Model);
@@ -71,3 +84,4 @@ begin
 end;
 
 end.
+

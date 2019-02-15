@@ -29,12 +29,12 @@ begin
   Self.Caption;
 
   Control                 := TComboBox.Create(FDTO.Owner);
+  Control.Items.CommaText := Self.GetItems;
+  Control.OnExit          := FDTO.OnNotify;
   Control.Parent          := FDTO.Parent.GetObject;
   Control.Position.X      := FDTO.Position.X;
   Control.Position.Y      := FDTO.Position.Y;
-  Control.Items.CommaText := FDTO.Prop.GetAtribute<TControlAttribute>.Items;
   Control.Value           := Self.GetValue;
-  Control.OnExit          := FDTO.OnNotify;
   Control.Width           := Self.GetWidth;
 
   Self.Offset(Control);

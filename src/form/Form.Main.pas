@@ -28,7 +28,7 @@ uses
   Template.AbstractClass,
   Template.TabItem,
   Util.Methods,
-  Util.Types;
+  Util.Types, FMX.Layouts, FMX.Edit;
 
 type
   TMain = class(TForm)
@@ -70,7 +70,7 @@ constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
   FModel := TConfig.Create;
-  FIniFile := TIniFile.Create(Util.Methods.TMethods.GetIniPath);
+  FIniFile := TIniFile.Create(TUtils.Methods.IniPath);
   FInvoker := TCommandInvoker.Create;
   FBinding := TBinding.Create;
 end;
@@ -121,6 +121,7 @@ end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
+  Self.Caption := FIniFile.FileName;
   FIniFile.ReadObject(FModel);
   ModelToView(FModel, TabControlWizard);
 end;
@@ -128,9 +129,9 @@ end;
 procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
 var
   Context: TRttiContext;
-  Prop: TRttiProperty;
-  DTO: TDTO;
   Control: IControl;
+  DTO: TDTO;
+  Prop: TRttiProperty;
   Template: TControlTemplate;
 begin
   Context := TRttiContext.Create;

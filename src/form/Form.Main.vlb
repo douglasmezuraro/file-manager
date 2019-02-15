@@ -24,10 +24,6 @@ Coordinates=224,10,81,58
 Coordinates=113,10,101,51
 
 []
-Coordinates=137,1,53,36
-Visible=True
-
-[TabControlWizard]
 Coordinates=0,0,118,36
 Visible=True
 

@@ -27,12 +27,12 @@ begin
   Self.Caption;
 
   Control            := TEdit.Create(FDTO.Owner);
+  Control.OnExit     := FDTO.OnNotify;
   Control.Parent     := FDTO.Parent.GetObject;
   Control.Position.X := FDTO.Position.X;
   Control.Position.Y := FDTO.Position.Y;
   Control.Value      := Self.GetValue;
   Control.Width      := Self.GetWidth;
-  Control.OnExit     := FDTO.OnNotify;
 
   Self.Offset(Control);
 

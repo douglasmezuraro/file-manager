@@ -23,7 +23,6 @@ uses
   Model.Config.SPP in 'src\model\Model.Config.SPP.pas',
   Model.Config.Update in 'src\model\Model.Config.Update.pas',
   Model.Config.Workflow in 'src\model\Model.Config.Workflow.pas',
-  Util.Constants in 'src\util\Util.Constants.pas',
   Util.Methods in 'src\util\Util.Methods.pas',
   Attribute.Control in 'src\attribute\Attribute.Control.pas',
   Helper.FMX in 'src\helper\Helper.FMX.pas',

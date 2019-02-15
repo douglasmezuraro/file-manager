@@ -11,7 +11,6 @@ uses
   System.Rtti,
   System.SysUtils,
   System.TypInfo,
-  Util.Constants,
   Util.Methods;
 
 type
@@ -99,24 +98,24 @@ begin
     emRead:
       begin
         if Value.IsBoolean then
-          Value := TMethods.StrToBool(ReadString(Section, Key, TMethods.BoolToStr(False)))
+          Value := TUtils.Conversions.StrToBool(ReadString(Section, Key, TUtils.Conversions.BoolToStr(False)))
         else if Value.IsDate then
-          Value := ReadDate(Section, Key, DateNull)
+          Value := ReadDate(Section, Key, TUtils.Constants.DateNull)
         else if Value.IsDateTime then
-          Value := ReadDateTime(Section, Key, DateNull)
+          Value := ReadDateTime(Section, Key, TUtils.Constants.DateNull)
         else if Value.IsTime then
-          Value := ReadTime(Section, Key, DateNull)
+          Value := ReadTime(Section, Key, TUtils.Constants.DateNull)
         else if Value.IsFloat then
-           Value := ReadFloat(Section, Key, NumericNull)
+           Value := ReadFloat(Section, Key, TUtils.Constants.NumericNull)
         else if Value.IsNumeric then
-          Value := ReadInteger(Section, Key, NumericNull)
+          Value := ReadInteger(Section, Key, TUtils.Constants.NumericNull)
         else if Value.IsString then
           Value := ReadString(Section, Key, string.Empty);
       end;
     emWrite:
       begin
         if Value.IsBoolean then
-          WriteString(Section, Key, TMethods.BoolToStr(Value.AsBoolean))
+          WriteString(Section, Key, TUtils.Conversions.BoolToStr(Value.AsBoolean))
         else if Value.IsDate then
           WriteDate(Section, Key, Value.AsDate)
         else if Value.IsDateTime then

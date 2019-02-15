@@ -3,41 +3,66 @@ unit Util.Methods;
 interface
 
 uses
-  System.SysUtils,
-  Util.Constants;
+  System.SysUtils;
 
 type
-  TMethods = class
+  TUtils = class
+  strict private type
+
+    TConstants = class
+    public
+      const DateNull    = 0; // 30/12/1899
+      const NumericNull = -999;
+      const IniFileName = 'spCfg.ini';
+      const True        = 'S';
+      const False       = 'N';
+    end;
+
+    TConversions = class
+    public
+      class function BoolToStr(const Value: Boolean): string; static;
+      class function StrToBool(const Value: string): Boolean; static;
+    end;
+
+    TMethods = class
+    public
+      class function IniPath: string; static;
+    end;
+
+  strict private
+    class var FConstants: TConstants;
+    class var FConversions: TConversions;
+    class var FMethods: TMethods;
   public
-    class function BoolToStr(const Value: Boolean): string;
-    class function StrToBool(const Value: string): Boolean;
-    class function GetIniPath: string;
+    class property Constants: TConstants read FConstants;
+    class property Conversions: TConversions read FConversions;
+    class property Methods: TMethods read FMethods;
   end;
 
 implementation
 
-{ TMethods }
+{ TUtils.TConversions }
 
-class function TMethods.BoolToStr(const Value: Boolean): string;
+class function TUtils.TConversions.BoolToStr(const Value: Boolean): string;
 const
-  Map: array[Boolean] of string = (FlagFalse, FlagTrue);
+  Mapping: array[Boolean] of string = (Constants.False, Constants.True);
 begin
-  Result := Map[Value];
+  Result := Mapping[Value];
 end;
 
-class function TMethods.StrToBool(const Value: string): Boolean;
+class function TUtils.TConversions.StrToBool(const Value: string): Boolean;
 begin
-  Result := False;
-  if SameText(Value, FlagTrue) then
-    Result := True;
+  Result := SameText(Value, Constants.True);
 end;
 
-class function TMethods.GetIniPath: string;
+{ TUtils.TMethods }
+
+class function TUtils.TMethods.IniPath: string;
 var
   Path: string;
 begin
   Path := IncludeTrailingPathDelimiter(GetCurrentDir);
-  Result := Path + IniFileName;
+  Result := Path + Constants.IniFileName;
 end;
 
 end.

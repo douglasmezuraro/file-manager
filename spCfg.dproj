@@ -117,7 +117,6 @@
         <DCCReference Include="src\model\Model.Config.SPP.pas"/>
         <DCCReference Include="src\model\Model.Config.Update.pas"/>
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
-        <DCCReference Include="src\util\Util.Constants.pas"/>
         <DCCReference Include="src\util\Util.Methods.pas"/>
         <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <DCCReference Include="src\helper\Helper.FMX.pas"/>
