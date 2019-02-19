@@ -3,8 +3,7 @@ unit Model.Config.DUnit;
 interface
 
 uses
-  Attribute.Control,
-  Attribute.Ident;
+  Attribute.Ini;
 
 type
   TDUnit = class
@@ -17,31 +16,31 @@ type
     FPassword: string;
     FUser: string;
   public
-    [TControl('Usuário')]
+    [TEditAttribute('Usuário')]
     [TIdent('USUARIO')]
     property User: string read FUser write FUser;
 
-    [TControl('Senha')]
+    [TEditAttribute('Senha')]
     [TIdent('SENHA')]
     property Password: string read FPassword write FPassword;
 
-    [TControl('Build')]
+    [TEditAttribute('Build')]
     [TIdent('BUILD')]
     property BuildType: string read FBuildType write FBuildType;
 
-    [TControl('Método de teste')]
+    [TEditAttribute('Método de teste')]
     [TIdent('METODOTEST')]
     property TestMethod: string read FTestMethod write FTestMethod;
 
-    [TControl('Suite')]
+    [TEditAttribute('Suite')]
     [TIdent('SUITE')]
     property Suit: string read FSuit write FSuit;
 
-    [TControl('URL de gerenciador de teste')]
+    [TEditAttribute('URL de gerenciador de teste')]
     [TIdent('TEST_MANAGER_URL')]
     property TestManagerURL: string read FTestManagerURL write FTestManagerURL;
 
-    [TControl('Registro de teste')]
+    [TEditAttribute('Registro de teste')]
     [TIdent('TEST_RECORD')]
     property TestRecord: string read FTestRecord write FTestRecord;
   end;

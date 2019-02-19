@@ -101,8 +101,6 @@
         <DCCReference Include="src\helper\Helper.Rtti.pas"/>
         <DCCReference Include="src\attribute\Attribute.Ini.pas"/>
         <DCCReference Include="src\helper\Helper.Ini.pas"/>
-        <DCCReference Include="src\attribute\Attribute.Ident.pas"/>
-        <DCCReference Include="src\attribute\Attribute.Section.pas"/>
         <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
         <DCCReference Include="src\model\Model.Config.Application.pas"/>
         <DCCReference Include="src\model\Model.Config.Balancer.pas"/>
@@ -118,7 +116,6 @@
         <DCCReference Include="src\model\Model.Config.Update.pas"/>
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
         <DCCReference Include="src\util\Util.Methods.pas"/>
-        <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <DCCReference Include="src\helper\Helper.FMX.pas"/>
         <DCCReference Include="src\template\Template.CheckBox.pas"/>
         <DCCReference Include="src\template\Template.ComboBox.pas"/>

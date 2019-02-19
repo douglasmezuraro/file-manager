@@ -3,8 +3,7 @@ unit Model.Config.SPP;
 interface
 
 uses
-  Attribute.Control,
-  Attribute.Ident;
+  Attribute.Ini;
 
 type
   TSPP = class
@@ -16,27 +15,27 @@ type
     FProcessBlock: UInt32;
     FSystemName: string;
   public
-    [TControl('Usar SPP?')]
+    [TCheckBoxAttribute('Usar SPP?')]
     [TIdent('USARSPP')]
     property UseSPP: Boolean read FUseSPP write FUseSPP;
 
-    [TControl('Nome do sistema')]
+    [TEditAttribute('Nome do sistema')]
     [TIdent('NOMESISTEMA')]
     property SystemName: string read FSystemName write FSystemName;
 
-    [TControl('Gravar log?')]
+    [TCheckBoxAttribute('Gravar log?')]
     [TIdent('GRAVARLOG')]
     property RegisterLog: Boolean read FRegisterLog write FRegisterLog;
 
-    [TControl('Bloco de processamento')]
+    [TEditAttribute('Bloco de processamento')]
     [TIdent('BLOCOPROCESSAMENTO')]
     property ProcessBlock: UInt32 read FProcessBlock write FProcessBlock;
 
-    [TControl('Bytes por bloco de processamento')]
+    [TEditAttribute('Bytes por bloco de processamento')]
     [TIdent('BYTESBLOCOPROCESSAMENTO')]
     property ProcessBlockSize: UInt32 read FProcessBlockSize write FProcessBlockSize;
 
-    [TControl('Quantidade de execuções sem processamento')]
+    [TEditAttribute('Quantidade de execuções sem processamento')]
     [TIdent('QTDEXECUCOESSEMPROCESSAMENTO')]
     property ExecutionsWithoutProcess: UInt8 read FExecutionsWithoutProcess write FExecutionsWithoutProcess;
   end;

@@ -17,8 +17,7 @@ uses
   Model.Config.Update,
   Model.Config.Workflow,
 
-  Attribute.Section,
-  Attribute.Control;
+  Attribute.Ini;
 
 type
   TConfig = class
@@ -40,55 +39,55 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    [TControl('Balanceador alternativo')]
+    [TTabItemAttribute('Balanceador alternativo')]
     [TSection('BALANCEADORALTERNATIVO')]
     property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
 
-    [TControl('Aplicação')]
+    [TTabItemAttribute('Aplicação')]
     [TSection('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
 
-    [TControl('Balanceador')]
+    [TTabItemAttribute('Balanceador')]
     [TSection('SPBALANCEADOR')]
     property Balancer: TBalancer read FBalancer write FBalancer;
 
-    [TControl('Cliente')]
+    [TTabItemAttribute('Cliente')]
     [TSection('CLIENTE')]
     property Client: TClient read FClient write FClient;
 
-    [TControl('Database')]
+    [TTabItemAttribute('Database')]
     [TSection('DATABASE')]
     property Database: TDatabase read FDatabase write FDatabase;
 
-    [TControl('DUnit')]
+    [TTabItemAttribute('DUnit')]
     [TSection('DUNIT')]
     property DUnit: TDUnit read FDUnit write FDUnit;
 
-    [TControl('LOG')]
+    [TTabItemAttribute('LOG')]
     [TSection('LOG')]
     property Log: TLog read FLog write FLog;
 
-    [TControl('Monitor')]
+    [TTabItemAttribute('Monitor')]
     [TSection('SPMONITOR')]
     property Monitor: TMonitor read FMonitor write FMonitor;
 
-    [TControl('Scanner')]
+    [TTabItemAttribute('Scanner')]
     [TSection('SCANNER')]
     property Scanner: TScanner read FScanner write FScanner;
 
-    [TControl('Servidor')]
+    [TTabItemAttribute('Servidor')]
     [TSection('SERVIDOR')]
     property Server: TServer read FServer write FServer;
 
-    [TControl('SPP')]
+    [TTabItemAttribute('SPP')]
     [TSection('CLIENTESPP')]
     property SPP: TSPP read FSPP write FSPP;
 
-    [TControl('Update')]
+    [TTabItemAttribute('Update')]
     [TSection('SPUPDATE')]
     property Update: TUpdate read FUpdate write FUpdate;
 
-    [TControl('Fluxo de trabalho')]
+    [TTabItemAttribute('Fluxo de trabalho')]
     [TSection('FLUXOTRABALHO')]
     property Workflow: TWorkflow read FWorkflow write FWorkflow;
   end;

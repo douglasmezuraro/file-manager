@@ -3,7 +3,7 @@ unit Template.AbstractClass;
 interface
 
 uses
-  Attribute.Control,
+  Attribute.Ini,
   FMX.Controls,
   FMX.StdCtrls,
   FMX.Types,
@@ -20,7 +20,6 @@ type
     function GetCaption: string;
     function GetValue: TValue;
     function GetWidth: Single;
-    function GetItems: string;
     procedure Caption;
     procedure OffSet(const Control: TControl);
   public
@@ -47,25 +46,8 @@ begin
 end;
 
 function TControlTemplate.GetCaption: string;
-var
-  Attribute: TControlAttribute;
 begin
-  Attribute := FDTO.Prop.GetAtribute<TControlAttribute>();
-
-  Result := string.Empty;
-  if Assigned(Attribute) then
-    Result := Attribute.Text;
-end;
-
-function TControlTemplate.GetItems: string;
-var
-  Attribute: TControlAttribute;
-begin
-  Attribute := FDTO.Prop.GetAtribute<TControlAttribute>();
-
-  Result := string.Empty;
-  if Assigned(Attribute) then
-    Result := Attribute.Items;
+  Result := FDTO.Prop.GetAtribute<TCaptionAttribute>().Text;
 end;
 
 function TControlTemplate.GetValue: TValue;

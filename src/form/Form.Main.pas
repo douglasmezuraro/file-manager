@@ -145,7 +145,7 @@ begin
       DTO.Parent   := Parent;
       DTO.Prop     := Prop;
 
-      Template := TFactoryMethod.Fabricate(Obj, Prop);
+      Template := TFactoryMethod.Fabricate(Prop);
       try
         Template.DTO := DTO;
         Control := Template.Fabricate;

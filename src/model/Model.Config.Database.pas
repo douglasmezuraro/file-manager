@@ -3,8 +3,7 @@ unit Model.Config.Database;
 interface
 
 uses
-  Attribute.Control,
-  Attribute.Ident;
+  Attribute.Ini;
 
 type
   TDatabase = class
@@ -20,43 +19,43 @@ type
     FSchema: string;
     FServer: string;
   public
-    [TControl('Esquema')]
+    [TEditAttribute('Esquema')]
     [TIdent('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
 
-    [TControl('Número máximo de conexões')]
+    [TEditAttribute('Número máximo de conexões')]
     [TIdent('NUMEROMAXIMOCONEXOES')]
     property MaxConnections: UInt32 read FMaxConnections write FMaxConnections;
 
-    [TControl('Número mínimo de conexões')]
+    [TEditAttribute('Número mínimo de conexões')]
     [TIdent('NUMEROMINIMOCONEXOES')]
     property MinConnections: UInt32 read FMinConnections write FMinConnections;
 
-    [TControl('Tempo de desconexçai de conexão inativa')]
+    [TEditAttribute('Tempo de desconexçai de conexão inativa')]
     [TIdent('TEMPODESCONEXAOCONEXAOINATIVA')]
     property DisconnectionTimeIdleConnection: UInt32 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
-    [TControl('Tempo de atualização de log de conexões')]
+    [TEditAttribute('Tempo de atualização de log de conexões')]
     [TIdent('TEMPOATUALIZACAOLOGCONEXOES')]
     property ConnectionLogUpdateTime: UInt32 read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
-    [TControl('Número de linhas para fetch')]
+    [TEditAttribute('Número de linhas para fetch')]
     [TIdent('NUMEROLINHASFETCH')]
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
 
-    [TControl('Tipo de acesso', ',SQLd,FireDAC')]
+    [TComboBoxAttribute('Tipo de acesso', ',SQLd,FireDAC')]
     [TIdent('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [TControl('Tipo de banco', ',Oracle,SQLServer,DB2')]
+    [TComboBoxAttribute('Tipo de banco', ',Oracle,SQLServer,DB2')]
     [TIdent('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 
-    [TControl('Alias')]
+    [TEditAttribute('Alias')]
     [TIdent('ALIAS')]
     property Alias: string read FAlias write FAlias;
 
-    [TControl('Server')]
+    [TEditAttribute('Server')]
     [TIdent('SERVER')]
     property Server: string read FServer write FServer;
   end;

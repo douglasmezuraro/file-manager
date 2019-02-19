@@ -3,8 +3,7 @@ unit Model.Config.Update;
 interface
 
 uses
-  Attribute.Control,
-  Attribute.Ident;
+  Attribute.Ini;
 
 type
   TUpdate = class
@@ -14,19 +13,19 @@ type
     FLocalUpdate: UInt32;
     FSystemCode: UInt32;
   public
-    [TControl('Tipo')]
+    [TEditAttribute('Tipo')]
     [TIdent('TIPOSERVIDOR')]
     property ServidorType: string read FServidorType write FServidorType;
 
-    [TControl('Código do sistema')]
+    [TEditAttribute('Código do sistema')]
     [TIdent('CDSISTEMA')]
     property SystemCode: UInt32 read FSystemCode write FSystemCode;
 
-    [TControl('Pode atualizar?')]
+    [TCheckBoxAttribute('Pode atualizar?')]
     [TIdent('PODEATUALIZAR')]
     property CanUpdate: Boolean read FCanUpdate write FCanUpdate;
 
-    [TControl('Update local')]
+    [TEditAttribute('Update local')]
     [TIdent('LOCALUPDATE')]
     property LocalUpdate: UInt32 read FLocalUpdate write FLocalUpdate;
   end;

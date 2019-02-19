@@ -3,10 +3,9 @@ unit FactoryMethod.Factory;
 interface
 
 uses
-  Attribute.Control,
+  Attribute.Ini,
   Helper.Rtti,
   System.Rtti,
-  System.SysUtils,
   Template.AbstractClass,
   Template.CheckBox,
   Template.ComboBox,
@@ -16,38 +15,40 @@ uses
 type
   TFactoryMethod = class
   public
-    class function Fabricate(const Obj: TObject; const Prop: TRttiProperty): TControlTemplate;
+    class function Fabricate(const Prop: TRttiProperty): TControlTemplate;
   end;
 
 implementation
 
 { TFactory }
 
-class function TFactoryMethod.Fabricate(const Obj: TObject; const Prop: TRttiProperty): TControlTemplate;
-var
-  Value: TValue;
+class function TFactoryMethod.Fabricate(const Prop: TRttiProperty): TControlTemplate;
 begin
-  Value := Prop.GetValue(Obj);
+  Result := nil;
 
-  if Value.IsBoolean then
+  if Prop.GetAtribute<TCheckBoxAttribute>() <> nil then
   begin
     Result := TCheckBoxTemplate.Create;
     Exit;
   end;
 
-  if Value.IsObject then
+  if Prop.GetAtribute<TTabItemAttribute>() <> nil then
   begin
     Result := TTabItemTemplate.Create;
     Exit;
   end;
 
-  if not Prop.GetAtribute<TControlAttribute>.Items.IsEmpty then
+  if Prop.GetAtribute<TComboBoxAttribute>() <> nil then
   begin
     Result := TComboBoxTemplate.Create;
     Exit;
   end;
 
-  Result := TEditTemplate.Create;
+  if Prop.GetAtribute<TEditAttribute>() <> nil then
+  begin
+    Result := TEditTemplate.Create;
+    Exit;
+  end;
 end;
 
 end.
