@@ -16,7 +16,7 @@ type
     TBindingPair = TPair<TObject, TRttiProperty>;
     TBindingDictionary = TDictionary<IControl, TBindingPair>;
   private
-    FDic: TBindingDictionary;
+    FDictionary: TBindingDictionary;
     function GetValue(const Control: IControl): TValue;
     procedure SetValue(const Control: IControl; const Value: TValue);
     function GetKeys: TArray<IControl>;
@@ -28,7 +28,7 @@ type
     property Values[const Control: IControl]: TValue read GetValue write SetValue;
   end;
 
-  TDTO = record
+  TControlDTO = record
     OnNotify: TNotifyEvent;
     Owner: TComponent;
     Parent: IControl;
@@ -42,7 +42,7 @@ implementation
 
 { TDTO }
 
-constructor TDTO.Create(const X, Y: Single);
+constructor TControlDTO.Create(const X, Y: Single);
 begin
   Position.X := X;
   Position.Y := Y;
@@ -53,23 +53,23 @@ end;
 procedure TBinding.Add(const Obj: TObject; const Prop: TRttiProperty;
   const Control: IControl);
 begin
-  FDic.Add(Control, TBindingPair.Create(Obj, Prop));
+  FDictionary.Add(Control, TBindingPair.Create(Obj, Prop));
 end;
 
 constructor TBinding.Create;
 begin
-  FDic := TBindingDictionary.Create;
+  FDictionary := TBindingDictionary.Create;
 end;
 
 destructor TBinding.Destroy;
 begin
-  FDic.Free;
+  FDictionary.Free;
   inherited Destroy;
 end;
 
 function TBinding.GetKeys: TArray<IControl>;
 begin
-  Result := FDic.Keys.ToArray;
+  Result := FDictionary.Keys.ToArray;
 end;
 
 function TBinding.GetValue(const Control: IControl): TValue;
@@ -78,10 +78,10 @@ var
   Obj: TObject;
 begin
   Result.Empty;
-  if FDic.ContainsKey(Control) then
+  if FDictionary.ContainsKey(Control) then
   begin
-    Obj := FDic.Items[Control].Key;
-    Prop := FDic.Items[Control].Value;
+    Obj := FDictionary.Items[Control].Key;
+    Prop := FDictionary.Items[Control].Value;
     Result := Prop.GetValue(Obj);
   end;
 end;
@@ -92,11 +92,11 @@ var
   Obj: TObject;
   PropValue: TValue;
 begin
-  if not FDic.ContainsKey(Control) then
+  if not FDictionary.ContainsKey(Control) then
     Exit;
 
-  Obj := FDic.Items[Control].Key;
-  Prop := FDic.Items[Control].Value;
+  Obj := FDictionary.Items[Control].Key;
+  Prop := FDictionary.Items[Control].Value;
 
   PropValue := Prop.GetValue(Obj);
   Prop.SetValue(Obj, PropValue.Assign(Value));

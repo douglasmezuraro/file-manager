@@ -16,7 +16,7 @@ uses
 type
   TControlTemplate = class abstract
   protected
-    FDTO: TDTO;
+    FDTO: TControlDTO;
     function GetCaption: string;
     function GetValue: TValue;
     function GetWidth: Single;
@@ -24,7 +24,7 @@ type
     procedure OffSet(const Control: TControl);
   public
     function Fabricate: IControl; virtual; abstract;
-    property DTO: TDTO read FDTO write FDTO;
+    property DTO: TControlDTO read FDTO write FDTO;
   end;
 
 implementation

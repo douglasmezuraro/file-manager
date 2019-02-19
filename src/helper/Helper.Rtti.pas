@@ -4,7 +4,8 @@ interface
 
 uses
   System.Rtti,
-  System.SysUtils;
+  System.SysUtils,
+  Util.Methods;
 
 type
   TRttiPropertyHelper = class Helper for TRttiProperty
@@ -206,49 +207,49 @@ begin
 
   if Self.IsByte then
   begin
-    Self := StrToIntDef(Text, 0);
+    Self := StrToIntDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
   if Self.IsCardinal then
   begin
-    Self := StrToUIntDef(Text, 0);
+    Self := StrToUIntDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
   if Self.IsCurrency then
   begin
-    Self := StrToCurrDef(Text, 0);
+    Self := StrToCurrDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
   if Self.IsDate then
   begin
-    Self := StrToDateDef(Text, 0);
+    Self := StrToDateDef(Text, TUtils.Constants.DateNull);
     Exit(Self);
   end;
 
   if Self.IsDateTime then
   begin
-    Self := strToDateTimeDef(Text, 0);
+    Self := StrToDateTimeDef(Text, TUtils.Constants.DateNull);
     Exit(Self);
   end;
 
   if Self.IsDouble then
   begin
-    Self := StrToFloatDef(Text, 0);
+    Self := StrToFloatDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
   if Self.IsInt64 then
   begin
-    Self := StrToInt64Def(Text, 0);
+    Self := StrToInt64Def(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
   if Self.IsInteger then
   begin
-    Self := StrToIntDef(Text, 0);
+    Self := StrToIntDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
@@ -260,19 +261,19 @@ begin
 
   if Self.IsShortInt then
   begin
-    Self := StrToIntDef(Text, 0);
+    Self := StrToIntDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
   if Self.IsSingle then
   begin
-    Self := StrToFloatDef(Text, 0);
+    Self := StrToFloatDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
   if Self.IsSmallInt then
   begin
-    Self := StrToIntDef(Text, 0);
+    Self := StrToIntDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
@@ -284,13 +285,13 @@ begin
 
   if Self.IsTime then
   begin
-    Self := StrToTimeDef(Text, 0);
+    Self := StrToTimeDef(Text, TUtils.Constants.DateNull);
     Exit(Self);
   end;
 
   if Self.IsUInt64 then
   begin
-    Self := StrToUInt64Def(Text, 0);
+    Self := StrToUInt64Def(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 
@@ -302,7 +303,7 @@ begin
 
   if Self.IsWord then
   begin
-    Self := StrToUIntDef(Text, 0);
+    Self := StrToUIntDef(Text, TUtils.Constants.Zero);
     Exit(Self);
   end;
 

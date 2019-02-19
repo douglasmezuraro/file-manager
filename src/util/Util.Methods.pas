@@ -6,25 +6,26 @@ uses
   System.SysUtils;
 
 type
-  TUtils = class
+  TUtils = class abstract
   strict private type
 
-    TConstants = class
+    TConstants = class abstract
     public
-      const DateNull    = 0; // 30/12/1899
+      const Zero        = 0;
+      const DateNull    = Zero;
       const NumericNull = -999;
       const IniFileName = 'spCfg.ini';
       const True        = 'S';
       const False       = 'N';
     end;
 
-    TConversions = class
+    TConversions = class abstract
     public
       class function BoolToStr(const Value: Boolean): string; static;
       class function StrToBool(const Value: string): Boolean; static;
     end;
 
-    TMethods = class
+    TMethods = class abstract
     public
       class function IniPath: string; static;
     end;

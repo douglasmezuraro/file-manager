@@ -130,13 +130,13 @@ procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
 var
   Context: TRttiContext;
   Control: IControl;
-  DTO: TDTO;
+  DTO: TControlDTO;
   Prop: TRttiProperty;
   Template: TControlTemplate;
 begin
   Context := TRttiContext.Create;
   try
-    DTO := TDTO.Create(10, 10);
+    DTO := TControlDTO.Create(10, 10);
     for Prop in Context.GetType(Obj.ClassType).GetProperties do
     begin
       DTO.Model    := Obj;
