@@ -3,7 +3,7 @@ unit Template.ComboBox;
 interface
 
 uses
-  Attribute.Ini,
+  Attribute.Control,
   FMX.Controls,
   FMX.ListBox,
   FMX.Types,
@@ -29,7 +29,7 @@ begin
   Self.Caption;
 
   Control                 := TComboBox.Create(FDTO.Owner);
-  Control.Items.CommaText := FDTO.Prop.GetAtribute<TComboBoxAttribute>().Items;
+  Control.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
   Control.OnExit          := FDTO.OnNotify;
   Control.Parent          := FDTO.Parent.GetObject;
   Control.Position.X      := FDTO.Position.X;

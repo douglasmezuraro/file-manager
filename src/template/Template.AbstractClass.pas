@@ -3,7 +3,7 @@ unit Template.AbstractClass;
 interface
 
 uses
-  Attribute.Ini,
+  Attribute.Control,
   FMX.Controls,
   FMX.StdCtrls,
   FMX.Types,
@@ -47,7 +47,7 @@ end;
 
 function TControlTemplate.GetCaption: string;
 begin
-  Result := FDTO.Prop.GetAtribute<TCaptionAttribute>().Text;
+  Result := FDTO.Prop.GetAtribute<CaptionAttribute>().Text;
 end;
 
 function TControlTemplate.GetValue: TValue;

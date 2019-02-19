@@ -128,6 +128,7 @@
         <DCCReference Include="src\util\Util.Types.pas"/>
         <DCCReference Include="src\template\Template.AbstractClass.pas"/>
         <DCCReference Include="src\factorymethod\FactoryMethod.ControlTemplate.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

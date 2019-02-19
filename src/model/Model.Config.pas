@@ -17,6 +17,7 @@ uses
   Model.Config.Update,
   Model.Config.Workflow,
 
+  Attribute.Control,
   Attribute.Ini;
 
 type
@@ -43,52 +44,52 @@ type
 //    [TSection('BALANCEADORALTERNATIVO')]
 //    property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
 
-    [TTabItemAttribute('Aplicação')]
-    [TSection('APLICACAO')]
+    [TabItem('Aplicação')]
+    [Section('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
 
 //    [TTabItemAttribute('Balanceador')]
 //    [TSection('SPBALANCEADOR')]
 //    property Balancer: TBalancer read FBalancer write FBalancer;
 
-    [TTabItemAttribute('Cliente')]
-    [TSection('CLIENTE')]
+    [TabItem('Cliente')]
+    [Section('CLIENTE')]
     property Client: TClient read FClient write FClient;
 
-    [TTabItemAttribute('Database')]
-    [TSection('DATABASE')]
+    [TabItem('Database')]
+    [Section('DATABASE')]
     property Database: TDatabase read FDatabase write FDatabase;
 
-    [TTabItemAttribute('DUnit')]
-    [TSection('DUNIT')]
+    [TabItem('DUnit')]
+    [Section('DUNIT')]
     property DUnit: TDUnit read FDUnit write FDUnit;
 
-    [TTabItemAttribute('LOG')]
-    [TSection('LOG')]
+    [TabItem('LOG')]
+    [Section('LOG')]
     property Log: TLog read FLog write FLog;
 
-    [TTabItemAttribute('Monitor')]
-    [TSection('SPMONITOR')]
+    [TabItem('Monitor')]
+    [Section('SPMONITOR')]
     property Monitor: TMonitor read FMonitor write FMonitor;
 
-    [TTabItemAttribute('Scanner')]
-    [TSection('SCANNER')]
+    [TabItem('Scanner')]
+    [Section('SCANNER')]
     property Scanner: TScanner read FScanner write FScanner;
 
-    [TTabItemAttribute('Servidor')]
-    [TSection('SERVIDOR')]
+    [TabItem('Servidor')]
+    [Section('SERVIDOR')]
     property Server: TServer read FServer write FServer;
 
-    [TTabItemAttribute('SPP')]
-    [TSection('CLIENTESPP')]
+    [TabItem('SPP')]
+    [Section('CLIENTESPP')]
     property SPP: TSPP read FSPP write FSPP;
 
-    [TTabItemAttribute('Update')]
-    [TSection('SPUPDATE')]
+    [TabItem('Update')]
+    [Section('SPUPDATE')]
     property Update: TUpdate read FUpdate write FUpdate;
 
-    [TTabItemAttribute('Fluxo de trabalho')]
-    [TSection('FLUXOTRABALHO')]
+    [TabItem('Fluxo de trabalho')]
+    [Section('FLUXOTRABALHO')]
     property Workflow: TWorkflow read FWorkflow write FWorkflow;
   end;
 

@@ -31,20 +31,20 @@ implementation
 
 function TIniFileHelper.GetIdent(const Prop: TRttiProperty): string;
 var
-  Ident: TIdent;
+  Ident: IdentAttribute;
 begin
   Result := string.Empty;
-  Ident := Prop.GetAtribute<TIdent>;
+  Ident := Prop.GetAtribute<IdentAttribute>;
   if Assigned(Ident) then
     Result := Ident.Name;
 end;
 
 function TIniFileHelper.GetSection(const Prop: TRttiProperty): string;
 var
-  Section: TSection;
+  Section: SectionAttribute;
 begin
   Result := string.Empty;
-  Section := Prop.GetAtribute<TSection>;
+  Section := Prop.GetAtribute<SectionAttribute>;
   if Assigned(Section) then
     Result := Section.Name;
 end;

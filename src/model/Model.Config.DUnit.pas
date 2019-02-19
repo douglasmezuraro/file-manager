@@ -3,6 +3,7 @@ unit Model.Config.DUnit;
 interface
 
 uses
+  Attribute.Control,
   Attribute.Ini;
 
 type
@@ -16,32 +17,32 @@ type
     FPassword: string;
     FUser: string;
   public
-    [TEditAttribute('Usuário')]
-    [TIdent('USUARIO')]
+    [Edit('Usuário')]
+    [Ident('USUARIO')]
     property User: string read FUser write FUser;
 
-    [TEditAttribute('Senha')]
-    [TIdent('SENHA')]
+    [Edit('Senha')]
+    [Ident('SENHA')]
     property Password: string read FPassword write FPassword;
 
-    [TEditAttribute('Build')]
-    [TIdent('BUILD')]
+    [Edit('Build')]
+    [Ident('BUILD')]
     property BuildType: string read FBuildType write FBuildType;
 
-    [TEditAttribute('Método de teste')]
-    [TIdent('METODOTEST')]
+    [Edit('Método de teste')]
+    [Ident('METODOTEST')]
     property TestMethod: string read FTestMethod write FTestMethod;
 
-    [TEditAttribute('Suite')]
-    [TIdent('SUITE')]
+    [Edit('Suite')]
+    [Ident('SUITE')]
     property Suit: string read FSuit write FSuit;
 
-    [TEditAttribute('URL de gerenciador de teste')]
-    [TIdent('TEST_MANAGER_URL')]
+    [Edit('URL de gerenciador de teste')]
+    [Ident('TEST_MANAGER_URL')]
     property TestManagerURL: string read FTestManagerURL write FTestManagerURL;
 
-    [TEditAttribute('Registro de teste')]
-    [TIdent('TEST_RECORD')]
+    [Edit('Registro de teste')]
+    [Ident('TEST_RECORD')]
     property TestRecord: string read FTestRecord write FTestRecord;
   end;
 

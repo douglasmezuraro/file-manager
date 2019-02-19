@@ -3,6 +3,7 @@ unit Model.Config.Log;
 interface
 
 uses
+  Attribute.Control,
   Attribute.Ini;
 
 type
@@ -12,16 +13,16 @@ type
     FRegisterSignatureLog: Boolean;
     FRegisterMethodLog: Boolean;
   public
-    [TCheckBoxAttribute('Registar log de métodos?')]
-    [TIdent('REGISTRALOGMETODO')]
+    [CheckBox('Registar log de métodos?')]
+    [Ident('REGISTRALOGMETODO')]
     property RegisterMethodLog: Boolean read FRegisterMethodLog write FRegisterMethodLog;
 
-    [TCheckBoxAttribute('Registrar log de SQLs?')]
-    [TIdent('REGISTRALOGSQL')]
+    [CheckBox('Registrar log de SQLs?')]
+    [Ident('REGISTRALOGSQL')]
     property RegisterSQLLog: Boolean read FRegisterSQLLog write FRegisterSQLLog;
 
-    [TCheckBoxAttribute('Registrar log de assinaturas?')]
-    [TIdent('GRAVARLOGASSINATURA')]
+    [CheckBox('Registrar log de assinaturas?')]
+    [Ident('GRAVARLOGASSINATURA')]
     property RegisterSignatureLog: Boolean read FRegisterSignatureLog write FRegisterSignatureLog;
   end;
 

@@ -3,6 +3,7 @@ unit Model.Config.Client;
 interface
 
 uses
+  Attribute.Control,
   Attribute.Ini;
 
 type
@@ -12,16 +13,16 @@ type
     FDisableMenuBackground: Boolean;
     FTimeOut: UInt8;
   public
-    [TEditAttribute('Login automático')]
-    [TIdent('LOGINAUTOMATICO')]
+    [Edit('Login automático')]
+    [Ident('LOGINAUTOMATICO')]
     property AutoLogin: string read FAutoLogin write FAutoLogin;
 
-    [TEditAttribute('Timeout de execução')]
-    [TIdent('TIMEOUTEXECUCAO')]
+    [Edit('Timeout de execução')]
+    [Ident('TIMEOUTEXECUCAO')]
     property TimeOut: UInt8 read FTimeOut write FTimeOut;
 
-    [TCheckBoxAttribute('Desabilita fundo menu')]
-    [TIdent('DESABILITAFUNDOMENU')]
+    [CheckBox('Desabilita fundo menu')]
+    [Ident('DESABILITAFUNDOMENU')]
     property DisableMenuBackground: Boolean read FDisableMenuBackground write FDisableMenuBackground;
   end;
 

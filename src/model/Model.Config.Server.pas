@@ -3,6 +3,7 @@ unit Model.Config.Server;
 interface
 
 uses
+  Attribute.Control,
   Attribute.Ini;
 
 type
@@ -19,44 +20,44 @@ type
     FIPServer: string;
     FIPAddress: string;
   public
-    [TEditAttribute('Nome')]
-    [TIdent('NOMESERVIDOR')]
+    [Edit('Nome')]
+    [Ident('NOMESERVIDOR')]
     property Name: string read FName write FName;
 
-    [TEditAttribute('GUID')]
-    [TIdent('GUIDSERVIDOR')]
+    [Edit('GUID')]
+    [Ident('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
 
-    [TEditAttribute('Nome do computador')]
-    [TIdent('NOMECOMPUTADOR')]
+    [Edit('Nome do computador')]
+    [Ident('NOMECOMPUTADOR')]
     property ComputerName: string read FComputerName write FComputerName;
 
-    [TEditAttribute('IP')]
-    [TIdent('IPSERVIDOR')]
+    [Edit('IP')]
+    [Ident('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
 
-    [TEditAttribute('Endereço de IP')]
-    [TIdent('ENDERECOIP')]
+    [Edit('Endereço de IP')]
+    [Ident('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
-    [TComboBoxAttribute('Tipo de conexão', ',Socket')]
-    [TIdent('TIPOCONEXAO')]
+    [ComboBox('Tipo de conexão', ',Socket')]
+    [Ident('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
 
-    [TCheckBoxAttribute('Pode balancear?')]
-    [TIdent('PODEBALANCEAR')]
+    [CheckBox('Pode balancear?')]
+    [Ident('PODEBALANCEAR')]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
-    [TEditAttribute('Nome do executável')]
-    [TIdent('NOMEEXECUTAVELSERVIDOR')]
+    [Edit('Nome do executável')]
+    [Ident('NOMEEXECUTAVELSERVIDOR')]
     property ExeName: string read FExeName write FExeName;
 
-    [TEditAttribute('Timeout de execução')]
-    [TIdent('TIMEOUTEXECUCAO')]
+    [Edit('Timeout de execução')]
+    [Ident('TIMEOUTEXECUCAO')]
     property TimeOut: UInt16 read FTimeOut write FTimeOut;
 
-    [TCheckBoxAttribute('Habilitar gerenciador de integração?')]
-    [TIdent('HABILITAGERENCIADORINTEGRACAO')]
+    [CheckBox('Habilitar gerenciador de integração?')]
+    [Ident('HABILITAGERENCIADORINTEGRACAO')]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
   end;
 

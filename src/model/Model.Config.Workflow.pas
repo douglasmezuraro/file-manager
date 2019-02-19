@@ -3,6 +3,7 @@ unit Model.Config.Workflow;
 interface
 
 uses
+  Attribute.Control,
   Attribute.Ini;
 
 type
@@ -10,8 +11,8 @@ type
   private
     FCanChangeCurrentVersion: Boolean;
   public
-    [TCheckBoxAttribute('Pode alterar o fluxo?')]
-    [TIdent('PODEALTERARVERSAOATUALFLUXO')]
+    [CheckBox('Pode alterar o fluxo?')]
+    [Ident('PODEALTERARVERSAOATUALFLUXO')]
     property CanChangeCurrentVersion: Boolean read FCanChangeCurrentVersion write FCanChangeCurrentVersion;
   end;
 

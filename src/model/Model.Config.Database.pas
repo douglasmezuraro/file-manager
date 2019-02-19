@@ -3,6 +3,7 @@ unit Model.Config.Database;
 interface
 
 uses
+  Attribute.Control,
   Attribute.Ini;
 
 type
@@ -19,44 +20,44 @@ type
     FSchema: string;
     FServer: string;
   public
-    [TEditAttribute('Esquema')]
-    [TIdent('ESQUEMA')]
+    [Edit('Esquema')]
+    [Ident('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
 
-    [TEditAttribute('Número máximo de conexões')]
-    [TIdent('NUMEROMAXIMOCONEXOES')]
+    [Edit('Número máximo de conexões')]
+    [Ident('NUMEROMAXIMOCONEXOES')]
     property MaxConnections: UInt32 read FMaxConnections write FMaxConnections;
 
-    [TEditAttribute('Número mínimo de conexões')]
-    [TIdent('NUMEROMINIMOCONEXOES')]
+    [Edit('Número mínimo de conexões')]
+    [Ident('NUMEROMINIMOCONEXOES')]
     property MinConnections: UInt32 read FMinConnections write FMinConnections;
 
-    [TEditAttribute('Tempo de desconexçai de conexão inativa')]
-    [TIdent('TEMPODESCONEXAOCONEXAOINATIVA')]
+    [Edit('Tempo de desconexçai de conexão inativa')]
+    [Ident('TEMPODESCONEXAOCONEXAOINATIVA')]
     property DisconnectionTimeIdleConnection: UInt32 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
-    [TEditAttribute('Tempo de atualização de log de conexões')]
-    [TIdent('TEMPOATUALIZACAOLOGCONEXOES')]
+    [Edit('Tempo de atualização de log de conexões')]
+    [Ident('TEMPOATUALIZACAOLOGCONEXOES')]
     property ConnectionLogUpdateTime: UInt32 read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
-    [TEditAttribute('Número de linhas para fetch')]
-    [TIdent('NUMEROLINHASFETCH')]
+    [Edit('Número de linhas para fetch')]
+    [Ident('NUMEROLINHASFETCH')]
     property FetchLines: UInt32 read FFetchLines write FFetchLines;
 
-    [TComboBoxAttribute('Tipo de acesso', ',SQLd,FireDAC')]
-    [TIdent('TIPOACESSOBD')]
+    [ComboBox('Tipo de acesso', ',SQLd,FireDAC')]
+    [Ident('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [TComboBoxAttribute('Tipo de banco', ',Oracle,SQLServer,DB2')]
-    [TIdent('TIPOBANCO')]
+    [ComboBox('Tipo de banco', ',Oracle,SQLServer,DB2')]
+    [Ident('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 
-    [TEditAttribute('Alias')]
-    [TIdent('ALIAS')]
+    [Edit('Alias')]
+    [Ident('ALIAS')]
     property Alias: string read FAlias write FAlias;
 
-    [TEditAttribute('Server')]
-    [TIdent('SERVER')]
+    [Edit('Server')]
+    [Ident('SERVER')]
     property Server: string read FServer write FServer;
   end;
 

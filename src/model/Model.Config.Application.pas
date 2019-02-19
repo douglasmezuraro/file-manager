@@ -3,6 +3,7 @@ unit Model.Config.Application;
 interface
 
 uses
+  Attribute.Control,
   Attribute.Ini;
 
 type
@@ -10,8 +11,8 @@ type
   private
     FName: string;
   public
-    [TEditAttribute('Nome de aplicação para monitoramento')]
-    [TIdent('NOMEAPLICACAOPARAMONITORAMENTO')]
+    [Edit('Nome de aplicação para monitoramento')]
+    [Ident('NOMEAPLICACAOPARAMONITORAMENTO')]
     property Name: string read FName write FName;
   end;
 

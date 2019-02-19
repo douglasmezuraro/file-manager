@@ -33,7 +33,8 @@ uses
   Command.Receiver in 'src\command\Command.Receiver.pas',
   Util.Types in 'src\util\Util.Types.pas',
   Template.AbstractClass in 'src\template\Template.AbstractClass.pas',
-  FactoryMethod.ControlTemplate in 'src\factorymethod\FactoryMethod.ControlTemplate.pas';
+  FactoryMethod.ControlTemplate in 'src\factorymethod\FactoryMethod.ControlTemplate.pas',
+  Attribute.Control in 'src\attribute\Attribute.Control.pas';
 
 {$R *.res}
 

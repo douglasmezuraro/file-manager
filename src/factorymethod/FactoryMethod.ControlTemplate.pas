@@ -3,7 +3,7 @@ unit FactoryMethod.ControlTemplate;
 interface
 
 uses
-  Attribute.Ini,
+  Attribute.Control,
   Helper.Rtti,
   System.Rtti,
   Template.AbstractClass,
@@ -26,25 +26,25 @@ class function TControlTemplateFactory.Fabricate(const Prop: TRttiProperty): TCo
 begin
   Result := nil;
 
-  if Prop.GetAtribute<TCheckBoxAttribute>() <> nil then
+  if Prop.GetAtribute<CheckBoxAttribute>() <> nil then
   begin
     Result := TCheckBoxTemplate.Create;
     Exit;
   end;
 
-  if Prop.GetAtribute<TTabItemAttribute>() <> nil then
+  if Prop.GetAtribute<TabItemAttribute>() <> nil then
   begin
     Result := TTabItemTemplate.Create;
     Exit;
   end;
 
-  if Prop.GetAtribute<TComboBoxAttribute>() <> nil then
+  if Prop.GetAtribute<ComboBoxAttribute>() <> nil then
   begin
     Result := TComboBoxTemplate.Create;
     Exit;
   end;
 
-  if Prop.GetAtribute<TEditAttribute>() <> nil then
+  if Prop.GetAtribute<EditAttribute>() <> nil then
   begin
     Result := TEditTemplate.Create;
     Exit;
