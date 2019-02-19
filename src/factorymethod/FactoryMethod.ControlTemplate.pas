@@ -1,4 +1,4 @@
-unit FactoryMethod.Factory;
+unit FactoryMethod.ControlTemplate;
 
 interface
 
@@ -13,16 +13,16 @@ uses
   Template.TabItem;
 
 type
-  TFactoryMethod = class
+  TControlTemplateFactory = class
   public
     class function Fabricate(const Prop: TRttiProperty): TControlTemplate;
   end;
 
 implementation
 
-{ TFactory }
+{ TControlTemplateFactory }
 
-class function TFactoryMethod.Fabricate(const Prop: TRttiProperty): TControlTemplate;
+class function TControlTemplateFactory.Fabricate(const Prop: TRttiProperty): TControlTemplate;
 begin
   Result := nil;
 

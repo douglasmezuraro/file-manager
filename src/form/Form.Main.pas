@@ -6,7 +6,7 @@ uses
   Command.Invoker,
   Command.Receiver,
   Command.Undoable,
-  FactoryMethod.Factory,
+  FactoryMethod.ControlTemplate,
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
@@ -145,7 +145,7 @@ begin
       DTO.Parent   := Parent;
       DTO.Prop     := Prop;
 
-      Template := TFactoryMethod.Fabricate(Prop);
+      Template := TControlTemplateFactory.Fabricate(Prop);
       try
         Template.DTO := DTO;
         Control := Template.Fabricate;

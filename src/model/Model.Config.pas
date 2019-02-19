@@ -39,17 +39,17 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    [TTabItemAttribute('Balanceador alternativo')]
-    [TSection('BALANCEADORALTERNATIVO')]
-    property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
+//    [TTabItemAttribute('Balanceador alternativo')]
+//    [TSection('BALANCEADORALTERNATIVO')]
+//    property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
 
     [TTabItemAttribute('Aplicação')]
     [TSection('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
 
-    [TTabItemAttribute('Balanceador')]
-    [TSection('SPBALANCEADOR')]
-    property Balancer: TBalancer read FBalancer write FBalancer;
+//    [TTabItemAttribute('Balanceador')]
+//    [TSection('SPBALANCEADOR')]
+//    property Balancer: TBalancer read FBalancer write FBalancer;
 
     [TTabItemAttribute('Cliente')]
     [TSection('CLIENTE')]
