@@ -3,6 +3,7 @@ unit Template.TabItem;
 interface
 
 uses
+  FMX.Layouts,
   FMX.TabControl,
   FMX.Types,
   Template.AbstractClass,
@@ -20,14 +21,20 @@ implementation
 
 function TTabItemTemplate.Fabricate: IControl;
 var
-  Control: TTabItem;
+  TabItem: TTabItem;
+  ScrollBox: TScrollBox;
 begin
   Result := nil;
   if FDTO.Parent is TTabControl then
   begin
-    Control      := (FDTO.Parent as TTabControl).Add;
-    Control.Text := Self.GetCaption;
-    Result       := Control;
+    TabItem          := (FDTO.Parent as TTabControl).Add;
+    TabItem.Text     := Self.GetCaption;
+
+    ScrollBox        := TScrollBox.Create(TabItem);
+    ScrollBox.Parent := TabItem;
+    ScrollBox.Align  := TAlignLayout.Client;
+
+    Result           := ScrollBox;
   end;
 end;
 

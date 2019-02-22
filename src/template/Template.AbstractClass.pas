@@ -61,8 +61,14 @@ begin
 end;
 
 procedure TControlTemplate.OffSet(const Control: TControl);
+var
+  Y: Single;
 begin
-  FDTO.Position.Offset(0, Control.Height + 5);
+  Y := Control.Height + 15;
+  if Control is TLabel then
+    Y := Y - 12;
+
+  FDTO.Position.Offset(0, Y);
 end;
 
 end.

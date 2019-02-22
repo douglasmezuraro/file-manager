@@ -28,7 +28,7 @@ uses
   Template.AbstractClass,
   Template.TabItem,
   Util.Methods,
-  Util.Types;
+  Util.Types, FMX.Layouts;
 
 type
   TMain = class(TForm)
@@ -38,6 +38,7 @@ type
     ActionList: TActionList;
     ActionSave: TAction;
     ActionCancel: TAction;
+    LayoutSpace: TLayout;
     TabControlWizard: TTabControl;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);

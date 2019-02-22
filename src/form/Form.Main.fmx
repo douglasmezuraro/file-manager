@@ -1,9 +1,8 @@
 object Main: TMain
   Left = 0
   Top = 0
-  Caption = 'Form1'
-  ClientHeight = 480
-  ClientWidth = 603
+  ClientHeight = 800
+  ClientWidth = 600
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -12,8 +11,8 @@ object Main: TMain
   DesignerMasterStyle = 0
   object PanelButtons: TPanel
     Align = Bottom
-    Position.Y = 435.000000000000000000
-    Size.Width = 603.000000000000000000
+    Position.Y = 755.000000000000000000
+    Size.Width = 600.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
@@ -22,7 +21,7 @@ object Main: TMain
       Align = Right
       Enabled = True
       ImageIndex = -1
-      Position.X = 503.000000000000000000
+      Position.X = 500.000000000000000000
       Size.Width = 100.000000000000000000
       Size.Height = 45.000000000000000000
       Size.PlatformDefault = False
@@ -39,14 +38,20 @@ object Main: TMain
       TabOrder = 0
     end
   end
+  object LayoutSpace: TLayout
+    Align = Bottom
+    Position.Y = 745.000000000000000000
+    Size.Width = 600.000000000000000000
+    Size.Height = 10.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+  end
   object TabControlWizard: TTabControl
     Align = Client
-    FullSize = False
-    Size.Width = 603.000000000000000000
-    Size.Height = 435.000000000000000000
+    Size.Width = 600.000000000000000000
+    Size.Height = 745.000000000000000000
     Size.PlatformDefault = False
-    StyleLookup = 'TabControlWizardStyle1'
-    TabOrder = 2
+    TabOrder = 4
     TabPosition = PlatformDefault
   end
   object ActionList: TActionList
