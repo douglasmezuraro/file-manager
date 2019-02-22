@@ -11,8 +11,8 @@ type
   private
     FCanUpdate: Boolean;
     FServidorType: string;
-    FLocalUpdate: UInt32;
-    FSystemCode: UInt32;
+    FLocalUpdate: Integer;
+    FSystemCode: Integer;
   public
     [Edit('Tipo')]
     [Ident('TIPOSERVIDOR')]
@@ -20,7 +20,7 @@ type
 
     [Edit('Código do sistema')]
     [Ident('CDSISTEMA')]
-    property SystemCode: UInt32 read FSystemCode write FSystemCode;
+    property SystemCode: Integer read FSystemCode write FSystemCode;
 
     [CheckBox('Pode atualizar?')]
     [Ident('PODEATUALIZAR')]
@@ -28,7 +28,7 @@ type
 
     [Edit('Update local')]
     [Ident('LOCALUPDATE')]
-    property LocalUpdate: UInt32 read FLocalUpdate write FLocalUpdate;
+    property LocalUpdate: Integer read FLocalUpdate write FLocalUpdate;
   end;
 
 implementation

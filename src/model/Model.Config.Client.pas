@@ -11,7 +11,7 @@ type
   private
     FAutoLogin: string;
     FDisableMenuBackground: Boolean;
-    FTimeOut: UInt8;
+    FTimeOut: Integer;
   public
     [Edit('Login automático')]
     [Ident('LOGINAUTOMATICO')]
@@ -19,7 +19,7 @@ type
 
     [Edit('Timeout de execução')]
     [Ident('TIMEOUTEXECUCAO')]
-    property TimeOut: UInt8 read FTimeOut write FTimeOut;
+    property TimeOut: Integer read FTimeOut write FTimeOut;
 
     [CheckBox('Desabilita fundo menu')]
     [Ident('DESABILITAFUNDOMENU')]

@@ -12,42 +12,42 @@ type
     FAutoIndentSQL: Boolean;
     FUseRegExFilters: Boolean;
     FVisibleColumns: string;
-    FErrorColor: UInt32;
+    FErrorColor: Integer;
     FLoadOnlyLevelZeroLogs: Boolean;
     FLoadLatestLog: Boolean;
     FAutoUpdateCriticalSections: Boolean;
-    FUserTimer: UInt32;
+    FUserTimer: Integer;
     FWindowsAlwaysOnTop: Boolean;
     FAutoUpdatePool: Boolean;
     FUseCrashErrorColor: Boolean;
     FGotoLastLog: Boolean;
-    FOpenTransactionColor: UInt32;
+    FOpenTransactionColor: Integer;
     FIgnoreExtraLog: Boolean;
     FDependentMethodTimer: Integer;
-    FInitialPerformanceColor: UInt32;
+    FInitialPerformanceColor: Integer;
     FAutoEvalueCrash: Boolean;
     FPoolTimer: Integer;
-    FMinTimeForPerformanceAnalysis: UInt32;
+    FMinTimeForPerformanceAnalysis: Integer;
     FAutoGotoLastLog: Boolean;
     FCriticalSectionTimer: Integer;
     FAutoUpdateUsers: Boolean;
     FLogPath: string;
-    FFinalPerformanceColor: UInt32;
+    FFinalPerformanceColor: Integer;
     FRegisterServerPoolAplicationMemory: Boolean;
     FAutoUpdateDependentMethods: Boolean;
     FMinTimeUnitForInactiveUser: string;
-    FMinTimeForInactiveUser: UInt32;
-    FMinTimeForDependentMethods: UInt32;
+    FMinTimeForInactiveUser: Integer;
+    FMinTimeForDependentMethods: Integer;
     FAutoRereadLog: Boolean;
-    FLogTimer: UInt32;
+    FLogTimer: Integer;
   public
     [Edit('Timer do log')]
     [Ident('TIMERLOG')]
-    property LogTimer: UInt32 read FLogTimer write FLogTimer;
+    property LogTimer: Integer read FLogTimer write FLogTimer;
 
     [Edit('Timer dos usuários')]
     [Ident('TIMERUSUARIOS')]
-    property UserTimer: UInt32 read FUserTimer write FUserTimer;
+    property UserTimer: Integer read FUserTimer write FUserTimer;
 
     [CheckBox('Releitura automática?')]
     [Ident('RELEITURAAUTOMATICALOG')]
@@ -119,11 +119,11 @@ type
 
     [Edit('Tempo mínimo para análise de desemprenho')]
     [Ident('TEMPOMINIMOPARAANALISEDESEMPENHO')]
-    property MinTimeForPerformanceAnalysis: UInt32 read FMinTimeForPerformanceAnalysis write FMinTimeForPerformanceAnalysis;
+    property MinTimeForPerformanceAnalysis: Integer read FMinTimeForPerformanceAnalysis write FMinTimeForPerformanceAnalysis;
 
     [Edit('Tempo mínimo para usuário inativo')]
     [Ident('TEMPOMINIMOPARAUSUARIOINATIVO')]
-    property MinTimeForInactiveUser: UInt32 read FMinTimeForInactiveUser write FMinTimeForInactiveUser;
+    property MinTimeForInactiveUser: Integer read FMinTimeForInactiveUser write FMinTimeForInactiveUser;
 
     [Edit('Unidade de tempo mínimo para usuário inativo')]
     [Ident('UNIDADETEMPOMINIMOPARAUSUARIOINATIVO')]
@@ -131,7 +131,7 @@ type
 
     [Edit('Tempo mínimo para métodos pendentes')]
     [Ident('TEMPOMINIMOPARAMETODOSPENDENTES')]
-    property MinTimeForDependentMethods: UInt32 read FMinTimeForDependentMethods write FMinTimeForDependentMethods;
+    property MinTimeForDependentMethods: Integer read FMinTimeForDependentMethods write FMinTimeForDependentMethods;
 
     [CheckBox('Registrar memória do pool do servidor de aplicação?')]
     [Ident('REGISTRARMEMORIASERVIDORAPLICACAOPOOL')]
@@ -139,11 +139,11 @@ type
 
     [Edit('Cor inicial de desempenho')]
     [Ident('CORINICIALDESEMPENHO')]
-    property InitialPerformanceColor: UInt32 read FInitialPerformanceColor write FInitialPerformanceColor;
+    property InitialPerformanceColor: Integer read FInitialPerformanceColor write FInitialPerformanceColor;
 
     [Edit('Cor final de desempenho')]
     [Ident('CORFINALDESEMPENHO')]
-    property FinalPerformanceColor: UInt32 read FFinalPerformanceColor write FFinalPerformanceColor;
+    property FinalPerformanceColor: Integer read FFinalPerformanceColor write FFinalPerformanceColor;
 
     [CheckBox('Utilizar cores ao travar?')]
     [Ident('UTILIZARCORESERROTRAVADO')]
@@ -151,11 +151,11 @@ type
 
     [Edit('Cor de erro')]
     [Ident('CORERRO')]
-    property ErrorColor: UInt32 read FErrorColor write FErrorColor;
+    property ErrorColor: Integer read FErrorColor write FErrorColor;
 
     [Edit('Cor de transação aberta')]
     [Ident('CORTRANSACAOABERTA')]
-    property OpenTransactionColor: UInt32 read FOpenTransactionColor write FOpenTransactionColor;
+    property OpenTransactionColor: Integer read FOpenTransactionColor write FOpenTransactionColor;
 
     [CheckBox('Identar automáticamente SQLs?')]
     [Ident('INDENTARAUTOMATICAMENTESQLS')]

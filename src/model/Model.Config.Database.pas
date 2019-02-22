@@ -9,14 +9,14 @@ uses
 type
   TDatabase = class
   private
-    FConnectionLogUpdateTime: UInt32;
-    FMaxConnections: UInt32;
+    FConnectionLogUpdateTime: Integer;
+    FMaxConnections: Integer;
     FDatabaseType: string;
     FAccessType: string;
-    FFetchLines: UInt32;
-    FMinConnections: UInt32;
+    FFetchLines: Integer;
+    FMinConnections: Integer;
     FAlias: string;
-    FDisconnectionTimeIdleConnection: UInt32;
+    FDisconnectionTimeIdleConnection: Integer;
     FSchema: string;
     FServer: string;
   public
@@ -26,23 +26,23 @@ type
 
     [Edit('Número máximo de conexões')]
     [Ident('NUMEROMAXIMOCONEXOES')]
-    property MaxConnections: UInt32 read FMaxConnections write FMaxConnections;
+    property MaxConnections: Integer read FMaxConnections write FMaxConnections;
 
     [Edit('Número mínimo de conexões')]
     [Ident('NUMEROMINIMOCONEXOES')]
-    property MinConnections: UInt32 read FMinConnections write FMinConnections;
+    property MinConnections: Integer read FMinConnections write FMinConnections;
 
     [Edit('Tempo de desconexçai de conexão inativa')]
     [Ident('TEMPODESCONEXAOCONEXAOINATIVA')]
-    property DisconnectionTimeIdleConnection: UInt32 read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
+    property DisconnectionTimeIdleConnection: Integer read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
     [Edit('Tempo de atualização de log de conexões')]
     [Ident('TEMPOATUALIZACAOLOGCONEXOES')]
-    property ConnectionLogUpdateTime: UInt32 read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
+    property ConnectionLogUpdateTime: Integer read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
     [Edit('Número de linhas para fetch')]
     [Ident('NUMEROLINHASFETCH')]
-    property FetchLines: UInt32 read FFetchLines write FFetchLines;
+    property FetchLines: Integer read FFetchLines write FFetchLines;
 
     [ComboBox('Tipo de acesso', ',SQLd,FireDAC')]
     [Ident('TIPOACESSOBD')]

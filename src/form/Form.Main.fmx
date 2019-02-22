@@ -3,6 +3,7 @@ object Main: TMain
   Top = 0
   ClientHeight = 800
   ClientWidth = 600
+  Position = ScreenCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]

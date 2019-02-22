@@ -11,9 +11,9 @@ type
   private
     FRegisterLog: Boolean;
     FExecutionsWithoutProcess: UInt8;
-    FProcessBlockSize: UInt32;
+    FProcessBlockSize: Integer;
     FUseSPP: Boolean;
-    FProcessBlock: UInt32;
+    FProcessBlock: Integer;
     FSystemName: string;
   public
     [CheckBox('Usar SPP?')]
@@ -30,11 +30,11 @@ type
 
     [Edit('Bloco de processamento')]
     [Ident('BLOCOPROCESSAMENTO')]
-    property ProcessBlock: UInt32 read FProcessBlock write FProcessBlock;
+    property ProcessBlock: Integer read FProcessBlock write FProcessBlock;
 
     [Edit('Bytes por bloco de processamento')]
     [Ident('BYTESBLOCOPROCESSAMENTO')]
-    property ProcessBlockSize: UInt32 read FProcessBlockSize write FProcessBlockSize;
+    property ProcessBlockSize: Integer read FProcessBlockSize write FProcessBlockSize;
 
     [Edit('Quantidade de execuções sem processamento')]
     [Ident('QTDEXECUCOESSEMPROCESSAMENTO')]
