@@ -16,6 +16,7 @@ Coordinates=10,71,92,58
 
 [PanelButtons]
 Coordinates=10,132,91,36
+LayerNames=
 
 [ButtonSave]
 Coordinates=224,10,81,58
@@ -26,4 +27,7 @@ Coordinates=113,10,101,51
 []
 Coordinates=0,0,118,36
 Visible=True
+
+[Module Settings]
+ModelLayerNames=a
 

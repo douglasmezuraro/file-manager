@@ -24,22 +24,22 @@ implementation
 
 function TComboBoxTemplate.Fabricate: IControl;
 var
-  Control: TComboBox;
+  ComboBox: TComboBox;
 begin
   Self.Caption;
 
-  Control                 := TComboBox.Create(FDTO.Owner);
-  Control.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
-  Control.OnExit          := FDTO.OnNotify;
-  Control.Parent          := FDTO.Parent.GetObject;
-  Control.Position.X      := FDTO.Position.X;
-  Control.Position.Y      := FDTO.Position.Y;
-  Control.Value           := Self.GetValue;
-  Control.Width           := Self.GetWidth;
+  ComboBox                 := TComboBox.Create(FDTO.Owner);
+  ComboBox.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
+  ComboBox.OnExit          := FDTO.OnNotify;
+  ComboBox.Parent          := FDTO.Parent.GetObject;
+  ComboBox.Position.X      := FDTO.Position.X;
+  ComboBox.Position.Y      := FDTO.Position.Y;
+  ComboBox.Value           := Self.GetValue;
+  ComboBox.Width           := Self.GetWidth;
 
-  Self.Offset(Control);
+  Self.Offset(ComboBox);
 
-  Result := Control;
+  Result := ComboBox;
 end;
 
 end.

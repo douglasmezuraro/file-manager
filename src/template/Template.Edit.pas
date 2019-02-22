@@ -22,21 +22,21 @@ implementation
 
 function TEditTemplate.Fabricate: IControl;
 var
-  Control: TEdit;
+  Edit: TEdit;
 begin
   Self.Caption;
 
-  Control            := TEdit.Create(FDTO.Owner);
-  Control.OnExit     := FDTO.OnNotify;
-  Control.Parent     := FDTO.Parent.GetObject;
-  Control.Position.X := FDTO.Position.X;
-  Control.Position.Y := FDTO.Position.Y;
-  Control.Value      := Self.GetValue;
-  Control.Width      := Self.GetWidth;
+  Edit            := TEdit.Create(FDTO.Owner);
+  Edit.OnExit     := FDTO.OnNotify;
+  Edit.Parent     := FDTO.Parent.GetObject;
+  Edit.Position.X := FDTO.Position.X;
+  Edit.Position.Y := FDTO.Position.Y;
+  Edit.Value      := Self.GetValue;
+  Edit.Width      := Self.GetWidth;
 
-  Self.Offset(Control);
+  Self.Offset(Edit);
 
-  Result := Control;
+  Result := Edit;
 end;
 
 end.

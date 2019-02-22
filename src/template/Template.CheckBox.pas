@@ -22,20 +22,20 @@ implementation
 
 function TCheckBoxTemplate.Fabricate: IControl;
 var
-  Control: TCheckBox;
+  CheckBox: TCheckBox;
 begin
-  Control            := TCheckBox.Create(FDTO.Owner);
-  Control.OnExit     := FDTO.OnNotify;
-  Control.Parent     := FDTO.Parent.GetObject;
-  Control.Position.X := FDTO.Position.X;
-  Control.Position.Y := FDTO.Position.Y;
-  Control.Text       := Self.GetCaption;
-  Control.Value      := Self.GetValue;
-  Control.Width      := Self.GetWidth;
+  CheckBox            := TCheckBox.Create(FDTO.Owner);
+  CheckBox.OnExit     := FDTO.OnNotify;
+  CheckBox.Parent     := FDTO.Parent.GetObject;
+  CheckBox.Position.X := FDTO.Position.X;
+  CheckBox.Position.Y := FDTO.Position.Y;
+  CheckBox.Text       := Self.GetCaption;
+  CheckBox.Value      := Self.GetValue;
+  CheckBox.Width      := Self.GetWidth;
 
-  Self.Offset(Control);
+  Self.Offset(CheckBox);
 
-  Result := Control;
+  Result := CheckBox;
 end;
 
 end.

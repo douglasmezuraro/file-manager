@@ -25,17 +25,18 @@ var
   ScrollBox: TScrollBox;
 begin
   Result := nil;
-  if FDTO.Parent is TTabControl then
-  begin
-    TabItem          := (FDTO.Parent as TTabControl).Add;
-    TabItem.Text     := Self.GetCaption;
 
-    ScrollBox        := TScrollBox.Create(TabItem);
-    ScrollBox.Parent := TabItem;
-    ScrollBox.Align  := TAlignLayout.Client;
+  if not (FDTO.Parent is TTabControl) then
+    Exit;
 
-    Result           := ScrollBox;
-  end;
+  TabItem          := (FDTO.Parent as TTabControl).Add;
+  TabItem.Text     := Self.GetCaption;
+
+  ScrollBox        := TScrollBox.Create(TabItem);
+  ScrollBox.Parent := TabItem;
+  ScrollBox.Align  := TAlignLayout.Client;
+
+  Result           := ScrollBox;
 end;
 
 end.
