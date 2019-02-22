@@ -11,6 +11,7 @@ object Main: TMain
   DesignerMasterStyle = 0
   object PanelButtons: TPanel
     Align = Bottom
+    Margins.Top = 10.000000000000000000
     Position.Y = 755.000000000000000000
     Size.Width = 600.000000000000000000
     Size.Height = 45.000000000000000000
@@ -38,20 +39,12 @@ object Main: TMain
       TabOrder = 0
     end
   end
-  object LayoutSpace: TLayout
-    Align = Bottom
-    Position.Y = 745.000000000000000000
-    Size.Width = 600.000000000000000000
-    Size.Height = 10.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 3
-  end
   object TabControlWizard: TTabControl
     Align = Client
     Size.Width = 600.000000000000000000
     Size.Height = 745.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 4
+    TabOrder = 3
     TabPosition = PlatformDefault
   end
   object ActionList: TActionList
