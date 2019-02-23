@@ -11,30 +11,30 @@ uses
   Util.Types;
 
 type
-  TEditTemplate = class(TControlTemplate)
+  TEditTemplate = class(TLabeledTemplate)
   public
-    function Fabricate: IControl; override;
+    function CreateControl: IControl; override;
   end;
 
 implementation
 
 { TEditTemplate }
 
-function TEditTemplate.Fabricate: IControl;
+function TEditTemplate.CreateControl: IControl;
 var
   Edit: TEdit;
 begin
-  Self.Caption;
+  CreateLabel;
 
   Edit            := TEdit.Create(FDTO.Owner);
   Edit.OnExit     := FDTO.OnNotify;
   Edit.Parent     := FDTO.Parent.GetObject;
   Edit.Position.X := FDTO.Position.X;
   Edit.Position.Y := FDTO.Position.Y;
-  Edit.Value      := Self.GetValue;
-  Edit.Width      := Self.GetWidth;
+  Edit.Value      := GetValue;
+  Edit.Width      := GetWidth;
 
-  Self.Offset(Edit);
+  Offset(Edit);
 
   Result := Edit;
 end;

@@ -148,7 +148,7 @@ begin
       Template := TControlTemplateFactory.Fabricate(Prop);
       try
         Template.DTO := DTO;
-        Control := Template.Fabricate;
+        Control := Template.CreateControl;
         DTO := Template.DTO;
       finally
         Template.Free;

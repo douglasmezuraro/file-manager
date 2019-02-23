@@ -1,7 +1,7 @@
 object Main: TMain
   Left = 0
   Top = 0
-  ClientHeight = 800
+  ClientHeight = 600
   ClientWidth = 600
   Position = ScreenCenter
   FormFactor.Width = 320
@@ -12,8 +12,7 @@ object Main: TMain
   DesignerMasterStyle = 0
   object PanelButtons: TPanel
     Align = Bottom
-    Margins.Top = 10.000000000000000000
-    Position.Y = 755.000000000000000000
+    Position.Y = 555.000000000000000000
     Size.Width = 600.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -43,7 +42,7 @@ object Main: TMain
   object TabControlWizard: TTabControl
     Align = Client
     Size.Width = 600.000000000000000000
-    Size.Height = 745.000000000000000000
+    Size.Height = 555.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 3
     TabPosition = PlatformDefault

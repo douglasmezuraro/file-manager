@@ -11,6 +11,7 @@ uses
   System.Rtti,
   System.SysUtils,
   System.Types,
+  Util.Methods,
   Util.Types;
 
 type
@@ -20,30 +21,20 @@ type
     function GetCaption: string;
     function GetValue: TValue;
     function GetWidth: Single;
-    procedure Caption;
-    procedure OffSet(const Control: TControl);
+    procedure Offset(const Control: TControl);
   public
-    function Fabricate: IControl; virtual; abstract;
+    function CreateControl: IControl; virtual; abstract;
     property DTO: TControlDTO read FDTO write FDTO;
+  end;
+
+  TLabeledTemplate = class abstract(TControlTemplate)
+  protected
+    procedure CreateLabel;
   end;
 
 implementation
 
 { TControlTemplate }
-
-procedure TControlTemplate.Caption;
-var
-  Caption: TLabel;
-begin
-  Caption            := TLabel.Create(FDTO.Owner);
-  Caption.Parent     := FDTO.Parent.GetObject;
-  Caption.Text       := Self.GetCaption;
-  Caption.Position.X := FDTO.Position.X;
-  Caption.Position.Y := FDTO.Position.Y;
-  Caption.Width      := Self.GetWidth;
-
-  Self.OffSet(Caption);
-end;
 
 function TControlTemplate.GetCaption: string;
 begin
@@ -57,18 +48,34 @@ end;
 
 function TControlTemplate.GetWidth: Single;
 begin
-  Result := 400;
+  Result := TUtils.Constants.DefaultWidth;
 end;
 
-procedure TControlTemplate.OffSet(const Control: TControl);
+procedure TControlTemplate.Offset(const Control: TControl);
 var
   Y: Single;
 begin
-  Y := Control.Height + 15;
-  if Control is TLabel then
-    Y := Y - 12;
+  Y := Control.Height;
+  if not (Control is TLabel) then
+    Y := Y + TUtils.Constants.DefaultSpacing;
 
-  FDTO.Position.Offset(0, Y);
+  FDTO.Position.Offset(TUtils.Constants.Zero, Y);
+end;
+
+{ TLabeledTemplate }
+
+procedure TLabeledTemplate.CreateLabel;
+var
+  ControlLabel: TLabel;
+begin
+  ControlLabel            := TLabel.Create(FDTO.Owner);
+  ControlLabel.Parent     := FDTO.Parent.GetObject;
+  ControlLabel.Text       := GetCaption;
+  ControlLabel.Position.X := FDTO.Position.X;
+  ControlLabel.Position.Y := FDTO.Position.Y;
+  ControlLabel.Width      := GetWidth;
+
+  Offset(ControlLabel);
 end;
 
 end.

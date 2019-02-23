@@ -12,14 +12,14 @@ uses
 type
   TTabItemTemplate = class(TControlTemplate)
   public
-    function Fabricate: IControl; override;
+    function CreateControl: IControl; override;
   end;
 
 implementation
 
 { TTabItemTemplate }
 
-function TTabItemTemplate.Fabricate: IControl;
+function TTabItemTemplate.CreateControl: IControl;
 var
   TabItem: TTabItem;
   ScrollBox: TScrollBox;
@@ -30,7 +30,7 @@ begin
     Exit;
 
   TabItem          := (FDTO.Parent as TTabControl).Add;
-  TabItem.Text     := Self.GetCaption;
+  TabItem.Text     := GetCaption;
 
   ScrollBox        := TScrollBox.Create(TabItem);
   ScrollBox.Parent := TabItem;

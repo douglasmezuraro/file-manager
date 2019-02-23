@@ -13,14 +13,14 @@ uses
 type
   TCheckBoxTemplate = class(TControlTemplate)
   public
-    function Fabricate: IControl; override;
+    function CreateControl: IControl; override;
   end;
 
 implementation
 
 { TCheckBoxTemplate }
 
-function TCheckBoxTemplate.Fabricate: IControl;
+function TCheckBoxTemplate.CreateControl: IControl;
 var
   CheckBox: TCheckBox;
 begin
@@ -29,11 +29,11 @@ begin
   CheckBox.Parent     := FDTO.Parent.GetObject;
   CheckBox.Position.X := FDTO.Position.X;
   CheckBox.Position.Y := FDTO.Position.Y;
-  CheckBox.Text       := Self.GetCaption;
-  CheckBox.Value      := Self.GetValue;
-  CheckBox.Width      := Self.GetWidth;
+  CheckBox.Text       := GetCaption;
+  CheckBox.Value      := GetValue;
+  CheckBox.Width      := GetWidth;
 
-  Self.Offset(CheckBox);
+  Offset(CheckBox);
 
   Result := CheckBox;
 end;

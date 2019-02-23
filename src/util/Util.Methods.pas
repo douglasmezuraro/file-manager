@@ -11,12 +11,14 @@ type
 
     TConstants = class abstract
     public
-      const Zero        = 0;
-      const DateNull    = Zero;
-      const NumericNull = -999;
-      const IniFileName = 'spCfg.ini';
-      const True        = 'S';
-      const False       = 'N';
+      const Zero           = 0;
+      const DateNull       = Zero;
+      const NumericNull    = -999;
+      const IniFileName    = 'spCfg.ini';
+      const True           = 'S';
+      const False          = 'N';
+      const DefaultSpacing = 15;
+      const DefaultWidth   = 400;
     end;
 
     TConversions = class abstract

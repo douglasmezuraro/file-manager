@@ -13,20 +13,20 @@ uses
   Util.Types;
 
 type
-  TComboBoxTemplate = class(TControlTemplate)
+  TComboBoxTemplate = class(TLabeledTemplate)
   public
-    function Fabricate: IControl; override;
+    function CreateControl: IControl; override;
   end;
 
 implementation
 
 { TComboBoxTemplate }
 
-function TComboBoxTemplate.Fabricate: IControl;
+function TComboBoxTemplate.CreateControl: IControl;
 var
   ComboBox: TComboBox;
 begin
-  Self.Caption;
+  CreateLabel;
 
   ComboBox                 := TComboBox.Create(FDTO.Owner);
   ComboBox.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
@@ -34,10 +34,10 @@ begin
   ComboBox.Parent          := FDTO.Parent.GetObject;
   ComboBox.Position.X      := FDTO.Position.X;
   ComboBox.Position.Y      := FDTO.Position.Y;
-  ComboBox.Value           := Self.GetValue;
-  ComboBox.Width           := Self.GetWidth;
+  ComboBox.Value           := GetValue;
+  ComboBox.Width           := GetWidth;
 
-  Self.Offset(ComboBox);
+  Offset(ComboBox);
 
   Result := ComboBox;
 end;
