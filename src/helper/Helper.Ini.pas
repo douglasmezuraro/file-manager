@@ -16,10 +16,9 @@ type
   private type
     TExecuteMode = (emRead, emWrite);
   private
-    procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: string); overload;
-    procedure Execute(var Value: TValue; const Section, Key: string; const Mode: TExecuteMode); overload;
-    function GetSection(const Prop: TRttiProperty): string;
-    function GetKey(const Prop: TRttiProperty): string;
+    procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: SectionAttribute);
+    procedure Read(var Value: TValue; const Section, Key: string);
+    procedure Write(var Value: TValue; const Section, Key: string);
   public
     procedure ReadObject(Obj: TObject);
     procedure WriteObject(Obj: TObject);
@@ -29,35 +28,113 @@ implementation
 
 { TIniFileHelper }
 
-function TIniFileHelper.GetKey(const Prop: TRttiProperty): string;
-var
-  Key: KeyAttribute;
+procedure TIniFileHelper.Read(var Value: TValue; const Section, Key: string);
 begin
-  Key := Prop.GetAtribute<KeyAttribute>;
-
-  Result := string.Empty;
-  if Assigned(Key) then
-    Result := Key.Name;
+  if Value.IsBoolean then
+  begin
+    Value := TUtils.Conversions.StrToBool(ReadString(Section, Key, TUtils.Conversions.BoolToStr(False)));
+    Exit;
+  end;
+    
+  if Value.IsDate then
+  begin
+    Value := ReadDate(Section, Key, TUtils.Constants.DateNull);
+    Exit;
+  end;
+    
+  if Value.IsDateTime then
+  begin
+    Value := ReadDateTime(Section, Key, TUtils.Constants.DateNull);
+    Exit;
+  end;
+    
+  if Value.IsTime then
+  begin
+    Value := ReadTime(Section, Key, TUtils.Constants.DateNull);
+    Exit;
+  end;
+    
+  if Value.IsFloat then
+  begin
+    Value := ReadFloat(Section, Key, TUtils.Constants.NumericNull);
+    Exit;
+  end;
+     
+  if Value.IsNumeric then
+  begin
+    Value := ReadInteger(Section, Key, TUtils.Constants.NumericNull);
+    Exit;
+  end;
+    
+  if Value.IsString then
+  begin
+    Value := ReadString(Section, Key, string.Empty);
+    Exit;
+  end;
 end;
 
-function TIniFileHelper.GetSection(const Prop: TRttiProperty): string;
-var
-  Section: SectionAttribute;
+procedure TIniFileHelper.ReadObject(Obj: TObject);
 begin
-  Section := Prop.GetAtribute<SectionAttribute>;
+  Execute(Obj, emRead, nil);
+end;
 
-  Result := string.Empty;
-  if Assigned(Section) then
-    Result := Section.Name;
+procedure TIniFileHelper.Write(var Value: TValue; const Section, Key: string);
+begin
+  if Value.IsBoolean then
+  begin
+    WriteString(Section, Key, TUtils.Conversions.BoolToStr(Value.AsBoolean));
+    Exit;
+  end;
+
+  if Value.IsDate then
+  begin
+    WriteDate(Section, Key, Value.AsDate);
+    Exit;
+  end;
+
+  if Value.IsDateTime then
+  begin
+    WriteDateTime(Section, Key, Value.AsDateTime);
+    Exit;
+  end;
+
+  if Value.IsTime then
+  begin
+    WriteTime(Section, Key, Value.AsTime);
+    Exit;
+  end;
+    
+  if Value.IsFloat then
+  begin
+    WriteFloat(Section, Key, Value.AsExtended);
+    Exit;
+  end;
+  
+  if Value.IsNumeric then
+  begin
+    WriteInteger(Section, Key, Value.AsInteger);
+    Exit;
+  end;
+  
+  if Value.IsString then
+  begin
+    WriteString(Section, Key, Value.AsString);
+    Exit;
+  end;
+end;
+
+procedure TIniFileHelper.WriteObject(Obj: TObject);
+begin
+  Execute(Obj, emWrite, nil);
 end;
 
 procedure TIniFileHelper.Execute(Obj: TObject; const Mode: TExecuteMode;
-  Section: string);
+  Section: SectionAttribute);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
   Value: TValue;
-  Key: string;
+  Key: KeyAttribute;
 begin
   if not Assigned(Obj) then
     Exit;
@@ -72,74 +149,30 @@ begin
       Value := Prop.GetValue(Obj);
       if Value.IsObject then
       begin
-        Section := GetSection(Prop);
+        Section := Prop.GetAtribute<SectionAttribute>();
         Execute(Value.AsObject, Mode, Section);
         Continue;
       end;
 
-      Key := GetKey(Prop);
+      if not Assigned(Section) then  
+        Continue;      
 
-      if Section.IsEmpty or Key.IsEmpty then
+      Key := Prop.GetAtribute<KeyAttribute>();
+      if not Assigned(Key) then
         Continue;
 
-      Execute(Value, Section, Key, Mode);
-      if Mode = emRead then
-        Prop.SetValue(Obj, Value);
+      case Mode of
+        emRead: 
+          begin
+            Read(Value, Section.Name, Key.Name);
+            Prop.SetValue(Obj, Value);
+          end;
+        emWrite: Write(Value, Section.Name, Key.Name);
+      end;
     end;
   finally
     Context.Free;
   end;
-end;
-
-procedure TIniFileHelper.Execute(var Value: TValue; const Section,
-  Key: string; const Mode: TExecuteMode);
-begin
-  case Mode of
-    emRead:
-      begin
-        if Value.IsBoolean then
-          Value := TUtils.Conversions.StrToBool(ReadString(Section, Key, TUtils.Conversions.BoolToStr(False)))
-        else if Value.IsDate then
-          Value := ReadDate(Section, Key, TUtils.Constants.DateNull)
-        else if Value.IsDateTime then
-          Value := ReadDateTime(Section, Key, TUtils.Constants.DateNull)
-        else if Value.IsTime then
-          Value := ReadTime(Section, Key, TUtils.Constants.DateNull)
-        else if Value.IsFloat then
-           Value := ReadFloat(Section, Key, TUtils.Constants.NumericNull)
-        else if Value.IsNumeric then
-          Value := ReadInteger(Section, Key, TUtils.Constants.NumericNull)
-        else if Value.IsString then
-          Value := ReadString(Section, Key, string.Empty);
-      end;
-    emWrite:
-      begin
-        if Value.IsBoolean then
-          WriteString(Section, Key, TUtils.Conversions.BoolToStr(Value.AsBoolean))
-        else if Value.IsDate then
-          WriteDate(Section, Key, Value.AsDate)
-        else if Value.IsDateTime then
-          WriteDateTime(Section, Key, Value.AsDateTime)
-        else if Value.IsTime then
-          WriteTime(Section, Key, Value.AsTime)
-        else if Value.IsFloat then
-          WriteFloat(Section, Key, Value.AsExtended)
-        else if Value.IsNumeric then
-          WriteInteger(Section, Key, Value.AsInteger)
-        else if Value.IsString then
-          WriteString(Section, Key, Value.AsString);
-      end;
-  end;
-end;
-
-procedure TIniFileHelper.ReadObject(Obj: TObject);
-begin
-  Execute(Obj, emRead, '');
-end;
-
-procedure TIniFileHelper.WriteObject(Obj: TObject);
-begin
-  Execute(Obj, emWrite, '');
 end;
 
 end.
