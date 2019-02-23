@@ -24,55 +24,55 @@ type
     FScannerModel: Integer;
   public
     [CheckBox('Gravar log da pasta digital?')]
-    [Ident('GRAVARLOGPASTADIGITAL')]
+    [Key('GRAVARLOGPASTADIGITAL')]
     property RegisterLogDigitalFolder: Boolean read FRegisterLogDigitalFolder write FRegisterLogDigitalFolder;
 
     [Edit('Tempo de espera (Ms)')]
-    [Ident('TEMPOESPERAEMMILISEGUNDOS')]
+    [Key('TEMPOESPERAEMMILISEGUNDOS')]
     property WaitTimeMS: Integer read FWaitTimeMS write FWaitTimeMS;
 
     [Edit('Tempo de espera')]
-    [Ident('TEMPOESPERA')]
+    [Key('TEMPOESPERA')]
     property WaitTime: Integer read FWaitTime write FWaitTime;
 
     [CheckBox('Duplex')]
-    [Ident('DUPLEX')]
+    [Key('DUPLEX')]
     property Duplex: Boolean read FDuplex write FDuplex;
 
     [CheckBox('AcquireFrame')]
-    [Ident('ACQUIREFRAME')]
+    [Key('ACQUIREFRAME')]
     property AcquireFrame: Boolean read FAcquireFrame write FAcquireFrame;
 
     [CheckBox('Detectar papel alimentador?')]
-    [Ident('DETECTARPAPELALIMENTADOR')]
+    [Key('DETECTARPAPELALIMENTADOR')]
     property DetectFeederPaper: Boolean read FDetectFeederPaper write FDetectFeederPaper;
 
     [Edit('Tamanho da página')]
-    [Ident('TAMPAGINA')]
+    [Key('TAMPAGINA')]
     property PageSize: Integer read FPageSize write FPageSize;
 
     [Edit('Resolução')]
-    [Ident('RESOLUCAO')]
+    [Key('RESOLUCAO')]
     property Resolution: Integer read FResolution write FResolution;
 
     [Edit('Resolução (cores)')]
-    [Ident('RESOLUCAOCORES')]
+    [Key('RESOLUCAOCORES')]
     property ColorResolution: Integer read FColorResolution write FColorResolution;
 
     [Edit('Modelo')]
-    [Ident('MODELOSCANNER')]
+    [Key('MODELOSCANNER')]
     property ScannerModel: Integer read FScannerModel write FScannerModel;
 
     [Edit('Perfil documento')]
-    [Ident('PERFILDOC')]
+    [Key('PERFILDOC')]
     property DocumentPerfil: Integer read FDocumentPerfil write FDocumentPerfil;
 
     [Edit('Limiar preto e branco')]
-    [Ident('LIMIARPRETOEBRANCO')]
+    [Key('LIMIARPRETOEBRANCO')]
     property BlackAndWhiteThreshold: Integer read FBlackAndWhiteThreshold write FBlackAndWhiteThreshold;
 
     [CheckBox('Processa preto e branco?')]
-    [Ident('PROCESSAPRETOEBRANCO')]
+    [Key('PROCESSAPRETOEBRANCO')]
     property BlackAndWhiteProcessing: Boolean read FBlackAndWhiteProcessing write FBlackAndWhiteProcessing;
   end;
 

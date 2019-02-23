@@ -15,19 +15,19 @@ type
     FSystemCode: Integer;
   public
     [Edit('Tipo')]
-    [Ident('TIPOSERVIDOR')]
+    [Key('TIPOSERVIDOR')]
     property ServidorType: string read FServidorType write FServidorType;
 
     [Edit('Código do sistema')]
-    [Ident('CDSISTEMA')]
+    [Key('CDSISTEMA')]
     property SystemCode: Integer read FSystemCode write FSystemCode;
 
     [CheckBox('Pode atualizar?')]
-    [Ident('PODEATUALIZAR')]
+    [Key('PODEATUALIZAR')]
     property CanUpdate: Boolean read FCanUpdate write FCanUpdate;
 
     [Edit('Update local')]
-    [Ident('LOCALUPDATE')]
+    [Key('LOCALUPDATE')]
     property LocalUpdate: Integer read FLocalUpdate write FLocalUpdate;
   end;
 

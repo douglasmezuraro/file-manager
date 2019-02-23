@@ -19,7 +19,7 @@ type
     procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: string); overload;
     procedure Execute(var Value: TValue; const Section, Key: string; const Mode: TExecuteMode); overload;
     function GetSection(const Prop: TRttiProperty): string;
-    function GetIdent(const Prop: TRttiProperty): string;
+    function GetKey(const Prop: TRttiProperty): string;
   public
     procedure ReadObject(Obj: TObject);
     procedure WriteObject(Obj: TObject);
@@ -29,22 +29,24 @@ implementation
 
 { TIniFileHelper }
 
-function TIniFileHelper.GetIdent(const Prop: TRttiProperty): string;
+function TIniFileHelper.GetKey(const Prop: TRttiProperty): string;
 var
-  Ident: IdentAttribute;
+  Key: KeyAttribute;
 begin
+  Key := Prop.GetAtribute<KeyAttribute>;
+
   Result := string.Empty;
-  Ident := Prop.GetAtribute<IdentAttribute>;
-  if Assigned(Ident) then
-    Result := Ident.Name;
+  if Assigned(Key) then
+    Result := Key.Name;
 end;
 
 function TIniFileHelper.GetSection(const Prop: TRttiProperty): string;
 var
   Section: SectionAttribute;
 begin
-  Result := string.Empty;
   Section := Prop.GetAtribute<SectionAttribute>;
+
+  Result := string.Empty;
   if Assigned(Section) then
     Result := Section.Name;
 end;
@@ -55,7 +57,7 @@ var
   Context: TRttiContext;
   Prop: TRttiProperty;
   Value: TValue;
-  Ident: string;
+  Key: string;
 begin
   if not Assigned(Obj) then
     Exit;
@@ -75,12 +77,12 @@ begin
         Continue;
       end;
 
-      Ident := GetIdent(Prop);
+      Key := GetKey(Prop);
 
-      if Section.IsEmpty or Ident.IsEmpty then
+      if Section.IsEmpty or Key.IsEmpty then
         Continue;
 
-      Execute(Value, Section, Ident, Mode);
+      Execute(Value, Section, Key, Mode);
       if Mode = emRead then
         Prop.SetValue(Obj, Value);
     end;

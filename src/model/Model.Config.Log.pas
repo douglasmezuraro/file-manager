@@ -14,15 +14,15 @@ type
     FRegisterMethodLog: Boolean;
   public
     [CheckBox('Registar log de métodos?')]
-    [Ident('REGISTRALOGMETODO')]
+    [Key('REGISTRALOGMETODO')]
     property RegisterMethodLog: Boolean read FRegisterMethodLog write FRegisterMethodLog;
 
     [CheckBox('Registrar log de SQLs?')]
-    [Ident('REGISTRALOGSQL')]
+    [Key('REGISTRALOGSQL')]
     property RegisterSQLLog: Boolean read FRegisterSQLLog write FRegisterSQLLog;
 
     [CheckBox('Registrar log de assinaturas?')]
-    [Ident('GRAVARLOGASSINATURA')]
+    [Key('GRAVARLOGASSINATURA')]
     property RegisterSignatureLog: Boolean read FRegisterSignatureLog write FRegisterSignatureLog;
   end;
 

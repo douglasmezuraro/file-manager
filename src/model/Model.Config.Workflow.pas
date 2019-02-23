@@ -12,7 +12,7 @@ type
     FCanChangeCurrentVersion: Boolean;
   public
     [CheckBox('Pode alterar o fluxo?')]
-    [Ident('PODEALTERARVERSAOATUALFLUXO')]
+    [Key('PODEALTERARVERSAOATUALFLUXO')]
     property CanChangeCurrentVersion: Boolean read FCanChangeCurrentVersion write FCanChangeCurrentVersion;
   end;
 

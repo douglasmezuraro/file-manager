@@ -18,31 +18,31 @@ type
     FUser: string;
   public
     [Edit('Usuário')]
-    [Ident('USUARIO')]
+    [Key('USUARIO')]
     property User: string read FUser write FUser;
 
     [Edit('Senha')]
-    [Ident('SENHA')]
+    [Key('SENHA')]
     property Password: string read FPassword write FPassword;
 
     [Edit('Build')]
-    [Ident('BUILD')]
+    [Key('BUILD')]
     property BuildType: string read FBuildType write FBuildType;
 
     [Edit('Método de teste')]
-    [Ident('METODOTEST')]
+    [Key('METODOTEST')]
     property TestMethod: string read FTestMethod write FTestMethod;
 
     [Edit('Suite')]
-    [Ident('SUITE')]
+    [Key('SUITE')]
     property Suit: string read FSuit write FSuit;
 
     [Edit('URL de gerenciador de teste')]
-    [Ident('TEST_MANAGER_URL')]
+    [Key('TEST_MANAGER_URL')]
     property TestManagerURL: string read FTestManagerURL write FTestManagerURL;
 
     [Edit('Registro de teste')]
-    [Ident('TEST_RECORD')]
+    [Key('TEST_RECORD')]
     property TestRecord: string read FTestRecord write FTestRecord;
   end;
 

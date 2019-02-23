@@ -12,7 +12,7 @@ type
   end;
 
   SectionAttribute = class(IniAttribute);
-  IdentAttribute = class(IniAttribute);
+  KeyAttribute = class(IniAttribute);
 
 implementation
 

@@ -21,43 +21,43 @@ type
     FIPAddress: string;
   public
     [Edit('Nome')]
-    [Ident('NOMESERVIDOR')]
+    [Key('NOMESERVIDOR')]
     property Name: string read FName write FName;
 
     [Edit('GUID')]
-    [Ident('GUIDSERVIDOR')]
+    [Key('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
 
     [Edit('Nome do computador')]
-    [Ident('NOMECOMPUTADOR')]
+    [Key('NOMECOMPUTADOR')]
     property ComputerName: string read FComputerName write FComputerName;
 
     [Edit('IP')]
-    [Ident('IPSERVIDOR')]
+    [Key('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
 
     [Edit('Endereço de IP')]
-    [Ident('ENDERECOIP')]
+    [Key('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
     [ComboBox('Tipo de conexão', ',Socket')]
-    [Ident('TIPOCONEXAO')]
+    [Key('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
 
     [CheckBox('Pode balancear?')]
-    [Ident('PODEBALANCEAR')]
+    [Key('PODEBALANCEAR')]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
     [Edit('Nome do executável')]
-    [Ident('NOMEEXECUTAVELSERVIDOR')]
+    [Key('NOMEEXECUTAVELSERVIDOR')]
     property ExeName: string read FExeName write FExeName;
 
     [Edit('Timeout de execução')]
-    [Ident('TIMEOUTEXECUCAO')]
+    [Key('TIMEOUTEXECUCAO')]
     property TimeOut: UInt16 read FTimeOut write FTimeOut;
 
     [CheckBox('Habilitar gerenciador de integração?')]
-    [Ident('HABILITAGERENCIADORINTEGRACAO')]
+    [Key('HABILITAGERENCIADORINTEGRACAO')]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
   end;
 

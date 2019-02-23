@@ -14,15 +14,15 @@ type
     FTimeOut: Integer;
   public
     [Edit('Login automático')]
-    [Ident('LOGINAUTOMATICO')]
+    [Key('LOGINAUTOMATICO')]
     property AutoLogin: string read FAutoLogin write FAutoLogin;
 
     [Edit('Timeout de execução')]
-    [Ident('TIMEOUTEXECUCAO')]
+    [Key('TIMEOUTEXECUCAO')]
     property TimeOut: Integer read FTimeOut write FTimeOut;
 
     [CheckBox('Desabilita fundo menu')]
-    [Ident('DESABILITAFUNDOMENU')]
+    [Key('DESABILITAFUNDOMENU')]
     property DisableMenuBackground: Boolean read FDisableMenuBackground write FDisableMenuBackground;
   end;
 

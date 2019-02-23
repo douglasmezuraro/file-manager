@@ -17,27 +17,27 @@ type
     FSystemName: string;
   public
     [CheckBox('Usar SPP?')]
-    [Ident('USARSPP')]
+    [Key('USARSPP')]
     property UseSPP: Boolean read FUseSPP write FUseSPP;
 
     [Edit('Nome do sistema')]
-    [Ident('NOMESISTEMA')]
+    [Key('NOMESISTEMA')]
     property SystemName: string read FSystemName write FSystemName;
 
     [CheckBox('Gravar log?')]
-    [Ident('GRAVARLOG')]
+    [Key('GRAVARLOG')]
     property RegisterLog: Boolean read FRegisterLog write FRegisterLog;
 
     [Edit('Bloco de processamento')]
-    [Ident('BLOCOPROCESSAMENTO')]
+    [Key('BLOCOPROCESSAMENTO')]
     property ProcessBlock: Integer read FProcessBlock write FProcessBlock;
 
     [Edit('Bytes por bloco de processamento')]
-    [Ident('BYTESBLOCOPROCESSAMENTO')]
+    [Key('BYTESBLOCOPROCESSAMENTO')]
     property ProcessBlockSize: Integer read FProcessBlockSize write FProcessBlockSize;
 
     [Edit('Quantidade de execuções sem processamento')]
-    [Ident('QTDEXECUCOESSEMPROCESSAMENTO')]
+    [Key('QTDEXECUCOESSEMPROCESSAMENTO')]
     property ExecutionsWithoutProcess: UInt8 read FExecutionsWithoutProcess write FExecutionsWithoutProcess;
   end;
 

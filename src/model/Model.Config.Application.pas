@@ -12,7 +12,7 @@ type
     FName: string;
   public
     [Edit('Nome de aplicação para monitoramento')]
-    [Ident('NOMEAPLICACAOPARAMONITORAMENTO')]
+    [Key('NOMEAPLICACAOPARAMONITORAMENTO')]
     property Name: string read FName write FName;
   end;
 
