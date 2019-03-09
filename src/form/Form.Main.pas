@@ -70,7 +70,7 @@ constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
   FModel := TConfig.Create;
-  FIniFile := TIniFile.Create(TUtils.Methods.IniPath);
+  FIniFile := TIniFile.Create(TUtils.Methods.IniPath('spCfg.ini'));
   FInvoker := TCommandInvoker.Create;
   FBinding := TBinding.Create;
 end;
@@ -121,6 +121,7 @@ end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
+  TUtils.Conversions.DefineBoolean('N', 'S');
   Self.Caption := FIniFile.FileName;
   FIniFile.ReadObject(FModel);
   ModelToView(FModel, TabControlWizard);

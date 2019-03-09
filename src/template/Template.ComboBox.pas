@@ -10,6 +10,7 @@ uses
   Helper.FMX,
   Helper.Rtti,
   Template.AbstractClass,
+  Util.Methods,
   Util.Types;
 
 type
@@ -26,7 +27,7 @@ function TComboBoxTemplate.CreateControl: IControl;
 var
   ComboBox: TComboBox;
 begin
-  CreateLabel;
+  inherited;
 
   ComboBox                 := TComboBox.Create(FDTO.Owner);
   ComboBox.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
@@ -37,7 +38,7 @@ begin
   ComboBox.Value           := GetValue;
   ComboBox.Width           := GetWidth;
 
-  Offset(ComboBox);
+  Offset(ComboBox.Height + TUtils.Constants.DefaultSpacing);
 
   Result := ComboBox;
 end;

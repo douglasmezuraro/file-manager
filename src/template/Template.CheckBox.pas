@@ -8,6 +8,7 @@ uses
   FMX.Types,
   Helper.FMX,
   Template.AbstractClass,
+  Util.Methods,
   Util.Types;
 
 type
@@ -33,7 +34,7 @@ begin
   CheckBox.Value      := GetValue;
   CheckBox.Width      := GetWidth;
 
-  Offset(CheckBox);
+  Offset(CheckBox.Height + TUtils.Constants.DefaultSpacing);
 
   Result := CheckBox;
 end;

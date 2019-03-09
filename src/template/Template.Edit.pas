@@ -8,6 +8,7 @@ uses
   FMX.Types,
   Helper.FMX,
   Template.AbstractClass,
+  Util.Methods,
   Util.Types;
 
 type
@@ -24,7 +25,7 @@ function TEditTemplate.CreateControl: IControl;
 var
   Edit: TEdit;
 begin
-  CreateLabel;
+  inherited;
 
   Edit            := TEdit.Create(FDTO.Owner);
   Edit.OnExit     := FDTO.OnNotify;
@@ -34,7 +35,7 @@ begin
   Edit.Value      := GetValue;
   Edit.Width      := GetWidth;
 
-  Offset(Edit);
+  Offset(Edit.Height + TUtils.Constants.DefaultSpacing);
 
   Result := Edit;
 end;

@@ -9,27 +9,29 @@ type
   TUtils = class abstract
   strict private type
 
-    TConstants = class abstract
+    TConstants = class
     public
       const Zero           = 0;
       const DateNull       = Zero;
       const NumericNull    = -999;
-      const IniFileName    = 'spCfg.ini';
-      const True           = 'S';
-      const False          = 'N';
-      const DefaultSpacing = 15;
+      const DefaultSpacing = 10;
       const DefaultWidth   = 400;
     end;
 
-    TConversions = class abstract
+    TConversions = class
+    private type
+      TBooleanValues = array[Boolean] of string;
+    strict private
+      class var FBooleanValues: TBooleanValues;
     public
+      class procedure DefineBoolean(const False, True: string); static;
       class function BoolToStr(const Value: Boolean): string; static;
       class function StrToBool(const Value: string): Boolean; static;
     end;
 
-    TMethods = class abstract
+    TMethods = class
     public
-      class function IniPath: string; static;
+      class function IniPath(const FileName: string): string; static;
     end;
 
   strict private
@@ -47,22 +49,26 @@ implementation
 { TUtils.TConversions }
 
 class function TUtils.TConversions.BoolToStr(const Value: Boolean): string;
-const
-  Mapping: array[Boolean] of string = (Constants.False, Constants.True);
 begin
-  Result := Mapping[Value];
+  Result := FBooleanValues[Value];
+end;
+
+class procedure TUtils.TConversions.DefineBoolean(const False, True: string);
+begin
+  FBooleanValues[System.False] := False;
+  FBooleanValues[System.True] := True;
 end;
 
 class function TUtils.TConversions.StrToBool(const Value: string): Boolean;
 begin
-  Result := SameText(Value, Constants.True);
+  Result := SameText(Value, FBooleanValues[True]);
 end;
 
 { TUtils.TMethods }
 
-class function TUtils.TMethods.IniPath: string;
+class function TUtils.TMethods.IniPath(const FileName: string): string;
 begin
-  Result := IncludeTrailingPathDelimiter(GetCurrentDir) + Constants.IniFileName;
+  Result := IncludeTrailingPathDelimiter(GetCurrentDir) + FileName;
 end;
 
 end.

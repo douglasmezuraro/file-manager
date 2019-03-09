@@ -21,7 +21,7 @@ type
     function GetCaption: string;
     function GetValue: TValue;
     function GetWidth: Single;
-    procedure Offset(const Control: TControl);
+    procedure Offset(const Y: Single);
   public
     function CreateControl: IControl; virtual; abstract;
     property DTO: TControlDTO read FDTO write FDTO;
@@ -30,6 +30,8 @@ type
   TLabeledTemplate = class abstract(TControlTemplate)
   protected
     procedure CreateLabel;
+  public
+    function CreateControl: IControl; override;
   end;
 
 implementation
@@ -51,18 +53,17 @@ begin
   Result := TUtils.Constants.DefaultWidth;
 end;
 
-procedure TControlTemplate.Offset(const Control: TControl);
-var
-  Y: Single;
+procedure TControlTemplate.Offset(const Y: Single);
 begin
-  Y := Control.Height;
-  if not (Control is TLabel) then
-    Y := Y + TUtils.Constants.DefaultSpacing;
-
   FDTO.Position.Offset(TUtils.Constants.Zero, Y);
 end;
 
 { TLabeledTemplate }
+
+function TLabeledTemplate.CreateControl: IControl;
+begin
+  CreateLabel;
+end;
 
 procedure TLabeledTemplate.CreateLabel;
 var
@@ -75,7 +76,7 @@ begin
   ControlLabel.Position.Y := FDTO.Position.Y;
   ControlLabel.Width      := GetWidth;
 
-  Offset(ControlLabel);
+  Offset(ControlLabel.Height);
 end;
 
 end.
