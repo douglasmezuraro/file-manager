@@ -1,4 +1,4 @@
-program spCfg;
+program INIReader;
 
 uses
   System.StartUpCopy,

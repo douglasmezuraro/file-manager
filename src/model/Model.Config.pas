@@ -3,6 +3,8 @@ unit Model.Config;
 interface
 
 uses
+  Attribute.Control,
+  Attribute.Ini,
   Model.Config.Application,
   Model.Config.Client,
   Model.Config.Database,
@@ -13,10 +15,7 @@ uses
   Model.Config.Server,
   Model.Config.SPP,
   Model.Config.Update,
-  Model.Config.Workflow,
-
-  Attribute.Control,
-  Attribute.Ini;
+  Model.Config.Workflow;
 
 type
   TConfig = class
@@ -102,17 +101,17 @@ end;
 
 destructor TConfig.Destroy;
 begin
-  FWorkflow.Free;
-  FMonitor.Free;
-  FSPP.Free;
-  FDUnit.Free;
-  FScanner.Free;
-  FLog.Free;
-  FDatabase.Free;
-  FUpdate.Free;
-  FApplication.Free;
-  FServer.Free;
   FClient.Free;
+  FServer.Free;
+  FApplication.Free;
+  FUpdate.Free;
+  FDatabase.Free;
+  FLog.Free;
+  FScanner.Free;
+  FDUnit.Free;
+  FSPP.Free;
+  FMonitor.Free;
+  FWorkflow.Free;
   inherited;
 end;
 
