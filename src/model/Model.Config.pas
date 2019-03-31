@@ -3,9 +3,7 @@ unit Model.Config;
 interface
 
 uses
-  Model.Config.AlternativeBalancer,
   Model.Config.Application,
-  Model.Config.Balancer,
   Model.Config.Client,
   Model.Config.Database,
   Model.Config.DUnit,
@@ -27,11 +25,9 @@ type
     FMonitor: TMonitor;
     FSPP: TSPP;
     FDUnit: TDUnit;
-    FBalancer: TBalancer;
     FScanner: TScanner;
     FLog: TLog;
     FDatabase: TDatabase;
-    FAlternativeBalancer: TAlternativeBalancer;
     FUpdate: TUpdate;
     FApplication: TApplication;
     FServer: TServer;
@@ -40,17 +36,9 @@ type
     constructor Create;
     destructor Destroy; override;
 
-//    [TTabItemAttribute('Balanceador alternativo')]
-//    [TSection('BALANCEADORALTERNATIVO')]
-//    property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
-
     [TabItem('Aplicação')]
     [Section('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
-
-//    [TTabItemAttribute('Balanceador')]
-//    [TSection('SPBALANCEADOR')]
-//    property Balancer: TBalancer read FBalancer write FBalancer;
 
     [TabItem('Cliente')]
     [Section('CLIENTE')]
@@ -103,11 +91,9 @@ begin
   FMonitor := TMonitor.Create;
   FSPP := TSPP.Create;
   FDUnit := TDUnit.Create;
-  FBalancer := TBalancer.Create;
   FScanner := TScanner.Create;
   FLog := TLog.Create;
   FDatabase := TDatabase.Create;
-  FAlternativeBalancer := TAlternativeBalancer.Create;
   FUpdate := TUpdate.Create;
   FApplication := TApplication.Create;
   FServer := TServer.Create;
@@ -120,11 +106,9 @@ begin
   FMonitor.Free;
   FSPP.Free;
   FDUnit.Free;
-  FBalancer.Free;
   FScanner.Free;
   FLog.Free;
   FDatabase.Free;
-  FAlternativeBalancer.Free;
   FUpdate.Free;
   FApplication.Free;
   FServer.Free;

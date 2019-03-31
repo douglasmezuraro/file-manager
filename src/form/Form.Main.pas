@@ -145,10 +145,13 @@ end;
 procedure TMain.FormShow(Sender: TObject);
 begin
   TUtils.Conversions.DefineBoolean('N', 'S');
-  Self.Caption := FIniFile.FileName;
+
   FIniFile.ReadObject(FModel);
   ModelToView(FModel, TabControlWizard);
+
   FInvoker.Clear;
+
+  Caption := FIniFile.FileName;
 end;
 
 procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
@@ -207,7 +210,7 @@ end;
 
 function TMain.SaveChanges: Boolean;
 var
-  _Result: Boolean;
+  lResult: Boolean;
 begin
   Result := False;
 
@@ -219,16 +222,16 @@ begin
     TMsgDlgType.mtConfirmation,
     FMX.Dialogs.mbYesNo,
     TMsgDlgBtn.mbNo,
-    0,
+    TUtils.Constants.NumericNull,
     procedure(const AResult: TModalResult)
     begin
       case AResult of
-        mrYes: _Result := True;
-        mrNo:  _Result := False;
+        mrYes : lResult := True;
+        mrNo  : lResult := False;
       end;
     end);
 
-  Result := _Result;
+  Result := lResult;
 end;
 
 end.

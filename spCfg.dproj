@@ -101,9 +101,7 @@
         <DCCReference Include="src\helper\Helper.Rtti.pas"/>
         <DCCReference Include="src\attribute\Attribute.Ini.pas"/>
         <DCCReference Include="src\helper\Helper.Ini.pas"/>
-        <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
         <DCCReference Include="src\model\Model.Config.Application.pas"/>
-        <DCCReference Include="src\model\Model.Config.Balancer.pas"/>
         <DCCReference Include="src\model\Model.Config.Client.pas"/>
         <DCCReference Include="src\model\Model.Config.Database.pas"/>
         <DCCReference Include="src\model\Model.Config.DUnit.pas"/>
