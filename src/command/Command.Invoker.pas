@@ -8,15 +8,14 @@ uses
 
 type
   TCommandInvoker = class
-  private type
-    TCommandStack = TStack<ICommand>;
   private
-    FUndoStack: TCommandStack;
+    FStack: TStack<ICommand>;
     function GetIsEmpty: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Add(const Command: ICommand);
+    procedure Clear;
     procedure Execute;
     property IsEmpty: Boolean read GetIsEmpty;
   end;
@@ -27,29 +26,34 @@ implementation
 
 procedure TCommandInvoker.Add(const Command: ICommand);
 begin
-  FUndoStack.Push(Command);
+  FStack.Push(Command);
+end;
+
+procedure TCommandInvoker.Clear;
+begin
+  FStack.Clear;
 end;
 
 constructor TCommandInvoker.Create;
 begin
-  FUndoStack := TCommandStack.Create;
+  FStack := TStack<ICommand>.Create;
 end;
 
 destructor TCommandInvoker.Destroy;
 begin
-  FUndoStack.Free;
+  FStack.Free;
   inherited Destroy;
 end;
 
 procedure TCommandInvoker.Execute;
 begin
   if not IsEmpty then
-    FUndoStack.Pop.Execute;
+    FStack.Pop.Execute;
 end;
 
 function TCommandInvoker.GetIsEmpty: Boolean;
 begin
-  Result := FUndoStack.Count = 0;
+  Result := FStack.Count = 0;
 end;
 
 end.

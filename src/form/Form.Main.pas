@@ -48,6 +48,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
       Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FBinding: TBinding;
     FModel: TConfig;
@@ -117,8 +118,6 @@ end;
 
 procedure TMain.ActionCancelExecute(Sender: TObject);
 begin
-  if SaveChanges then
-    ActionSave.Execute;
   Close;
 end;
 
@@ -126,6 +125,12 @@ procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
   FIniFile.WriteObject(FModel);
   Close;
+end;
+
+procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if SaveChanges then
+    FIniFile.WriteObject(FModel);
 end;
 
 procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
@@ -143,6 +148,7 @@ begin
   Self.Caption := FIniFile.FileName;
   FIniFile.ReadObject(FModel);
   ModelToView(FModel, TabControlWizard);
+  FInvoker.Clear;
 end;
 
 procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
