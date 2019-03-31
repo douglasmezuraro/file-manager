@@ -11,7 +11,7 @@ uses
   Helper.Rtti,
   Template.AbstractClass,
   Util.Methods,
-  Util.Types;
+  Util.DTO;
 
 type
   TComboBoxTemplate = class(TLabeledTemplate)

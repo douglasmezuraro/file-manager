@@ -167,7 +167,10 @@ begin
             Read(Value, Section.Name, Key.Name);
             Prop.SetValue(Obj, Value);
           end;
-        emWrite: Write(Value, Section.Name, Key.Name);
+        emWrite:
+          begin
+            Write(Value, Section.Name, Key.Name);
+          end;
       end;
     end;
   finally

@@ -7,18 +7,19 @@ type
   private
     FText: string;
   public
-    constructor Create(const Text: string);
+    constructor Create(const Text: string); overload;
     property Text: string read FText;
   end;
 
   TabItemAttribute = class(CaptionAttribute);
   CheckBoxAttribute = class(CaptionAttribute);
   EditAttribute = class(CaptionAttribute);
+
   ComboBoxAttribute = class(CaptionAttribute)
   private
     FItems: string;
   public
-    constructor Create(const Text, Items: string); reintroduce;
+    constructor Create(const Text, Items: string); overload;
     property Items: string read FItems;
   end;
 
@@ -40,3 +41,4 @@ begin
 end;
 
 end.
+

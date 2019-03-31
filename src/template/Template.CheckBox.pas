@@ -9,7 +9,7 @@ uses
   Helper.FMX,
   Template.AbstractClass,
   Util.Methods,
-  Util.Types;
+  Util.DTO;
 
 type
   TCheckBoxTemplate = class(TControlTemplate)
@@ -26,7 +26,7 @@ var
   CheckBox: TCheckBox;
 begin
   CheckBox            := TCheckBox.Create(FDTO.Owner);
-  CheckBox.OnExit     := FDTO.OnNotify;
+  CheckBox.OnChange   := FDTO.OnNotify;
   CheckBox.Parent     := FDTO.Parent.GetObject;
   CheckBox.Position.X := FDTO.Position.X;
   CheckBox.Position.Y := FDTO.Position.Y;

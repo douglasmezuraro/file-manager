@@ -12,7 +12,7 @@ uses
   System.SysUtils,
   System.Types,
   Util.Methods,
-  Util.Types;
+  Util.DTO;
 
 type
   TControlTemplate = class abstract

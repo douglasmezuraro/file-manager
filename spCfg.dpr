@@ -31,10 +31,11 @@ uses
   Command.Undoable in 'src\command\Command.Undoable.pas',
   Command.API in 'src\command\Command.API.pas',
   Command.Receiver in 'src\command\Command.Receiver.pas',
-  Util.Types in 'src\util\Util.Types.pas',
+  Util.Binding in 'src\util\Util.Binding.pas',
   Template.AbstractClass in 'src\template\Template.AbstractClass.pas',
   FactoryMethod.ControlTemplate in 'src\factorymethod\FactoryMethod.ControlTemplate.pas',
-  Attribute.Control in 'src\attribute\Attribute.Control.pas';
+  Attribute.Control in 'src\attribute\Attribute.Control.pas',
+  Util.DTO in 'src\util\Util.DTO.pas';
 
 {$R *.res}
 

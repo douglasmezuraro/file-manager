@@ -27,8 +27,9 @@ uses
   System.UITypes,
   Template.AbstractClass,
   Template.TabItem,
-  Util.Methods,
-  Util.Types;
+  Util.Binding,
+  Util.DTO,
+  Util.Methods;
 
 type
   TMain = class(TForm)
@@ -49,12 +50,8 @@ type
     FModel: TConfig;
     FIniFile: TIniFile;
     FInvoker: TCommandInvoker;
-
-    { ModelToView }
-    procedure ModelToView(const Obj: TObject; const Parent: IControl);
-
-    { Utils }
     function SaveChanges: Boolean;
+    procedure ModelToView(const Obj: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
     procedure ExecuteWithDisabledControls(const Proc: TProc);
   public
@@ -77,10 +74,10 @@ end;
 
 destructor TMain.Destroy;
 begin
+  FBinding.Free;
+  FInvoker.Free;
   FIniFile.Free;
   FModel.Free;
-  FInvoker.Free;
-  FBinding.Free;
   inherited;
 end;
 
@@ -89,12 +86,22 @@ var
   Control: IControl;
 begin
   for Control in FBinding.Keys do
-    (Control as TControl).OnExit := nil;
+  begin
+    if Control is TCheckBox then
+      (Control as TCheckBox).OnChange := nil
+    else
+      (Control as TControl).OnExit := nil;
+  end;
 
   Proc;
 
   for Control in FBinding.Keys do
-     (Control as TControl).OnExit := Notify;
+  begin
+    if Control is TCheckBox then
+      (Control as TCheckBox).OnChange := Notify
+    else
+      (Control as TControl).OnExit := Notify;
+  end;
 end;
 
 procedure TMain.ActionCancelExecute(Sender: TObject);

@@ -24,31 +24,19 @@ implementation
 
 class function TControlTemplateFactory.Fabricate(const Prop: TRttiProperty): TControlTemplate;
 begin
-  Result := nil;
-
   if Assigned(Prop.GetAtribute<CheckBoxAttribute>()) then
-  begin
-    Result := TCheckBoxTemplate.Create;
-    Exit;
-  end;
+    Exit(TCheckBoxTemplate.Create);
 
   if Assigned(Prop.GetAtribute<TabItemAttribute>()) then
-  begin
-    Result := TTabItemTemplate.Create;
-    Exit;
-  end;
+    Exit(TTabItemTemplate.Create);
 
   if Assigned(Prop.GetAtribute<ComboBoxAttribute>()) then
-  begin
-    Result := TComboBoxTemplate.Create;
-    Exit;
-  end;
+    Exit(TComboBoxTemplate.Create);
 
   if Assigned(Prop.GetAtribute<EditAttribute>()) then
-  begin
-    Result := TEditTemplate.Create;
-    Exit;
-  end;
+    Exit(TEditTemplate.Create);
+
+  Result := nil;
 end;
 
 end.
