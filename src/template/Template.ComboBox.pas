@@ -10,8 +10,8 @@ uses
   Helper.FMX,
   Helper.Rtti,
   Template.AbstractClass,
-  Util.Methods,
-  Util.DTO;
+  Util.DTO,
+  Util.Methods;
 
 type
   TComboBoxTemplate = class(TLabeledTemplate)
@@ -31,7 +31,7 @@ begin
 
   ComboBox                 := TComboBox.Create(FDTO.Owner);
   ComboBox.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
-  ComboBox.OnExit          := FDTO.OnNotify;
+  ComboBox.OnChange        := FDTO.OnNotify;
   ComboBox.Parent          := FDTO.Parent.GetObject;
   ComboBox.Position.X      := FDTO.Position.X;
   ComboBox.Position.Y      := FDTO.Position.Y;

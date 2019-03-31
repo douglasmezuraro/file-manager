@@ -8,8 +8,8 @@ uses
   FMX.Types,
   Helper.FMX,
   Template.AbstractClass,
-  Util.Methods,
-  Util.DTO;
+  Util.DTO,
+  Util.Methods;
 
 type
   TEditTemplate = class(TLabeledTemplate)
@@ -28,7 +28,7 @@ begin
   inherited;
 
   Edit            := TEdit.Create(FDTO.Owner);
-  Edit.OnExit     := FDTO.OnNotify;
+  Edit.OnChange   := FDTO.OnNotify;
   Edit.Parent     := FDTO.Parent.GetObject;
   Edit.Position.X := FDTO.Position.X;
   Edit.Position.Y := FDTO.Position.Y;

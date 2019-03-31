@@ -8,8 +8,8 @@ uses
   FMX.Types,
   Helper.FMX,
   Template.AbstractClass,
-  Util.Methods,
-  Util.DTO;
+  Util.DTO,
+  Util.Methods;
 
 type
   TCheckBoxTemplate = class(TControlTemplate)

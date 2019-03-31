@@ -15,8 +15,6 @@ type
 
   TValueHelper = record Helper for TValue
   public
-    { Other useful methods }
-    function Equals(const Value: TValue): Boolean;
     function Assign(const Value: TValue): TValue;
 
     { As-Functions }
@@ -82,11 +80,6 @@ end;
 function TValueHelper.AsTime: TTime;
 begin
   Result := AsType<TTime>;
-end;
-
-function TValueHelper.Equals(const Value: TValue): Boolean;
-begin
-  Result := SameText(Self.ToString, Value.ToString);
 end;
 
 function TValueHelper.IsBoolean: Boolean;

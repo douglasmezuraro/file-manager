@@ -10,13 +10,16 @@ uses
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
+  FMX.Dialogs,
+  FMX.DialogService,
+  FMX.Edit,
   FMX.Forms,
+  FMX.ListBox,
   FMX.StdCtrls,
   FMX.TabControl,
   FMX.Types,
   Helper.FMX,
   Helper.Ini,
-  Helper.Rtti,
   Model.Config,
   System.Actions,
   System.Classes,
@@ -87,20 +90,28 @@ var
 begin
   for Control in FBinding.Keys do
   begin
+    if Control is TEdit then
+      (Control as TEdit).OnChange := nil;
+
+    if Control is TComboBox then
+      (Control as TComboBox).OnChange := nil;
+
     if Control is TCheckBox then
-      (Control as TCheckBox).OnChange := nil
-    else
-      (Control as TControl).OnExit := nil;
+      (Control as TCheckBox).OnChange := nil;
   end;
 
   Proc;
 
   for Control in FBinding.Keys do
   begin
+    if Control is TEdit then
+      (Control as TEdit).OnChange := Notify;
+
+    if Control is TComboBox then
+      (Control as TComboBox).OnChange := Notify;
+
     if Control is TCheckBox then
-      (Control as TCheckBox).OnChange := Notify
-    else
-      (Control as TControl).OnExit := Notify;
+      (Control as TCheckBox).OnChange := Notify;
   end;
 end;
 
@@ -176,23 +187,42 @@ procedure TMain.Notify(Sender: TObject);
 var
   Control: TControl;
   Receiver: TReceiver;
-  OldValue: TValue;
+  OldValue, NewValue: TValue;
 begin
   Control := Sender as TControl;
 
   OldValue := FBinding.Values[Control];
-
-  if Control.Value.Equals(OldValue) then
-    Exit;
+  NewValue := Control.Value;
 
   Receiver := TReceiver.Create(Control, OldValue);
   FInvoker.Add(TUndoableCommand.Create(Receiver));
-  FBinding.Values[Control] := Control.Value;
+  FBinding.Values[Control] := NewValue;
 end;
 
 function TMain.SaveChanges: Boolean;
+var
+  _Result: Boolean;
 begin
   Result := False;
+
+  if FInvoker.IsEmpty then
+    Exit;
+
+  TDialogService.MessageDialog(
+    'Existem alterações não salvas, deseja salvar?',
+    TMsgDlgType.mtConfirmation,
+    FMX.Dialogs.mbYesNo,
+    TMsgDlgBtn.mbNo,
+    0,
+    procedure(const AResult: TModalResult)
+    begin
+      case AResult of
+        mrYes: _Result := True;
+        mrNo:  _Result := False;
+      end;
+    end);
+
+  Result := _Result;
 end;
 
 end.
