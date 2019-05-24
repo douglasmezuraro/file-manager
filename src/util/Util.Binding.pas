@@ -22,6 +22,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    procedure Clear;
     procedure Add(const Obj: TObject; const Prop: TRttiProperty; const Control: IControl);
     property Keys: TArray<IControl> read GetKeys;
     property Values[const Control: IControl]: TValue read GetValue write SetValue;
@@ -46,6 +47,11 @@ destructor TBinding.Destroy;
 begin
   FDictionary.Free;
   inherited Destroy;
+end;
+
+procedure TBinding.Clear;
+begin
+  FDictionary.Clear;
 end;
 
 function TBinding.GetKeys: TArray<IControl>;

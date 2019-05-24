@@ -32,7 +32,11 @@ uses
   Template.TabItem,
   Util.Binding,
   Util.DTO,
-  Util.Methods;
+  Util.Methods, FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
+  FMX.ListView,
+  Util.Types,
+  Rest.Json,
+  System.IOUtils, FMX.Layouts;
 
 type
   TMain = class(TForm)
@@ -43,21 +47,27 @@ type
     ActionSave: TAction;
     ActionCancel: TAction;
     TabControlWizard: TTabControl;
+    Expander1: TExpander;
+    ListPaths: TListBox;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
       Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ListPathsDblClick(Sender: TObject);
   private
     FBinding: TBinding;
     FModel: TConfig;
-    FIniFile: TIniFile;
     FInvoker: TCommandInvoker;
+    FPaths: TPaths;
     function SaveChanges: Boolean;
     procedure ModelToView(const Obj: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
     procedure ExecuteWithDisabledControls(const Proc: TProc);
+    procedure ReadInput;
+    procedure ReadFile(const Index: Integer);
+    procedure Clear;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -67,21 +77,39 @@ implementation
 
 {$R *.fmx}
 
+procedure TMain.Clear;
+var
+  Tab: TTabItem;
+begin
+  while TabControlWizard.TabCount > 0 do
+  begin
+    Tab := TabControlWizard.Tabs[0];
+    while Tab.ComponentCount > 0 do
+    begin
+      Tab.Components[0].Free;
+    end;
+    Tab.Free;
+  end;
+end;
+
 constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
   FModel := TConfig.Create;
-  FIniFile := TIniFile.Create(TUtils.Methods.IniPath('spCfg.ini'));
   FInvoker := TCommandInvoker.Create;
   FBinding := TBinding.Create;
+
+  TUtils.Conversions.DefineBoolean('N', 'S');
+
+  ReadInput;
 end;
 
 destructor TMain.Destroy;
 begin
   FBinding.Free;
   FInvoker.Free;
-  FIniFile.Free;
   FModel.Free;
+  FPaths.Free;
   inherited;
 end;
 
@@ -123,14 +151,14 @@ end;
 
 procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
-  FIniFile.WriteObject(FModel);
+  FPaths.Curr.IniFile.WriteObject(FModel);
   Close;
 end;
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if SaveChanges then
-    FIniFile.WriteObject(FModel);
+    FPaths.Curr.IniFile.WriteObject(FModel);
 end;
 
 procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
@@ -144,14 +172,12 @@ end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
-  TUtils.Conversions.DefineBoolean('N', 'S');
-
-  FIniFile.ReadObject(FModel);
-  ModelToView(FModel, TabControlWizard);
-
   FInvoker.Clear;
+end;
 
-  Caption := FIniFile.FileName;
+procedure TMain.ListPathsDblClick(Sender: TObject);
+begin
+  ReadFile(ListPaths.Selected.Index);
 end;
 
 procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
@@ -206,6 +232,51 @@ begin
   Receiver := TReceiver.Create(Control, OldValue);
   FInvoker.Add(TUndoableCommand.Create(Receiver));
   FBinding.Values[Control] := NewValue;
+end;
+
+procedure TMain.ReadFile(const Index: Integer);
+begin
+  Clear;
+  FPaths.Curr := FPaths.Paths[Index];
+
+  if Assigned(FModel) then
+    FModel.Free;
+
+  FModel := TConfig.Create;
+  FBinding.Clear;
+
+  Caption := FPaths.Curr.Path;
+
+  if not Assigned(FPaths.Curr.iniFile) then
+  begin
+    FPaths.Curr.IniFile := TIniFile.Create(FPaths.Curr.Path);
+    FPaths.Curr.IniFile.ReadObject(FModel);
+  end;
+
+  ModelToView(FModel, TabControlWizard);
+end;
+
+procedure TMain.ReadInput;
+var
+  JSON: string;
+  Path: TFilePath;
+  Item: TListViewItem;
+begin
+  try
+  //TUtils.Methods.FilePath('input.json')
+    JSON := TFile.ReadAllText(TUtils.Methods.FilePath('input.json'));
+    FPaths := TJson.JsonToObject<TPaths>(JSON);
+
+    for Path in FPaths.Paths do
+    begin
+      ListPaths.Items.AddObject(Path.Name, Path);
+    end;
+  except
+    on E: EFileNotFoundException do
+    begin
+      //MessageDlg('Arquivo não encontrado', TMsgDlgType.mtInformation, [mbOK], 0);
+    end;
+  end;
 end;
 
 function TMain.SaveChanges: Boolean;

@@ -31,7 +31,7 @@ type
 
     TMethods = class
     public
-      class function IniPath(const FileName: string): string; static;
+      class function FilePath(const FileName: TFileName): string; static;
     end;
 
   strict private
@@ -66,7 +66,7 @@ end;
 
 { TUtils.TMethods }
 
-class function TUtils.TMethods.IniPath(const FileName: string): string;
+class function TUtils.TMethods.FilePath(const FileName: TFileName): string;
 begin
   Result := IncludeTrailingPathDelimiter(GetCurrentDir) + FileName;
 end;
