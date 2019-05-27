@@ -35,7 +35,7 @@ uses
   Util.Methods, FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView,
   Util.Types,
-  Rest.Json,
+  Rest.Json, System.TypInfo,
   System.IOUtils, FMX.Layouts;
 
 type
@@ -47,7 +47,7 @@ type
     ActionSave: TAction;
     ActionCancel: TAction;
     TabControlWizard: TTabControl;
-    Expander1: TExpander;
+    ExpanderItems: TExpander;
     ListPaths: TListBox;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
@@ -58,16 +58,16 @@ type
     procedure ListPathsDblClick(Sender: TObject);
   private
     FBinding: TBinding;
-    FModel: TConfig;
     FInvoker: TCommandInvoker;
-    FPaths: TPaths;
-    function SaveChanges: Boolean;
+    FPaths: TPaths<TConfig>;
     procedure ModelToView(const Obj: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
     procedure ExecuteWithDisabledControls(const Proc: TProc);
     procedure ReadInput;
     procedure ReadFile(const Index: Integer);
     procedure Clear;
+    function HasChanges: Boolean;
+    procedure SaveChanges;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -79,23 +79,21 @@ implementation
 
 procedure TMain.Clear;
 var
-  Tab: TTabItem;
+  I, J: Integer;
 begin
-  while TabControlWizard.TabCount > 0 do
+  for I := Pred(TabControlWizard.TabCount) downto 0 do
   begin
-    Tab := TabControlWizard.Tabs[0];
-    while Tab.ComponentCount > 0 do
+    for J := Pred(TabControlWizard.Tabs[I].ComponentCount) downto 0 do
     begin
-      Tab.Components[0].Free;
+      TabControlWizard.Tabs[I].RemoveComponent(TabControlWizard.Tabs[I].Components[J]);
     end;
-    Tab.Free;
+    TabControlWizard.Delete(I);
   end;
 end;
 
 constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
-  FModel := TConfig.Create;
   FInvoker := TCommandInvoker.Create;
   FBinding := TBinding.Create;
 
@@ -108,7 +106,6 @@ destructor TMain.Destroy;
 begin
   FBinding.Free;
   FInvoker.Free;
-  FModel.Free;
   FPaths.Free;
   inherited;
 end;
@@ -151,14 +148,14 @@ end;
 
 procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
-  FPaths.Curr.IniFile.WriteObject(FModel);
+  SaveChanges;
   Close;
 end;
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if SaveChanges then
-    FPaths.Curr.IniFile.WriteObject(FModel);
+  if HasChanges and TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja salvar?') then
+    FPaths.Curr.Model.Write;
 end;
 
 procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
@@ -175,9 +172,14 @@ begin
   FInvoker.Clear;
 end;
 
+function TMain.HasChanges: Boolean;
+begin
+  Result := not FInvoker.IsEmpty;
+end;
+
 procedure TMain.ListPathsDblClick(Sender: TObject);
 begin
-  ReadFile(ListPaths.Selected.Index);
+  ReadFile((Sender as TListBox).Selected.Index);
 end;
 
 procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
@@ -189,33 +191,36 @@ var
   Template: TControlTemplate;
 begin
   Context := TRttiContext.Create;
-  try
-    DTO := TControlDTO.Create(10, 10);
-    for Prop in Context.GetType(Obj.ClassType).GetProperties do
-    begin
-      DTO.Model    := Obj;
-      DTO.OnNotify := Notify;
-      DTO.Owner    := Self;
-      DTO.Parent   := Parent;
-      DTO.Prop     := Prop;
+  DTO := TControlDTO.Create(10, 10);
+  for Prop in Context.GetType(Obj.ClassType).GetProperties do
+  begin
+    if Prop.Visibility <> mvPublic then
+      Continue;
 
-      Template := TControlTemplateFactory.Fabricate(Prop);
-      try
-        Template.DTO := DTO;
-        Control := Template.CreateControl;
-        DTO := Template.DTO;
-      finally
-        Template.Free;
-      end;
+    if Length(Prop.GetAttributes) = 0 then
+      Continue;
+
+    DTO.Model    := Obj;
+    DTO.OnNotify := Notify;
+    DTO.Owner    := Self;
+    DTO.Parent   := Parent;
+    DTO.Prop     := Prop;
+
+    Template := TControlTemplateFactory.Fabricate(Prop);
+    try
+      Template.DTO := DTO;
+      Control := Template.CreateControl;
+      DTO := Template.DTO;
 
       FBinding.Add(Obj, Prop, Control);
 
       if Template is TTabItemTemplate then
         ModelToView(Prop.GetValue(Obj).AsObject, Control);
+    finally
+      Template.Free;
     end;
-  finally
-    Context.Free;
   end;
+  FInvoker.Clear;
 end;
 
 procedure TMain.Notify(Sender: TObject);
@@ -236,73 +241,55 @@ end;
 
 procedure TMain.ReadFile(const Index: Integer);
 begin
-  Clear;
-  FPaths.Curr := FPaths.Paths[Index];
+  if HasChanges then
+  begin
+    if TUtils.Dialogs.Confirmation('Deseja salvar as alterações?') then
+      SaveChanges
+    else
+      Abort;
+  end;
 
-  if Assigned(FModel) then
-    FModel.Free;
+  FPaths.Curr := FPaths.Items[Index];
 
-  FModel := TConfig.Create;
+  if Assigned(FPaths.Curr) and (FPaths.Curr.Path = Self.Caption) then
+    Exit;
+
   FBinding.Clear;
+  Clear;
 
   Caption := FPaths.Curr.Path;
 
-  if not Assigned(FPaths.Curr.iniFile) then
-  begin
-    FPaths.Curr.IniFile := TIniFile.Create(FPaths.Curr.Path);
-    FPaths.Curr.IniFile.ReadObject(FModel);
-  end;
-
-  ModelToView(FModel, TabControlWizard);
+  ModelToView(FPaths.Curr.Model, TabControlWizard);
 end;
 
 procedure TMain.ReadInput;
 var
   JSON: string;
-  Path: TFilePath;
-  Item: TListViewItem;
+  Path: TFilePath<TConfig>;
 begin
   try
-  //TUtils.Methods.FilePath('input.json')
-    JSON := TFile.ReadAllText(TUtils.Methods.FilePath('input.json'));
-    FPaths := TJson.JsonToObject<TPaths>(JSON);
+    JSON := TFile.ReadAllText(TUtils.Methods.FilePath(TUtils.Constants.InputFile));
+    FPaths := TJson.JsonToObject<TPaths<TConfig>>(JSON);
 
-    for Path in FPaths.Paths do
+    for Path in FPaths.Items do
     begin
       ListPaths.Items.AddObject(Path.Name, Path);
     end;
+
+    FPaths.Foo;
+
   except
     on E: EFileNotFoundException do
     begin
-      //MessageDlg('Arquivo não encontrado', TMsgDlgType.mtInformation, [mbOK], 0);
+      TUtils.Dialogs.Information('Arquivo não encontrado');
     end;
   end;
 end;
 
-function TMain.SaveChanges: Boolean;
-var
-  lResult: Boolean;
+procedure TMain.SaveChanges;
 begin
-  Result := False;
-
-  if FInvoker.IsEmpty then
-    Exit;
-
-  TDialogService.MessageDialog(
-    'Existem alterações não salvas, deseja salvar?',
-    TMsgDlgType.mtConfirmation,
-    FMX.Dialogs.mbYesNo,
-    TMsgDlgBtn.mbNo,
-    TUtils.Constants.NumericNull,
-    procedure(const AResult: TModalResult)
-    begin
-      case AResult of
-        mrYes : lResult := True;
-        mrNo  : lResult := False;
-      end;
-    end);
-
-  Result := lResult;
+  FPaths.Curr.Model.Write;
+  FInvoker.Clear;
 end;
 
 end.

@@ -15,10 +15,12 @@ uses
   Model.Config.Server,
   Model.Config.SPP,
   Model.Config.Update,
-  Model.Config.Workflow;
+  Model.Config.Workflow,
+  Model.FileObject,
+  System.SysUtils;
 
 type
-  TConfig = class
+  TConfig = class(TIniObject)
   private
     FWorkflow: TWorkflow;
     FMonitor: TMonitor;
@@ -32,7 +34,7 @@ type
     FServer: TServer;
     FClient: TClient;
   public
-    constructor Create;
+    constructor Create(const FileName: TFileName);
     destructor Destroy; override;
 
     [TabItem('Aplicação')]
@@ -84,8 +86,9 @@ implementation
 
 { TConfig }
 
-constructor TConfig.Create;
+constructor TConfig.Create(const FileName: TFileName);
 begin
+  inherited Create(FileName);
   FWorkflow := TWorkflow.Create;
   FMonitor := TMonitor.Create;
   FSPP := TSPP.Create;
@@ -112,7 +115,7 @@ begin
   FSPP.Free;
   FMonitor.Free;
   FWorkflow.Free;
-  inherited;
+  inherited Destroy;
 end;
 
 end.

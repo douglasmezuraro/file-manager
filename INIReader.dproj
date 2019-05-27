@@ -130,6 +130,8 @@
         <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <DCCReference Include="src\util\Util.DTO.pas"/>
         <DCCReference Include="src\util\Util.Types.pas"/>
+        <DCCReference Include="src\model\Model.FileObject.pas"/>
+        <DCCReference Include="src\model\Model.FileObjectAPI.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
