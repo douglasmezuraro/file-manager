@@ -34,7 +34,7 @@ uses
   FactoryMethod.ControlTemplate in 'src\factorymethod\FactoryMethod.ControlTemplate.pas',
   Attribute.Control in 'src\attribute\Attribute.Control.pas',
   Util.DTO in 'src\util\Util.DTO.pas',
-  Util.Types in 'src\util\Util.Types.pas',
+  Util.Types.Path in 'src\util\Util.Types.Path.pas',
   Model.FileObject in 'src\model\Model.FileObject.pas',
   Model.FileObjectAPI in 'src\model\Model.FileObjectAPI.pas';
 

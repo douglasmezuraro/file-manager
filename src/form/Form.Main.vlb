@@ -11,21 +11,15 @@ Coordinates=248,173,79,36
 Coordinates=10,10,93,51
 Visible=True
 
-[ButtonCancel]
-Coordinates=10,71,92,58
-
 [PanelButtons]
 Coordinates=10,132,91,36
 LayerNames=
-
-[ButtonSave]
-Coordinates=224,10,81,58
 
 [LabelServerName]
 Coordinates=113,10,101,51
 
 []
-Coordinates=0,0,118,36
+Coordinates=10,71,92,58
 Visible=True
 
 [Module Settings]

@@ -11,6 +11,8 @@ type
     property Text: string read FText;
   end;
 
+  HintAttribute = class(CaptionAttribute);
+
   TabItemAttribute = class(CaptionAttribute);
   CheckBoxAttribute = class(CaptionAttribute);
   EditAttribute = class(CaptionAttribute);

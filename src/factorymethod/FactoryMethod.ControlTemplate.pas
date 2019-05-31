@@ -24,6 +24,8 @@ implementation
 
 class function TControlTemplateFactory.Fabricate(const Prop: TRttiProperty): TControlTemplate;
 begin
+  Result := nil;
+
   if Assigned(Prop.GetAtribute<CheckBoxAttribute>()) then
     Exit(TCheckBoxTemplate.Create);
 
@@ -35,8 +37,6 @@ begin
 
   if Assigned(Prop.GetAtribute<EditAttribute>()) then
     Exit(TEditTemplate.Create);
-
-  Result := nil;
 end;
 
 end.

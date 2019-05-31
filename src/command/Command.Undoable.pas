@@ -3,6 +3,7 @@ unit Command.Undoable;
 interface
 
 uses
+  FMX.Controls,
   Command.API,
   Command.Receiver,
   Helper.FMX;
@@ -26,10 +27,15 @@ begin
 end;
 
 procedure TUndoableCommand.Execute;
+var
+  Control: TControl;
 begin
-  FReceiver.Key.Value := FReceiver.Value;
-  if FReceiver.Key.CanFocus then
-    FReceiver.Key.SetFocus;
+  Control := FReceiver.Key;
+
+  Control.Value := FReceiver.Value;
+
+  if Control.CanFocus then
+    Control.SetFocus;
 end;
 
 end.

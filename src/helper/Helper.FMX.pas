@@ -5,7 +5,6 @@ interface
 uses
   FMX.ListBox,
   FMX.Types,
-  Helper.Rtti,
   System.Rtti;
 
 type

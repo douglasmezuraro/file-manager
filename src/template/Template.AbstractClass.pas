@@ -4,6 +4,7 @@ interface
 
 uses
   Attribute.Control,
+  Attribute.Ini,
   FMX.Controls,
   FMX.StdCtrls,
   FMX.Types,
@@ -19,6 +20,7 @@ type
   protected
     FDTO: TControlDTO;
     function GetCaption: string;
+    function GetHint: string;
     function GetValue: TValue;
     function GetWidth: Single;
     procedure Offset(const Y: Single);
@@ -41,6 +43,27 @@ implementation
 function TControlTemplate.GetCaption: string;
 begin
   Result := FDTO.Prop.GetAtribute<CaptionAttribute>().Text;
+end;
+
+function TControlTemplate.GetHint: string;
+var
+  Hint: HintAttribute;
+  Attribute: KeyAttribute;
+begin
+  Result := string.Empty;
+
+  Attribute := DTO.Prop.GetAtribute<KeyAttribute>();
+  if Assigned(Attribute) then
+    Result := Attribute.Name;
+
+  Hint := DTO.Prop.GetAtribute<HintAttribute>();
+  if Assigned(Hint) then
+  begin
+    if Result.IsEmpty then
+      Result := Hint.Text
+    else
+      Result := Result + ' - ' + Hint.Text;
+  end;
 end;
 
 function TControlTemplate.GetValue: TValue;

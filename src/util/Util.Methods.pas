@@ -5,6 +5,7 @@ interface
 uses
   FMX.Dialogs,
   FMX.DialogService,
+  System.IOUtils,
   System.SysUtils,
   System.UITypes;
 
@@ -20,6 +21,7 @@ type
       const NumericNull    = -999;
       const DefaultSpacing = 10;
       const DefaultWidth   = 400;
+      const ChangeChar     = '*';
     end;
 
     TConversions = class
@@ -83,7 +85,7 @@ end;
 
 class function TUtils.TMethods.FilePath(const FileName: TFileName): string;
 begin
-  Result := IncludeTrailingPathDelimiter(GetCurrentDir) + FileName;
+  Result := TPath.Combine(TPath.GetDirectoryName(ParamStr(0)), FileName);
 end;
 
 { TUtils.TDialogs }

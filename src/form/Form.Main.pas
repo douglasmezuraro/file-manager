@@ -10,64 +10,64 @@ uses
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
-  FMX.Dialogs,
-  FMX.DialogService,
-  FMX.Edit,
   FMX.Forms,
+  FMX.Layouts,
   FMX.ListBox,
   FMX.StdCtrls,
   FMX.TabControl,
   FMX.Types,
   Helper.FMX,
-  Helper.Ini,
   Model.Config,
+  Rest.Json,
   System.Actions,
   System.Classes,
   System.Generics.Collections,
-  System.IniFiles,
+  System.IOUtils,
   System.Rtti,
   System.SysUtils,
+  System.TypInfo,
   System.UITypes,
   Template.AbstractClass,
   Template.TabItem,
   Util.Binding,
   Util.DTO,
-  Util.Methods, FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
-  FMX.ListView,
-  Util.Types,
-  Rest.Json, System.TypInfo,
-  System.IOUtils, FMX.Layouts;
+  Util.Methods,
+  Util.Types.Path;
 
 type
   TMain = class(TForm)
-    PanelButtons: TPanel;
-    ButtonCancel: TButton;
-    ButtonSave: TButton;
+    ActionCancel: TAction;
     ActionList: TActionList;
     ActionSave: TAction;
-    ActionCancel: TAction;
-    TabControlWizard: TTabControl;
     ExpanderItems: TExpander;
     ListPaths: TListBox;
+    PanelButtons: TPanel;
+    TabControlWizard: TTabControl;
+    ActionReplace: TAction;
+    ButtonReplace: TButton;
+    ButtonCancel: TButton;
+    ButtonSave: TButton;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
-      Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
     procedure ListPathsDblClick(Sender: TObject);
+    procedure ActionReplaceExecute(Sender: TObject);
   private
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
     FPaths: TPaths<TConfig>;
+    FLockOnNotifyEvent: Boolean;
+    function HasChanges: Boolean;
     procedure ModelToView(const Obj: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
-    procedure ExecuteWithDisabledControls(const Proc: TProc);
-    procedure ReadInput;
     procedure ReadFile(const Index: Integer);
-    procedure Clear;
-    function HasChanges: Boolean;
-    procedure SaveChanges;
+    procedure ReadInput;
+    procedure RestoreView;
+    procedure Save;
+    procedure Replace;
+    procedure ControlView(const NewCaption: string = string.Empty);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -76,29 +76,14 @@ type
 implementation
 
 {$R *.fmx}
-
-procedure TMain.Clear;
-var
-  I, J: Integer;
-begin
-  for I := Pred(TabControlWizard.TabCount) downto 0 do
-  begin
-    for J := Pred(TabControlWizard.Tabs[I].ComponentCount) downto 0 do
-    begin
-      TabControlWizard.Tabs[I].RemoveComponent(TabControlWizard.Tabs[I].Components[J]);
-    end;
-    TabControlWizard.Delete(I);
-  end;
-end;
+{$R *.Windows.fmx MSWINDOWS}
 
 constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
+  TUtils.Conversions.DefineBoolean('N', 'S');
   FInvoker := TCommandInvoker.Create;
   FBinding := TBinding.Create;
-
-  TUtils.Conversions.DefineBoolean('N', 'S');
-
   ReadInput;
 end;
 
@@ -110,66 +95,56 @@ begin
   inherited;
 end;
 
-procedure TMain.ExecuteWithDisabledControls(const Proc: TProc);
-var
-  Control: IControl;
-begin
-  for Control in FBinding.Keys do
-  begin
-    if Control is TEdit then
-      (Control as TEdit).OnChange := nil;
-
-    if Control is TComboBox then
-      (Control as TComboBox).OnChange := nil;
-
-    if Control is TCheckBox then
-      (Control as TCheckBox).OnChange := nil;
-  end;
-
-  Proc;
-
-  for Control in FBinding.Keys do
-  begin
-    if Control is TEdit then
-      (Control as TEdit).OnChange := Notify;
-
-    if Control is TComboBox then
-      (Control as TComboBox).OnChange := Notify;
-
-    if Control is TCheckBox then
-      (Control as TCheckBox).OnChange := Notify;
-  end;
-end;
-
 procedure TMain.ActionCancelExecute(Sender: TObject);
 begin
   Close;
 end;
 
+procedure TMain.ActionReplaceExecute(Sender: TObject);
+begin
+  Replace;
+end;
+
 procedure TMain.ActionSaveExecute(Sender: TObject);
 begin
-  SaveChanges;
-  Close;
+  Save;
 end;
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if HasChanges and TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja salvar?') then
-    FPaths.Curr.Model.Write;
+  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja sair mesmo assim?') then
+    Abort;
+
+  inherited;
 end;
 
 procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
   Shift: TShiftState);
 begin
-  if (Shift = [ssCtrl]) and (Key = vkZ) then
-  begin
-    ExecuteWithDisabledControls(FInvoker.Execute);
+  if Shift <> [ssCtrl] then
+    Exit;
+
+  FLockOnNotifyEvent := True;
+  try
+    case Key of
+      vkZ:
+        begin
+          FInvoker.Execute;
+          ControlView;
+        end;
+      vkY:
+        begin
+          // TODO: Implement redo
+        end;
+    end;
+  finally
+    FLockOnNotifyEvent := False;
   end;
 end;
 
 procedure TMain.FormShow(Sender: TObject);
 begin
-  FInvoker.Clear;
+  ControlView;
 end;
 
 function TMain.HasChanges: Boolean;
@@ -190,16 +165,12 @@ var
   Prop: TRttiProperty;
   Template: TControlTemplate;
 begin
-  Context := TRttiContext.Create;
+  FLockOnNotifyEvent := True;
+
   DTO := TControlDTO.Create(10, 10);
+  Context := TRttiContext.Create;
   for Prop in Context.GetType(Obj.ClassType).GetProperties do
   begin
-    if Prop.Visibility <> mvPublic then
-      Continue;
-
-    if Length(Prop.GetAttributes) = 0 then
-      Continue;
-
     DTO.Model    := Obj;
     DTO.OnNotify := Notify;
     DTO.Owner    := Self;
@@ -208,19 +179,24 @@ begin
 
     Template := TControlTemplateFactory.Fabricate(Prop);
     try
-      Template.DTO := DTO;
-      Control := Template.CreateControl;
-      DTO := Template.DTO;
+      if Assigned(Template) then
+      begin
+        Template.DTO := DTO;
+        Control := Template.CreateControl;
+        DTO := Template.DTO;
 
-      FBinding.Add(Obj, Prop, Control);
+        FBinding.Add(Obj, Prop, Control);
 
-      if Template is TTabItemTemplate then
-        ModelToView(Prop.GetValue(Obj).AsObject, Control);
+        if Template is TTabItemTemplate then
+          ModelToView(Prop.GetValue(Obj).AsObject, Control);
+      end;
     finally
-      Template.Free;
+      if Assigned(Template) then
+        Template.Free;
     end;
   end;
-  FInvoker.Clear;
+
+  FLockOnNotifyEvent := False;
 end;
 
 procedure TMain.Notify(Sender: TObject);
@@ -229,6 +205,9 @@ var
   Receiver: TReceiver;
   OldValue, NewValue: TValue;
 begin
+  if FLockOnNotifyEvent then
+    Exit;
+
   Control := Sender as TControl;
 
   OldValue := FBinding.Values[Control];
@@ -237,29 +216,25 @@ begin
   Receiver := TReceiver.Create(Control, OldValue);
   FInvoker.Add(TUndoableCommand.Create(Receiver));
   FBinding.Values[Control] := NewValue;
+
+  ControlView;
 end;
 
 procedure TMain.ReadFile(const Index: Integer);
 begin
-  if HasChanges then
-  begin
-    if TUtils.Dialogs.Confirmation('Deseja salvar as alterações?') then
-      SaveChanges
-    else
-      Abort;
-  end;
-
-  FPaths.Curr := FPaths.Items[Index];
-
-  if Assigned(FPaths.Curr) and (FPaths.Curr.Path = Self.Caption) then
+  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocas mesmo assim?') then
     Exit;
 
-  FBinding.Clear;
-  Clear;
+  if Assigned(FPaths.Current) and (FPaths.Current.Id = Index) then
+    Exit;
 
-  Caption := FPaths.Curr.Path;
+  FPaths.Current := FPaths.Items[Index];
 
-  ModelToView(FPaths.Curr.Model, TabControlWizard);
+  RestoreView;
+
+  ControlView(FPaths.Current.Source);
+
+  ModelToView(FPaths.Current.Model, TabControlWizard);
 end;
 
 procedure TMain.ReadInput;
@@ -272,24 +247,62 @@ begin
     FPaths := TJson.JsonToObject<TPaths<TConfig>>(JSON);
 
     for Path in FPaths.Items do
-    begin
       ListPaths.Items.AddObject(Path.Name, Path);
-    end;
 
-    FPaths.Foo;
+    ExpanderItems.Height := ExpanderItems.HeaderHeight + ListPaths.BorderHeight + (ListPaths.ItemHeight * ListPaths.Count);
 
+    FPaths.Populate;
   except
     on E: EFileNotFoundException do
     begin
-      TUtils.Dialogs.Information('Arquivo não encontrado');
+      TUtils.Dialogs.Information('Arquivo %s não encontrado.', [TUtils.Constants.InputFile]);
+      Halt;
     end;
   end;
 end;
 
-procedure TMain.SaveChanges;
+procedure TMain.Replace;
 begin
-  FPaths.Curr.Model.Write;
+  FPaths.Current.Model.Write;
   FInvoker.Clear;
+  ControlView;
+end;
+
+procedure TMain.RestoreView;
+var
+  I, J: Integer;
+begin
+  FBinding.Clear;
+  FInvoker.Clear;
+
+  for I := Pred(TabControlWizard.TabCount) downto 0 do
+  begin
+    for J := Pred(TabControlWizard.Tabs[I].ComponentCount) downto 0 do
+    begin
+      TabControlWizard.Tabs[I].RemoveComponent(TabControlWizard.Tabs[I].Components[J]);
+    end;
+    TabControlWizard.Delete(I);
+  end;
+end;
+
+procedure TMain.Save;
+begin
+  FPaths.Current.Model.Write(FPaths.Current.Target);
+  FInvoker.Clear;
+  ControlView;
+end;
+
+procedure TMain.ControlView(const NewCaption: string);
+begin
+  if not NewCaption.Trim.IsEmpty then
+    Caption := NewCaption;
+
+  Caption := Caption.Replace(TUtils.Constants.ChangeChar, string.Empty);
+  if HasChanges and not Caption.Contains(TUtils.Constants.ChangeChar) then
+    Caption := Caption + TUtils.Constants.ChangeChar;
+
+  ActionSave.Enabled := Assigned(FPaths.Current) and (not FInvoker.IsEmpty);
+  ActionReplace.Enabled := Assigned(FPaths.Current) and (not FInvoker.IsEmpty) and FPaths.Current.CanOverride;
 end;
 
 end.

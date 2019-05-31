@@ -16,7 +16,8 @@ type
     constructor Create(const FileName: TFileName);
     destructor Destroy; override;
     procedure Read;
-    procedure Write;
+    procedure Write; overload;
+    procedure Write(const FileName: TFileName); overload;
   end;
 
 implementation
@@ -37,6 +38,16 @@ end;
 procedure TIniObject.Read;
 begin
   FIniFile.ReadObject(Self);
+end;
+
+procedure TIniObject.Write(const FileName: TFileName);
+begin
+  if Assigned(FIniFile) then
+    FIniFile.Free;
+
+  FIniFile := TIniFile.Create(FileName);
+
+  Write;
 end;
 
 procedure TIniObject.Write;

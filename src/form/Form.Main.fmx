@@ -1,6 +1,7 @@
 object Main: TMain
   Left = 0
   Top = 0
+  Caption = 'INI Reader'
   ClientHeight = 600
   ClientWidth = 600
   Position = ScreenCenter
@@ -17,27 +18,44 @@ object Main: TMain
     Size.Width = 600.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 0
-    object ButtonCancel: TButton
-      Action = ActionCancel
-      Align = Right
+    TabOrder = 2
+    object ButtonReplace: TButton
+      Action = ActionReplace
+      Align = Left
       Enabled = True
+      Hint = 'Sobreescreve o arquivo de origem'
       ImageIndex = -1
-      Position.X = 500.000000000000000000
+      Position.X = 100.000000000000000000
       Size.Width = 100.000000000000000000
       Size.Height = 45.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ButtonCancel: TButton
+      Action = ActionCancel
+      Align = Right
+      Enabled = True
+      ImageIndex = 1
+      Position.X = 500.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 45.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
     end
     object ButtonSave: TButton
       Action = ActionSave
       Align = Left
       Enabled = True
-      ImageIndex = -1
+      Hint = 'Sobreescreve o arquivo de destino'
+      ImageIndex = 0
       Size.Width = 100.000000000000000000
       Size.Height = 45.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
+      ParentShowHint = False
+      ShowHint = True
     end
   end
   object TabControlWizard: TTabControl
@@ -45,17 +63,18 @@ object Main: TMain
     Size.Width = 600.000000000000000000
     Size.Height = 414.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 3
+    TabOrder = 1
     TabPosition = PlatformDefault
   end
   object ExpanderItems: TExpander
     Align = Top
+    HeaderHeight = 25
     ShowCheck = False
     Size.Width = 600.000000000000000000
     Size.Height = 141.000000000000000000
     Size.PlatformDefault = False
     Text = 'Arquivos'
-    TabOrder = 5
+    TabOrder = 0
     ContentSize = '116'
     object ListPaths: TListBox
       Align = Client
@@ -65,6 +84,7 @@ object Main: TMain
       TabOrder = 0
       OnDblClick = ListPathsDblClick
       DisableFocusEffect = True
+      ItemHeight = 22.000000000000000000
       DefaultItemStyles.ItemStyle = ''
       DefaultItemStyles.GroupHeaderStyle = ''
       DefaultItemStyles.GroupFooterStyle = ''
@@ -77,11 +97,19 @@ object Main: TMain
     Top = 232
     object ActionSave: TAction
       Text = '&Salvar'
+      ImageIndex = 0
       OnExecute = ActionSaveExecute
+      ImageIndex = 0
     end
     object ActionCancel: TAction
       Text = '&Cancelar'
+      ImageIndex = 1
       OnExecute = ActionCancelExecute
+      ImageIndex = 1
+    end
+    object ActionReplace: TAction
+      Text = 'Su&bstituir'
+      OnExecute = ActionReplaceExecute
     end
   end
 end

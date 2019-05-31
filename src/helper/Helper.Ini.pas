@@ -140,41 +140,37 @@ begin
     Exit;
 
   Context := TRttiContext.Create;
-  try
-    for Prop in Context.GetType(Obj.ClassType).GetProperties do
+  for Prop in Context.GetType(Obj.ClassType).GetProperties do
+  begin
+    if Prop.Visibility <> mvPublic then
+      Continue;
+
+    Value := Prop.GetValue(Obj);
+    if Value.IsObject then
     begin
-      if Prop.Visibility <> mvPublic then
-        Continue;
-
-      Value := Prop.GetValue(Obj);
-      if Value.IsObject then
-      begin
-        Section := Prop.GetAtribute<SectionAttribute>();
-        Execute(Value.AsObject, Mode, Section);
-        Continue;
-      end;
-
-      if not Assigned(Section) then  
-        Continue;      
-
-      Key := Prop.GetAtribute<KeyAttribute>();
-      if not Assigned(Key) then
-        Continue;
-
-      case Mode of
-        emRead: 
-          begin
-            Read(Value, Section.Name, Key.Name);
-            Prop.SetValue(Obj, Value);
-          end;
-        emWrite:
-          begin
-            Write(Value, Section.Name, Key.Name);
-          end;
-      end;
+      Section := Prop.GetAtribute<SectionAttribute>();
+      Execute(Value.AsObject, Mode, Section);
+      Continue;
     end;
-  finally
-    Context.Free;
+
+    if not Assigned(Section) then
+      Continue;
+
+    Key := Prop.GetAtribute<KeyAttribute>();
+    if not Assigned(Key) then
+      Continue;
+
+    case Mode of
+      emRead:
+        begin
+          Read(Value, Section.Name, Key.Name);
+          Prop.SetValue(Obj, Value);
+        end;
+      emWrite:
+        begin
+          Write(Value, Section.Name, Key.Name);
+        end;
+    end;
   end;
 end;
 
