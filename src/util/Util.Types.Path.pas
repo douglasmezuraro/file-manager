@@ -70,7 +70,11 @@ begin
     if not Assigned(Method) then
       Continue;
 
+    if not Method.IsConstructor then
+      Continue;
+
     Path.Model := Method.Invoke(T, [Path.Source]).AsType<T>;
+
     if Assigned(Path.Model) then
       Path.Model.Read;
   end;

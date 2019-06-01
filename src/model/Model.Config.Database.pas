@@ -32,7 +32,7 @@ type
     [Key('NUMEROMINIMOCONEXOES')]
     property MinConnections: Integer read FMinConnections write FMinConnections;
 
-    [Edit('Tempo de desconexçai de conexão inativa')]
+    [Edit('Tempo de desconexão quando inativa')]
     [Key('TEMPODESCONEXAOCONEXAOINATIVA')]
     property DisconnectionTimeIdleConnection: Integer read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 

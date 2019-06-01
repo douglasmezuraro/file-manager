@@ -5,9 +5,11 @@ interface
 uses
   FMX.Dialogs,
   FMX.DialogService,
+  FMX.Consts,
   System.IOUtils,
   System.SysUtils,
-  System.UITypes;
+  System.UITypes,
+  Winapi.Windows;
 
 type
   TUtils = class abstract
@@ -49,16 +51,25 @@ type
       class function Confirmation(const Message: string; const Args: array of const): Boolean; overload; static;
     end;
 
+    TTranslation = class
+    private
+      class procedure SetResourceString(const Source: PResStringRec; const Value: PChar); static;
+    public
+      class procedure Translate; static;
+    end;
+
   strict private
     class var FConstants: TConstants;
     class var FConversions: TConversions;
     class var FMethods: TMethods;
     class var FDialogs: TDialogs;
+    class var FTranslation: TTranslation;
   public
     class property Constants: TConstants read FConstants;
     class property Conversions: TConversions read FConversions;
     class property Methods: TMethods read FMethods;
     class property Dialogs: TDialogs read FDialogs;
+    class property Translation: TTranslation read FTranslation;
   end;
 
 implementation
@@ -132,6 +143,39 @@ begin
     TMsgDlgBtn.mbOK,
     TUtils.Constants.NumericNull,
     nil);
+end;
+
+{ TUtils.TTranslation }
+
+class procedure TUtils.TTranslation.SetResourceString(const Source: PResStringRec;
+  const Value: PChar);
+var
+  POldProtect: DWORD;
+begin
+  VirtualProtect(Source, SizeOf(Source^), PAGE_EXECUTE_READWRITE, @POldProtect);
+  Source^.Identifier := Integer(Value);
+  VirtualProtect(Source, SizeOf(Source^), POldProtect, @POldProtect);
+end;
+
+class procedure TUtils.TTranslation.Translate;
+begin
+  SetResourceString(@SMsgDlgWarning, 'Atenção');
+  SetResourceString(@SMsgDlgError, 'Erro');
+  SetResourceString(@SMsgDlgInformation,'Informação');
+  SetResourceString(@SMsgDlgConfirm , 'Confirme');
+  SetResourceString(@SMsgDlgYes , '&Sim');
+  SetResourceString(@SMsgDlgNo , '&Não');
+  SetResourceString(@SMsgDlgOK , 'OK');
+  SetResourceString(@SMsgDlgCancel , 'Cancelar');
+  SetResourceString(@SMsgDlgHelp , '&Ajuda');
+  SetResourceString(@SMsgDlgHelpHelp , 'Ajuda');
+  SetResourceString(@SMsgDlgAbort , '&Abortar');
+  SetResourceString(@SMsgDlgRetry , '&Repetir');
+  SetResourceString(@SMsgDlgIgnore , '&Ignorar');
+  SetResourceString(@SMsgDlgAll , '&Tudo');
+  SetResourceString(@SMsgDlgNoToAll , 'N&ao para Tudo');
+  SetResourceString(@SMsgDlgYesToAll , 'Sim para &Tudo');
+  SetResourceString(@SMsgDlgClose , '&Fechar');
 end;
 
 end.

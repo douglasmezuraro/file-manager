@@ -10,7 +10,7 @@ type
   TSPP = class
   private
     FRegisterLog: Boolean;
-    FExecutionsWithoutProcess: UInt8;
+    FExecutionsWithoutProcess: Integer;
     FProcessBlockSize: Integer;
     FUseSPP: Boolean;
     FProcessBlock: Integer;
@@ -38,7 +38,7 @@ type
 
     [Edit('Quantidade de execuções sem processamento')]
     [Key('QTDEXECUCOESSEMPROCESSAMENTO')]
-    property ExecutionsWithoutProcess: UInt8 read FExecutionsWithoutProcess write FExecutionsWithoutProcess;
+    property ExecutionsWithoutProcess: Integer read FExecutionsWithoutProcess write FExecutionsWithoutProcess;
   end;
 
 implementation

@@ -68,7 +68,7 @@ begin
     
   if Value.IsString then
   begin
-    Value := ReadString(Section, Key, string.Empty);
+    Value := ReadString(Section, Key, string.Empty).Trim;
     Exit;
   end;
 end;

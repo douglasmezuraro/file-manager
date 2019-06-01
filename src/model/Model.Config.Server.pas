@@ -15,10 +15,11 @@ type
     FComputerName: string;
     FCanBalance: Boolean;
     FIntegrationManager: Boolean;
-    FTimeOut: UInt16;
+    FTimeOut: Integer;
     FGUID: string;
     FIPServer: string;
     FIPAddress: string;
+    FPort: Integer;
   public
     [Edit('Nome')]
     [Key('NOMESERVIDOR')]
@@ -54,11 +55,15 @@ type
 
     [Edit('Timeout de execução')]
     [Key('TIMEOUTEXECUCAO')]
-    property TimeOut: UInt16 read FTimeOut write FTimeOut;
+    property TimeOut: Integer read FTimeOut write FTimeOut;
 
     [CheckBox('Habilitar gerenciador de integração?')]
     [Key('HABILITAGERENCIADORINTEGRACAO')]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
+
+    [Edit('Porta')]
+    [Key('PORTA')]
+    property Port: Integer read FPort write FPort;
   end;
 
 implementation

@@ -44,9 +44,9 @@ type
     PanelButtons: TPanel;
     TabControlWizard: TTabControl;
     ActionReplace: TAction;
-    ButtonReplace: TButton;
     ButtonCancel: TButton;
     ButtonSave: TButton;
+    ButtonReplace: TButton;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -97,6 +97,7 @@ end;
 
 procedure TMain.ActionCancelExecute(Sender: TObject);
 begin
+  TUtils.Dialogs.Information('aa');
   Close;
 end;
 

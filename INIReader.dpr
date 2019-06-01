@@ -45,7 +45,11 @@ var
 
 begin
   Application.Initialize;
+  TUtils.Translation.Translate;
   Application.CreateForm(TMain, Main);
   Application.Run;
+
+
   ReportMemoryLeaksOnShutdown := True;
 end.
+
