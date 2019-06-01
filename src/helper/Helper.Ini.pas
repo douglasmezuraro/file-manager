@@ -9,7 +9,7 @@ uses
   System.Rtti,
   System.SysUtils,
   System.TypInfo,
-  Util.Methods;
+  Types.Utils;
 
 type
   TIniFileHelper = class Helper for TIniFile

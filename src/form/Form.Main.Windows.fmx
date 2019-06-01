@@ -2,7 +2,7 @@ inherited Main_Windows: TMain_Windows
   DesignerMasterStyle = 0
   inherited ExpanderItems: TExpander
     ContentSize = '116'
-    inherited ListPaths: TListBox
+    inherited TreeViewItems: TTreeView
       Viewport.Width = 596.000000000000000000
       Viewport.Height = 112.000000000000000000
     end

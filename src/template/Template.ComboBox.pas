@@ -10,8 +10,8 @@ uses
   Helper.FMX,
   Helper.Rtti,
   Template.AbstractClass,
-  Util.DTO,
-  Util.Methods;
+  Types.DTO,
+  Types.Utils;
 
 type
   TComboBoxTemplate = class(TLabeledTemplate)

@@ -117,7 +117,7 @@
         <DCCReference Include="src\model\Model.Config.SPP.pas"/>
         <DCCReference Include="src\model\Model.Config.Update.pas"/>
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
-        <DCCReference Include="src\util\Util.Methods.pas"/>
+        <DCCReference Include="src\types\Types.Utils.pas"/>
         <DCCReference Include="src\helper\Helper.FMX.pas"/>
         <DCCReference Include="src\template\Template.CheckBox.pas"/>
         <DCCReference Include="src\template\Template.ComboBox.pas"/>
@@ -127,14 +127,14 @@
         <DCCReference Include="src\command\Command.Undoable.pas"/>
         <DCCReference Include="src\command\Command.API.pas"/>
         <DCCReference Include="src\command\Command.Receiver.pas"/>
-        <DCCReference Include="src\util\Util.Binding.pas"/>
+        <DCCReference Include="src\types\Types.Binding.pas"/>
         <DCCReference Include="src\template\Template.AbstractClass.pas"/>
         <DCCReference Include="src\factorymethod\FactoryMethod.ControlTemplate.pas"/>
         <DCCReference Include="src\attribute\Attribute.Control.pas"/>
-        <DCCReference Include="src\util\Util.DTO.pas"/>
+        <DCCReference Include="src\types\Types.DTO.pas"/>
         <DCCReference Include="src\util\Util.Types.Path.pas"/>
-        <DCCReference Include="src\model\Model.FileObject.pas"/>
-        <DCCReference Include="src\model\Model.FileObjectAPI.pas"/>
+        <DCCReference Include="src\types\Types.ObjectFile.pas"/>
+        <DCCReference Include="src\types\Types.ObjectFileAPI.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

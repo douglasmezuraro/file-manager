@@ -19,7 +19,7 @@ uses
   Model.Config.SPP in 'src\model\Model.Config.SPP.pas',
   Model.Config.Update in 'src\model\Model.Config.Update.pas',
   Model.Config.Workflow in 'src\model\Model.Config.Workflow.pas',
-  Util.Methods in 'src\util\Util.Methods.pas',
+  Types.Utils in 'src\types\Types.Utils.pas',
   Helper.FMX in 'src\helper\Helper.FMX.pas',
   Template.CheckBox in 'src\template\Template.CheckBox.pas',
   Template.ComboBox in 'src\template\Template.ComboBox.pas',
@@ -29,14 +29,14 @@ uses
   Command.Undoable in 'src\command\Command.Undoable.pas',
   Command.API in 'src\command\Command.API.pas',
   Command.Receiver in 'src\command\Command.Receiver.pas',
-  Util.Binding in 'src\util\Util.Binding.pas',
+  Types.Binding in 'src\types\Types.Binding.pas',
   Template.AbstractClass in 'src\template\Template.AbstractClass.pas',
   FactoryMethod.ControlTemplate in 'src\factorymethod\FactoryMethod.ControlTemplate.pas',
   Attribute.Control in 'src\attribute\Attribute.Control.pas',
-  Util.DTO in 'src\util\Util.DTO.pas',
+  Types.DTO in 'src\types\Types.DTO.pas',
   Util.Types.Path in 'src\util\Util.Types.Path.pas',
-  Model.FileObject in 'src\model\Model.FileObject.pas',
-  Model.FileObjectAPI in 'src\model\Model.FileObjectAPI.pas';
+  Types.ObjectFile in 'src\types\Types.ObjectFile.pas',
+  Types.ObjectFileAPI in 'src\types\Types.ObjectFileAPI.pas';
 
 {$R *.res}
 

@@ -9,8 +9,8 @@ uses
   Helper.FMX,
   System.UITypes,
   Template.AbstractClass,
-  Util.DTO,
-  Util.Methods;
+  Types.DTO,
+  Types.Utils;
 
 type
   TEditTemplate = class(TLabeledTemplate)

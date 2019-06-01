@@ -5,7 +5,7 @@ interface
 uses
   System.Rtti,
   System.SysUtils,
-  Util.Methods;
+  Types.Utils;
 
 type
   TRttiPropertyHelper = class Helper for TRttiProperty

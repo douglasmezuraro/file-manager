@@ -12,8 +12,8 @@ uses
   System.Rtti,
   System.SysUtils,
   System.Types,
-  Util.DTO,
-  Util.Methods;
+  Types.DTO,
+  Types.Utils;
 
 type
   TControlTemplate = class abstract

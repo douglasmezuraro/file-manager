@@ -16,8 +16,8 @@ uses
   Model.Config.SPP,
   Model.Config.Update,
   Model.Config.Workflow,
-  Model.FileObject,
-  System.SysUtils;
+  System.SysUtils,
+  Types.ObjectFile;
 
 type
   TConfig = class(TIniObject)

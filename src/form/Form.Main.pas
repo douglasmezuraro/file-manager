@@ -12,9 +12,9 @@ uses
   FMX.Controls.Presentation,
   FMX.Forms,
   FMX.Layouts,
-  FMX.ListBox,
   FMX.StdCtrls,
   FMX.TabControl,
+  FMX.TreeView,
   FMX.Types,
   Helper.FMX,
   Model.Config,
@@ -29,45 +29,47 @@ uses
   System.UITypes,
   Template.AbstractClass,
   Template.TabItem,
-  Util.Binding,
-  Util.DTO,
-  Util.Methods,
-  Util.Types.Path;
+  Types.Binding,
+  Types.DTO,
+  Types.Path,
+  Types.Paths,
+  Types.Utils;
 
 type
   TMain = class(TForm)
     ActionCancel: TAction;
     ActionList: TActionList;
+    ActionReplace: TAction;
     ActionSave: TAction;
+    ButtonCancel: TButton;
+    ButtonReplace: TButton;
+    ButtonSave: TButton;
     ExpanderItems: TExpander;
-    ListPaths: TListBox;
     PanelButtons: TPanel;
     TabControlWizard: TTabControl;
-    ActionReplace: TAction;
-    ButtonCancel: TButton;
-    ButtonSave: TButton;
-    ButtonReplace: TButton;
+    TreeViewItems: TTreeView;
     procedure ActionCancelExecute(Sender: TObject);
+    procedure ActionReplaceExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
-    procedure ListPathsDblClick(Sender: TObject);
-    procedure ActionReplaceExecute(Sender: TObject);
+    procedure TreeViewItemsDblClick(Sender: TObject);
   private
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
     FPaths: TPaths<TConfig>;
     FLockOnNotifyEvent: Boolean;
     function HasChanges: Boolean;
+    procedure ControlView(const NewCaption: string = string.Empty);
+    procedure MakeTree;
     procedure ModelToView(const Obj: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
-    procedure ReadFile(const Index: Integer);
+    procedure ReadFile(const Text: string);
     procedure ReadInput;
+    procedure Replace;
     procedure RestoreView;
     procedure Save;
-    procedure Replace;
-    procedure ControlView(const NewCaption: string = string.Empty);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -97,7 +99,6 @@ end;
 
 procedure TMain.ActionCancelExecute(Sender: TObject);
 begin
-  TUtils.Dialogs.Information('aa');
   Close;
 end;
 
@@ -153,9 +154,53 @@ begin
   Result := not FInvoker.IsEmpty;
 end;
 
-procedure TMain.ListPathsDblClick(Sender: TObject);
+procedure TMain.MakeTree;
+
+  function MakeNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
+  var
+    Delimiter: Integer;
+    Item, NewItem: string;
+  begin
+    Item := Text;
+    NewItem := string.Empty;
+    Delimiter := Text.IndexOf('.');
+
+    if Delimiter <> -1 then
+    begin
+      Item := Text.Substring(0, Delimiter);
+      NewItem := Text.Substring(Succ(Delimiter));
+    end;
+
+    if Item.IsEmpty then
+      Exit(nil);
+
+    Result := TreeViewItems.ItemByText(Item);
+
+    if not Assigned(Result) then
+    begin
+      Result := TTreeViewItem.Create(Owner);
+      Result.Text := Item;
+      Result.Parent := Owner;
+    end;
+
+    if not NewItem.IsEmpty then
+      Result := MakeNode(Result, NewItem);
+  end;
+
+var
+  Path: TPath<TConfig>;
+  Group, Item: TTreeViewItem;
 begin
-  ReadFile((Sender as TListBox).Selected.Index);
+  for Path in FPaths.Items do
+  begin
+    Group := MakeNode(TreeViewItems, Path.Group);
+    if Assigned(Group) then
+    begin
+      Item := TTreeViewItem.Create(Group);
+      Item.Text := Path.Name;
+      Item.Parent := Group;
+    end;
+  end;
 end;
 
 procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
@@ -221,15 +266,15 @@ begin
   ControlView;
 end;
 
-procedure TMain.ReadFile(const Index: Integer);
+procedure TMain.ReadFile(const Text: string);
 begin
   if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocas mesmo assim?') then
     Exit;
 
-  if Assigned(FPaths.Current) and (FPaths.Current.Id = Index) then
+  if Assigned(FPaths.Current) and FPaths.Current.Name.Equals(Text) then
     Exit;
 
-  FPaths.Current := FPaths.Items[Index];
+  FPaths.Current := FPaths.Item[Text];
 
   RestoreView;
 
@@ -241,16 +286,12 @@ end;
 procedure TMain.ReadInput;
 var
   JSON: string;
-  Path: TFilePath<TConfig>;
 begin
   try
     JSON := TFile.ReadAllText(TUtils.Methods.FilePath(TUtils.Constants.InputFile));
     FPaths := TJson.JsonToObject<TPaths<TConfig>>(JSON);
 
-    for Path in FPaths.Items do
-      ListPaths.Items.AddObject(Path.Name, Path);
-
-    ExpanderItems.Height := ExpanderItems.HeaderHeight + ListPaths.BorderHeight + (ListPaths.ItemHeight * ListPaths.Count);
+    MakeTree;
 
     FPaths.Populate;
   except
@@ -291,6 +332,11 @@ begin
   FPaths.Current.Model.Write(FPaths.Current.Target);
   FInvoker.Clear;
   ControlView;
+end;
+
+procedure TMain.TreeViewItemsDblClick(Sender: TObject);
+begin
+  ReadFile(TreeViewItems.Selected.Text);
 end;
 
 procedure TMain.ControlView(const NewCaption: string);

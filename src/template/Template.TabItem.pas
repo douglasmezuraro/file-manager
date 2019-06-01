@@ -7,7 +7,7 @@ uses
   FMX.TabControl,
   FMX.Types,
   Template.AbstractClass,
-  Util.DTO;
+  Types.DTO;
 
 type
   TTabItemTemplate = class(TControlTemplate)

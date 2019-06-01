@@ -78,18 +78,13 @@ object Main: TMain
     Text = 'Arquivos'
     TabOrder = 0
     ContentSize = '116'
-    object ListPaths: TListBox
+    object TreeViewItems: TTreeView
       Align = Client
       Size.Width = 600.000000000000000000
       Size.Height = 116.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 0
-      OnDblClick = ListPathsDblClick
-      DisableFocusEffect = True
-      ItemHeight = 22.000000000000000000
-      DefaultItemStyles.ItemStyle = ''
-      DefaultItemStyles.GroupHeaderStyle = ''
-      DefaultItemStyles.GroupFooterStyle = ''
+      TabOrder = 1
+      OnDblClick = TreeViewItemsDblClick
       Viewport.Width = 596.000000000000000000
       Viewport.Height = 112.000000000000000000
     end

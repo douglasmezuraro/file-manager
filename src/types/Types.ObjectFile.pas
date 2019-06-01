@@ -1,15 +1,15 @@
-unit Model.FileObject;
+unit Types.ObjectFile;
 
 interface
 
 uses
   Helper.Ini,
-  Model.FileObjectAPI,
   System.IniFiles,
-  System.SysUtils;
+  System.SysUtils,
+  Types.ObjectFileAPI;
 
 type
-  TIniObject = class(TInterfacedObject, IFileObject)
+  TIniObject = class(TInterfacedObject, IObjectFile)
   private
     FIniFile: TIniFile;
   public
@@ -56,3 +56,4 @@ begin
 end;
 
 end.
+

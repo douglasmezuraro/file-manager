@@ -1,39 +1,27 @@
-unit Util.Types.Path;
+unit Types.Paths;
 
 interface
 
 uses
-  Model.FileObject,
+  System.Generics.Collections,
   System.Rtti,
-  System.SysUtils;
+  System.SysUtils,
+  Types.ObjectFile,
+  Types.Path;
 
 type
-  TFilePath<T: TIniObject> = class
-  strict private
-    FId: UInt8;
-    FCanOverride: Boolean;
-    FName: string;
-    FSource: TFileName;
-    FTarget: TFileName;
-    FModel: T;
-  public
-    property Id: UInt8 read FId write FId;
-    property Name: string read FName write FName;
-    property CanOverride: Boolean read FCanOverride write FCanOverride;
-    property Source: TFileName read FSource write FSource;
-    property Target: TFileName read FTarget write FTarget;
-    property Model: T read FModel write FModel;
-  end;
-
   TPaths<T: TIniObject> = class
   strict private
-    FItems: TArray<TFilePath<T>> ;
-    FCurrent: TFilePath<T>;
+    FItems: TArray<TPath<T>> ;
+    FCurrent: TPath<T>;
+  private
+    function GetItem(const Name: string): TPath<T>;
   public
     destructor Destroy; override;
     procedure Populate;
-    property Current: TFilePath<T> read FCurrent write FCurrent;
-    property Items: TArray<TFilePath<T>> read FItems write FItems;
+    property Current: TPath<T> read FCurrent write FCurrent;
+    property Item[const Name: string]: TPath<T> read GetItem;
+    property Items: TArray<TPath<T>> read FItems write FItems;
   end;
 
 implementation
@@ -42,7 +30,7 @@ implementation
 
 destructor TPaths<T>.Destroy;
 var
-  Path: TFilePath<T>;
+  Path: TPath<T>;
 begin
   for Path in Items do
   begin
@@ -53,9 +41,21 @@ begin
   inherited Destroy;
 end;
 
+function TPaths<T>.GetItem(const Name: string): TPath<T>;
+var
+  Path: TPath<T>;
+begin
+  Result := nil;
+  for Path in FItems do
+  begin
+    if Path.Name.Equals(Name) then
+      Exit(Path);
+  end;
+end;
+
 procedure TPaths<T>.Populate;
 var
-  Path: TFilePath<T>;
+  Path: TPath<T>;
   Context: TRttiContext;
   Typ: TRttiType;
   Method: TRttiMethod;
@@ -81,3 +81,4 @@ begin
 end;
 
 end.
+
