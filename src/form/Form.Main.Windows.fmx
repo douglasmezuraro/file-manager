@@ -1,10 +1,22 @@
 inherited Main_Windows: TMain_Windows
   DesignerMasterStyle = 0
-  inherited ExpanderItems: TExpander
-    ContentSize = '116'
-    inherited TreeViewItems: TTreeView
-      Viewport.Width = 596.000000000000000000
-      Viewport.Height = 112.000000000000000000
+  inherited TabControlView: TTabControl
+    Sizes = (
+      600s
+      529s
+      600s
+      529s)
+    inherited TabItemFiles: TTabItem
+      ExplicitSize.cx = 70.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      inherited TreeViewItems: TTreeView
+        Viewport.Width = 596.000000000000000000
+        Viewport.Height = 525.000000000000000000
+      end
+    end
+    inherited TabItemSelectedFile: TTabItem
+      ExplicitSize.cx = 70.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
     end
   end
   inherited ActionList: TActionList

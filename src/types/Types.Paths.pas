@@ -3,7 +3,7 @@ unit Types.Paths;
 interface
 
 uses
-  System.Generics.Collections,
+
   System.Rtti,
   System.SysUtils,
   Types.ObjectFile,

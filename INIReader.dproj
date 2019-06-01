@@ -98,43 +98,48 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="src\attribute\Attribute.Control.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Ini.pas"/>
+        <DCCReference Include="src\command\Command.API.pas"/>
+        <DCCReference Include="src\command\Command.Invoker.pas"/>
+        <DCCReference Include="src\command\Command.Receiver.pas"/>
+        <DCCReference Include="src\command\Command.Undoable.pas"/>
+        <DCCReference Include="src\factorymethod\FactoryMethod.ControlTemplate.pas"/>
         <DCCReference Include="src\form\Form.Main.pas">
             <Form>Main</Form>
-            <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="src\helper\Helper.Rtti.pas"/>
-        <DCCReference Include="src\attribute\Attribute.Ini.pas"/>
+        <DCCReference Include="src\helper\Helper.FMX.pas"/>
         <DCCReference Include="src\helper\Helper.Ini.pas"/>
+        <DCCReference Include="src\helper\Helper.Rtti.pas"/>
+        <DCCReference Include="src\model\Model.Config.pas"/>
         <DCCReference Include="src\model\Model.Config.Application.pas"/>
         <DCCReference Include="src\model\Model.Config.Client.pas"/>
         <DCCReference Include="src\model\Model.Config.Database.pas"/>
         <DCCReference Include="src\model\Model.Config.DUnit.pas"/>
         <DCCReference Include="src\model\Model.Config.Log.pas"/>
         <DCCReference Include="src\model\Model.Config.Monitor.pas"/>
-        <DCCReference Include="src\model\Model.Config.pas"/>
         <DCCReference Include="src\model\Model.Config.Scanner.pas"/>
         <DCCReference Include="src\model\Model.Config.Server.pas"/>
         <DCCReference Include="src\model\Model.Config.SPP.pas"/>
         <DCCReference Include="src\model\Model.Config.Update.pas"/>
         <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
-        <DCCReference Include="src\types\Types.Utils.pas"/>
-        <DCCReference Include="src\helper\Helper.FMX.pas"/>
+        <DCCReference Include="src\template\Template.AbstractClass.pas"/>
         <DCCReference Include="src\template\Template.CheckBox.pas"/>
         <DCCReference Include="src\template\Template.ComboBox.pas"/>
         <DCCReference Include="src\template\Template.Edit.pas"/>
         <DCCReference Include="src\template\Template.TabItem.pas"/>
-        <DCCReference Include="src\command\Command.Invoker.pas"/>
-        <DCCReference Include="src\command\Command.Undoable.pas"/>
-        <DCCReference Include="src\command\Command.API.pas"/>
-        <DCCReference Include="src\command\Command.Receiver.pas"/>
         <DCCReference Include="src\types\Types.Binding.pas"/>
-        <DCCReference Include="src\template\Template.AbstractClass.pas"/>
-        <DCCReference Include="src\factorymethod\FactoryMethod.ControlTemplate.pas"/>
-        <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <DCCReference Include="src\types\Types.DTO.pas"/>
-        <DCCReference Include="src\util\Util.Types.Path.pas"/>
         <DCCReference Include="src\types\Types.ObjectFile.pas"/>
         <DCCReference Include="src\types\Types.ObjectFileAPI.pas"/>
+        <DCCReference Include="src\types\Types.Path.pas"/>
+        <DCCReference Include="src\types\Types.Paths.pas"/>
+        <DCCReference Include="src\types\Types.Utils.pas"/>
+        <DCCReference Include="src\types\Types.Utils.Constants.pas"/>
+        <DCCReference Include="src\types\Types.Utils.Conversions.pas"/>
+        <DCCReference Include="src\types\Types.Utils.Dialogs.pas"/>
+        <DCCReference Include="src\types\Types.Utils.Methods.pas"/>
+        <DCCReference Include="src\types\Types.Utils.Translation.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

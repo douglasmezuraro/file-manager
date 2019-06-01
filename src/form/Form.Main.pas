@@ -44,10 +44,12 @@ type
     ButtonCancel: TButton;
     ButtonReplace: TButton;
     ButtonSave: TButton;
-    ExpanderItems: TExpander;
     PanelButtons: TPanel;
-    TabControlWizard: TTabControl;
+    TabControlView: TTabControl;
+    TabItemFiles: TTabItem;
     TreeViewItems: TTreeView;
+    TabItemSelectedFile: TTabItem;
+    TabControlFile: TTabControl;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionReplaceExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
@@ -62,6 +64,7 @@ type
     FLockOnNotifyEvent: Boolean;
     function HasChanges: Boolean;
     procedure ControlView(const NewCaption: string = string.Empty);
+    function MakeNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
     procedure MakeTree;
     procedure ModelToView(const Obj: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
@@ -154,42 +157,41 @@ begin
   Result := not FInvoker.IsEmpty;
 end;
 
-procedure TMain.MakeTree;
+function TMain.MakeNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
+var
+  Delimiter: Integer;
+  Item, Child: string;
+begin
+  Child := string.Empty;
+  Item := Text;
 
-  function MakeNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
-  var
-    Delimiter: Integer;
-    Item, NewItem: string;
+  if Text.Contains('.') then
   begin
-    Item := Text;
-    NewItem := string.Empty;
     Delimiter := Text.IndexOf('.');
-
-    if Delimiter <> -1 then
-    begin
-      Item := Text.Substring(0, Delimiter);
-      NewItem := Text.Substring(Succ(Delimiter));
-    end;
-
-    if Item.IsEmpty then
-      Exit(nil);
-
-    Result := TreeViewItems.ItemByText(Item);
-
-    if not Assigned(Result) then
-    begin
-      Result := TTreeViewItem.Create(Owner);
-      Result.Text := Item;
-      Result.Parent := Owner;
-    end;
-
-    if not NewItem.IsEmpty then
-      Result := MakeNode(Result, NewItem);
+    Item := Text.Substring(0, Delimiter);
+    Child := Text.Substring(Succ(Delimiter));
   end;
 
+  if Item.Trim.IsEmpty then
+    Exit(nil);
+
+  Result := TreeViewItems.ItemByText(Item);
+
+  if not Assigned(Result) then
+  begin
+    Result := TTreeViewItem.Create(Owner);
+    Result.Text := Item;
+    Result.Parent := Owner;
+  end;
+
+  if not Child.IsEmpty then
+    Result := MakeNode(Result, Child);
+end;
+
+procedure TMain.MakeTree;
 var
   Path: TPath<TConfig>;
-  Group, Item: TTreeViewItem;
+  Item, Group: TTreeViewItem;
 begin
   for Path in FPaths.Items do
   begin
@@ -201,6 +203,7 @@ begin
       Item.Parent := Group;
     end;
   end;
+  TreeViewItems.ExpandAll;
 end;
 
 procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
@@ -276,11 +279,13 @@ begin
 
   FPaths.Current := FPaths.Item[Text];
 
+  TabControlView.ActiveTab := TabItemSelectedFile;
+
   RestoreView;
 
   ControlView(FPaths.Current.Source);
 
-  ModelToView(FPaths.Current.Model, TabControlWizard);
+  ModelToView(FPaths.Current.Model, TabControlFile);
 end;
 
 procedure TMain.ReadInput;
@@ -317,13 +322,13 @@ begin
   FBinding.Clear;
   FInvoker.Clear;
 
-  for I := Pred(TabControlWizard.TabCount) downto 0 do
+  for I := Pred(TabControlFile.TabCount) downto 0 do
   begin
-    for J := Pred(TabControlWizard.Tabs[I].ComponentCount) downto 0 do
+    for J := Pred(TabControlFile.Tabs[I].ComponentCount) downto 0 do
     begin
-      TabControlWizard.Tabs[I].RemoveComponent(TabControlWizard.Tabs[I].Components[J]);
+      TabControlFile.Tabs[I].RemoveComponent(TabControlFile.Tabs[I].Components[J]);
     end;
-    TabControlWizard.Delete(I);
+    TabControlFile.Delete(I);
   end;
 end;
 
@@ -342,11 +347,11 @@ end;
 procedure TMain.ControlView(const NewCaption: string);
 begin
   if not NewCaption.Trim.IsEmpty then
-    Caption := NewCaption;
+    TabItemSelectedFile.Text := NewCaption;
 
-  Caption := Caption.Replace(TUtils.Constants.ChangeChar, string.Empty);
-  if HasChanges and not Caption.Contains(TUtils.Constants.ChangeChar) then
-    Caption := Caption + TUtils.Constants.ChangeChar;
+  TabItemSelectedFile.Text := TabItemSelectedFile.Text.Replace(TUtils.Constants.ChangeChar, string.Empty);
+  if HasChanges and not TabItemSelectedFile.Text.Contains(TUtils.Constants.ChangeChar) then
+    TabItemSelectedFile.Text := TabItemSelectedFile.Text + TUtils.Constants.ChangeChar;
 
   ActionSave.Enabled := Assigned(FPaths.Current) and (not FInvoker.IsEmpty);
   ActionReplace.Enabled := Assigned(FPaths.Current) and (not FInvoker.IsEmpty) and FPaths.Current.CanOverride;

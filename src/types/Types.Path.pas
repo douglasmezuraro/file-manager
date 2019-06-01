@@ -3,7 +3,8 @@ unit Types.Path;
 interface
 
 uses
-  System.SysUtils;
+  System.SysUtils,
+  Types.ObjectFile;
 
 type
   TPath<T: TIniObject> = class
