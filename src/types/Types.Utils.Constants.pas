@@ -3,7 +3,7 @@ unit Types.Utils.Constants;
 interface
 
 type
-  TConstants = class
+  TConstants = class abstract
   public
     const InputFile      = 'input.json';
     const Zero           = 0;
@@ -17,3 +17,4 @@ type
 implementation
 
 end.
+

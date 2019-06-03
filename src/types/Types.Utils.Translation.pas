@@ -31,21 +31,22 @@ class procedure TTranslation.Translate;
 begin
   HookResourceString(@SMsgDlgWarning, 'Atenção');
   HookResourceString(@SMsgDlgError, 'Erro');
-  HookResourceString(@SMsgDlgInformation,'Informação');
-  HookResourceString(@SMsgDlgConfirm , 'Confirme');
-  HookResourceString(@SMsgDlgYes , '&Sim');
-  HookResourceString(@SMsgDlgNo , '&Não');
-  HookResourceString(@SMsgDlgOK , 'OK');
-  HookResourceString(@SMsgDlgCancel , 'Cancelar');
-  HookResourceString(@SMsgDlgHelp , '&Ajuda');
-  HookResourceString(@SMsgDlgHelpHelp , 'Ajuda');
-  HookResourceString(@SMsgDlgAbort , '&Abortar');
-  HookResourceString(@SMsgDlgRetry , '&Repetir');
-  HookResourceString(@SMsgDlgIgnore , '&Ignorar');
-  HookResourceString(@SMsgDlgAll , '&Tudo');
-  HookResourceString(@SMsgDlgNoToAll , 'N&ao para Tudo');
-  HookResourceString(@SMsgDlgYesToAll , 'Sim para &Tudo');
-  HookResourceString(@SMsgDlgClose , '&Fechar');
+  HookResourceString(@SMsgDlgInformation, 'Informação');
+  HookResourceString(@SMsgDlgConfirm, 'Confirme');
+  HookResourceString(@SMsgDlgYes, '&Sim');
+  HookResourceString(@SMsgDlgNo, '&Não');
+  HookResourceString(@SMsgDlgOK, 'OK');
+  HookResourceString(@SMsgDlgCancel, 'Cancelar');
+  HookResourceString(@SMsgDlgHelp, '&Ajuda');
+  HookResourceString(@SMsgDlgHelpHelp, 'Ajuda');
+  HookResourceString(@SMsgDlgAbort, '&Abortar');
+  HookResourceString(@SMsgDlgRetry, '&Repetir');
+  HookResourceString(@SMsgDlgIgnore, '&Ignorar');
+  HookResourceString(@SMsgDlgAll, '&Tudo');
+  HookResourceString(@SMsgDlgNoToAll, 'N&ao para Tudo');
+  HookResourceString(@SMsgDlgYesToAll, 'Sim para &Tudo');
+  HookResourceString(@SMsgDlgClose, '&Fechar');
 end;
 
 end.
+

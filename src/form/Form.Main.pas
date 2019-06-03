@@ -1,4 +1,4 @@
-unit Form.Main;
+ï»¿unit Form.Main;
 
 interface
 
@@ -33,7 +33,7 @@ uses
   Types.DTO,
   Types.Path,
   Types.Paths,
-  Types.Utils;
+  Types.Utils, System.ImageList, FMX.ImgList;
 
 type
   TMain = class(TForm)
@@ -50,6 +50,7 @@ type
     TreeViewItems: TTreeView;
     TabItemSelectedFile: TTabItem;
     TabControlFile: TTabControl;
+    ImageListIcons: TImageList;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionReplaceExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
@@ -63,19 +64,20 @@ type
     FPaths: TPaths<TConfig>;
     FLockOnNotifyEvent: Boolean;
     function HasChanges: Boolean;
-    procedure ControlView(const NewCaption: string = string.Empty);
-    function MakeNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
+    function MakeNode(const Owner: TFmxObject; const Text: string; const Pos: Integer): TTreeViewItem;
+    procedure ControlView(const Text: string = string.Empty);
     procedure MakeTree;
     procedure ModelToView(const Obj: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
-    procedure ReadFile(const Text: string);
     procedure ReadInput;
     procedure Replace;
     procedure RestoreView;
     procedure Save;
+    procedure SelectFile(const Path: TObject);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure AfterConstruction; override;
   end;
 
 implementation
@@ -89,7 +91,6 @@ begin
   TUtils.Conversions.DefineBoolean('N', 'S');
   FInvoker := TCommandInvoker.Create;
   FBinding := TBinding.Create;
-  ReadInput;
 end;
 
 destructor TMain.Destroy;
@@ -115,9 +116,17 @@ begin
   Save;
 end;
 
+procedure TMain.AfterConstruction;
+begin
+  inherited;
+  ReadInput;
+  FPaths.ReadFiles;
+  MakeTree;
+end;
+
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja sair mesmo assim?') then
+  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alteraï¿½ï¿½es nï¿½o salvas, deseja sair mesmo assim?') then
     Abort;
 
   inherited;
@@ -157,26 +166,18 @@ begin
   Result := not FInvoker.IsEmpty;
 end;
 
-function TMain.MakeNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
+function TMain.MakeNode(const Owner: TFmxObject; const Text: string; const Pos: Integer): TTreeViewItem;
 var
-  Delimiter: Integer;
-  Item, Child: string;
+  Item: string;
+  Items: TArray<string>;
 begin
-  Child := string.Empty;
-  Item := Text;
-
-  if Text.Contains('.') then
-  begin
-    Delimiter := Text.IndexOf('.');
-    Item := Text.Substring(0, Delimiter);
-    Child := Text.Substring(Succ(Delimiter));
-  end;
+  Items := Text.Split(['.']);
+  Item := Items[Pos];
 
   if Item.Trim.IsEmpty then
     Exit(nil);
 
   Result := TreeViewItems.ItemByText(Item);
-
   if not Assigned(Result) then
   begin
     Result := TTreeViewItem.Create(Owner);
@@ -184,8 +185,8 @@ begin
     Result.Parent := Owner;
   end;
 
-  if not Child.IsEmpty then
-    Result := MakeNode(Result, Child);
+  if Pos < Pred(Length(Items)) then
+    Result := MakeNode(Result, Text, Succ(Pos));
 end;
 
 procedure TMain.MakeTree;
@@ -195,12 +196,14 @@ var
 begin
   for Path in FPaths.Items do
   begin
-    Group := MakeNode(TreeViewItems, Path.Group);
+    Group := MakeNode(TreeViewItems, Path.Group, 0);
     if Assigned(Group) then
     begin
       Item := TTreeViewItem.Create(Group);
+      Item.TagObject := Path;
       Item.Text := Path.Name;
       Item.Parent := Group;
+      Item.ImageIndex := Path.CanOverride.ToInteger;
     end;
   end;
   TreeViewItems.ExpandAll;
@@ -252,32 +255,35 @@ procedure TMain.Notify(Sender: TObject);
 var
   Control: TControl;
   Receiver: TReceiver;
-  OldValue, NewValue: TValue;
+  Old, New: TValue;
 begin
   if FLockOnNotifyEvent then
     Exit;
 
   Control := Sender as TControl;
 
-  OldValue := FBinding.Values[Control];
-  NewValue := Control.Value;
+  Old := FBinding.Values[Control];
+  New := Control.Value;
 
-  Receiver := TReceiver.Create(Control, OldValue);
+  Receiver := TReceiver.Create(Control, Old);
   FInvoker.Add(TUndoableCommand.Create(Receiver));
-  FBinding.Values[Control] := NewValue;
+  FBinding.Values[Control] := New;
 
   ControlView;
 end;
 
-procedure TMain.ReadFile(const Text: string);
+procedure TMain.SelectFile(const Path: TObject);
 begin
-  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocas mesmo assim?') then
+  if not Assigned(Path) then
     Exit;
 
-  if Assigned(FPaths.Current) and FPaths.Current.Name.Equals(Text) then
+  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alteraï¿½ï¿½es nï¿½o salvas, deseja trocas mesmo assim?') then
     Exit;
 
-  FPaths.Current := FPaths.Item[Text];
+  if Assigned(FPaths.Current) and FPaths.Current.Equals(Path) then
+    Exit;
+
+  FPaths.Current := Path as TPath<TConfig>;
 
   TabControlView.ActiveTab := TabItemSelectedFile;
 
@@ -290,19 +296,15 @@ end;
 
 procedure TMain.ReadInput;
 var
-  JSON: string;
+  FileName: TFileName;
 begin
   try
-    JSON := TFile.ReadAllText(TUtils.Methods.FilePath(TUtils.Constants.InputFile));
-    FPaths := TJson.JsonToObject<TPaths<TConfig>>(JSON);
-
-    MakeTree;
-
-    FPaths.Populate;
+    FileName := TUtils.Methods.FilePath(TUtils.Constants.InputFile);
+    FPaths := TJson.JsonToObject<TPaths<TConfig>>(TFile.ReadAllText(FileName));
   except
     on E: EFileNotFoundException do
     begin
-      TUtils.Dialogs.Information('Arquivo %s não encontrado.', [TUtils.Constants.InputFile]);
+      TUtils.Dialogs.Information('Arquivo "%s" nÃ£o encontrado.', [FileName]);
       Halt;
     end;
   end;
@@ -317,18 +319,13 @@ end;
 
 procedure TMain.RestoreView;
 var
-  I, J: Integer;
+  TabIndex: Integer;
 begin
   FBinding.Clear;
   FInvoker.Clear;
-
-  for I := Pred(TabControlFile.TabCount) downto 0 do
+  for TabIndex := Pred(TabControlFile.TabCount) downto 0 do
   begin
-    for J := Pred(TabControlFile.Tabs[I].ComponentCount) downto 0 do
-    begin
-      TabControlFile.Tabs[I].RemoveComponent(TabControlFile.Tabs[I].Components[J]);
-    end;
-    TabControlFile.Delete(I);
+    TabControlFile.Delete(TabIndex);
   end;
 end;
 
@@ -341,20 +338,25 @@ end;
 
 procedure TMain.TreeViewItemsDblClick(Sender: TObject);
 begin
-  ReadFile(TreeViewItems.Selected.Text);
+  SelectFile(TreeViewItems.Selected.TagObject);
 end;
 
-procedure TMain.ControlView(const NewCaption: string);
+procedure TMain.ControlView(const Text: string);
+var
+  LText: string;
 begin
-  if not NewCaption.Trim.IsEmpty then
-    TabItemSelectedFile.Text := NewCaption;
+  LText := Text;
+  if LText.Trim.IsEmpty then
+    LText := TabItemSelectedFile.Text;
 
-  TabItemSelectedFile.Text := TabItemSelectedFile.Text.Replace(TUtils.Constants.ChangeChar, string.Empty);
-  if HasChanges and not TabItemSelectedFile.Text.Contains(TUtils.Constants.ChangeChar) then
-    TabItemSelectedFile.Text := TabItemSelectedFile.Text + TUtils.Constants.ChangeChar;
+  LText := LText.Replace(TUtils.Constants.ChangeChar, string.Empty);
+  if HasChanges and not LText.Contains(TUtils.Constants.ChangeChar) then
+    LText := LText + TUtils.Constants.ChangeChar;
+
+  TabItemSelectedFile.Text := LText;
 
   ActionSave.Enabled := Assigned(FPaths.Current) and (not FInvoker.IsEmpty);
-  ActionReplace.Enabled := Assigned(FPaths.Current) and (not FInvoker.IsEmpty) and FPaths.Current.CanOverride;
+  ActionReplace.Enabled := ActionSave.Enabled and FPaths.Current.CanOverride;
 end;
 
 end.

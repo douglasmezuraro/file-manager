@@ -11,12 +11,12 @@ uses
 
 type
   TControlDTO = record
+    Model: TObject;
     OnNotify: TNotifyEvent;
     Owner: TComponent;
     Parent: IControl;
     Position: TPointF;
     Prop: TRttiProperty;
-    Model: TObject;
     constructor Create(const X, Y: Single);
   end;
 
@@ -31,3 +31,4 @@ begin
 end;
 
 end.
+

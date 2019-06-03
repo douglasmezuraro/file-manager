@@ -9,7 +9,7 @@ uses
   System.UITypes;
 
 type
-  TDialogs = class
+  TDialogs = class abstract
   public
     { Information }
     class procedure Information(const Message: string); overload; static;

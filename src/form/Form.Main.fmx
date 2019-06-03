@@ -2,7 +2,7 @@ object Main: TMain
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biHelp]
-  Caption = 'INI Reader'
+  Caption = 'FileManager'
   ClientHeight = 600
   ClientWidth = 600
   Position = ScreenCenter
@@ -83,6 +83,8 @@ object Main: TMain
       StyleLookup = ''
       TabOrder = 0
       Text = 'Arquivos'
+      ExplicitSize.cx = 67.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
       object TreeViewItems: TTreeView
         Align = Client
         Size.Width = 600.000000000000000000
@@ -91,6 +93,7 @@ object Main: TMain
         TabOrder = 0
         OnDblClick = TreeViewItemsDblClick
         ItemHeight = 22.000000000000000000
+        Images = ImageListIcons
         Sorted = True
         Viewport.Width = 596.000000000000000000
         Viewport.Height = 525.000000000000000000
@@ -107,6 +110,8 @@ object Main: TMain
       StyleLookup = ''
       TabOrder = 0
       Text = 'Arquivo Selecionado'
+      ExplicitSize.cx = 130.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
       object TabControlFile: TTabControl
         Align = Client
         Size.Width = 600.000000000000000000
@@ -136,5 +141,67 @@ object Main: TMain
       Text = 'Su&bstituir'
       OnExecute = ActionReplaceExecute
     end
+  end
+  object ImageListIcons: TImageList
+    Source = <
+      item
+        MultiResBitmap.TransparentColor = 16777215
+        MultiResBitmap = <
+          item
+            Width = 16
+            Height = 16
+            PNG = {
+              89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+              61000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              00CB49444154384F6366C00F9809C83330E250A00A146F006216200619F21E88
+              6B80F825210341F23240BC0A8805911483C4D603310F3106CC052A92C0A2D014
+              28568F2ECE844521C8961758C4CF00C5348931E00F0E67FE078AFF4597430EC4
+              72A0A431109B03F1491C86C0E4F602E56722AB01F9B98F980082AA9907530B0B
+              0336A0C04F120CF8816E002EBDBE40093B7C06638B0564F5CB809C6994187004
+              A819847102422E580ED4B98E1203160135EF22C60050222105C0D30F8C01A241
+              71FB8B48537E03D5E580D4020010C61C4F476562FA0000000049454E44AE4260
+              82}
+            FileName = 'C:\Users\Douglas Mezuraro\Downloads\locked.png'
+          end>
+        Name = 'locked'
+      end
+      item
+        MultiResBitmap.TransparentColor = 16777215
+        MultiResBitmap = <
+          item
+            Width = 16
+            Height = 16
+            PNG = {
+              89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+              61000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              010D49444154384F9D9331AE454018857F84ABD5D98946A7D08A448446A84467
+              070A850DD8881D28496C40ABD0697482FFDD51B8F7C57DFF95378966E6CCE79C
+              333300C458D715F77D474AC37D5AECFB1EB32C832700B66D03455120CF735055
+              F5A3FE17631806741C07A7693AFFCCE62CCBC2799E493707288A221CC7F1226C
+              DB96B9FA0EF82B2FEBC275DD0B80A70A7A5FE3799E1304E1223F4B298A02BBAE
+              23794DD380A669601806C471FC2A94654ED3F476BE300C4FED11615916783C1E
+              77D3802CCBA796ECA0AA2AACEB9A7446027CDF87244948672440D775601F3548
+              80E77960DBF6FF01411070A66992F7FF70C071DFDFC8BB0DC457AFC74E764D9F
+              6F002449BA7594A228425996C7DE1F4E2366E30D5B5E6A0000000049454E44AE
+              426082}
+            FileName = 'C:\Users\Douglas Mezuraro\Downloads\unlocked.png'
+          end>
+        Name = 'unlocked'
+      end>
+    Destination = <
+      item
+        Layers = <
+          item
+            Name = 'unlocked'
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'locked'
+          end>
+      end>
+    Left = 177
+    Top = 192
   end
 end

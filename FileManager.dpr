@@ -1,4 +1,4 @@
-program INIReader;
+program FileManager;
 
 uses
   System.StartUpCopy,

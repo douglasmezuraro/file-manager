@@ -6,7 +6,7 @@ uses
   System.SysUtils;
 
 type
-  TConversions = class
+  TConversions = class abstract
   private type
     TBooleanValues = array[Boolean] of string;
   strict private
@@ -38,3 +38,4 @@ begin
 end;
 
 end.
+

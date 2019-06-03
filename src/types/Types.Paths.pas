@@ -3,7 +3,6 @@ unit Types.Paths;
 interface
 
 uses
-
   System.Rtti,
   System.SysUtils,
   Types.ObjectFile,
@@ -14,13 +13,10 @@ type
   strict private
     FItems: TArray<TPath<T>> ;
     FCurrent: TPath<T>;
-  private
-    function GetItem(const Name: string): TPath<T>;
   public
     destructor Destroy; override;
-    procedure Populate;
+    procedure ReadFiles;
     property Current: TPath<T> read FCurrent write FCurrent;
-    property Item[const Name: string]: TPath<T> read GetItem;
     property Items: TArray<TPath<T>> read FItems write FItems;
   end;
 
@@ -41,31 +37,16 @@ begin
   inherited Destroy;
 end;
 
-function TPaths<T>.GetItem(const Name: string): TPath<T>;
-var
-  Path: TPath<T>;
-begin
-  Result := nil;
-  for Path in FItems do
-  begin
-    if Path.Name.Equals(Name) then
-      Exit(Path);
-  end;
-end;
-
-procedure TPaths<T>.Populate;
+procedure TPaths<T>.ReadFiles;
 var
   Path: TPath<T>;
   Context: TRttiContext;
-  Typ: TRttiType;
   Method: TRttiMethod;
 begin
   Context := TRttiContext.Create;
-  Typ := Context.GetType(TypeInfo(T));
-
   for Path in Items do
   begin
-    Method := Typ.GetMethod('Create');
+    Method := Context.GetType(TypeInfo(T)).GetMethod('Create');
 
     if not Assigned(Method) then
       Continue;

@@ -11,7 +11,7 @@ uses
 
 type
   TUtils = class abstract
-  strict private
+  private
     class var FConstants: TConstants;
     class var FConversions: TConversions;
     class var FMethods: TMethods;

@@ -7,18 +7,19 @@ uses
   System.SysUtils;
 
 type
-  TMethods = class
+  TMethods = class abstract
   public
-    class function FilePath(const FileName: TFileName): string; static;
+    class function FilePath(const FileName: TFileName): TFileName; static;
   end;
 
 implementation
 
 { TMethods }
 
-class function TMethods.FilePath(const FileName: TFileName): string;
+class function TMethods.FilePath(const FileName: TFileName): TFileName;
 begin
   Result := TPath.Combine(TPath.GetDirectoryName(ParamStr(0)), FileName);
 end;
 
 end.
+
