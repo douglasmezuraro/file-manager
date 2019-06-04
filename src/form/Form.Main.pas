@@ -167,17 +167,46 @@ begin
 end;
 
 function TMain.MakeNode(const Owner: TFmxObject; const Text: string; const Pos: Integer): TTreeViewItem;
+
+  function Foo(const Owner: TFmxObject; Text: string): TTreeViewItem;
+  var
+    I: Integer;
+  begin
+    Result := nil;
+
+    if Owner = TreeViewItems then
+    begin
+      Result := TreeViewItems.ItemByText(Text);
+      Exit;
+    end;
+
+    for I := 0 to Pred(TTreeViewItem(Owner).Count) do
+    begin
+      if TTreeViewItem(Owner).Items[I].Text = Text then
+      begin
+        Result := TTreeViewItem(Owner).Items[I];
+        Exit;
+      end;
+    end;
+  end;
+
 var
   Item: string;
   Items: TArray<string>;
 begin
-  Items := Text.Split(['.']);
+  Result := nil;
+
+  Items := Text.Split(['\']);
+
+  if Length(Items) = 0 then
+    Exit;
+
   Item := Items[Pos];
 
   if Item.Trim.IsEmpty then
-    Exit(nil);
+    Exit;
 
-  Result := TreeViewItems.ItemByText(Item);
+  Result := Foo(Owner, Item);
   if not Assigned(Result) then
   begin
     Result := TTreeViewItem.Create(Owner);
@@ -192,18 +221,15 @@ end;
 procedure TMain.MakeTree;
 var
   Path: TPath<TConfig>;
-  Item, Group: TTreeViewItem;
+  Node: TTreeViewItem;
 begin
   for Path in FPaths.Items do
   begin
-    Group := MakeNode(TreeViewItems, Path.Group, 0);
-    if Assigned(Group) then
+    Node := MakeNode(TreeViewItems, Path.Group + '\' + Path.Name, 0);
+    if Assigned(Node) then
     begin
-      Item := TTreeViewItem.Create(Group);
-      Item.TagObject := Path;
-      Item.Text := Path.Name;
-      Item.Parent := Group;
-      Item.ImageIndex := Path.CanOverride.ToInteger;
+      Node.TagObject := Path;
+      Node.ImageIndex := Path.CanOverride.ToInteger;
     end;
   end;
   TreeViewItems.ExpandAll;
