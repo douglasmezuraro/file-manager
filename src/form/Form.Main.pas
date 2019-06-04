@@ -64,7 +64,6 @@ type
     FPaths: TPaths<TConfig>;
     FLockOnNotifyEvent: Boolean;
     function HasChanges: Boolean;
-    function MakeNode(const Owner: TFmxObject; const Text: string; const Pos: Integer): TTreeViewItem;
     procedure ControlView(const Text: string = string.Empty);
     procedure MakeTree;
     procedure ModelToView(const Obj: TObject; const Parent: IControl);
@@ -166,58 +165,6 @@ begin
   Result := not FInvoker.IsEmpty;
 end;
 
-function TMain.MakeNode(const Owner: TFmxObject; const Text: string; const Pos: Integer): TTreeViewItem;
-
-  function Foo(const Owner: TFmxObject; Text: string): TTreeViewItem;
-  var
-    I: Integer;
-  begin
-    Result := nil;
-
-    if Owner = TreeViewItems then
-    begin
-      Result := TreeViewItems.ItemByText(Text);
-      Exit;
-    end;
-
-    for I := 0 to Pred(TTreeViewItem(Owner).Count) do
-    begin
-      if TTreeViewItem(Owner).Items[I].Text = Text then
-      begin
-        Result := TTreeViewItem(Owner).Items[I];
-        Exit;
-      end;
-    end;
-  end;
-
-var
-  Item: string;
-  Items: TArray<string>;
-begin
-  Result := nil;
-
-  Items := Text.Split(['\']);
-
-  if Length(Items) = 0 then
-    Exit;
-
-  Item := Items[Pos];
-
-  if Item.Trim.IsEmpty then
-    Exit;
-
-  Result := Foo(Owner, Item);
-  if not Assigned(Result) then
-  begin
-    Result := TTreeViewItem.Create(Owner);
-    Result.Text := Item;
-    Result.Parent := Owner;
-  end;
-
-  if Pos < Pred(Length(Items)) then
-    Result := MakeNode(Result, Text, Succ(Pos));
-end;
-
 procedure TMain.MakeTree;
 var
   Path: TPath<TConfig>;
@@ -225,7 +172,7 @@ var
 begin
   for Path in FPaths.Items do
   begin
-    Node := MakeNode(TreeViewItems, Path.Group + '\' + Path.Name, 0);
+    Node := TreeViewItems.MakeNode(Path.Group + '\' + Path.Name);
     if Assigned(Node) then
     begin
       Node.TagObject := Path;
