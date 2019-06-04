@@ -6,7 +6,7 @@ uses
   FMX.Controls,
   Command.API,
   Command.Receiver,
-  Helper.FMX;
+  Helper.FMX.FMXObject;
 
 type
   TUndoableCommand = class(TInterfacedObject, ICommand)

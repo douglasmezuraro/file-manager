@@ -7,7 +7,7 @@ uses
   FMX.Controls,
   FMX.ListBox,
   FMX.Types,
-  Helper.FMX,
+  Helper.FMX.FMXObject,
   Helper.Rtti,
   Template.AbstractClass,
   Types.DTO,

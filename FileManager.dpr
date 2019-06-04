@@ -11,7 +11,7 @@ uses
   Command.Undoable in 'src\command\Command.Undoable.pas',
   FactoryMethod.ControlTemplate in 'src\factorymethod\FactoryMethod.ControlTemplate.pas',
   Form.Main in 'src\form\Form.Main.pas' {Main},
-  Helper.FMX in 'src\helper\Helper.FMX.pas',
+  Helper.FMX.FMXObject in 'src\helper\Helper.FMX.FMXObject.pas',
   Helper.Ini in 'src\helper\Helper.Ini.pas',
   Helper.Rtti in 'src\helper\Helper.Rtti.pas',
   Model.Config in 'src\model\Model.Config.pas',
@@ -42,7 +42,8 @@ uses
   Types.Utils.Conversions in 'src\types\Types.Utils.Conversions.pas',
   Types.Utils.Dialogs in 'src\types\Types.Utils.Dialogs.pas',
   Types.Utils.Methods in 'src\types\Types.Utils.Methods.pas',
-  Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas';
+  Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas',
+  Helper.FMX.TreeView in 'src\helper\Helper.FMX.TreeView.pas';
 
 {$R *.res}
 

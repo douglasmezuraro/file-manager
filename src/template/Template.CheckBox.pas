@@ -6,7 +6,7 @@ uses
   FMX.Controls,
   FMX.StdCtrls,
   FMX.Types,
-  Helper.FMX,
+  Helper.FMX.FMXObject,
   Template.AbstractClass,
   Types.DTO,
   Types.Utils;

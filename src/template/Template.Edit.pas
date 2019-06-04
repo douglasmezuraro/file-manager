@@ -6,7 +6,7 @@ uses
   FMX.Controls,
   FMX.Edit,
   FMX.Types,
-  Helper.FMX,
+  Helper.FMX.FMXObject,
   System.UITypes,
   Template.AbstractClass,
   Types.DTO,
