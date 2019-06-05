@@ -15,7 +15,7 @@ type
     FCurrent: TPath<T>;
   public
     destructor Destroy; override;
-    procedure ReadFiles;
+    procedure Read;
     property Current: TPath<T> read FCurrent write FCurrent;
     property Items: TArray<TPath<T>> read FItems write FItems;
   end;
@@ -37,7 +37,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TPaths<T>.ReadFiles;
+procedure TPaths<T>.Read;
 var
   Path: TPath<T>;
   Context: TRttiContext;

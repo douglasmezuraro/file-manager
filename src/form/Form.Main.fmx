@@ -130,6 +130,7 @@ object Main: TMain
     Top = 256
     object ActionSave: TAction
       Text = '&Salvar'
+      Hint = 'Atualiza o arquivo de origem'
       ImageIndex = 0
       OnExecute = ActionSaveExecute
       ImageIndex = 0
@@ -142,6 +143,7 @@ object Main: TMain
     end
     object ActionReplace: TAction
       Text = 'Su&bstituir'
+      Hint = 'Atualiza o arquivo de destino'
       OnExecute = ActionReplaceExecute
     end
   end

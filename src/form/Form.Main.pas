@@ -11,6 +11,7 @@ uses
   FMX.Controls,
   FMX.Controls.Presentation,
   FMX.Forms,
+  FMX.ImgList,
   FMX.Layouts,
   FMX.StdCtrls,
   FMX.TabControl,
@@ -23,6 +24,7 @@ uses
   System.Actions,
   System.Classes,
   System.Generics.Collections,
+  System.ImageList,
   System.IOUtils,
   System.Rtti,
   System.StrUtils,
@@ -35,7 +37,7 @@ uses
   Types.DTO,
   Types.Path,
   Types.Paths,
-  Types.Utils, System.ImageList, FMX.ImgList;
+  Types.Utils;
 
 type
   TMain = class(TForm)
@@ -64,7 +66,7 @@ type
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
     FPaths: TPaths<TConfig>;
-    FLockOnNotifyEvent: Boolean;
+    FLockNotify: Boolean;
     function HasChanges: Boolean;
     procedure ControlView(const Text: string = string.Empty);
     procedure MakeTree;
@@ -121,7 +123,7 @@ procedure TMain.AfterConstruction;
 begin
   inherited;
   ReadInput;
-  FPaths.ReadFiles;
+  FPaths.Read;
   MakeTree;
   TabControlView.ActiveTab := TabItemFiles;
 end;
@@ -143,12 +145,12 @@ begin
   if Key <> vkZ then
     Exit;
 
-  FLockOnNotifyEvent := True;
+  FLockNotify := True;
   try
     FInvoker.Execute;
     ControlView;
   finally
-    FLockOnNotifyEvent := False;
+    FLockNotify := False;
   end;
 end;
 
@@ -191,9 +193,9 @@ var
   Prop: TRttiProperty;
   Template: TControlTemplate;
 begin
-  FLockOnNotifyEvent := True;
+  FLockNotify := True;
+  DTO := TControlDTO.Create;
   try
-    DTO := TControlDTO.Create(10, 10);
     Context := TRttiContext.Create;
     for Prop in Context.GetType(Model.ClassType).GetProperties do
     begin
@@ -209,7 +211,6 @@ begin
         begin
           Template.DTO := DTO;
           Control := Template.CreateControl;
-          DTO := Template.DTO;
 
           FBinding.Add(Model, Prop, Control);
 
@@ -222,7 +223,8 @@ begin
       end;
     end;
   finally
-    FLockOnNotifyEvent := False;
+    DTO.Free;
+    FLockNotify := False;
   end;
 end;
 
@@ -232,7 +234,7 @@ var
   Receiver: TReceiver;
   Old, New: TValue;
 begin
-  if FLockOnNotifyEvent then
+  if FLockNotify then
     Exit;
 
   Control := Sender as TControl;
@@ -287,7 +289,7 @@ end;
 
 procedure TMain.Replace;
 begin
-  FPaths.Current.Model.Write;
+  FPaths.Current.Model.Write(FPaths.Current.Target);
   FInvoker.Clear;
   ControlView;
   TUtils.Dialogs.Information('O arquivo foi substituido com sucesso!');
@@ -307,7 +309,7 @@ end;
 
 procedure TMain.Save;
 begin
-  FPaths.Current.Model.Write(FPaths.Current.Target);
+  FPaths.Current.Model.Write;
   FInvoker.Clear;
   ControlView;
   TUtils.Dialogs.Information('O arquivo foi salvo com sucesso!');
@@ -315,7 +317,8 @@ end;
 
 procedure TMain.TreeViewItemsDblClick(Sender: TObject);
 begin
-  SelectFile(TreeViewItems.Selected.TagObject);
+  if Assigned(TreeViewItems.Selected) then
+    SelectFile(TreeViewItems.Selected.TagObject);
 end;
 
 procedure TMain.ControlView(const Text: string);

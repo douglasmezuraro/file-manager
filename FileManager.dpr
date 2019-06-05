@@ -3,6 +3,7 @@ program FileManager;
 uses
   System.StartUpCopy,
   FMX.Forms,
+  MidasLib,
   Attribute.Control in 'src\attribute\Attribute.Control.pas',
   Attribute.Ini in 'src\attribute\Attribute.Ini.pas',
   Command.API in 'src\command\Command.API.pas',

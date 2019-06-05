@@ -8,9 +8,9 @@ uses
 type
   TConversions = class abstract
   private type
-    TBooleanValues = array[Boolean] of string;
+    TBooleanString = array[Boolean] of string;
   strict private
-    class var FBooleanValues: TBooleanValues;
+    class var FBooleanString: TBooleanString;
   public
     class procedure DefineBoolean(const False, True: string); static;
     class function BoolToStr(const Value: Boolean): string; static;
@@ -23,18 +23,18 @@ implementation
 
 class function TConversions.BoolToStr(const Value: Boolean): string;
 begin
-  Result := FBooleanValues[Value];
+  Result := FBooleanString[Value];
 end;
 
 class procedure TConversions.DefineBoolean(const False, True: string);
 begin
-  FBooleanValues[System.False] := False;
-  FBooleanValues[System.True] := True;
+  FBooleanString[System.False] := False;
+  FBooleanString[System.True] := True;
 end;
 
 class function TConversions.StrToBool(const Value: string): Boolean;
 begin
-  Result := SameText(Value, FBooleanValues[True]);
+  Result := SameText(Value, FBooleanString[True]);
 end;
 
 end.
