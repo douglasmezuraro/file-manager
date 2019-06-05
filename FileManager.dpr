@@ -43,7 +43,8 @@ uses
   Types.Utils.Dialogs in 'src\types\Types.Utils.Dialogs.pas',
   Types.Utils.Methods in 'src\types\Types.Utils.Methods.pas',
   Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas',
-  Helper.FMX.TreeView in 'src\helper\Helper.FMX.TreeView.pas';
+  Helper.FMX.TreeView in 'src\helper\Helper.FMX.TreeView.pas',
+  Attribute.Validation in 'src\attribute\Attribute.Validation.pas';
 
 {$R *.res}
 

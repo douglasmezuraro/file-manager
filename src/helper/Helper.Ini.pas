@@ -17,11 +17,11 @@ type
     TExecuteMode = (emRead, emWrite);
   private
     procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: SectionAttribute);
-    procedure Read(var Value: TValue; const Section, Key: string);
-    procedure Write(var Value: TValue; const Section, Key: string);
+    procedure Read(var Value: TValue; const Section, Key: string); overload;
+    procedure Write(var Value: TValue; const Section, Key: string); overload;
   public
-    procedure ReadObject(Obj: TObject);
-    procedure WriteObject(Obj: TObject);
+    procedure Read(Obj: TObject); overload;
+    procedure Write(Obj: TObject); overload;
   end;
 
 implementation
@@ -35,37 +35,37 @@ begin
     Value := TUtils.Conversions.StrToBool(ReadString(Section, Key, TUtils.Conversions.BoolToStr(False)));
     Exit;
   end;
-    
+
   if Value.IsDate then
   begin
     Value := ReadDate(Section, Key, TUtils.Constants.DateNull);
     Exit;
   end;
-    
+
   if Value.IsDateTime then
   begin
     Value := ReadDateTime(Section, Key, TUtils.Constants.DateNull);
     Exit;
   end;
-    
+
   if Value.IsTime then
   begin
     Value := ReadTime(Section, Key, TUtils.Constants.DateNull);
     Exit;
   end;
-    
+
   if Value.IsFloat then
   begin
     Value := ReadFloat(Section, Key, TUtils.Constants.NumericNull);
     Exit;
   end;
-     
+
   if Value.IsNumeric then
   begin
     Value := ReadInteger(Section, Key, TUtils.Constants.NumericNull);
     Exit;
   end;
-    
+
   if Value.IsString then
   begin
     Value := ReadString(Section, Key, string.Empty).Trim;
@@ -73,7 +73,7 @@ begin
   end;
 end;
 
-procedure TIniFileHelper.ReadObject(Obj: TObject);
+procedure TIniFileHelper.Read(Obj: TObject);
 begin
   Execute(Obj, emRead, nil);
 end;
@@ -103,19 +103,19 @@ begin
     WriteTime(Section, Key, Value.AsTime);
     Exit;
   end;
-    
+
   if Value.IsFloat then
   begin
     WriteFloat(Section, Key, Value.AsExtended);
     Exit;
   end;
-  
+
   if Value.IsNumeric then
   begin
     WriteInteger(Section, Key, Value.AsInteger);
     Exit;
   end;
-  
+
   if Value.IsString then
   begin
     WriteString(Section, Key, Value.AsString);
@@ -123,7 +123,7 @@ begin
   end;
 end;
 
-procedure TIniFileHelper.WriteObject(Obj: TObject);
+procedure TIniFileHelper.Write(Obj: TObject);
 begin
   Execute(Obj, emWrite, nil);
 end;

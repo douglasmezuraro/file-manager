@@ -37,7 +37,7 @@ end;
 
 procedure TIniObject.Read;
 begin
-  FIniFile.ReadObject(Self);
+  FIniFile.Read(Self);
 end;
 
 procedure TIniObject.Write(const FileName: TFileName);
@@ -52,7 +52,7 @@ end;
 
 procedure TIniObject.Write;
 begin
-  FIniFile.WriteObject(Self);
+  FIniFile.Write(Self);
 end;
 
 end.

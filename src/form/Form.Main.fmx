@@ -61,10 +61,11 @@ object Main: TMain
   end
   object TabControlView: TTabControl
     Align = Client
+    Locked = True
     Size.Width = 600.000000000000000000
     Size.Height = 555.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     TabPosition = PlatformDefault
     Sizes = (
@@ -76,7 +77,7 @@ object Main: TMain
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 67.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -87,6 +88,7 @@ object Main: TMain
       ExplicitSize.cy = 26.000000000000000000
       object TreeViewItems: TTreeView
         Align = Client
+        Locked = True
         Size.Width = 600.000000000000000000
         Size.Height = 529.000000000000000000
         Size.PlatformDefault = False
@@ -103,7 +105,7 @@ object Main: TMain
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 130.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -114,6 +116,7 @@ object Main: TMain
       ExplicitSize.cy = 26.000000000000000000
       object TabControlFile: TTabControl
         Align = Client
+        Locked = True
         Size.Width = 600.000000000000000000
         Size.Height = 529.000000000000000000
         Size.PlatformDefault = False
@@ -123,8 +126,8 @@ object Main: TMain
     end
   end
   object ActionList: TActionList
-    Left = 384
-    Top = 232
+    Left = 176
+    Top = 256
     object ActionSave: TAction
       Text = '&Salvar'
       ImageIndex = 0
@@ -192,13 +195,13 @@ object Main: TMain
       item
         Layers = <
           item
-            Name = 'unlocked'
+            Name = 'locked'
           end>
       end
       item
         Layers = <
           item
-            Name = 'locked'
+            Name = 'unlocked'
           end>
       end>
     Left = 177

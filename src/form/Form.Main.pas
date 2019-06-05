@@ -122,6 +122,7 @@ begin
   ReadInput;
   FPaths.ReadFiles;
   MakeTree;
+  TabControlView.ActiveTab := TabItemFiles;
 end;
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
