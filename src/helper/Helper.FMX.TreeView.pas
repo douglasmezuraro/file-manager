@@ -12,8 +12,8 @@ uses
 type
   TTreeViewHelper = class Helper for TTreeView
   private const
-    RootLevel = 0;
-    Separator = '\';
+    Root = 0;
+    Separators: array of string = ['/', '\'];
   private
     function GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
     function MakeNode(const Parent: TFmxObject; const Text: string; const Level: Integer): TTreeViewItem; overload;
@@ -27,7 +27,7 @@ implementation
 
 function TTreeViewHelper.GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
 var
-  ItemIndex: Integer;
+  Index: Integer;
 begin
   Result := nil;
 
@@ -40,11 +40,11 @@ begin
   if not (Owner is TTreeViewItem) then
     Exit;
 
-  for ItemIndex := 0 to Pred(TTreeViewItem(Owner).Count) do
+  for Index := 0 to Pred(TTreeViewItem(Owner).Count) do
   begin
-    if TTreeViewItem(Owner).Items[ItemIndex].Text = Text then
+    if TTreeViewItem(Owner).Items[Index].Text = Text then
     begin
-      Result := TTreeViewItem(Owner).Items[ItemIndex];
+      Result := TTreeViewItem(Owner).Items[Index];
       Exit;
     end;
   end;
@@ -52,7 +52,7 @@ end;
 
 function TTreeViewHelper.MakeNode(const Text: string): TTreeViewItem;
 begin
-  Result := MakeNode(Self, Text, RootLevel);
+  Result := MakeNode(Self, Text, Root);
 end;
 
 function TTreeViewHelper.MakeNode(const Parent: TFmxObject; const Text: string;
@@ -63,7 +63,7 @@ var
 begin
   Result := nil;
 
-  Items := Text.Split([Separator]);
+  Items := Text.Split(Separators);
 
   if Length(Items) = 0 then
     Exit;
@@ -86,3 +86,4 @@ begin
 end;
 
 end.
+

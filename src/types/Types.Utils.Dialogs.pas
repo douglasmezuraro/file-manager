@@ -11,12 +11,15 @@ uses
 type
   TDialogs = class abstract
   public
-    { Information }
-    class procedure Information(const Message: string); overload; static;
-    class procedure Information(const Message: string; const Args: array of const); overload; static;
     { Confirmation }
     class function Confirmation(const Message: string): Boolean; overload; static;
     class function Confirmation(const Message: string; const Args: array of const): Boolean; overload; static;
+    { Information }
+    class procedure Information(const Message: string); overload; static;
+    class procedure Information(const Message: string; const Args: array of const); overload; static;
+    { Warning }
+    class procedure Warning(const Message: string); overload; static;
+    class procedure Warning(const Message: string; const Args: array of const); overload; static;
   end;
 
 implementation
@@ -62,4 +65,21 @@ begin
   Information(Format(Message, Args));
 end;
 
+class procedure TDialogs.Warning(const Message: string);
+begin
+  TDialogService.MessageDialog(
+    Message,
+    TMsgDlgType.mtWarning,
+    [TMsgDlgBtn.mbOK],
+    TMsgDlgBtn.mbOK,
+    0,
+    nil);
+end;
+
+class procedure TDialogs.Warning(const Message: string; const Args: array of const);
+begin
+  Warning(Format(Message, Args));
+end;
+
 end.
+

@@ -67,7 +67,7 @@ type
     function HasChanges: Boolean;
     procedure ControlView(const Text: string = string.Empty);
     procedure MakeTree;
-    procedure ModelToView(const Obj: TObject; const Parent: IControl);
+    procedure ModelToView(const Model: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
     procedure ReadInput;
     procedure Replace;
@@ -138,19 +138,13 @@ begin
   if Shift <> [ssCtrl] then
     Exit;
 
+  if Key <> vkZ then
+    Exit;
+
   FLockOnNotifyEvent := True;
   try
-    case Key of
-      vkZ:
-        begin
-          FInvoker.Execute;
-          ControlView;
-        end;
-      vkY:
-        begin
-          // TODO: Implement redo
-        end;
-    end;
+    FInvoker.Execute;
+    ControlView;
   finally
     FLockOnNotifyEvent := False;
   end;
@@ -173,7 +167,7 @@ var
 begin
   for Path in FPaths.Items do
   begin
-    Node := TreeViewItems.MakeNode(Path.Group + '\' + Path.Name);
+    Node := TreeViewItems.MakeNode(Path.Group + '/' + Path.Name);
     if Assigned(Node) then
     begin
       Node.TagObject := Path;
@@ -183,7 +177,7 @@ begin
   TreeViewItems.ExpandAll;
 end;
 
-procedure TMain.ModelToView(const Obj: TObject; const Parent: IControl);
+procedure TMain.ModelToView(const Model: TObject; const Parent: IControl);
 var
   Context: TRttiContext;
   Control: IControl;
@@ -192,37 +186,38 @@ var
   Template: TControlTemplate;
 begin
   FLockOnNotifyEvent := True;
+  try
+    DTO := TControlDTO.Create(10, 10);
+    Context := TRttiContext.Create;
+    for Prop in Context.GetType(Model.ClassType).GetProperties do
+    begin
+      DTO.Model    := Model;
+      DTO.OnNotify := Notify;
+      DTO.Owner    := Self;
+      DTO.Parent   := Parent;
+      DTO.Prop     := Prop;
 
-  DTO := TControlDTO.Create(10, 10);
-  Context := TRttiContext.Create;
-  for Prop in Context.GetType(Obj.ClassType).GetProperties do
-  begin
-    DTO.Model    := Obj;
-    DTO.OnNotify := Notify;
-    DTO.Owner    := Self;
-    DTO.Parent   := Parent;
-    DTO.Prop     := Prop;
+      Template := TControlTemplateFactory.Fabricate(Prop);
+      try
+        if Assigned(Template) then
+        begin
+          Template.DTO := DTO;
+          Control := Template.CreateControl;
+          DTO := Template.DTO;
 
-    Template := TControlTemplateFactory.Fabricate(Prop);
-    try
-      if Assigned(Template) then
-      begin
-        Template.DTO := DTO;
-        Control := Template.CreateControl;
-        DTO := Template.DTO;
+          FBinding.Add(Model, Prop, Control);
 
-        FBinding.Add(Obj, Prop, Control);
-
-        if Template is TTabItemTemplate then
-          ModelToView(Prop.GetValue(Obj).AsObject, Control);
+          if Template is TTabItemTemplate then
+            ModelToView(Prop.GetValue(Model).AsObject, Control);
+        end;
+      finally
+        if Assigned(Template) then
+          Template.Free;
       end;
-    finally
-      if Assigned(Template) then
-        Template.Free;
     end;
+  finally
+    FLockOnNotifyEvent := False;
   end;
-
-  FLockOnNotifyEvent := False;
 end;
 
 procedure TMain.Notify(Sender: TObject);
@@ -278,7 +273,7 @@ begin
   except
     on E: EFileNotFoundException do
     begin
-      TUtils.Dialogs.Information('Arquivo "%s" não encontrado.', [FileName]);
+      TUtils.Dialogs.Warning('Arquivo "%s" não encontrado.', [FileName]);
       Halt;
     end;
   end;
@@ -289,6 +284,7 @@ begin
   FPaths.Current.Model.Write;
   FInvoker.Clear;
   ControlView;
+  TUtils.Dialogs.Information('O arquivo foi substituido com sucesso!');
 end;
 
 procedure TMain.RestoreView;
@@ -308,6 +304,7 @@ begin
   FPaths.Current.Model.Write(FPaths.Current.Target);
   FInvoker.Clear;
   ControlView;
+  TUtils.Dialogs.Information('O arquivo foi salvo com sucesso!');
 end;
 
 procedure TMain.TreeViewItemsDblClick(Sender: TObject);
@@ -329,7 +326,7 @@ begin
 
   TabItemSelectedFile.Text := LText;
 
-  ActionSave.Enabled := Assigned(FPaths.Current) and (not FInvoker.IsEmpty);
+  ActionSave.Enabled := Assigned(FPaths.Current) and HasChanges;
   ActionReplace.Enabled := ActionSave.Enabled and FPaths.Current.CanOverride;
 end;
 
