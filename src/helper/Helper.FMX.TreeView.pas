@@ -60,12 +60,14 @@ function TTreeViewHelper.MakeNode(const Parent: TFmxObject; const Text: string;
 var
   Item: string;
   Items: TArray<string>;
+  LastLevel: Integer;
 begin
   Result := nil;
 
   Items := Text.Split(Separators);
+  LastLevel := Length(Items);
 
-  if Length(Items) = 0 then
+  if LastLevel = 0 then
     Exit;
 
   Item := Items[Level];
@@ -81,7 +83,7 @@ begin
     Result.Parent := Parent;
   end;
 
-  if Level < Pred(Length(Items)) then
+  if Level < Pred(LastLevel) then
     Result := MakeNode(Result, Text, Succ(Level));
 end;
 

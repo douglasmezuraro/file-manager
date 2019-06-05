@@ -8,7 +8,7 @@ uses
 
 type
   TPath<T: TIniObject> = class
-  strict private
+  private
     FCanOverride: Boolean;
     FName: string;
     FSource: TFileName;

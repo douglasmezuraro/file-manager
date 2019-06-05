@@ -25,6 +25,7 @@ uses
   System.Generics.Collections,
   System.IOUtils,
   System.Rtti,
+  System.StrUtils,
   System.SysUtils,
   System.TypInfo,
   System.UITypes,
@@ -165,16 +166,20 @@ procedure TMain.MakeTree;
 var
   Path: TPath<TConfig>;
   Node: TTreeViewItem;
+  Text: string;
 begin
   for Path in FPaths.Items do
   begin
-    Node := TreeViewItems.MakeNode(Path.Group + '/' + Path.Name);
+    Text := IfThen(Path.Group.IsEmpty, 'Sem grupo', Path.Group) + '/' + Path.Name;
+
+    Node := TreeViewItems.MakeNode(Text);
     if Assigned(Node) then
     begin
       Node.TagObject := Path;
       Node.ImageIndex := Path.CanOverride.ToInteger;
     end;
   end;
+
   TreeViewItems.ExpandAll;
 end;
 
