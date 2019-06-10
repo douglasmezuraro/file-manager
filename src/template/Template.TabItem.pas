@@ -10,7 +10,7 @@ uses
   Types.DTO;
 
 type
-  TTabItemTemplate = class(TControlTemplate)
+  TTabItemTemplate = class(TLayoutTemplate)
   public
     procedure TemplateMethod; override;
   end;
@@ -28,7 +28,7 @@ begin
     Exit;
 
   TabItem          := (FDTO.Parent as TTabControl).Add;
-  TabItem.Text     := Text;
+  TabItem.Text     := GetText;
 
   ScrollBox        := TScrollBox.Create(TabItem);
   ScrollBox.Parent := TabItem;

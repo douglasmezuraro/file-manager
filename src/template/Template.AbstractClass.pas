@@ -6,7 +6,6 @@ uses
   Attribute.Control,
   Attribute.Ini,
   FMX.Controls,
-  FMX.Layouts,
   FMX.StdCtrls,
   FMX.Types,
   Helper.Rtti,
@@ -18,26 +17,30 @@ uses
 
 type
   TControlTemplate = class abstract
-  private
-    function GetText: string;
-    function GetHint: string;
-    function GetValue: TValue;
-    function GetIni: string;
-    procedure Offset(const Y: Single);
   protected
     FControl: TControl;
     FDTO: TControlDTO;
+    function GetHint: string;
+    function GetIni: string;
+    function GetText: string;
+    function GetValue: TValue;
     procedure DoBefore; virtual;
     procedure DoAfter; virtual;
+    procedure Offset(const Y: Single);
     procedure TemplateMethod; virtual; abstract;
   public
     constructor Create(const DTO: TControlDTO);
     function New: IControl;
-    property Text: string read GetText;
-    property Value: TValue read GetValue;
   end;
 
-  TLabeledTemplate = class abstract(TControlTemplate)
+  TLayoutTemplate = class abstract(TControlTemplate);
+
+  TStylizedTemplate = class abstract(TControlTemplate)
+  protected
+    procedure DoAfter; override;
+  end;
+
+  TLabeledTemplate = class abstract(TStylizedTemplate)
   protected
     procedure DoBefore; override;
   end;
@@ -48,21 +51,13 @@ implementation
 
 constructor TControlTemplate.Create(const DTO: TControlDTO);
 begin
+  FControl := nil;
   FDTO := DTO;
 end;
 
 procedure TControlTemplate.DoAfter;
 begin
-  if not (FControl is TScrollBox) then
-    FControl.Parent := FDTO.Parent.GetObject;
-
-  FControl.Hint := GetHint;
-  FControl.ShowHint := True;
-  FControl.Position.X := FDTO.Position.X;
-  FControl.Position.Y := FDTO.Position.Y;
-  FControl.Width := TUtils.Constants.DefaultWidth;
-
-  Offset(FControl.Height + TUtils.Constants.DefaultOffset);
+  Exit;
 end;
 
 procedure TControlTemplate.DoBefore;
@@ -77,6 +72,8 @@ begin
   Result := GetIni;
 
   Attribute := FDTO.Prop.GetAtribute<HintAttribute>();
+
+  Result := string.Empty;
 
   if not Assigned(Attribute) then
     Exit;
@@ -125,14 +122,32 @@ procedure TLabeledTemplate.DoBefore;
 var
   ControlLabel: TLabel;
 begin
+  inherited;
+
   ControlLabel            := TLabel.Create(FDTO.Owner);
   ControlLabel.Parent     := FDTO.Parent.GetObject;
-  ControlLabel.Text       := Text;
+  ControlLabel.Text       := GetText;
   ControlLabel.Position.X := FDTO.Position.X;
   ControlLabel.Position.Y := FDTO.Position.Y;
   ControlLabel.Width      := TUtils.Constants.DefaultWidth;
 
   Offset(ControlLabel.Height);
+end;
+
+{ TStylizedTemplate }
+
+procedure TStylizedTemplate.DoAfter;
+begin
+  inherited;
+
+  FControl.Parent     := FDTO.Parent.GetObject;
+  FControl.Hint       := GetHint;
+  FControl.ShowHint   := True;
+  FControl.Position.X := FDTO.Position.X;
+  FControl.Position.Y := FDTO.Position.Y;
+  FControl.Width      := TUtils.Constants.DefaultWidth;
+
+  Offset(FControl.Height + TUtils.Constants.DefaultOffset);
 end;
 
 end.

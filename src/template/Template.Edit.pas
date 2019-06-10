@@ -29,7 +29,7 @@ begin
   Control          := TEdit.Create(FDTO.Owner);
   Control.CharCase := TEditCharCase.ecUpperCase;
   Control.OnChange := FDTO.OnNotify;
-  Control.Value    := Value;
+  Control.Value    := GetValue;
 
   FControl := Control;
 end;

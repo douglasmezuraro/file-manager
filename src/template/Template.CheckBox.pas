@@ -12,7 +12,7 @@ uses
   Types.Utils;
 
 type
-  TCheckBoxTemplate = class(TControlTemplate)
+  TCheckBoxTemplate = class(TStylizedTemplate)
   public
     procedure TemplateMethod; override;
   end;
@@ -27,8 +27,8 @@ var
 begin
   Control          := TCheckBox.Create(FDTO.Owner);
   Control.OnChange := FDTO.OnNotify;
-  Control.Text     := Text;
-  Control.Value    := Value;
+  Control.Text     := GetText;
+  Control.Value    := GetValue;
 
   FControl := Control;
 end;
