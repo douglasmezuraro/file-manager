@@ -38,31 +38,31 @@ begin
 
   if Value.IsDate then
   begin
-    Value := ReadDate(Section, Key, TUtils.Constants.DateNull);
+    Value := ReadDate(Section, Key, TUtils.Constants.NullDate);
     Exit;
   end;
 
   if Value.IsDateTime then
   begin
-    Value := ReadDateTime(Section, Key, TUtils.Constants.DateNull);
+    Value := ReadDateTime(Section, Key, TUtils.Constants.NullDate);
     Exit;
   end;
 
   if Value.IsTime then
   begin
-    Value := ReadTime(Section, Key, TUtils.Constants.DateNull);
+    Value := ReadTime(Section, Key, TUtils.Constants.NullDate);
     Exit;
   end;
 
   if Value.IsFloat then
   begin
-    Value := ReadFloat(Section, Key, TUtils.Constants.NumericNull);
+    Value := ReadFloat(Section, Key, TUtils.Constants.NullNumeric);
     Exit;
   end;
 
   if Value.IsNumeric then
   begin
-    Value := ReadInteger(Section, Key, TUtils.Constants.NumericNull);
+    Value := ReadInteger(Section, Key, TUtils.Constants.NullNumeric);
     Exit;
   end;
 

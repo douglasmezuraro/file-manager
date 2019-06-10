@@ -35,8 +35,8 @@ uses
   Template.TabItem,
   Types.Binding,
   Types.DTO,
+  Types.Input,
   Types.Path,
-  Types.Paths,
   Types.Utils;
 
 type
@@ -65,7 +65,7 @@ type
   private
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
-    FPaths: TPaths<TConfig>;
+    FInput: TInput<TConfig>;
     FLockNotify: Boolean;
     function HasChanges: Boolean;
     procedure ControlView(const Text: string = string.Empty);
@@ -100,7 +100,7 @@ destructor TMain.Destroy;
 begin
   FBinding.Free;
   FInvoker.Free;
-  FPaths.Free;
+  FInput.Free;
   inherited;
 end;
 
@@ -123,7 +123,7 @@ procedure TMain.AfterConstruction;
 begin
   inherited;
   ReadInput;
-  FPaths.Read;
+  FInput.Read;
   MakeTree;
   TabControlView.ActiveTab := TabItemFiles;
 end;
@@ -170,7 +170,7 @@ var
   Node: TTreeViewItem;
   Text: string;
 begin
-  for Path in FPaths.Items do
+  for Path in FInput.Items do
   begin
     Text := IfThen(Path.Group.IsEmpty, 'Sem grupo', Path.Group) + '/' + Path.Name;
 
@@ -205,11 +205,10 @@ begin
       DTO.Parent   := Parent;
       DTO.Prop     := Prop;
 
-      Template := TControlTemplateFactory.Fabricate(Prop);
+      Template := TControlTemplateFactory.Fabricate(DTO);
       try
         if Assigned(Template) then
         begin
-          Template.DTO := DTO;
           Control := Template.CreateControl;
 
           FBinding.Add(Model, Prop, Control);
@@ -257,18 +256,18 @@ begin
   if HasChanges and not TUtils.Dialogs.Confirmation('Existem altera��es n�o salvas, deseja trocas mesmo assim?') then
     Exit;
 
-  if Assigned(FPaths.Current) and FPaths.Current.Equals(Path) then
+  if Assigned(FInput.Current) and FInput.Current.Equals(Path) then
     Exit;
 
-  FPaths.Current := Path as TPath<TConfig>;
+  FInput.Current := Path as TPath<TConfig>;
 
   TabControlView.ActiveTab := TabItemSelectedFile;
 
   RestoreView;
 
-  ControlView(FPaths.Current.Source);
+  ControlView(FInput.Current.Source);
 
-  ModelToView(FPaths.Current.Model, TabControlFile);
+  ModelToView(FInput.Current.Model, TabControlFile);
 end;
 
 procedure TMain.ReadInput;
@@ -276,8 +275,8 @@ var
   FileName: TFileName;
 begin
   try
-    FileName := TUtils.Methods.FilePath(TUtils.Constants.InputFile);
-    FPaths := TJson.JsonToObject<TPaths<TConfig>>(TFile.ReadAllText(FileName));
+    FileName := TUtils.Methods.FilePath(TInput<TConfig>.FileName);
+    FInput := TJson.JsonToObject<TInput<TConfig>>(TFile.ReadAllText(FileName));
   except
     on E: EFileNotFoundException do
     begin
@@ -289,7 +288,7 @@ end;
 
 procedure TMain.Replace;
 begin
-  FPaths.Current.Model.Write(FPaths.Current.Target);
+  FInput.Current.Model.Write(FInput.Current.Target);
   FInvoker.Clear;
   ControlView;
   TUtils.Dialogs.Information('O arquivo foi substituido com sucesso!');
@@ -309,7 +308,7 @@ end;
 
 procedure TMain.Save;
 begin
-  FPaths.Current.Model.Write;
+  FInput.Current.Model.Write;
   FInvoker.Clear;
   ControlView;
   TUtils.Dialogs.Information('O arquivo foi salvo com sucesso!');
@@ -335,8 +334,8 @@ begin
 
   TabItemSelectedFile.Text := LText;
 
-  ActionSave.Enabled := Assigned(FPaths.Current) and HasChanges;
-  ActionReplace.Enabled := ActionSave.Enabled and FPaths.Current.CanOverride;
+  ActionSave.Enabled := Assigned(FInput.Current) and HasChanges;
+  ActionReplace.Enabled := ActionSave.Enabled and FInput.Current.CanOverride;
 end;
 
 end.

@@ -131,7 +131,7 @@
         <DCCReference Include="src\types\Types.ObjectFile.pas"/>
         <DCCReference Include="src\types\Types.ObjectFileAPI.pas"/>
         <DCCReference Include="src\types\Types.Path.pas"/>
-        <DCCReference Include="src\types\Types.Paths.pas"/>
+        <DCCReference Include="src\types\Types.Input.pas"/>
         <DCCReference Include="src\types\Types.Utils.pas"/>
         <DCCReference Include="src\types\Types.Utils.Constants.pas"/>
         <DCCReference Include="src\types\Types.Utils.Conversions.pas"/>

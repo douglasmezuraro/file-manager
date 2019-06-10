@@ -30,15 +30,15 @@ begin
   inherited;
 
   ComboBox                 := TComboBox.Create(FDTO.Owner);
-  ComboBox.Hint            := GetHint;
+  ComboBox.Hint            := Hint;
   ComboBox.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
   ComboBox.OnChange        := FDTO.OnNotify;
   ComboBox.Parent          := FDTO.Parent.GetObject;
   ComboBox.Position.X      := FDTO.Position.X;
   ComboBox.Position.Y      := FDTO.Position.Y;
   ComboBox.ShowHint        := True;
-  ComboBox.Value           := GetValue;
-  ComboBox.Width           := GetWidth;
+  ComboBox.Value           := Value;
+  ComboBox.Width           := Width;
 
   Offset(ComboBox.Height + TUtils.Constants.DefaultSpacing);
 

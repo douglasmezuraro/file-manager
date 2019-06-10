@@ -218,13 +218,13 @@ begin
 
   if Self.IsDate then
   begin
-    Self := StrToDateDef(Text, TUtils.Constants.DateNull);
+    Self := StrToDateDef(Text, TUtils.Constants.NullDate);
     Exit(Self);
   end;
 
   if Self.IsDateTime then
   begin
-    Self := StrToDateTimeDef(Text, TUtils.Constants.DateNull);
+    Self := StrToDateTimeDef(Text, TUtils.Constants.NullDate);
     Exit(Self);
   end;
 
@@ -278,7 +278,7 @@ begin
 
   if Self.IsTime then
   begin
-    Self := StrToTimeDef(Text, TUtils.Constants.DateNull);
+    Self := StrToTimeDef(Text, TUtils.Constants.NullDate);
     Exit(Self);
   end;
 

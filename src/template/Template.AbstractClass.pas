@@ -17,16 +17,21 @@ uses
 
 type
   TControlTemplate = class abstract
-  protected
-    FDTO: TControlDTO;
-    function GetCaption: string;
+  private
+    function GetText: string;
     function GetHint: string;
     function GetValue: TValue;
     function GetWidth: Single;
+  protected
+    FDTO: TControlDTO;
     procedure Offset(const Y: Single);
   public
+    constructor Create(const DTO: TControlDTO);
+    property Hint: string read GetHint;
+    property Text: string read GetText;
+    property Value: TValue read GetValue;
+    property Width: Single read GetWidth;
     function CreateControl: IControl; virtual; abstract;
-    property DTO: TControlDTO read FDTO write FDTO;
   end;
 
   TLabeledTemplate = class abstract(TControlTemplate)
@@ -40,7 +45,12 @@ implementation
 
 { TControlTemplate }
 
-function TControlTemplate.GetCaption: string;
+constructor TControlTemplate.Create(const DTO: TControlDTO);
+begin
+  FDTO := DTO;
+end;
+
+function TControlTemplate.GetText: string;
 begin
   Result := FDTO.Prop.GetAtribute<CaptionAttribute>().Text;
 end;
@@ -52,11 +62,11 @@ var
 begin
   Result := string.Empty;
 
-  Attribute := DTO.Prop.GetAtribute<KeyAttribute>();
+  Attribute := FDTO.Prop.GetAtribute<KeyAttribute>();
   if Assigned(Attribute) then
     Result := Attribute.Name;
 
-  Hint := DTO.Prop.GetAtribute<HintAttribute>();
+  Hint := FDTO.Prop.GetAtribute<HintAttribute>();
   if Assigned(Hint) then
   begin
     if Result.IsEmpty then
@@ -94,10 +104,10 @@ var
 begin
   ControlLabel            := TLabel.Create(FDTO.Owner);
   ControlLabel.Parent     := FDTO.Parent.GetObject;
-  ControlLabel.Text       := GetCaption;
+  ControlLabel.Text       := Text;
   ControlLabel.Position.X := FDTO.Position.X;
   ControlLabel.Position.Y := FDTO.Position.Y;
-  ControlLabel.Width      := GetWidth;
+  ControlLabel.Width      := Width;
 
   Offset(ControlLabel.Height);
 end;

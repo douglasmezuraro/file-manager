@@ -26,15 +26,15 @@ var
   CheckBox: TCheckBox;
 begin
   CheckBox            := TCheckBox.Create(FDTO.Owner);
-  CheckBox.Hint       := GetHint;
+  CheckBox.Hint       := Hint;
   CheckBox.OnChange   := FDTO.OnNotify;
   CheckBox.Parent     := FDTO.Parent.GetObject;
   CheckBox.Position.X := FDTO.Position.X;
   CheckBox.Position.Y := FDTO.Position.Y;
   CheckBox.ShowHint   := True;
-  CheckBox.Text       := GetCaption;
-  CheckBox.Value      := GetValue;
-  CheckBox.Width      := GetWidth;
+  CheckBox.Text       := Text;
+  CheckBox.Value      := Value;
+  CheckBox.Width      := Width;
 
   Offset(CheckBox.Height + TUtils.Constants.DefaultSpacing);
 

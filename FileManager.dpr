@@ -37,7 +37,7 @@ uses
   Types.ObjectFile in 'src\types\Types.ObjectFile.pas',
   Types.ObjectFileAPI in 'src\types\Types.ObjectFileAPI.pas',
   Types.Path in 'src\types\Types.Path.pas',
-  Types.Paths in 'src\types\Types.Paths.pas',
+  Types.Input in 'src\types\Types.Input.pas',
   Types.Utils in 'src\types\Types.Utils.pas',
   Types.Utils.Constants in 'src\types\Types.Utils.Constants.pas',
   Types.Utils.Conversions in 'src\types\Types.Utils.Conversions.pas',

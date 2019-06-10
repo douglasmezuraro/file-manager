@@ -30,7 +30,7 @@ begin
     Exit;
 
   TabItem          := (FDTO.Parent as TTabControl).Add;
-  TabItem.Text     := GetCaption;
+  TabItem.Text     := Text;
 
   ScrollBox        := TScrollBox.Create(TabItem);
   ScrollBox.Parent := TabItem;

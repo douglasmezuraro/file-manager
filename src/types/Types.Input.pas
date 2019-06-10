@@ -1,4 +1,4 @@
-unit Types.Paths;
+unit Types.Input;
 
 interface
 
@@ -9,10 +9,12 @@ uses
   Types.Path;
 
 type
-  TPaths<T: TIniObject> = class
+  TInput<T: TIniObject> = class
   strict private
     FItems: TArray<TPath<T>> ;
     FCurrent: TPath<T>;
+  public
+    const FileName = 'input.json';
   public
     destructor Destroy; override;
     procedure Read;
@@ -22,9 +24,9 @@ type
 
 implementation
 
-{ TPaths }
+{ TInput }
 
-destructor TPaths<T>.Destroy;
+destructor TInput<T>.Destroy;
 var
   Path: TPath<T>;
 begin
@@ -37,7 +39,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TPaths<T>.Read;
+procedure TInput<T>.Read;
 var
   Path: TPath<T>;
   Context: TRttiContext;

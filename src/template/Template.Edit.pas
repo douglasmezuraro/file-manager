@@ -30,14 +30,14 @@ begin
 
   Edit            := TEdit.Create(FDTO.Owner);
   Edit.CharCase   := TEditCharCase.ecUpperCase;
-  Edit.Hint       := GetHint;
+  Edit.Hint       := Hint;
   Edit.OnChange   := FDTO.OnNotify;
   Edit.Parent     := FDTO.Parent.GetObject;
   Edit.Position.X := FDTO.Position.X;
   Edit.Position.Y := FDTO.Position.Y;
   Edit.ShowHint   := True;
-  Edit.Value      := GetValue;
-  Edit.Width      := GetWidth;
+  Edit.Value      := Value;
+  Edit.Width      := Width;
 
   Offset(Edit.Height + TUtils.Constants.DefaultSpacing);
 
