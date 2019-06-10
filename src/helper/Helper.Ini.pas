@@ -163,12 +163,12 @@ begin
     case Mode of
       emRead:
         begin
-          Read(Value, Section.Name, Key.Name);
+          Read(Value, Section.Text, Key.Text);
           Prop.SetValue(Obj, Value);
         end;
       emWrite:
         begin
-          Write(Value, Section.Name, Key.Name);
+          Write(Value, Section.Text, Key.Text);
         end;
     end;
   end;

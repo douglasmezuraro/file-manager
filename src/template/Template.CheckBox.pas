@@ -14,31 +14,23 @@ uses
 type
   TCheckBoxTemplate = class(TControlTemplate)
   public
-    function CreateControl: IControl; override;
+    procedure TemplateMethod; override;
   end;
 
 implementation
 
 { TCheckBoxTemplate }
 
-function TCheckBoxTemplate.CreateControl: IControl;
+procedure TCheckBoxTemplate.TemplateMethod;
 var
-  CheckBox: TCheckBox;
+  Control: TCheckBox;
 begin
-  CheckBox            := TCheckBox.Create(FDTO.Owner);
-  CheckBox.Hint       := Hint;
-  CheckBox.OnChange   := FDTO.OnNotify;
-  CheckBox.Parent     := FDTO.Parent.GetObject;
-  CheckBox.Position.X := FDTO.Position.X;
-  CheckBox.Position.Y := FDTO.Position.Y;
-  CheckBox.ShowHint   := True;
-  CheckBox.Text       := Text;
-  CheckBox.Value      := Value;
-  CheckBox.Width      := Width;
+  Control          := TCheckBox.Create(FDTO.Owner);
+  Control.OnChange := FDTO.OnNotify;
+  Control.Text     := Text;
+  Control.Value    := Value;
 
-  Offset(CheckBox.Height + TUtils.Constants.DefaultSpacing);
-
-  Result := CheckBox;
+  FControl := Control;
 end;
 
 end.

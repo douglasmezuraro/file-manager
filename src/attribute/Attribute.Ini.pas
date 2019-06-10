@@ -5,10 +5,10 @@ interface
 type
   IniAttribute = class abstract(TCustomAttribute)
   private
-    FName: string;
+    FText: string;
   public
-    constructor Create(const Name: string);
-    property Name: string read FName;
+    constructor Create(const Text: string);
+    property Text: string read FText;
   end;
 
   SectionAttribute = class(IniAttribute);
@@ -18,9 +18,9 @@ implementation
 
 { TIniAttribute }
 
-constructor IniAttribute.Create(const Name: string);
+constructor IniAttribute.Create(const Text: string);
 begin
-  FName := Name;
+  FText := Text;
 end;
 
 end.

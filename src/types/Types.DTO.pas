@@ -35,8 +35,8 @@ implementation
 
 constructor TControlDTO.Create;
 begin
-  FPosition.X := TUtils.Constants.DefaultSpacing;
-  FPosition.Y := TUtils.Constants.DefaultSpacing;
+  FPosition.X := TUtils.Constants.DefaultOffset;
+  FPosition.Y := TUtils.Constants.DefaultOffset;
 end;
 
 end.

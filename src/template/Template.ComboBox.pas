@@ -16,33 +16,23 @@ uses
 type
   TComboBoxTemplate = class(TLabeledTemplate)
   public
-    function CreateControl: IControl; override;
+    procedure TemplateMethod; override;
   end;
 
 implementation
 
 { TComboBoxTemplate }
 
-function TComboBoxTemplate.CreateControl: IControl;
+procedure TComboBoxTemplate.TemplateMethod;
 var
-  ComboBox: TComboBox;
+  Control: TComboBox;
 begin
-  inherited;
+  Control                 := TComboBox.Create(FDTO.Owner);
+  Control.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
+  Control.OnChange        := FDTO.OnNotify;
+  Control.Value           := Value;
 
-  ComboBox                 := TComboBox.Create(FDTO.Owner);
-  ComboBox.Hint            := Hint;
-  ComboBox.Items.CommaText := FDTO.Prop.GetAtribute<ComboBoxAttribute>().Items;
-  ComboBox.OnChange        := FDTO.OnNotify;
-  ComboBox.Parent          := FDTO.Parent.GetObject;
-  ComboBox.Position.X      := FDTO.Position.X;
-  ComboBox.Position.Y      := FDTO.Position.Y;
-  ComboBox.ShowHint        := True;
-  ComboBox.Value           := Value;
-  ComboBox.Width           := Width;
-
-  Offset(ComboBox.Height + TUtils.Constants.DefaultSpacing);
-
-  Result := ComboBox;
+  FControl := Control;
 end;
 
 end.

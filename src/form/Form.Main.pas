@@ -206,19 +206,18 @@ begin
       DTO.Prop     := Prop;
 
       Template := TControlTemplateFactory.Fabricate(DTO);
-      try
-        if Assigned(Template) then
-        begin
-          Control := Template.CreateControl;
+      if Assigned(Template) then
+      begin
+        try
+          Control := Template.New;
 
           FBinding.Add(Model, Prop, Control);
 
           if Template is TTabItemTemplate then
             ModelToView(Prop.GetValue(Model).AsObject, Control);
-        end;
-      finally
-        if Assigned(Template) then
+        finally
           Template.Free;
+        end;
       end;
     end;
   finally

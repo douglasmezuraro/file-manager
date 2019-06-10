@@ -12,20 +12,18 @@ uses
 type
   TTabItemTemplate = class(TControlTemplate)
   public
-    function CreateControl: IControl; override;
+    procedure TemplateMethod; override;
   end;
 
 implementation
 
 { TTabItemTemplate }
 
-function TTabItemTemplate.CreateControl: IControl;
+procedure TTabItemTemplate.TemplateMethod;
 var
   TabItem: TTabItem;
   ScrollBox: TScrollBox;
 begin
-  Result := nil;
-
   if not (FDTO.Parent is TTabControl) then
     Exit;
 
@@ -36,7 +34,7 @@ begin
   ScrollBox.Parent := TabItem;
   ScrollBox.Align  := TAlignLayout.Client;
 
-  Result           := ScrollBox;
+  FControl         := ScrollBox;
 end;
 
 end.

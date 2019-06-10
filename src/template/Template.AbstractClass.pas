@@ -6,6 +6,7 @@ uses
   Attribute.Control,
   Attribute.Ini,
   FMX.Controls,
+  FMX.Layouts,
   FMX.StdCtrls,
   FMX.Types,
   Helper.Rtti,
@@ -21,24 +22,24 @@ type
     function GetText: string;
     function GetHint: string;
     function GetValue: TValue;
-    function GetWidth: Single;
-  protected
-    FDTO: TControlDTO;
+    function GetIni: string;
     procedure Offset(const Y: Single);
+  protected
+    FControl: TControl;
+    FDTO: TControlDTO;
+    procedure DoBefore; virtual;
+    procedure DoAfter; virtual;
+    procedure TemplateMethod; virtual; abstract;
   public
     constructor Create(const DTO: TControlDTO);
-    property Hint: string read GetHint;
+    function New: IControl;
     property Text: string read GetText;
     property Value: TValue read GetValue;
-    property Width: Single read GetWidth;
-    function CreateControl: IControl; virtual; abstract;
   end;
 
   TLabeledTemplate = class abstract(TControlTemplate)
   protected
-    procedure CreateLabel;
-  public
-    function CreateControl: IControl; override;
+    procedure DoBefore; override;
   end;
 
 implementation
@@ -50,30 +51,53 @@ begin
   FDTO := DTO;
 end;
 
-function TControlTemplate.GetText: string;
+procedure TControlTemplate.DoAfter;
 begin
-  Result := FDTO.Prop.GetAtribute<CaptionAttribute>().Text;
+  if not (FControl is TScrollBox) then
+    FControl.Parent := FDTO.Parent.GetObject;
+
+  FControl.Hint := GetHint;
+  FControl.ShowHint := True;
+  FControl.Position.X := FDTO.Position.X;
+  FControl.Position.Y := FDTO.Position.Y;
+  FControl.Width := TUtils.Constants.DefaultWidth;
+
+  Offset(FControl.Height + TUtils.Constants.DefaultOffset);
+end;
+
+procedure TControlTemplate.DoBefore;
+begin
+  Exit;
 end;
 
 function TControlTemplate.GetHint: string;
 var
-  Hint: HintAttribute;
-  Attribute: KeyAttribute;
+  Attribute: HintAttribute;
 begin
+  Result := GetIni;
+
+  Attribute := FDTO.Prop.GetAtribute<HintAttribute>();
+
+  if not Assigned(Attribute) then
+    Exit;
+
+  Result := Result + ' - ' + Attribute.Text;
+end;
+
+function TControlTemplate.GetIni: string;
+var
+  Attribute: IniAttribute;
+begin
+  Attribute := FDTO.Prop.GetAtribute<IniAttribute>();
+
   Result := string.Empty;
-
-  Attribute := FDTO.Prop.GetAtribute<KeyAttribute>();
   if Assigned(Attribute) then
-    Result := Attribute.Name;
+    Result := Attribute.Text;
+end;
 
-  Hint := FDTO.Prop.GetAtribute<HintAttribute>();
-  if Assigned(Hint) then
-  begin
-    if Result.IsEmpty then
-      Result := Hint.Text
-    else
-      Result := Result + ' - ' + Hint.Text;
-  end;
+function TControlTemplate.GetText: string;
+begin
+  Result := FDTO.Prop.GetAtribute<CaptionAttribute>().Text;
 end;
 
 function TControlTemplate.GetValue: TValue;
@@ -81,9 +105,13 @@ begin
   Result := FDTO.Prop.GetValue(FDTO.Model);
 end;
 
-function TControlTemplate.GetWidth: Single;
+function TControlTemplate.New: IControl;
 begin
-  Result := TUtils.Constants.DefaultWidth;
+  DoBefore;
+  TemplateMethod;
+  DoAfter;
+
+  Result := FControl;
 end;
 
 procedure TControlTemplate.Offset(const Y: Single);
@@ -93,12 +121,7 @@ end;
 
 { TLabeledTemplate }
 
-function TLabeledTemplate.CreateControl: IControl;
-begin
-  CreateLabel;
-end;
-
-procedure TLabeledTemplate.CreateLabel;
+procedure TLabeledTemplate.DoBefore;
 var
   ControlLabel: TLabel;
 begin
@@ -107,7 +130,7 @@ begin
   ControlLabel.Text       := Text;
   ControlLabel.Position.X := FDTO.Position.X;
   ControlLabel.Position.Y := FDTO.Position.Y;
-  ControlLabel.Width      := Width;
+  ControlLabel.Width      := TUtils.Constants.DefaultWidth;
 
   Offset(ControlLabel.Height);
 end;

@@ -15,33 +15,23 @@ uses
 type
   TEditTemplate = class(TLabeledTemplate)
   public
-    function CreateControl: IControl; override;
+    procedure TemplateMethod; override;
   end;
 
 implementation
 
 { TEditTemplate }
 
-function TEditTemplate.CreateControl: IControl;
+procedure TEditTemplate.TemplateMethod;
 var
-  Edit: TEdit;
+  Control: TEdit;
 begin
-  inherited;
+  Control          := TEdit.Create(FDTO.Owner);
+  Control.CharCase := TEditCharCase.ecUpperCase;
+  Control.OnChange := FDTO.OnNotify;
+  Control.Value    := Value;
 
-  Edit            := TEdit.Create(FDTO.Owner);
-  Edit.CharCase   := TEditCharCase.ecUpperCase;
-  Edit.Hint       := Hint;
-  Edit.OnChange   := FDTO.OnNotify;
-  Edit.Parent     := FDTO.Parent.GetObject;
-  Edit.Position.X := FDTO.Position.X;
-  Edit.Position.Y := FDTO.Position.Y;
-  Edit.ShowHint   := True;
-  Edit.Value      := Value;
-  Edit.Width      := Width;
-
-  Offset(Edit.Height + TUtils.Constants.DefaultSpacing);
-
-  Result := Edit;
+  FControl := Control;
 end;
 
 end.
