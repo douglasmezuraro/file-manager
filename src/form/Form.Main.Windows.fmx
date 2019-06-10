@@ -10,8 +10,8 @@ inherited Main_Windows: TMain_Windows
       ExplicitSize.cx = 70.000000000000000000
       ExplicitSize.cy = 26.000000000000000000
       inherited TreeViewItems: TTreeView
-        Viewport.Width = 596.000000000000000000
-        Viewport.Height = 525.000000000000000000
+        Viewport.Width = 600.000000000000000000
+        Viewport.Height = 529.000000000000000000
       end
     end
     inherited TabItemSelectedFile: TTabItem
@@ -20,11 +20,11 @@ inherited Main_Windows: TMain_Windows
     end
   end
   inherited ActionList: TActionList
-    inherited ActionSave: TAction
-      ImageIndex = 0
-    end
     inherited ActionCancel: TAction
       ImageIndex = 1
+    end
+    inherited ActionSaveSource: TAction
+      ImageIndex = 0
     end
   end
 end

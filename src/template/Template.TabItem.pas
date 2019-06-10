@@ -21,20 +21,17 @@ implementation
 
 procedure TTabItemTemplate.TemplateMethod;
 var
-  TabItem: TTabItem;
+  Tab: TTabItem;
   ScrollBox: TScrollBox;
 begin
-  if not (FDTO.Parent is TTabControl) then
-    Exit;
+  Tab := (FDTO.Parent as TTabControl).Add;
+  Tab.Text := GetText;
 
-  TabItem          := (FDTO.Parent as TTabControl).Add;
-  TabItem.Text     := GetText;
+  ScrollBox := TScrollBox.Create(Tab);
+  ScrollBox.Parent := Tab;
+  ScrollBox.Align := TAlignLayout.Client;
 
-  ScrollBox        := TScrollBox.Create(TabItem);
-  ScrollBox.Parent := TabItem;
-  ScrollBox.Align  := TAlignLayout.Client;
-
-  FControl         := ScrollBox;
+  FControl := ScrollBox;
 end;
 
 end.

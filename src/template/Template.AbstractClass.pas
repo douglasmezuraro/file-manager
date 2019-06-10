@@ -51,7 +51,6 @@ implementation
 
 constructor TControlTemplate.Create(const DTO: TControlDTO);
 begin
-  FControl := nil;
   FDTO := DTO;
 end;
 
@@ -69,16 +68,11 @@ function TControlTemplate.GetHint: string;
 var
   Attribute: HintAttribute;
 begin
-  Result := GetIni;
-
   Attribute := FDTO.Prop.GetAtribute<HintAttribute>();
 
   Result := string.Empty;
-
-  if not Assigned(Attribute) then
-    Exit;
-
-  Result := Result + ' - ' + Attribute.Text;
+  if Assigned(Attribute) then
+    Result := GetIni + ' - ' + Attribute.Text;
 end;
 
 function TControlTemplate.GetIni: string;
@@ -93,8 +87,14 @@ begin
 end;
 
 function TControlTemplate.GetText: string;
+var
+  Attribute: CaptionAttribute;
 begin
-  Result := FDTO.Prop.GetAtribute<CaptionAttribute>().Text;
+  Attribute := FDTO.Prop.GetAtribute<CaptionAttribute>();
+
+  Result := string.Empty;
+  if Assigned(Attribute) then
+    Result := Attribute.Text;
 end;
 
 function TControlTemplate.GetValue: TValue;

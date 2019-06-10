@@ -6,13 +6,15 @@ uses
   MidasLib,
   Attribute.Control in 'src\attribute\Attribute.Control.pas',
   Attribute.Ini in 'src\attribute\Attribute.Ini.pas',
+  Attribute.Validation in 'src\attribute\Attribute.Validation.pas',
   Command.API in 'src\command\Command.API.pas',
   Command.Invoker in 'src\command\Command.Invoker.pas',
   Command.Receiver in 'src\command\Command.Receiver.pas',
   Command.Undoable in 'src\command\Command.Undoable.pas',
-  FactoryMethod.ControlTemplate in 'src\factorymethod\FactoryMethod.ControlTemplate.pas',
+  FactoryMethod.Control in 'src\factorymethod\FactoryMethod.Control.pas',
   Form.Main in 'src\form\Form.Main.pas' {Main},
   Helper.FMX.FMXObject in 'src\helper\Helper.FMX.FMXObject.pas',
+  Helper.FMX.TreeView in 'src\helper\Helper.FMX.TreeView.pas',
   Helper.Ini in 'src\helper\Helper.Ini.pas',
   Helper.Rtti in 'src\helper\Helper.Rtti.pas',
   Model.Config in 'src\model\Model.Config.pas',
@@ -34,18 +36,16 @@ uses
   Template.TabItem in 'src\template\Template.TabItem.pas',
   Types.Binding in 'src\types\Types.Binding.pas',
   Types.DTO in 'src\types\Types.DTO.pas',
+  Types.Input in 'src\types\Types.Input.pas',
   Types.ObjectFile in 'src\types\Types.ObjectFile.pas',
   Types.ObjectFileAPI in 'src\types\Types.ObjectFileAPI.pas',
   Types.Path in 'src\types\Types.Path.pas',
-  Types.Input in 'src\types\Types.Input.pas',
   Types.Utils in 'src\types\Types.Utils.pas',
   Types.Utils.Constants in 'src\types\Types.Utils.Constants.pas',
   Types.Utils.Conversions in 'src\types\Types.Utils.Conversions.pas',
   Types.Utils.Dialogs in 'src\types\Types.Utils.Dialogs.pas',
   Types.Utils.Methods in 'src\types\Types.Utils.Methods.pas',
-  Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas',
-  Helper.FMX.TreeView in 'src\helper\Helper.FMX.TreeView.pas',
-  Attribute.Validation in 'src\attribute\Attribute.Validation.pas';
+  Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas';
 
 {$R *.res}
 
@@ -53,10 +53,10 @@ var
   View: TMain;
 
 begin
-  TUtils.Translation.Translate;
-
   Application.Initialize;
   Application.CreateForm(TMain, View);
+
+  TUtils.Translation.Translate;
   Application.Run;
 
   ReportMemoryLeaksOnShutdown := True;

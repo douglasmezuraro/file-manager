@@ -25,10 +25,10 @@ procedure TCheckBoxTemplate.TemplateMethod;
 var
   Control: TCheckBox;
 begin
-  Control          := TCheckBox.Create(FDTO.Owner);
+  Control := TCheckBox.Create(FDTO.Owner);
   Control.OnChange := FDTO.OnNotify;
-  Control.Text     := GetText;
-  Control.Value    := GetValue;
+  Control.Text := GetText;
+  Control.Value := GetValue;
 
   FControl := Control;
 end;

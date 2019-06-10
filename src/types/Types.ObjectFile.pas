@@ -42,11 +42,11 @@ end;
 
 procedure TIniObject.Write(const FileName: TFileName);
 begin
-  if Assigned(FIniFile) then
+  if Assigned(FIniFile) and (FIniFile.FileName <> FileName) then
+  begin
     FIniFile.Free;
-
-  FIniFile := TIniFile.Create(FileName);
-
+    FIniFile := TIniFile.Create(FileName);
+  end;
   Write;
 end;
 

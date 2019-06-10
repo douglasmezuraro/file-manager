@@ -6,7 +6,7 @@ uses
   Command.Invoker,
   Command.Receiver,
   Command.Undoable,
-  FactoryMethod.ControlTemplate,
+  FactoryMethod.Control,
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
@@ -43,11 +43,11 @@ type
   TMain = class(TForm)
     ActionCancel: TAction;
     ActionList: TActionList;
-    ActionReplace: TAction;
-    ActionSave: TAction;
+    ActionSaveTarget: TAction;
+    ActionSaveSource: TAction;
     ButtonCancel: TButton;
-    ButtonReplace: TButton;
-    ButtonSave: TButton;
+    ButtonSaveSource: TButton;
+    ButtonSaveTarget: TButton;
     PanelButtons: TPanel;
     TabControlView: TTabControl;
     TabItemFiles: TTabItem;
@@ -56,8 +56,8 @@ type
     TabControlFile: TTabControl;
     ImageListIcons: TImageList;
     procedure ActionCancelExecute(Sender: TObject);
-    procedure ActionReplaceExecute(Sender: TObject);
-    procedure ActionSaveExecute(Sender: TObject);
+    procedure ActionSaveTargetExecute(Sender: TObject);
+    procedure ActionSaveSourceExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
@@ -73,9 +73,8 @@ type
     procedure ModelToView(const Model: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
     procedure ReadInput;
-    procedure Replace;
     procedure RestoreView;
-    procedure Save;
+    procedure Save(const Path: TFileName);
     procedure SelectFile(const Path: TObject);
   public
     constructor Create(AOwner: TComponent); override;
@@ -109,14 +108,14 @@ begin
   Close;
 end;
 
-procedure TMain.ActionReplaceExecute(Sender: TObject);
+procedure TMain.ActionSaveTargetExecute(Sender: TObject);
 begin
-  Replace;
+  Save(FInput.Current.Target);
 end;
 
-procedure TMain.ActionSaveExecute(Sender: TObject);
+procedure TMain.ActionSaveSourceExecute(Sender: TObject);
 begin
-  Save;
+  Save(FInput.Current.Source);
 end;
 
 procedure TMain.AfterConstruction;
@@ -130,7 +129,7 @@ end;
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if HasChanges and not TUtils.Dialogs.Confirmation('Existem altera��es n�o salvas, deseja sair mesmo assim?') then
+  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja sair mesmo assim?') then
     Abort;
 
   inherited;
@@ -205,7 +204,7 @@ begin
       DTO.Parent   := Parent;
       DTO.Prop     := Prop;
 
-      Template := TControlTemplateFactory.Fabricate(DTO);
+      Template := TControlFactory.Fabricate(DTO);
       if Assigned(Template) then
       begin
         try
@@ -252,7 +251,7 @@ begin
   if not Assigned(Path) then
     Exit;
 
-  if HasChanges and not TUtils.Dialogs.Confirmation('Existem altera��es n�o salvas, deseja trocas mesmo assim?') then
+  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocas mesmo assim?') then
     Exit;
 
   if Assigned(FInput.Current) and FInput.Current.Equals(Path) then
@@ -285,14 +284,6 @@ begin
   end;
 end;
 
-procedure TMain.Replace;
-begin
-  FInput.Current.Model.Write(FInput.Current.Target);
-  FInvoker.Clear;
-  ControlView;
-  TUtils.Dialogs.Information('O arquivo foi substituido com sucesso!');
-end;
-
 procedure TMain.RestoreView;
 var
   TabIndex: Integer;
@@ -305,9 +296,9 @@ begin
   end;
 end;
 
-procedure TMain.Save;
+procedure TMain.Save(const Path: TFileName);
 begin
-  FInput.Current.Model.Write;
+  FInput.Current.Model.Write(Path);
   FInvoker.Clear;
   ControlView;
   TUtils.Dialogs.Information('O arquivo foi salvo com sucesso!');
@@ -333,8 +324,8 @@ begin
 
   TabItemSelectedFile.Text := LText;
 
-  ActionSave.Enabled := Assigned(FInput.Current) and HasChanges;
-  ActionReplace.Enabled := ActionSave.Enabled and FInput.Current.CanOverride;
+  ActionSaveTarget.Enabled := Assigned(FInput.Current) and HasChanges;
+  ActionSaveSource.Enabled := Assigned(FInput.Current) and HasChanges and FInput.Current.CanOverride;
 end;
 
 end.

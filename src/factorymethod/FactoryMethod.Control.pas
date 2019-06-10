@@ -1,4 +1,4 @@
-unit FactoryMethod.ControlTemplate;
+unit FactoryMethod.Control;
 
 interface
 
@@ -14,16 +14,16 @@ uses
   Types.DTO;
 
 type
-  TControlTemplateFactory = class
+  TControlFactory = class
   public
     class function Fabricate(const DTO: TControlDTO): TControlTemplate;
   end;
 
 implementation
 
-{ TControlTemplateFactory }
+{ TControlFactory }
 
-class function TControlTemplateFactory.Fabricate(const DTO: TControlDTO): TControlTemplate;
+class function TControlFactory.Fabricate(const DTO: TControlDTO): TControlTemplate;
 begin
   Result := nil;
 

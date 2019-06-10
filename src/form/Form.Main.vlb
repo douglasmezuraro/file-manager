@@ -4,9 +4,6 @@ Coordinates=13,77,71,36
 [ActionCancel]
 Coordinates=267,133,90,36
 
-[ActionSave]
-Coordinates=248,173,79,36
-
 [EditServerName]
 Coordinates=10,10,93,51
 Visible=True
@@ -24,4 +21,7 @@ Visible=True
 
 [Module Settings]
 ModelLayerNames=a
+
+[ActionSaveSource]
+Coordinates=248,173,79,36
 

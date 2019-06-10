@@ -98,15 +98,17 @@
         </DelphiCompile>
         <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <DCCReference Include="src\attribute\Attribute.Ini.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Validation.pas"/>
         <DCCReference Include="src\command\Command.API.pas"/>
         <DCCReference Include="src\command\Command.Invoker.pas"/>
         <DCCReference Include="src\command\Command.Receiver.pas"/>
         <DCCReference Include="src\command\Command.Undoable.pas"/>
-        <DCCReference Include="src\factorymethod\FactoryMethod.ControlTemplate.pas"/>
+        <DCCReference Include="src\factorymethod\FactoryMethod.Control.pas"/>
         <DCCReference Include="src\form\Form.Main.pas">
             <Form>Main</Form>
         </DCCReference>
         <DCCReference Include="src\helper\Helper.FMX.FMXObject.pas"/>
+        <DCCReference Include="src\helper\Helper.FMX.TreeView.pas"/>
         <DCCReference Include="src\helper\Helper.Ini.pas"/>
         <DCCReference Include="src\helper\Helper.Rtti.pas"/>
         <DCCReference Include="src\model\Model.Config.pas"/>
@@ -128,18 +130,16 @@
         <DCCReference Include="src\template\Template.TabItem.pas"/>
         <DCCReference Include="src\types\Types.Binding.pas"/>
         <DCCReference Include="src\types\Types.DTO.pas"/>
+        <DCCReference Include="src\types\Types.Input.pas"/>
         <DCCReference Include="src\types\Types.ObjectFile.pas"/>
         <DCCReference Include="src\types\Types.ObjectFileAPI.pas"/>
         <DCCReference Include="src\types\Types.Path.pas"/>
-        <DCCReference Include="src\types\Types.Input.pas"/>
         <DCCReference Include="src\types\Types.Utils.pas"/>
         <DCCReference Include="src\types\Types.Utils.Constants.pas"/>
         <DCCReference Include="src\types\Types.Utils.Conversions.pas"/>
         <DCCReference Include="src\types\Types.Utils.Dialogs.pas"/>
         <DCCReference Include="src\types\Types.Utils.Methods.pas"/>
         <DCCReference Include="src\types\Types.Utils.Translation.pas"/>
-        <DCCReference Include="src\helper\Helper.FMX.TreeView.pas"/>
-        <DCCReference Include="src\attribute\Attribute.Validation.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

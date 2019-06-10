@@ -26,10 +26,10 @@ procedure TEditTemplate.TemplateMethod;
 var
   Control: TEdit;
 begin
-  Control          := TEdit.Create(FDTO.Owner);
+  Control := TEdit.Create(FDTO.Owner);
   Control.CharCase := TEditCharCase.ecUpperCase;
   Control.OnChange := FDTO.OnNotify;
-  Control.Value    := GetValue;
+  Control.Value := GetValue;
 
   FControl := Control;
 end;
