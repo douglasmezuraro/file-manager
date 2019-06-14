@@ -5,9 +5,16 @@ interface
 uses
   System.Rtti,
   System.SysUtils,
+  System.Variants,
   Types.Utils;
 
 type
+  TRttiTypeHelper = class Helper for TRttiType
+  public
+    function GetConstructor: TRttiMethod;
+    function GetDestructor: TRttiMethod;
+  end;
+
   TRttiPropertyHelper = class Helper for TRttiProperty
   public
     function GetAtribute<T: class>: T;
@@ -16,6 +23,7 @@ type
   TValueHelper = record Helper for TValue
   public
     function Assign(const Value: TValue): TValue;
+    function Assigned: Boolean;
 
     { As-Functions }
     function AsDate: TDate;
@@ -200,19 +208,19 @@ begin
 
   if Self.IsByte then
   begin
-    Self := StrToIntDef(Text, TUtils.Constants.Zero);
+    Self := StrToIntDef(Text, Byte.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsCardinal then
   begin
-    Self := StrToUIntDef(Text, TUtils.Constants.Zero);
+    Self := StrToUIntDef(Text, Cardinal.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsCurrency then
   begin
-    Self := StrToCurrDef(Text, TUtils.Constants.Zero);
+    Self := StrToCurrDef(Text, Extended.MaxValue);
     Exit(Self);
   end;
 
@@ -230,19 +238,19 @@ begin
 
   if Self.IsDouble then
   begin
-    Self := StrToFloatDef(Text, TUtils.Constants.Zero);
+    Self := StrToFloatDef(Text, Double.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsInt64 then
   begin
-    Self := StrToInt64Def(Text, TUtils.Constants.Zero);
+    Self := StrToInt64Def(Text, Int64.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsInteger then
   begin
-    Self := StrToIntDef(Text, TUtils.Constants.Zero);
+    Self := StrToIntDef(Text, Integer.MaxValue);
     Exit(Self);
   end;
 
@@ -254,19 +262,19 @@ begin
 
   if Self.IsShortInt then
   begin
-    Self := StrToIntDef(Text, TUtils.Constants.Zero);
+    Self := StrToIntDef(Text, ShortInt.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsSingle then
   begin
-    Self := StrToFloatDef(Text, TUtils.Constants.Zero);
+    Self := StrToFloatDef(Text, Single.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsSmallInt then
   begin
-    Self := StrToIntDef(Text, TUtils.Constants.Zero);
+    Self := StrToIntDef(Text, SmallInt.MaxValue);
     Exit(Self);
   end;
 
@@ -284,7 +292,7 @@ begin
 
   if Self.IsUInt64 then
   begin
-    Self := StrToUInt64Def(Text, TUtils.Constants.Zero);
+    Self := StrToUInt64Def(Text, UInt64.MaxValue);
     Exit(Self);
   end;
 
@@ -296,11 +304,93 @@ begin
 
   if Self.IsWord then
   begin
-    Self := StrToUIntDef(Text, TUtils.Constants.Zero);
+    Self := StrToUIntDef(Text, Word.MaxValue);
     Exit(Self);
   end;
 
   Result := Self;
+end;
+
+function TValueHelper.Assigned: Boolean;
+begin
+  Result := False;
+
+  if Self.IsByte then
+    Exit(Self.AsType<Byte>() <> Byte.MaxValue);
+
+  if Self.IsCardinal then
+    Exit(Self.AsType<Cardinal>() <> Cardinal.MaxValue);
+
+  if Self.IsCurrency then
+    Exit(Self.AsType<Currency>() <> Extended.MaxValue);
+
+  if Self.IsDate then
+    Exit(Self.AsType<TDate>() <> TUtils.Constants.NullDate);
+
+  if Self.IsDateTime then
+    Exit(Self.AsType<TDateTime>() <> TUtils.Constants.NullDate);
+
+  if Self.IsDouble then
+    Exit(Self.AsType<Double>() <> Double.MaxValue);
+
+  if Self.IsInt64 then
+    Exit(Self.AsType<Int64>() <> Int64.MaxValue);
+
+  if Self.IsInteger then
+    Exit(Self.AsType<Integer>() <> Integer.MaxValue);
+
+  if Self.IsPointer then
+    Exit(Self.AsType<Pointer>() <> nil);
+
+  if Self.IsShortInt then
+    Exit(Self.AsType<ShortInt>() <> ShortInt.MaxValue);
+
+  if Self.IsSingle then
+    Exit(Self.AsType<Single>() <> Single.MaxValue);
+
+  if Self.IsSmallInt then
+    Exit(Self.AsType<SmallInt>() <> SmallInt.MaxValue);
+
+  if Self.IsString then
+    Exit(not Self.AsType<string>().IsEmpty);
+
+  if Self.IsTime then
+    Exit(Self.AsType<TTime>() <> TUtils.Constants.NullDate);
+
+  if Self.IsUInt64 then
+    Exit(Self.AsType<UInt64>() <> Single.MaxValue);
+
+  if Self.IsVariant then
+    Exit(not VarIsNull(Self.AsType<Variant>()));
+
+  if Self.IsWord then
+    Exit(Self.AsType<Word>() <> Word.MaxValue);
+end;
+
+{ TRttiTypeHelper }
+
+function TRttiTypeHelper.GetConstructor: TRttiMethod;
+var
+  Method: TRttiMethod;
+begin
+  Method := GetMethod('Create');
+
+  if Assigned(Method) and (not Method.IsConstructor) then
+    Method := nil;
+
+  Result := Method;
+end;
+
+function TRttiTypeHelper.GetDestructor: TRttiMethod;
+var
+  Method: TRttiMethod;
+begin
+  Method := GetMethod('Destroy');
+
+  if Assigned(Method) and (not Method.IsDestructor) then
+    Method := nil;
+
+  Result := Method;
 end;
 
 end.

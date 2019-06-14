@@ -34,9 +34,6 @@ type
     FServer: TServer;
     FClient: TClient;
   public
-    constructor Create(const FileName: TFileName);
-    destructor Destroy; override;
-
     [TabItem('Aplicação')]
     [Section('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
@@ -83,40 +80,6 @@ type
   end;
 
 implementation
-
-{ TConfig }
-
-constructor TConfig.Create(const FileName: TFileName);
-begin
-  inherited Create(FileName);
-  FWorkflow := TWorkflow.Create;
-  FMonitor := TMonitor.Create;
-  FSPP := TSPP.Create;
-  FDUnit := TDUnit.Create;
-  FScanner := TScanner.Create;
-  FLog := TLog.Create;
-  FDatabase := TDatabase.Create;
-  FUpdate := TUpdate.Create;
-  FApplication := TApplication.Create;
-  FServer := TServer.Create;
-  FClient := TClient.Create;
-end;
-
-destructor TConfig.Destroy;
-begin
-  FClient.Free;
-  FServer.Free;
-  FApplication.Free;
-  FUpdate.Free;
-  FDatabase.Free;
-  FLog.Free;
-  FScanner.Free;
-  FDUnit.Free;
-  FSPP.Free;
-  FMonitor.Free;
-  FWorkflow.Free;
-  inherited Destroy;
-end;
 
 end.
 

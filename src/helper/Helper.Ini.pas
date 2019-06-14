@@ -56,13 +56,13 @@ begin
 
   if Value.IsFloat then
   begin
-    Value := ReadFloat(Section, Key, TUtils.Constants.NullNumeric);
+    Value := ReadFloat(Section, Key, Double.MaxValue);
     Exit;
   end;
 
   if Value.IsNumeric then
   begin
-    Value := ReadInteger(Section, Key, TUtils.Constants.NullNumeric);
+    Value := ReadInteger(Section, Key, Integer.MaxValue);
     Exit;
   end;
 
@@ -80,6 +80,12 @@ end;
 
 procedure TIniFileHelper.Write(var Value: TValue; const Section, Key: string);
 begin
+  if not Value.Assigned then
+  begin
+    WriteString(Section, Key, string.Empty);
+    Exit;
+  end;
+
   if Value.IsBoolean then
   begin
     WriteString(Section, Key, TUtils.Conversions.BoolToStr(Value.AsBoolean));

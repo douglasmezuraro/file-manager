@@ -5,6 +5,7 @@ interface
 uses
   FMX.ListBox,
   FMX.Types,
+  Helper.Rtti,
   System.Rtti;
 
 type
@@ -28,10 +29,16 @@ begin
 end;
 
 procedure TFMXObjectHelper.SetValue(const Value: TValue);
+var
+  LValue: TValue;
 begin
-  Data := Value;
+  LValue := TValue.Empty;
+  if Value.Assigned then
+    LValue := Value;
+
+  Data := LValue;
   if Self is TComboBox then
-    (Self as TComboBox).ItemIndex := (Self as TComboBox).Items.IndexOf(Value.AsString);
+    (Self as TComboBox).ItemIndex := (Self as TComboBox).Items.IndexOf(LValue.AsString);
 end;
 
 end.
