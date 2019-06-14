@@ -3,23 +3,23 @@ unit Types.Input;
 interface
 
 uses
+  Helper.Rtti,
+  Model.Base,
   System.Rtti,
   System.SysUtils,
-  Types.ObjectFile,
   Types.Path;
 
 type
-  TInput<T: TIniObject> = class
-  strict private
+  TInput<T: TModel> = class
+  private
     FItems: TArray<TPath<T>> ;
     FCurrent: TPath<T>;
-  public
-    const FileName = 'input.json';
   public
     destructor Destroy; override;
     procedure Read;
     property Current: TPath<T> read FCurrent write FCurrent;
     property Items: TArray<TPath<T>> read FItems write FItems;
+    const FileName = 'input.json';
   end;
 
 implementation
@@ -48,18 +48,13 @@ begin
   Context := TRttiContext.Create;
   for Path in Items do
   begin
-    Method := Context.GetType(TypeInfo(T)).GetMethod('Create');
-
-    if not Assigned(Method) then
-      Continue;
-
-    if not Method.IsConstructor then
-      Continue;
-
-    Path.Model := Method.Invoke(T, [Path.Source]).AsType<T>;
-
-    if Assigned(Path.Model) then
-      Path.Model.Read;
+    Method := Context.GetType(TypeInfo(T)).GetConstructor;
+    if Assigned(Method) then
+    begin
+      Path.Model := Method.Invoke(T, [Path.Source]).AsType<T>;
+      if Assigned(Path.Model) then
+        Path.Model.Read;
+    end;
   end;
 end;
 

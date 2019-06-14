@@ -20,11 +20,11 @@ implementation
 
 class procedure TTranslation.HookResourceString(const Source: PResStringRec; const Value: PChar);
 var
-  POldProtect: DWORD;
+  PProtect: DWORD;
 begin
-  VirtualProtect(Source, SizeOf(Source^), PAGE_EXECUTE_READWRITE, @POldProtect);
+  VirtualProtect(Source, SizeOf(Source^), PAGE_EXECUTE_READWRITE, @PProtect);
   Source^.Identifier := Integer(Value);
-  VirtualProtect(Source, SizeOf(Source^), POldProtect, @POldProtect);
+  VirtualProtect(Source, SizeOf(Source^), PProtect, @PProtect);
 end;
 
 class procedure TTranslation.Translate;

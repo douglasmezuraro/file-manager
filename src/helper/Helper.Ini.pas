@@ -17,59 +17,61 @@ type
     TExecuteMode = (emRead, emWrite);
   private
     procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: SectionAttribute);
-    procedure Read(var Value: TValue; const Section, Key: string); overload;
-    procedure Write(var Value: TValue; const Section, Key: string); overload;
+    function InternalRead(var Value: TValue; const Section, Key: string): TValue;
+    procedure InternalWrite(var Value: TValue; const Section, Key: string);
   public
-    procedure Read(Obj: TObject); overload;
-    procedure Write(Obj: TObject); overload;
+    procedure Read(Obj: TObject);
+    procedure Write(Obj: TObject);
   end;
 
 implementation
 
 { TIniFileHelper }
 
-procedure TIniFileHelper.Read(var Value: TValue; const Section, Key: string);
+function TIniFileHelper.InternalRead(var Value: TValue; const Section, Key: string): TValue;
 begin
+  Result := Value;
+
   if Value.IsBoolean then
   begin
     Value := TUtils.Conversions.StrToBool(ReadString(Section, Key, TUtils.Conversions.BoolToStr(False)));
-    Exit;
+    Exit(Value);
   end;
 
   if Value.IsDate then
   begin
     Value := ReadDate(Section, Key, TUtils.Constants.NullDate);
-    Exit;
+    Exit(Value);
   end;
 
   if Value.IsDateTime then
   begin
     Value := ReadDateTime(Section, Key, TUtils.Constants.NullDate);
-    Exit;
+    Exit(Value);
   end;
 
   if Value.IsTime then
   begin
     Value := ReadTime(Section, Key, TUtils.Constants.NullDate);
-    Exit;
+    Exit(Value);
   end;
 
   if Value.IsFloat then
   begin
     Value := ReadFloat(Section, Key, Double.MaxValue);
-    Exit;
+    Exit(Value);
   end;
 
   if Value.IsNumeric then
   begin
     Value := ReadInteger(Section, Key, Integer.MaxValue);
-    Exit;
+    Exit(Value);
   end;
 
   if Value.IsString then
   begin
     Value := ReadString(Section, Key, string.Empty).Trim;
-    Exit;
+    Exit(Value);
   end;
 end;
 
@@ -78,7 +80,7 @@ begin
   Execute(Obj, emRead, nil);
 end;
 
-procedure TIniFileHelper.Write(var Value: TValue; const Section, Key: string);
+procedure TIniFileHelper.InternalWrite(var Value: TValue; const Section, Key: string);
 begin
   if not Value.Assigned then
   begin
@@ -167,15 +169,8 @@ begin
       Continue;
 
     case Mode of
-      emRead:
-        begin
-          Read(Value, Section.Text, Key.Text);
-          Prop.SetValue(Obj, Value);
-        end;
-      emWrite:
-        begin
-          Write(Value, Section.Text, Key.Text);
-        end;
+      emRead  : Prop.SetValue(Obj, InternalRead(Value, Section.Text, Key.Text));
+      emWrite : InternalWrite(Value, Section.Text, Key.Text);
     end;
   end;
 end;

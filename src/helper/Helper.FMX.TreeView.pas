@@ -9,14 +9,13 @@ uses
 
 type
   TTreeViewHelper = class Helper for TTreeView
-  private const
-    Root = 0;
-    Separators: array of string = ['/', '\'];
   private
     function GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
     function MakeNode(const Parent: TFmxObject; const Text: string; const Level: Integer): TTreeViewItem; overload;
+    const Root = 0;
   public
     function MakeNode(const Text: string): TTreeViewItem; overload;
+    const Separator = '>';
   end;
 
 implementation
@@ -30,10 +29,7 @@ begin
   Result := nil;
 
   if Owner = Self then
-  begin
-    Result := Self.ItemByText(Text);
-    Exit;
-  end;
+    Exit(Self.ItemByText(Text));
 
   if not (Owner is TTreeViewItem) then
     Exit;
@@ -41,10 +37,7 @@ begin
   for Index := 0 to Pred(TTreeViewItem(Owner).Count) do
   begin
     if TTreeViewItem(Owner).Items[Index].Text = Text then
-    begin
-      Result := TTreeViewItem(Owner).Items[Index];
-      Exit;
-    end;
+      Exit(TTreeViewItem(Owner).Items[Index]);
   end;
 end;
 
@@ -61,11 +54,10 @@ var
   LastLevel: Integer;
 begin
   Result := nil;
-
-  Items := Text.Split(Separators);
+  Items := Text.Split([Separator]);
   LastLevel := Length(Items);
 
-  if LastLevel = 0 then
+  if LastLevel = Root then
     Exit;
 
   Item := Items[Level];

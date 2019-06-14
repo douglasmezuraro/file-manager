@@ -131,7 +131,7 @@
         <DCCReference Include="src\types\Types.Binding.pas"/>
         <DCCReference Include="src\types\Types.DTO.pas"/>
         <DCCReference Include="src\types\Types.Input.pas"/>
-        <DCCReference Include="src\types\Types.ObjectFile.pas"/>
+        <DCCReference Include="src\types\Types.IniObject.pas"/>
         <DCCReference Include="src\types\Types.ObjectFileAPI.pas"/>
         <DCCReference Include="src\types\Types.Path.pas"/>
         <DCCReference Include="src\types\Types.Utils.pas"/>
@@ -140,6 +140,7 @@
         <DCCReference Include="src\types\Types.Utils.Dialogs.pas"/>
         <DCCReference Include="src\types\Types.Utils.Methods.pas"/>
         <DCCReference Include="src\types\Types.Utils.Translation.pas"/>
+        <DCCReference Include="src\model\Model.Base.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

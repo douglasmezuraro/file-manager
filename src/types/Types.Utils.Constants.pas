@@ -7,7 +7,6 @@ type
   public const
     Zero          = 0;
     NullDate      = Zero;
-    NullNumeric   = -999;
     DefaultOffset = 10;
     DefaultWidth  = 400;
     ChangeChar    = '*';

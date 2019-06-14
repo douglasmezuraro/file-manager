@@ -3,11 +3,11 @@ unit Types.Path;
 interface
 
 uses
-  System.SysUtils,
-  Types.ObjectFile;
+  Model.Base,
+  System.SysUtils;
 
 type
-  TPath<T: TIniObject> = class
+  TPath<T: TModel> = class
   private
     FCanOverride: Boolean;
     FName: string;

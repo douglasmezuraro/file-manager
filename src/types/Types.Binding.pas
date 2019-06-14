@@ -23,7 +23,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    procedure Add(const Obj: TObject; const Prop: TRttiProperty; const Control: IControl);
+    procedure Add(const Control: IControl; const Obj: TObject; const Prop: TRttiProperty);
     property Keys: TArray<IControl> read GetKeys;
     property Values[const Control: IControl]: TValue read GetValue write SetValue;
   end;
@@ -32,7 +32,7 @@ implementation
 
 { TBinding }
 
-procedure TBinding.Add(const Obj: TObject; const Prop: TRttiProperty; const Control: IControl);
+procedure TBinding.Add(const Control: IControl; const Obj: TObject; const Prop: TRttiProperty);
 begin
   FDictionary.Add(Control, TBindingPair.Create(Obj, Prop));
 end;
@@ -68,7 +68,6 @@ begin
   begin
     Obj := FDictionary.Items[Control].Key;
     Prop := FDictionary.Items[Control].Value;
-
     Result := Prop.GetValue(Obj);
   end;
 end;
@@ -78,13 +77,12 @@ var
   Obj: TObject;
   Prop: TRttiProperty;
 begin
-  if not FDictionary.ContainsKey(Control) then
-    Exit;
-
-  Obj := FDictionary.Items[Control].Key;
-  Prop := FDictionary.Items[Control].Value;
-
-  Prop.SetValue(Obj, Prop.GetValue(Obj).Assign(Value));
+  if FDictionary.ContainsKey(Control) then
+  begin
+    Obj := FDictionary.Items[Control].Key;
+    Prop := FDictionary.Items[Control].Value;
+    Prop.SetValue(Obj, Prop.GetValue(Obj).Assign(Value));
+  end;
 end;
 
 end.

@@ -1,4 +1,4 @@
-unit Types.ObjectFile;
+unit Types.IniObject;
 
 interface
 
@@ -14,7 +14,7 @@ type
   private
     FIniFile: TIniFile;
   public
-    constructor Create(const FileName: TFileName);
+    constructor Create(const FileName: TFileName); virtual;
     destructor Destroy; override;
     procedure Read;
     procedure Write; overload;

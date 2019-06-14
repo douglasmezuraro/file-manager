@@ -9,6 +9,13 @@ uses
   Types.Utils;
 
 type
+  TRttiUtil = class
+  public
+    class procedure CreateProperties(const Obj: TObject); overload;
+    class procedure CreateProperties(const Obj: TObject; const Args: TArray<TValue>); overload;
+    class procedure DestroyProperties(const Obj: TObject);
+  end;
+
   TRttiTypeHelper = class Helper for TRttiType
   public
     function GetConstructor: TRttiMethod;
@@ -199,116 +206,117 @@ var
   Text: string;
 begin
   Text := Value.ToString;
+  try
+    if Self.IsBoolean then
+    begin
+      Self := Text.ToBoolean;
+      Exit;
+    end;
 
-  if Self.IsBoolean then
-  begin
-    Self := Text.ToBoolean;
-    Exit(Self);
+    if Self.IsByte then
+    begin
+      Self := StrToIntDef(Text, Byte.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsCardinal then
+    begin
+      Self := StrToUIntDef(Text, Cardinal.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsCurrency then
+    begin
+      Self := StrToCurrDef(Text, Extended.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsDate then
+    begin
+      Self := StrToDateDef(Text, TUtils.Constants.NullDate);
+      Exit;
+    end;
+
+    if Self.IsDateTime then
+    begin
+      Self := StrToDateTimeDef(Text, TUtils.Constants.NullDate);
+      Exit;
+    end;
+
+    if Self.IsDouble then
+    begin
+      Self := StrToFloatDef(Text, Double.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsInt64 then
+    begin
+      Self := StrToInt64Def(Text, Int64.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsInteger then
+    begin
+      Self := StrToIntDef(Text, Integer.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsPointer then
+    begin
+      Self := &Text;
+      Exit;
+    end;
+
+    if Self.IsShortInt then
+    begin
+      Self := StrToIntDef(Text, ShortInt.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsSingle then
+    begin
+      Self := StrToFloatDef(Text, Single.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsSmallInt then
+    begin
+      Self := StrToIntDef(Text, SmallInt.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsString then
+    begin
+      Self := Text;
+      Exit;
+    end;
+
+    if Self.IsTime then
+    begin
+      Self := StrToTimeDef(Text, TUtils.Constants.NullDate);
+      Exit;
+    end;
+
+    if Self.IsUInt64 then
+    begin
+      Self := StrToUInt64Def(Text, UInt64.MaxValue);
+      Exit;
+    end;
+
+    if Self.IsVariant then
+    begin
+      Self := Text;
+      Exit;
+    end;
+
+    if Self.IsWord then
+    begin
+      Self := StrToUIntDef(Text, Word.MaxValue);
+      Exit;
+    end;
+  finally
+    Result := Self;
   end;
-
-  if Self.IsByte then
-  begin
-    Self := StrToIntDef(Text, Byte.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsCardinal then
-  begin
-    Self := StrToUIntDef(Text, Cardinal.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsCurrency then
-  begin
-    Self := StrToCurrDef(Text, Extended.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsDate then
-  begin
-    Self := StrToDateDef(Text, TUtils.Constants.NullDate);
-    Exit(Self);
-  end;
-
-  if Self.IsDateTime then
-  begin
-    Self := StrToDateTimeDef(Text, TUtils.Constants.NullDate);
-    Exit(Self);
-  end;
-
-  if Self.IsDouble then
-  begin
-    Self := StrToFloatDef(Text, Double.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsInt64 then
-  begin
-    Self := StrToInt64Def(Text, Int64.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsInteger then
-  begin
-    Self := StrToIntDef(Text, Integer.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsPointer then
-  begin
-    Self := &Text;
-    Exit(Self);
-  end;
-
-  if Self.IsShortInt then
-  begin
-    Self := StrToIntDef(Text, ShortInt.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsSingle then
-  begin
-    Self := StrToFloatDef(Text, Single.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsSmallInt then
-  begin
-    Self := StrToIntDef(Text, SmallInt.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsString then
-  begin
-    Self := Text;
-    Exit(Self);
-  end;
-
-  if Self.IsTime then
-  begin
-    Self := StrToTimeDef(Text, TUtils.Constants.NullDate);
-    Exit(Self);
-  end;
-
-  if Self.IsUInt64 then
-  begin
-    Self := StrToUInt64Def(Text, UInt64.MaxValue);
-    Exit(Self);
-  end;
-
-  if Self.IsVariant then
-  begin
-    Self := Text;
-    Exit(Self);
-  end;
-
-  if Self.IsWord then
-  begin
-    Self := StrToUIntDef(Text, Word.MaxValue);
-    Exit(Self);
-  end;
-
-  Result := Self;
 end;
 
 function TValueHelper.Assigned: Boolean;
@@ -391,6 +399,50 @@ begin
     Method := nil;
 
   Result := Method;
+end;
+
+{ TRttiUtil }
+
+class procedure TRttiUtil.CreateProperties(const Obj: TObject);
+begin
+  TRttiUtil.CreateProperties(Obj, []);
+end;
+
+class procedure TRttiUtil.CreateProperties(const Obj: TObject; const Args: TArray<TValue>);
+var
+  Context: TRttiContext;
+  Prop: TRttiProperty;
+  Method: TRttiMethod;
+  Instance: TObject;
+begin
+  Context := TRttiContext.Create;
+  for Prop in Context.GetType(Obj.ClassType).GetProperties do
+  begin
+    Method := Prop.PropertyType.GetConstructor;
+    if Assigned(Method) then
+    begin
+      Instance := Method.Invoke(Prop.PropertyType.AsInstance.MetaclassType, Args).AsObject;
+      Prop.SetValue(Obj, Instance);
+    end;
+  end;
+end;
+
+class procedure TRttiUtil.DestroyProperties(const Obj: TObject);
+var
+  Context: TRttiContext;
+  Prop: TRttiProperty;
+  Method: TRttiMethod;
+begin
+  Context := TRttiContext.Create;
+  for Prop in Context.GetType(Obj.ClassType).GetProperties do
+  begin
+    Method := Prop.PropertyType.GetDestructor;
+    if Assigned(Method) then
+    begin
+      Method.Invoke(Prop.GetValue(Obj), []);
+      Prop.SetValue(Obj, nil);
+    end;
+  end;
 end;
 
 end.

@@ -10,6 +10,7 @@ uses
   FMX.Types,
   Helper.Rtti,
   System.Rtti,
+  System.StrUtils,
   System.SysUtils,
   System.Types,
   Types.DTO,
@@ -67,12 +68,15 @@ end;
 function TControlTemplate.GetHint: string;
 var
   Attribute: HintAttribute;
+  Hint, Ini: string;
 begin
-  Attribute := FDTO.Prop.GetAtribute<HintAttribute>();
+  Ini := GetIni;
 
-  Result := string.Empty;
+  Attribute := FDTO.Prop.GetAtribute<HintAttribute>();
   if Assigned(Attribute) then
-    Result := GetIni + ' - ' + Attribute.Text;
+    Hint := Attribute.Text;
+
+  Result := IfThen(Hint.IsEmpty, Ini, Ini + ' - ' + Hint);
 end;
 
 function TControlTemplate.GetIni: string;
@@ -116,6 +120,22 @@ begin
   FDTO.Position.Offset(TUtils.Constants.Zero, Y);
 end;
 
+{ TStylizedTemplate }
+
+procedure TStylizedTemplate.DoAfter;
+begin
+  inherited;
+
+  FControl.Parent     := FDTO.Parent.GetObject;
+  FControl.Hint       := GetHint;
+  FControl.ShowHint   := True;
+  FControl.Position.X := FDTO.Position.X;
+  FControl.Position.Y := FDTO.Position.Y;
+  FControl.Width      := TUtils.Constants.DefaultWidth;
+
+  Offset(FControl.Height + TUtils.Constants.DefaultOffset);
+end;
+
 { TLabeledTemplate }
 
 procedure TLabeledTemplate.DoBefore;
@@ -132,22 +152,6 @@ begin
   ControlLabel.Width      := TUtils.Constants.DefaultWidth;
 
   Offset(ControlLabel.Height);
-end;
-
-{ TStylizedTemplate }
-
-procedure TStylizedTemplate.DoAfter;
-begin
-  inherited;
-
-  FControl.Parent     := FDTO.Parent.GetObject;
-  FControl.Hint       := GetHint;
-  FControl.ShowHint   := True;
-  FControl.Position.X := FDTO.Position.X;
-  FControl.Position.Y := FDTO.Position.Y;
-  FControl.Width      := TUtils.Constants.DefaultWidth;
-
-  Offset(FControl.Height + TUtils.Constants.DefaultOffset);
 end;
 
 end.

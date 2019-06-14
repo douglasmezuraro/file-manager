@@ -5,6 +5,7 @@ interface
 uses
   Attribute.Control,
   Attribute.Ini,
+  Model.Base,
   Model.Config.Application,
   Model.Config.Client,
   Model.Config.Database,
@@ -16,11 +17,10 @@ uses
   Model.Config.SPP,
   Model.Config.Update,
   Model.Config.Workflow,
-  System.SysUtils,
-  Types.ObjectFile;
+  System.SysUtils;
 
 type
-  TConfig = class(TIniObject)
+  TConfig = class(TModel)
   private
     FWorkflow: TWorkflow;
     FMonitor: TMonitor;

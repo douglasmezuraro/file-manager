@@ -135,8 +135,7 @@ begin
   inherited;
 end;
 
-procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
-  Shift: TShiftState);
+procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
 begin
   if Shift <> [ssCtrl] then
     Exit;
@@ -171,7 +170,7 @@ var
 begin
   for Path in FInput.Items do
   begin
-    Text := IfThen(Path.Group.IsEmpty, 'Sem grupo', Path.Group) + '/' + Path.Name;
+    Text := IfThen(Path.Group.IsEmpty, 'Sem grupo', Path.Group) + TTreeView.Separator + Path.Name;
 
     Node := TreeViewItems.MakeNode(Text);
     if Assigned(Node) then
@@ -210,7 +209,7 @@ begin
         try
           Control := Template.New;
 
-          FBinding.Add(Model, Prop, Control);
+          FBinding.Add(Control, Model, Prop);
 
           if Template is TTabItemTemplate then
             ModelToView(Prop.GetValue(Model).AsObject, Control);

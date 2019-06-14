@@ -37,7 +37,7 @@ uses
   Types.Binding in 'src\types\Types.Binding.pas',
   Types.DTO in 'src\types\Types.DTO.pas',
   Types.Input in 'src\types\Types.Input.pas',
-  Types.ObjectFile in 'src\types\Types.ObjectFile.pas',
+  Types.IniObject in 'src\types\Types.IniObject.pas',
   Types.ObjectFileAPI in 'src\types\Types.ObjectFileAPI.pas',
   Types.Path in 'src\types\Types.Path.pas',
   Types.Utils in 'src\types\Types.Utils.pas',
@@ -45,17 +45,17 @@ uses
   Types.Utils.Conversions in 'src\types\Types.Utils.Conversions.pas',
   Types.Utils.Dialogs in 'src\types\Types.Utils.Dialogs.pas',
   Types.Utils.Methods in 'src\types\Types.Utils.Methods.pas',
-  Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas';
+  Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas',
+  Model.Base in 'src\model\Model.Base.pas';
 
 {$R *.res}
 
 var
-  View: TMain;
+  Main: TMain;
 
 begin
   Application.Initialize;
-  Application.CreateForm(TMain, View);
-
+  Application.CreateForm(TMain, Main);
   TUtils.Translation.Translate;
   Application.Run;
 
