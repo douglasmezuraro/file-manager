@@ -127,7 +127,6 @@ procedure TMain.AfterConstruction;
 begin
   inherited;
   ReadInput;
-  FInput.Read;
   MakeTree;
   TabControlView.ActiveTab := TabItemFiles;
 end;
@@ -298,10 +297,11 @@ begin
   try
     FileName := TUtils.Methods.FilePath(TInput<TConfig>.FileName);
     FInput := TJson.JsonToObject<TInput<TConfig>>(TFile.ReadAllText(FileName));
+    FInput.Read;
   except
-    on E: EFileNotFoundException do
+    on Exception: EFileNotFoundException do
     begin
-      TUtils.Dialogs.Warning('Arquivo "%s" não encontrado.', [FileName]);
+      TUtils.Dialogs.Warning('Arquivo não encontrado: %s.', [TUtils.Methods.ExtractFileName(Exception)]);
       Halt;
     end;
   end;

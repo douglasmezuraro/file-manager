@@ -10,6 +10,7 @@ uses
 type
   TMethods = class abstract
   public
+    class function ExtractFileName(const Exception: EFileNotFoundException): TFileName; static;
     class function FilePath(const FileName: TFileName): TFileName; static;
     class procedure OpenURL(const URL: string); static;
   end;
@@ -17,6 +18,14 @@ type
 implementation
 
 { TMethods }
+
+class function TMethods.ExtractFileName(const Exception: EFileNotFoundException): TFileName;
+var
+  Start: Integer;
+begin
+  Start := Succ(Exception.Message.IndexOf(':'));
+  Result := Exception.Message.Substring(Start, Pred(Exception.Message.Length) - Start).Trim;
+end;
 
 class function TMethods.FilePath(const FileName: TFileName): TFileName;
 begin

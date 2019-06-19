@@ -5,6 +5,7 @@ interface
 uses
   Helper.Rtti,
   Model.Base,
+  System.IOUtils,
   System.Rtti,
   System.SysUtils,
   Types.Input.Item;
@@ -30,32 +31,35 @@ implementation
 
 destructor TInput<T>.Destroy;
 var
-  Path: TInputItem<T>;
+  Item: TInputItem<T>;
 begin
-  for Path in Items do
+  for Item in Items do
   begin
-    if Assigned(Path.Model) then
-      Path.Model.Free;
-    Path.Free;
+    if Assigned(Item.Model) then
+      Item.Model.Free;
+    Item.Free;
   end;
   inherited Destroy;
 end;
 
 procedure TInput<T>.Read;
 var
-  Path: TInputItem<T>;
+  Item: TInputItem<T>;
   Context: TRttiContext;
   Method: TRttiMethod;
 begin
   Context := TRttiContext.Create;
-  for Path in Items do
+  for Item in Items do
   begin
+    if not TFile.Exists(Item.Source) then
+      raise EFileNotFoundException.CreateFmt('File not found: %s.', [Item.Source]);
+
     Method := Context.GetType(TypeInfo(T)).GetConstructor;
     if Assigned(Method) then
     begin
-      Path.Model := Method.Invoke(T, [Path.Source]).AsType<T>;
-      if Assigned(Path.Model) then
-        Path.Model.Read;
+      Item.Model := Method.Invoke(T, [Item.Source]).AsType<T>;
+      if Assigned(Item.Model) then
+        Item.Model.Read;
     end;
   end;
 end;
