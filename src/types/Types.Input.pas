@@ -52,7 +52,7 @@ begin
   for Item in Items do
   begin
     if not TFile.Exists(Item.Source) then
-      raise EFileNotFoundException.CreateFmt('File not found: %s.', [Item.Source]);
+      raise EFileNotFoundException.Create(Item.Source);
 
     Method := Context.GetType(TypeInfo(T)).GetConstructor;
     if Assigned(Method) then

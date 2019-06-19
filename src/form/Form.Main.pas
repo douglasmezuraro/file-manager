@@ -301,7 +301,7 @@ begin
   except
     on Exception: EFileNotFoundException do
     begin
-      TUtils.Dialogs.Warning('Arquivo não encontrado: %s.', [TUtils.Methods.ExtractFileName(Exception)]);
+      TUtils.Dialogs.Warning('Arquivo não encontrado: %s.', [Exception.Message]);
       Halt;
     end;
   end;
