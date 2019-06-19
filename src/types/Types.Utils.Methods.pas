@@ -4,12 +4,14 @@ interface
 
 uses
   System.IOUtils,
-  System.SysUtils;
+  System.SysUtils,
+  Winapi.UrlMon;
 
 type
   TMethods = class abstract
   public
     class function FilePath(const FileName: TFileName): TFileName; static;
+    class procedure OpenURL(const URL: string); static;
   end;
 
 implementation
@@ -19,6 +21,12 @@ implementation
 class function TMethods.FilePath(const FileName: TFileName): TFileName;
 begin
   Result := TPath.Combine(TPath.GetDirectoryName(ParamStr(0)), FileName);
+end;
+
+class procedure TMethods.OpenURL(const URL: string);
+begin
+  if not URL.IsEmpty then
+    HlinkNavigateString(nil, PWideChar(URL));
 end;
 
 end.

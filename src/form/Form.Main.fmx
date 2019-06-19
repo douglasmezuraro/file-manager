@@ -16,7 +16,7 @@ object Main: TMain
   object PanelButtons: TPanel
     Align = Bottom
     Locked = True
-    Position.Y = 555.000000000000000000
+    Position.Y = 533.000000000000000000
     Size.Width = 600.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -63,16 +63,16 @@ object Main: TMain
     Align = Client
     Locked = True
     Size.Width = 600.000000000000000000
-    Size.Height = 555.000000000000000000
+    Size.Height = 533.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
     TabPosition = PlatformDefault
     Sizes = (
       600s
-      529s
+      507s
       600s
-      529s)
+      507s)
     object TabItemFiles: TTabItem
       CustomIcon = <
         item
@@ -90,7 +90,7 @@ object Main: TMain
         Align = Client
         Locked = True
         Size.Width = 600.000000000000000000
-        Size.Height = 529.000000000000000000
+        Size.Height = 507.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         OnDblClick = TreeViewItemsDblClick
@@ -98,14 +98,14 @@ object Main: TMain
         Images = ImageListIcons
         Sorted = True
         Viewport.Width = 596.000000000000000000
-        Viewport.Height = 525.000000000000000000
+        Viewport.Height = 503.000000000000000000
       end
     end
     object TabItemSelectedFile: TTabItem
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 130.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -118,11 +118,35 @@ object Main: TMain
         Align = Client
         Locked = True
         Size.Width = 600.000000000000000000
-        Size.Height = 529.000000000000000000
+        Size.Height = 507.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         TabPosition = PlatformDefault
       end
+    end
+  end
+  object StatusBar: TStatusBar
+    Locked = True
+    Position.Y = 578.000000000000000000
+    ShowSizeGrip = True
+    Size.Width = 600.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    object LabelHelp: TLabel
+      Align = Left
+      AutoSize = True
+      StyledSettings = [Family, Size]
+      HitTest = True
+      Size.Width = 99.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.WordWrap = False
+      Text = 'Abrir ajuda na wiki'
+      TabOrder = 7
+      OnClick = LabelHelpClick
+      OnMouseMove = LabelHelpMouseMove
+      OnMouseLeave = LabelHelpMouseLeave
     end
   end
   object ActionList: TActionList

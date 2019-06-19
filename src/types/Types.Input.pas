@@ -7,18 +7,20 @@ uses
   Model.Base,
   System.Rtti,
   System.SysUtils,
-  Types.Path;
+  Types.Input.Item;
 
 type
   TInput<T: TModel> = class
+  private type
+    TInputItems = TArray<TInputItem<T>>;
   private
-    FItems: TArray<TPath<T>> ;
-    FCurrent: TPath<T>;
+    FItems: TInputItems;
+    FCurrent: TInputItem<T>;
   public
     destructor Destroy; override;
     procedure Read;
-    property Current: TPath<T> read FCurrent write FCurrent;
-    property Items: TArray<TPath<T>> read FItems write FItems;
+    property Current: TInputItem<T> read FCurrent write FCurrent;
+    property Items: TInputItems read FItems write FItems;
     const FileName = 'input.json';
   end;
 
@@ -28,7 +30,7 @@ implementation
 
 destructor TInput<T>.Destroy;
 var
-  Path: TPath<T>;
+  Path: TInputItem<T>;
 begin
   for Path in Items do
   begin
@@ -41,7 +43,7 @@ end;
 
 procedure TInput<T>.Read;
 var
-  Path: TPath<T>;
+  Path: TInputItem<T>;
   Context: TRttiContext;
   Method: TRttiMethod;
 begin

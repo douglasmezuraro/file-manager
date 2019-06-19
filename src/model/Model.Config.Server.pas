@@ -41,7 +41,7 @@ type
     [Key('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
-    [ComboBox('Tipo de conexão', ',Socket')]
+    [ComboBox('Tipo de conexão', 'Socket')]
     [Key('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
 

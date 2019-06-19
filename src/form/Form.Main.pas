@@ -36,7 +36,7 @@ uses
   Types.Binding,
   Types.DTO,
   Types.Input,
-  Types.Path,
+  Types.Input.Item,
   Types.Utils;
 
 type
@@ -55,6 +55,8 @@ type
     TabItemSelectedFile: TTabItem;
     TabControlFile: TTabControl;
     ImageListIcons: TImageList;
+    StatusBar: TStatusBar;
+    LabelHelp: TLabel;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveTargetExecute(Sender: TObject);
     procedure ActionSaveSourceExecute(Sender: TObject);
@@ -62,6 +64,9 @@ type
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure TreeViewItemsDblClick(Sender: TObject);
+    procedure LabelHelpMouseLeave(Sender: TObject);
+    procedure LabelHelpMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
+    procedure LabelHelpClick(Sender: TObject);
   private
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
@@ -75,7 +80,7 @@ type
     procedure ReadInput;
     procedure RestoreView;
     procedure Save(const Path: TFileName);
-    procedure SelectFile(const Path: TObject);
+    procedure SelectFile(const InputItem: TObject);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -162,21 +167,40 @@ begin
   Result := not FInvoker.IsEmpty;
 end;
 
+procedure TMain.LabelHelpClick(Sender: TObject);
+begin
+  TUtils.Methods.OpenURL(TUtils.Constants.HelpURL);
+end;
+
+procedure TMain.LabelHelpMouseLeave(Sender: TObject);
+begin
+  TLabel(Sender).FontColor := TAlphaColorRec.Black;
+  TLabel(Sender).Font.Style := [];
+  Cursor := crDefault;
+end;
+
+procedure TMain.LabelHelpMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
+begin
+  TLabel(Sender).FontColor := TAlphaColorRec.Blue;
+  TLabel(Sender).Font.Style := [TFontStyle.fsUnderline];
+  Cursor := crHandPoint;
+end;
+
 procedure TMain.MakeTree;
 var
-  Path: TPath<TConfig>;
+  Item: TInputItem<TConfig>;
   Node: TTreeViewItem;
   Text: string;
 begin
-  for Path in FInput.Items do
+  for Item in FInput.Items do
   begin
-    Text := IfThen(Path.Group.IsEmpty, 'Sem grupo', Path.Group) + TTreeView.Separator + Path.Name;
+    Text := IfThen(Item.Group.IsEmpty, 'Sem grupo', Item.Group) + TTreeView.Separator + Item.Name;
 
     Node := TreeViewItems.MakeNode(Text);
     if Assigned(Node) then
     begin
-      Node.TagObject := Path;
-      Node.ImageIndex := Path.CanOverride.ToInteger;
+      Node.TagObject := Item;
+      Node.ImageIndex := Item.CanOverride.ToInteger;
     end;
   end;
 
@@ -245,18 +269,18 @@ begin
   ControlView;
 end;
 
-procedure TMain.SelectFile(const Path: TObject);
+procedure TMain.SelectFile(const InputItem: TObject);
 begin
-  if not Assigned(Path) then
+  if not Assigned(InputItem) then
     Exit;
 
   if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocas mesmo assim?') then
     Exit;
 
-  if Assigned(FInput.Current) and FInput.Current.Equals(Path) then
+  if Assigned(FInput.Current) and FInput.Current.Equals(InputItem) then
     Exit;
 
-  FInput.Current := Path as TPath<TConfig>;
+  FInput.Current := InputItem as TInputItem<TConfig>;
 
   TabControlView.ActiveTab := TabItemSelectedFile;
 

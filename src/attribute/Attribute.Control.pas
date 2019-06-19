@@ -39,7 +39,7 @@ end;
 constructor ComboBoxAttribute.Create(const Text, Items: string);
 begin
   inherited Create(Text);
-  FItems := Items;
+  FItems := ',' + Items;
 end;
 
 end.

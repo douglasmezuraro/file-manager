@@ -44,11 +44,11 @@ type
     [Key('NUMEROLINHASFETCH')]
     property FetchLines: Integer read FFetchLines write FFetchLines;
 
-    [ComboBox('Tipo de acesso', ',SQLd,FireDAC')]
+    [ComboBox('Tipo de acesso', 'SQLd,FireDAC')]
     [Key('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [ComboBox('Tipo de banco', ',Oracle,SQLServer,DB2')]
+    [ComboBox('Tipo de banco', 'Oracle,SQLServer,DB2')]
     [Key('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 

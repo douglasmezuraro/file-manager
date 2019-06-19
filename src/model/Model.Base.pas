@@ -3,7 +3,6 @@ unit Model.Base;
 interface
 
 uses
-  Helper.Ini,
   Helper.Rtti,
   System.Rtti,
   System.SysUtils,

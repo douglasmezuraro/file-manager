@@ -3,15 +3,15 @@ inherited Main_Windows: TMain_Windows
   inherited TabControlView: TTabControl
     Sizes = (
       600s
-      529s
+      507s
       600s
-      529s)
+      507s)
     inherited TabItemFiles: TTabItem
       ExplicitSize.cx = 70.000000000000000000
       ExplicitSize.cy = 26.000000000000000000
       inherited TreeViewItems: TTreeView
         Viewport.Width = 600.000000000000000000
-        Viewport.Height = 529.000000000000000000
+        Viewport.Height = 507.000000000000000000
       end
     end
     inherited TabItemSelectedFile: TTabItem

@@ -39,7 +39,7 @@ uses
   Types.Input in 'src\types\Types.Input.pas',
   Types.IniObject in 'src\types\Types.IniObject.pas',
   Types.ObjectFileAPI in 'src\types\Types.ObjectFileAPI.pas',
-  Types.Path in 'src\types\Types.Path.pas',
+  Types.Input.Item in 'src\types\Types.Input.Item.pas',
   Types.Utils in 'src\types\Types.Utils.pas',
   Types.Utils.Constants in 'src\types\Types.Utils.Constants.pas',
   Types.Utils.Conversions in 'src\types\Types.Utils.Conversions.pas',
