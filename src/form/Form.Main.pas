@@ -79,7 +79,7 @@ type
     procedure Notify(Sender: TObject);
     procedure ReadInput;
     procedure RestoreView;
-    procedure Save(const Path: TFileName);
+    procedure Save(const FileName: TFileName);
     procedure SelectFile(const InputItem: TObject);
   public
     constructor Create(AOwner: TComponent); override;
@@ -202,8 +202,6 @@ begin
       Node.ImageIndex := Item.CanOverride.ToInteger;
     end;
   end;
-
-  TreeViewItems.ExpandAll;
 end;
 
 procedure TMain.ModelToView(const Model: TObject; const Parent: IControl);
@@ -273,7 +271,7 @@ begin
   if not Assigned(InputItem) then
     Exit;
 
-  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocas mesmo assim?') then
+  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocar mesmo assim?') then
     Exit;
 
   if Assigned(FInput.Current) and FInput.Current.Equals(InputItem) then
@@ -319,9 +317,9 @@ begin
   end;
 end;
 
-procedure TMain.Save(const Path: TFileName);
+procedure TMain.Save(const FileName: TFileName);
 begin
-  FInput.Current.Model.Write(Path);
+  FInput.Current.Model.Write(FileName);
   FInvoker.Clear;
   ControlView;
   TUtils.Dialogs.Information('O arquivo foi salvo com sucesso!');
@@ -337,17 +335,14 @@ procedure TMain.ControlView(const Text: string);
 var
   LText: string;
 begin
-  LText := Text;
-  if LText.Trim.IsEmpty then
-    LText := TabItemSelectedFile.Text;
-
+  LText := IfThen(Text.IsEmpty, TabItemSelectedFile.Text, Text);
   LText := LText.Replace(TUtils.Constants.ChangeChar, string.Empty);
+
   if HasChanges and not LText.Contains(TUtils.Constants.ChangeChar) then
     LText := LText + TUtils.Constants.ChangeChar;
 
   TabItemSelectedFile.Text := LText;
 
-  ActionSaveTarget.Enabled := Assigned(FInput.Current) and HasChanges;
   ActionSaveSource.Enabled := Assigned(FInput.Current) and HasChanges and FInput.Current.CanOverride;
 end;
 

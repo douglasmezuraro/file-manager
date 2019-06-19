@@ -29,7 +29,7 @@ begin
   Result := nil;
 
   if Owner = Self then
-    Exit(Self.ItemByText(Text));
+    Exit(ItemByText(Text));
 
   if not (Owner is TTreeViewItem) then
     Exit;
@@ -44,6 +44,7 @@ end;
 function TTreeViewHelper.MakeNode(const Text: string): TTreeViewItem;
 begin
   Result := MakeNode(Self, Text, Root);
+  ExpandAll;
 end;
 
 function TTreeViewHelper.MakeNode(const Parent: TFmxObject; const Text: string;

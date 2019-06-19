@@ -3,7 +3,7 @@ unit Attribute.Control;
 interface
 
 type
-  CaptionAttribute = class abstract(TCustomAttribute)
+  TextAttribute = class abstract(TCustomAttribute)
   private
     FText: string;
   public
@@ -11,13 +11,13 @@ type
     property Text: string read FText;
   end;
 
-  HintAttribute = class(CaptionAttribute);
+  HintAttribute = class(TextAttribute);
 
-  TabItemAttribute = class(CaptionAttribute);
-  CheckBoxAttribute = class(CaptionAttribute);
-  EditAttribute = class(CaptionAttribute);
+  TabItemAttribute = class(TextAttribute);
+  CheckBoxAttribute = class(TextAttribute);
+  EditAttribute = class(TextAttribute);
 
-  ComboBoxAttribute = class(CaptionAttribute)
+  ComboBoxAttribute = class(TextAttribute)
   private
     FItems: string;
   public
@@ -29,7 +29,7 @@ implementation
 
 { CaptionAttribute }
 
-constructor CaptionAttribute.Create(const Text: string);
+constructor TextAttribute.Create(const Text: string);
 begin
   FText := Text;
 end;
