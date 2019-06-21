@@ -246,23 +246,42 @@ begin
 end;
 
 procedure TMain.Notify(Sender: TObject);
+
+  function Validate(const Control: TControl; out Message: string): Boolean;
+  begin
+    Message := '';
+    Result := Control.Validate;
+  end;
+
+  procedure UpdateValue(const Control: TControl);
+  var
+    Receiver: TReceiver;
+    Old, New: TValue;
+  begin
+    Old := FBinding.Values[Control];
+    New := Control.Value;
+
+    Receiver := TReceiver.Create(Control, Old);
+    FInvoker.Add(TUndoableCommand.Create(Receiver));
+    FBinding.Values[Control] := New;
+  end;
+
 var
   Control: TControl;
-  Receiver: TReceiver;
-  Old, New: TValue;
+  Message: string;
 begin
   if FLockNotify then
     Exit;
 
   Control := Sender as TControl;
 
-  Old := FBinding.Values[Control];
-  New := Control.Value;
+  if not Validate(Control, Message) then
+  begin
+    TUtils.Dialogs.Warning(Message);
+    Exit;
+  end;
 
-  Receiver := TReceiver.Create(Control, Old);
-  FInvoker.Add(TUndoableCommand.Create(Receiver));
-  FBinding.Values[Control] := New;
-
+  UpdateValue(Control);
   ControlView;
 end;
 

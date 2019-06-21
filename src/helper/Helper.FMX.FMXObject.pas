@@ -14,6 +14,7 @@ type
     function GetValue: TValue;
     procedure SetValue(const Value: TValue);
   public
+    function Validate: Boolean;
     property Value: TValue read GetValue write SetValue;
   end;
 
@@ -39,6 +40,11 @@ begin
   Data := LValue;
   if Self is TComboBox then
     (Self as TComboBox).ItemIndex := (Self as TComboBox).Items.IndexOf(LValue.AsString);
+end;
+
+function TFmxObjectHelper.Validate: Boolean;
+begin
+  Result := True; // TODO: Validar os attributes aqui
 end;
 
 end.

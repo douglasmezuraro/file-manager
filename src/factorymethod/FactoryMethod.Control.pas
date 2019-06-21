@@ -30,7 +30,7 @@ begin
   if Assigned(DTO.Prop.GetAtribute<CheckBoxAttribute>()) then
     Exit(TCheckBoxTemplate.Create(DTO));
 
-  if Assigned(DTO.Prop.GetAtribute<TabItemAttribute>()) then
+  if Assigned(DTO.Prop.GetAtribute<TabAttribute>()) then
     Exit(TTabItemTemplate.Create(DTO));
 
   if Assigned(DTO.Prop.GetAtribute<ComboBoxAttribute>()) then
