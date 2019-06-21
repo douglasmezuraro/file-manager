@@ -13,7 +13,7 @@ type
 
   HintAttribute = class(TextAttribute);
 
-  TabItemAttribute = class(TextAttribute);
+  TabAttribute = class(TextAttribute);
   CheckBoxAttribute = class(TextAttribute);
   EditAttribute = class(TextAttribute);
 

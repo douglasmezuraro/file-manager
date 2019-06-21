@@ -21,9 +21,13 @@ type
   StringAttribute = class(ValidationAttribute)
   private
     FNullable: Boolean;
+    FMaxLength: Byte;
+    FMinLength: Byte;
   public
-    constructor Create(const Nullable: Boolean = True);
+    constructor Create(const Nullable: Boolean = True; const MinLength: Byte = Byte.MinValue; const MaxLength: Byte = Byte.MaxValue);
     property Nullable: Boolean read FNullable;
+    property MinLength: Byte read FMinLength;
+    property MaxLength: Byte read FMaxLength;
   end;
 
   FloatAttribute = class(ValidationAttribute)
@@ -36,6 +40,8 @@ type
     property MaxValue: Double read FMaxValue;
   end;
 
+  DateAttribute = class(ValidationAttribute);
+  TimeAttribute = class(ValidationAttribute);
   DateTimeAttribute = class(ValidationAttribute);
 
   RegExAttribute = class(ValidationAttribute)
@@ -58,9 +64,11 @@ end;
 
 { StringAttribute }
 
-constructor StringAttribute.Create(const Nullable: Boolean);
+constructor StringAttribute.Create(const Nullable: Boolean; const MinLength, MaxLength: Byte);
 begin
   FNullable := Nullable;
+  FMinLength := MinLength;
+  FMaxLength := MaxLength;
 end;
 
 { FloatAttribute }

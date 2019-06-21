@@ -33,47 +33,47 @@ type
     FServer: TServer;
     FClient: TClient;
   public
-    [TabItem('Aplicação')]
+    [Tab('Aplicação')]
     [Section('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
 
-    [TabItem('Cliente')]
+    [Tab('Cliente')]
     [Section('CLIENTE')]
     property Client: TClient read FClient write FClient;
 
-    [TabItem('Database')]
+    [Tab('Database')]
     [Section('DATABASE')]
     property Database: TDatabase read FDatabase write FDatabase;
 
-    [TabItem('DUnit')]
+    [Tab('DUnit')]
     [Section('DUNIT')]
     property DUnit: TDUnit read FDUnit write FDUnit;
 
-    [TabItem('LOG')]
+    [Tab('LOG')]
     [Section('LOG')]
     property Log: TLog read FLog write FLog;
 
-    [TabItem('Monitor')]
+    [Tab('Monitor')]
     [Section('SPMONITOR')]
     property Monitor: TMonitor read FMonitor write FMonitor;
 
-    [TabItem('Scanner')]
+    [Tab('Scanner')]
     [Section('SCANNER')]
     property Scanner: TScanner read FScanner write FScanner;
 
-    [TabItem('Servidor')]
+    [Tab('Servidor')]
     [Section('SERVIDOR')]
     property Server: TServer read FServer write FServer;
 
-    [TabItem('SPP')]
+    [Tab('SPP')]
     [Section('CLIENTESPP')]
     property SPP: TSPP read FSPP write FSPP;
 
-    [TabItem('Update')]
+    [Tab('Update')]
     [Section('SPUPDATE')]
     property Update: TUpdate read FUpdate write FUpdate;
 
-    [TabItem('Fluxo de trabalho')]
+    [Tab('Fluxo de trabalho')]
     [Section('FLUXOTRABALHO')]
     property Workflow: TWorkflow read FWorkflow write FWorkflow;
   end;
