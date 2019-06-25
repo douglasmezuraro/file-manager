@@ -4,7 +4,8 @@ interface
 
 uses
   Attribute.Control,
-  Attribute.Ini;
+  Attribute.Ini,
+  Attribute.Validation;
 
 type
   TClient = class
@@ -13,10 +14,12 @@ type
     FDisableMenuBackground: Boolean;
     FTimeOut: Integer;
   public
+    [StringAttribute]
     [Edit('Login automático')]
     [Key('LOGINAUTOMATICO')]
     property AutoLogin: string read FAutoLogin write FAutoLogin;
 
+    [IntegerAttribute]
     [Edit('Timeout de execução')]
     [Key('TIMEOUTEXECUCAO')]
     property TimeOut: Integer read FTimeOut write FTimeOut;

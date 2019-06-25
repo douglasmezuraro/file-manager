@@ -12,7 +12,7 @@ type
   private
     FName: string;
   public
-    [StringAttribute(True, 3, 128)]
+    [StringAttribute]
     [Edit('Nome de aplicação para monitoramento')]
     [Key('NOMEAPLICACAOPARAMONITORAMENTO')]
     property Name: string read FName write FName;

@@ -4,7 +4,9 @@ interface
 
 uses
   Attribute.Control,
-  Attribute.Ini;
+  Attribute.Ini,
+  Attribute.Validation,
+  Types.Utils;
 
 type
   TServer = class
@@ -21,26 +23,32 @@ type
     FIPAddress: string;
     FPort: Integer;
   public
+    [StringAttribute(False)]
     [Edit('Nome')]
     [Key('NOMESERVIDOR')]
     property Name: string read FName write FName;
 
+    [RegExAttribute(TUtils.RegEx.GUID)]
     [Edit('GUID')]
     [Key('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
 
+    [StringAttribute]
     [Edit('Nome do computador')]
     [Key('NOMECOMPUTADOR')]
     property ComputerName: string read FComputerName write FComputerName;
 
+    [StringAttribute]
     [Edit('IP')]
     [Key('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
 
+    [RegExAttribute(TUtils.RegEx.IP)]
     [Edit('Endereço de IP')]
     [Key('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
+    [StringAttribute(False)]
     [ComboBox('Tipo de conexão', 'Socket')]
     [Key('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
@@ -49,10 +57,12 @@ type
     [Key('PODEBALANCEAR')]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
+    [StringAttribute]
     [Edit('Nome do executável')]
     [Key('NOMEEXECUTAVELSERVIDOR')]
     property ExeName: string read FExeName write FExeName;
 
+    [IntegerAttribute]
     [Edit('Timeout de execução')]
     [Key('TIMEOUTEXECUCAO')]
     property TimeOut: Integer read FTimeOut write FTimeOut;
@@ -61,6 +71,7 @@ type
     [Key('HABILITAGERENCIADORINTEGRACAO')]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
 
+    [IntegerAttribute]
     [Edit('Porta')]
     [Key('PORTA')]
     property Port: Integer read FPort write FPort;

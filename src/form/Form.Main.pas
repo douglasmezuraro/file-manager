@@ -74,9 +74,10 @@ type
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
     FInput: TInput<TConfig>;
-    FLockNotify: Boolean;
+    FLock: Boolean;
     function HasChanges: Boolean;
     procedure ControlView(const Text: string = string.Empty);
+    procedure ExecuteWithLock(const Proc: TProc);
     procedure MakeTree;
     procedure ModelToView(const Model: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
@@ -109,6 +110,16 @@ begin
   FInvoker.Free;
   FInput.Free;
   inherited;
+end;
+
+procedure TMain.ExecuteWithLock(const Proc: TProc);
+begin
+  FLock := True;
+  try
+    Proc;
+  finally
+    FLock := False;
+  end;
 end;
 
 procedure TMain.ActionCancelExecute(Sender: TObject);
@@ -150,13 +161,12 @@ begin
   if Key <> vkZ then
     Exit;
 
-  FLockNotify := True;
-  try
-    FInvoker.Execute;
-    ControlView;
-  finally
-    FLockNotify := False;
-  end;
+  ExecuteWithLock(
+    procedure
+    begin
+      FInvoker.Execute;
+      ControlView;
+    end);
 end;
 
 procedure TMain.FormShow(Sender: TObject);
@@ -215,7 +225,7 @@ var
   Prop: TRttiProperty;
   Template: TControlTemplate;
 begin
-  FLockNotify := True;
+  FLock := True;
   DTO := TControlDTO.Create;
   try
     Context := TRttiContext.Create;
@@ -244,7 +254,7 @@ begin
     end;
   finally
     DTO.Free;
-    FLockNotify := False;
+    FLock := False;
   end;
 end;
 
@@ -279,19 +289,18 @@ procedure TMain.Notify(Sender: TObject);
 var
   Control: TControl;
 begin
-  if FLockNotify then
+  if FLock then
     Exit;
 
   Control := Sender as TControl;
 
+  UpdateValue(Control);
   if not Validate(Control) then
   begin
     TUtils.Dialogs.Warning('Dado inválido!');
-    Control.SetFocus;
-    Exit;
+    ExecuteWithLock(FInvoker.Execute);
+    Abort;
   end;
-
-  UpdateValue(Control);
   ControlView;
 end;
 

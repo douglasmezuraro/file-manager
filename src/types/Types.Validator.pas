@@ -102,7 +102,7 @@ class function TValidator.ValidateRegEx(const Att: RegExAttribute; const Value: 
 var
   RegEx: TRegEx;
 begin
-  RegEx := TRegEx.Create(Att.Pattern);
+  RegEx := TRegEx.Create(Att.Pattern, [roIgnoreCase, roNotEmpty]);
   Result := RegEx.IsMatch(Value.ToString);
 end;
 
