@@ -19,8 +19,10 @@ implementation
 { TMethods }
 
 class function TMethods.FilePath(const FileName: TFileName): TFileName;
+const
+  ExeDirParam = 0;
 begin
-  Result := TPath.Combine(TPath.GetDirectoryName(ParamStr(0)), FileName);
+  Result := TPath.Combine(TPath.GetDirectoryName(ParamStr(ExeDirParam)), FileName);
 end;
 
 class procedure TMethods.OpenURL(const URL: string);

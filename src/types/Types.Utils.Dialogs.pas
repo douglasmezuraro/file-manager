@@ -10,6 +10,8 @@ uses
 
 type
   TDialogs = class abstract
+  private
+    const UndefinedHelpCtx = 0;
   public
     { Confirmation }
     class function Confirmation(const Message: string): Boolean; overload; static;
@@ -35,7 +37,7 @@ begin
     TMsgDlgType.mtConfirmation,
     FMX.Dialogs.mbYesNo,
     TMsgDlgBtn.mbNo,
-    0,
+    UndefinedHelpCtx,
     procedure(const AResult: TModalResult)
     begin
       LResult := AResult in [mrYes, mrYesToAll];
@@ -56,7 +58,7 @@ begin
     TMsgDlgType.mtInformation,
     [TMsgDlgBtn.mbOK],
     TMsgDlgBtn.mbOK,
-    0,
+    UndefinedHelpCtx,
     nil);
 end;
 
@@ -72,7 +74,7 @@ begin
     TMsgDlgType.mtWarning,
     [TMsgDlgBtn.mbOK],
     TMsgDlgBtn.mbOK,
-    0,
+    UndefinedHelpCtx,
     nil);
 end;
 

@@ -373,10 +373,10 @@ var
   LText: string;
 begin
   LText := IfThen(Text.IsEmpty, TabItemSelectedFile.Text, Text);
-  LText := LText.Replace(TUtils.Constants.ChangeChar, string.Empty);
+  LText := LText.Replace(TUtils.Constants.ChangeIndicator, string.Empty);
 
-  if HasChanges and not LText.Contains(TUtils.Constants.ChangeChar) then
-    LText := LText + TUtils.Constants.ChangeChar;
+  if HasChanges and not LText.Contains(TUtils.Constants.ChangeIndicator) then
+    LText := LText + TUtils.Constants.ChangeIndicator;
 
   TabItemSelectedFile.Text := LText;
 
