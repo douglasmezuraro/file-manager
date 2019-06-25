@@ -72,7 +72,7 @@ var
 begin
   Ini := GetIni;
 
-  Attribute := FDTO.Prop.GetAtribute<HintAttribute>();
+  Attribute := FDTO.Prop.GetAttribute<HintAttribute>();
   if Assigned(Attribute) then
     Hint := Attribute.Text;
 
@@ -83,7 +83,7 @@ function TControlTemplate.GetIni: string;
 var
   Attribute: IniAttribute;
 begin
-  Attribute := FDTO.Prop.GetAtribute<IniAttribute>();
+  Attribute := FDTO.Prop.GetAttribute<IniAttribute>();
 
   Result := string.Empty;
   if Assigned(Attribute) then
@@ -94,7 +94,7 @@ function TControlTemplate.GetText: string;
 var
   Attribute: TextAttribute;
 begin
-  Attribute := FDTO.Prop.GetAtribute<TextAttribute>();
+  Attribute := FDTO.Prop.GetAttribute<TextAttribute>();
 
   Result := string.Empty;
   if Assigned(Attribute) then

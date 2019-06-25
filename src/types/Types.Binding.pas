@@ -19,6 +19,7 @@ type
     function GetValue(const Control: IControl): TValue;
     procedure SetValue(const Control: IControl; const Value: TValue);
     function GetKeys: TArray<IControl>;
+    function GetProp(const Control: IControl): TRttiProperty;
   public
     constructor Create;
     destructor Destroy; override;
@@ -26,6 +27,7 @@ type
     procedure Add(const Control: IControl; const Obj: TObject; const Prop: TRttiProperty);
     property Keys: TArray<IControl> read GetKeys;
     property Values[const Control: IControl]: TValue read GetValue write SetValue;
+    property Prop[const Control: IControl]: TRttiProperty read GetProp;
   end;
 
 implementation
@@ -56,6 +58,13 @@ end;
 function TBinding.GetKeys: TArray<IControl>;
 begin
   Result := FDictionary.Keys.ToArray;
+end;
+
+function TBinding.GetProp(const Control: IControl): TRttiProperty;
+begin
+  Result := nil;
+  if FDictionary.ContainsKey(Control) then
+    Result := FDictionary.Items[Control].Value;
 end;
 
 function TBinding.GetValue(const Control: IControl): TValue;

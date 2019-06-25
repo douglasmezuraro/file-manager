@@ -3,6 +3,7 @@
 interface
 
 uses
+  Attribute.Validation,
   Command.Invoker,
   Command.Receiver,
   Command.Undoable,
@@ -19,6 +20,7 @@ uses
   FMX.Types,
   Helper.FMX.FMXObject,
   Helper.FMX.TreeView,
+  Helper.Rtti,
   Model.Config,
   Rest.Json,
   System.Actions,
@@ -37,7 +39,8 @@ uses
   Types.DTO,
   Types.Input,
   Types.Input.Item,
-  Types.Utils;
+  Types.Utils,
+  Types.Validator;
 
 type
   TMain = class(TForm)
@@ -247,10 +250,17 @@ end;
 
 procedure TMain.Notify(Sender: TObject);
 
-  function Validate(const Control: TControl; out Message: string): Boolean;
+  function Validate(const Control: TControl): Boolean;
+  var
+    Prop: TRttiProperty;
   begin
-    Message := '';
-    Result := Control.Validate;
+    Result := False;
+
+    Prop := FBinding.Prop[Control];
+    if not Assigned(Prop) then
+      Exit;
+
+    Result := TValidator.Validate(Prop, Control.Value);
   end;
 
   procedure UpdateValue(const Control: TControl);
@@ -268,16 +278,16 @@ procedure TMain.Notify(Sender: TObject);
 
 var
   Control: TControl;
-  Message: string;
 begin
   if FLockNotify then
     Exit;
 
   Control := Sender as TControl;
 
-  if not Validate(Control, Message) then
+  if not Validate(Control) then
   begin
-    TUtils.Dialogs.Warning(Message);
+    TUtils.Dialogs.Warning('Dado inválido!');
+    Control.SetFocus;
     Exit;
   end;
 

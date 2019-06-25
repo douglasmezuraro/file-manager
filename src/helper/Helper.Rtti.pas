@@ -24,7 +24,7 @@ type
 
   TRttiPropertyHelper = class Helper for TRttiProperty
   public
-    function GetAtribute<T: class>: T;
+    function GetAttribute<T: class>: T;
   end;
 
   TValueHelper = record Helper for TValue
@@ -59,13 +59,19 @@ type
     function IsFloat: Boolean;
     function IsString: Boolean;
     function IsNumeric: Boolean;
+
+    function IsValidInteger(out Value: Integer): Boolean;
+    function IsValidFloat(out Value: Double): Boolean;
+    function IsValidDate(out Value: TDateTime): Boolean;
+    function IsValidTime(out Value: TDateTime): Boolean;
+    function IsValidDateTime(out Value: TDateTime): Boolean;
   end;
 
 implementation
 
 { TRttiPropertyHelper }
 
-function TRttiPropertyHelper.GetAtribute<T>: T;
+function TRttiPropertyHelper.GetAttribute<T>: T;
 var
   Attribute: TCustomAttribute;
 begin
@@ -373,6 +379,31 @@ begin
 
   if Self.IsWord then
     Exit(Self.AsType<Word>() <> Word.MaxValue);
+end;
+
+function TValueHelper.IsValidDate(out Value: TDateTime): Boolean;
+begin
+  Result := System.SysUtils.TryStrToDate(ToString, Value);
+end;
+
+function TValueHelper.IsValidDateTime(out Value: TDateTime): Boolean;
+begin
+  Result := System.SysUtils.TryStrToDateTime(ToString, Value);
+end;
+
+function TValueHelper.IsValidFloat(out Value: Double): Boolean;
+begin
+  Result := System.SysUtils.TryStrToFloat(ToString, Value);
+end;
+
+function TValueHelper.IsValidInteger(out Value: Integer): Boolean;
+begin
+  Result := System.SysUtils.TryStrToInt(ToString, Value);
+end;
+
+function TValueHelper.IsValidTime(out Value: TDateTime): Boolean;
+begin
+  Result := System.SysUtils.TryStrToTime(ToString, Value);
 end;
 
 { TRttiTypeHelper }

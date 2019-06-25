@@ -156,7 +156,7 @@ begin
     Value := Prop.GetValue(Obj);
     if Value.IsObject then
     begin
-      Section := Prop.GetAtribute<SectionAttribute>();
+      Section := Prop.GetAttribute<SectionAttribute>();
       Execute(Value.AsObject, Mode, Section);
       Continue;
     end;
@@ -164,7 +164,7 @@ begin
     if not Assigned(Section) then
       Continue;
 
-    Key := Prop.GetAtribute<KeyAttribute>();
+    Key := Prop.GetAttribute<KeyAttribute>();
     if not Assigned(Key) then
       Continue;
 

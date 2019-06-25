@@ -4,7 +4,8 @@ interface
 
 uses
   Attribute.Control,
-  Attribute.Ini;
+  Attribute.Ini,
+  Attribute.Validation;
 
 type
   TDatabase = class
@@ -24,6 +25,7 @@ type
     [Key('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
 
+    [IntegerAttribute]
     [Edit('Número máximo de conexões')]
     [Key('NUMEROMAXIMOCONEXOES')]
     property MaxConnections: Integer read FMaxConnections write FMaxConnections;

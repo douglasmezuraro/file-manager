@@ -27,16 +27,16 @@ class function TControlFactory.Fabricate(const DTO: TControlDTO): TControlTempla
 begin
   Result := nil;
 
-  if Assigned(DTO.Prop.GetAtribute<CheckBoxAttribute>()) then
+  if Assigned(DTO.Prop.GetAttribute<CheckBoxAttribute>()) then
     Exit(TCheckBoxTemplate.Create(DTO));
 
-  if Assigned(DTO.Prop.GetAtribute<TabAttribute>()) then
+  if Assigned(DTO.Prop.GetAttribute<TabAttribute>()) then
     Exit(TTabItemTemplate.Create(DTO));
 
-  if Assigned(DTO.Prop.GetAtribute<ComboBoxAttribute>()) then
+  if Assigned(DTO.Prop.GetAttribute<ComboBoxAttribute>()) then
     Exit(TComboBoxTemplate.Create(DTO));
 
-  if Assigned(DTO.Prop.GetAtribute<EditAttribute>()) then
+  if Assigned(DTO.Prop.GetAttribute<EditAttribute>()) then
     Exit(TEditTemplate.Create(DTO));
 end;
 
