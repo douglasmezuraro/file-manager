@@ -141,6 +141,8 @@
         <DCCReference Include="src\types\Types.Utils.Methods.pas"/>
         <DCCReference Include="src\types\Types.Utils.Translation.pas"/>
         <DCCReference Include="src\model\Model.Base.pas"/>
+        <DCCReference Include="src\types\Types.Validator.pas"/>
+        <DCCReference Include="src\types\Types.Utils.RegEx.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

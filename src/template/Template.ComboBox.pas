@@ -4,9 +4,7 @@ interface
 
 uses
   Attribute.Control,
-  FMX.Controls,
   FMX.ListBox,
-  FMX.Types,
   Helper.FMX.FMXObject,
   Helper.Rtti,
   Template.AbstractClass,

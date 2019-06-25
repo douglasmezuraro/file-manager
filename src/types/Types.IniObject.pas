@@ -5,7 +5,6 @@ interface
 uses
   Helper.Ini,
   System.IniFiles,
-  System.Rtti,
   System.SysUtils,
   Types.ObjectFileAPI;
 

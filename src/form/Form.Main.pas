@@ -3,7 +3,6 @@
 interface
 
 uses
-  Attribute.Validation,
   Command.Invoker,
   Command.Receiver,
   Command.Undoable,

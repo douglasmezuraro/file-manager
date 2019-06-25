@@ -4,7 +4,6 @@ interface
 
 uses
   Helper.Rtti,
-  System.Rtti,
   System.SysUtils,
   Types.IniObject;
 

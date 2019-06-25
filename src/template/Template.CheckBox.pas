@@ -3,9 +3,7 @@ unit Template.CheckBox;
 interface
 
 uses
-  FMX.Controls,
   FMX.StdCtrls,
-  FMX.Types,
   Helper.FMX.FMXObject,
   Template.AbstractClass,
   Types.DTO;

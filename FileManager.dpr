@@ -46,7 +46,9 @@ uses
   Types.Utils.Dialogs in 'src\types\Types.Utils.Dialogs.pas',
   Types.Utils.Methods in 'src\types\Types.Utils.Methods.pas',
   Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas',
-  Model.Base in 'src\model\Model.Base.pas';
+  Model.Base in 'src\model\Model.Base.pas',
+  Types.Validator in 'src\types\Types.Validator.pas',
+  Types.Utils.RegEx in 'src\types\Types.Utils.RegEx.pas';
 
 {$R *.res}
 

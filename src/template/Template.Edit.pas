@@ -3,9 +3,7 @@ unit Template.Edit;
 interface
 
 uses
-  FMX.Controls,
   FMX.Edit,
-  FMX.Types,
   Helper.FMX.FMXObject,
   System.UITypes,
   Template.AbstractClass,
