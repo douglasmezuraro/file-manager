@@ -64,6 +64,11 @@ class function TValidator.ValidateDate(const Attribute: DateAttribute; const Val
 var
   LValue: TDateTime;
 begin
+  Result := False;
+
+  if (not Attribute.Nullable) and Value.IsEmpty then
+    Exit;
+
   Result := Value.IsValidDate(LValue);
 end;
 
@@ -71,6 +76,11 @@ class function TValidator.ValidateDateTime(const Attribute: DateTimeAttribute; c
 var
   LValue: TDateTime;
 begin
+  Result := False;
+
+  if (not Attribute.Nullable) and Value.IsEmpty then
+    Exit;
+
   Result := Value.IsValidDateTime(LValue);
 end;
 
@@ -79,6 +89,9 @@ var
   LValue: Double;
 begin
   Result := False;
+
+  if (not Attribute.Nullable) and Value.IsEmpty then
+    Exit;
 
   if not Value.IsValidFloat(LValue) then
     Exit;
@@ -92,6 +105,9 @@ var
 begin
   Result := False;
 
+  if (not Attribute.Nullable) and Value.IsEmpty then
+    Exit;
+
   if not Value.IsValidInteger(LValue) then
     Exit;
 
@@ -99,11 +115,13 @@ begin
 end;
 
 class function TValidator.ValidateRegEx(const Attribute: RegExAttribute; const Value: TValue): Boolean;
-var
-  RegEx: TRegEx;
 begin
-  RegEx := TRegEx.Create(Attribute.Pattern, [roIgnoreCase, roNotEmpty]);
-  Result := RegEx.IsMatch(Value.ToString);
+  Result := False;
+
+  if (not Attribute.Nullable) and Value.IsEmpty then
+    Exit;
+
+  Result := TRegEx.Create(Attribute.Pattern, [roIgnoreCase, roNotEmpty]).IsMatch(Value.ToString);
 end;
 
 class function TValidator.ValidateString(const Attribute: StringAttribute; const Value: TValue): Boolean;
@@ -123,6 +141,11 @@ class function TValidator.ValidateTime(const Attribute: TimeAttribute; const Val
 var
   LValue: TDateTime;
 begin
+  Result := False;
+
+  if (not Attribute.Nullable) and Value.IsEmpty then
+    Exit;
+
   Result := Value.IsValidTime(LValue);
 end;
 

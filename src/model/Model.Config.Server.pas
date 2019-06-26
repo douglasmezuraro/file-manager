@@ -28,7 +28,7 @@ type
     [Key('NOMESERVIDOR')]
     property Name: string read FName write FName;
 
-    [RegExAttribute(TUtils.RegEx.GUID)]
+    [RegExAttribute(False, TUtils.RegEx.GUID)]
     [Edit('GUID')]
     [Key('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
@@ -43,7 +43,7 @@ type
     [Key('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
 
-    [RegExAttribute(TUtils.RegEx.IP)]
+    [RegExAttribute(False, TUtils.RegEx.IP)]
     [Edit('Endereço de IP')]
     [Key('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;

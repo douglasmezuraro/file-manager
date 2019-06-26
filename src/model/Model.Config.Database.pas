@@ -26,27 +26,27 @@ type
     [Key('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
 
-    [IntegerAttribute]
+    [IntegerAttribute(False)]
     [Edit('Número máximo de conexões')]
     [Key('NUMEROMAXIMOCONEXOES')]
     property MaxConnections: Integer read FMaxConnections write FMaxConnections;
 
-    [IntegerAttribute]
+    [IntegerAttribute(False)]
     [Edit('Número mínimo de conexões')]
     [Key('NUMEROMINIMOCONEXOES')]
     property MinConnections: Integer read FMinConnections write FMinConnections;
 
-    [IntegerAttribute]
+    [IntegerAttribute(False)]
     [Edit('Tempo de desconexão quando inativa')]
     [Key('TEMPODESCONEXAOCONEXAOINATIVA')]
     property DisconnectionTimeIdleConnection: Integer read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
-    [IntegerAttribute]
+    [IntegerAttribute(False)]
     [Edit('Tempo de atualização de log de conexões')]
     [Key('TEMPOATUALIZACAOLOGCONEXOES')]
     property ConnectionLogUpdateTime: Integer read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
-    [IntegerAttribute]
+    [IntegerAttribute(False)]
     [Edit('Número de linhas para fetch')]
     [Key('NUMEROLINHASFETCH')]
     property FetchLines: Integer read FFetchLines write FFetchLines;
