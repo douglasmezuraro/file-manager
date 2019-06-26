@@ -259,7 +259,7 @@ end;
 
 procedure TMain.Notify(Sender: TObject);
 
-  function Validate(const Control: TControl): Boolean;
+  function Validate(const Control: TControl; out Error: string): Boolean;
   var
     Prop: TRttiProperty;
   begin
@@ -270,6 +270,7 @@ procedure TMain.Notify(Sender: TObject);
       Exit;
 
     Result := TValidator.Validate(Prop, Control.Value);
+    Error := TValidator.Error;
   end;
 
   procedure UpdateValue(const Control: TControl);
@@ -287,6 +288,7 @@ procedure TMain.Notify(Sender: TObject);
 
 var
   Control: TControl;
+  Error: string;
 begin
   if FLock then
     Exit;
@@ -294,9 +296,9 @@ begin
   Control := Sender as TControl;
 
   UpdateValue(Control);
-  if not Validate(Control) then
+  if not Validate(Control, Error) then
   begin
-    TUtils.Dialogs.Warning('Dado inválido!');
+    TUtils.Dialogs.Warning(Error);
     ExecuteWithLock(FInvoker.Execute);
     Abort;
   end;
