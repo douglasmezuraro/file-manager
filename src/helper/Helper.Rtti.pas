@@ -29,15 +29,14 @@ type
 
   TValueHelper = record Helper for TValue
   public
+    { Assign Methods}
     function Assign(const Value: TValue): TValue;
     function Assigned: Boolean;
-
-    { As-Functions }
+    { As-Methods }
     function AsDate: TDate;
     function AsDateTime: TDateTime;
     function AsTime: TTime;
-
-    { Is-Functions }
+    { Is-Mehods }
     function IsBoolean: Boolean;
     function IsByte: Boolean;
     function IsCardinal: Boolean;
@@ -55,11 +54,10 @@ type
     function IsUInt64: Boolean;
     function IsVariant: Boolean;
     function IsWord: Boolean;
-
     function IsFloat: Boolean;
     function IsString: Boolean;
     function IsNumeric: Boolean;
-
+    { Validation-Methods }
     function IsValidInteger(out Value: Integer): Boolean;
     function IsValidFloat(out Value: Double): Boolean;
     function IsValidDate(out Value: TDateTime): Boolean;
@@ -79,10 +77,7 @@ begin
   for Attribute in Self.GetAttributes do
   begin
     if Attribute is T then
-    begin
-      Result := Attribute as T;
-      Break;
-    end;
+      Exit(Attribute as T);
   end;
 end;
 
