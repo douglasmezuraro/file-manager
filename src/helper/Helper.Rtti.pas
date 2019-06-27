@@ -327,7 +327,8 @@ end;
 
 function TValueHelper.Assigned: Boolean;
 begin
-  Result := False;
+  if Self.IsBoolean then
+    Exit(True);
 
   if Self.IsByte then
     Exit(Self.AsType<Byte>() <> Byte.MaxValue);
@@ -379,6 +380,8 @@ begin
 
   if Self.IsWord then
     Exit(Self.AsType<Word>() <> Word.MaxValue);
+
+  Result := not ToString.IsEmpty;
 end;
 
 function TValueHelper.IsValidDate(out Value: TDateTime): Boolean;
