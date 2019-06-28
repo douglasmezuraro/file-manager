@@ -26,6 +26,7 @@ var
 begin
   Tab := (FDTO.Parent as TTabControl).Add;
   Tab.Text := GetText;
+  Tab.TagString := Self.GetIni;
 
   ScrollBox := TScrollBox.Create(Tab);
   ScrollBox.Parent := Tab;

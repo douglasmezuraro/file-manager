@@ -12,6 +12,7 @@ type
   public
     class function FilePath(const FileName: TFileName): TFileName; static;
     class procedure OpenURL(const URL: string); static;
+    class function IndexOf(const Value: string; const Values: TArray<string>): Integer; static;
   end;
 
 implementation
@@ -23,6 +24,18 @@ const
   ExeDirParam = 0;
 begin
   Result := TPath.Combine(TPath.GetDirectoryName(ParamStr(ExeDirParam)), FileName);
+end;
+
+class function TMethods.IndexOf(const Value: string; const Values: TArray<string>): Integer;
+var
+  Index: Integer;
+begin
+  Result := -1;
+  for Index := 0 to Pred(Length(Values)) do
+  begin
+    if Values[Index].ToUpper.Equals(Value.ToUpper) then
+      Exit(Index);
+  end;
 end;
 
 class procedure TMethods.OpenURL(const URL: string);

@@ -17,11 +17,13 @@ type
   private
     FItems: TInputItems;
     FCurrent: TInputItem<T>;
+    FTabs: TArray<string>;
   public
     destructor Destroy; override;
     procedure Read;
     property Current: TInputItem<T> read FCurrent write FCurrent;
     property Items: TInputItems read FItems write FItems;
+    property Tabs: TArray<string> read FTabs;
     const FileName = 'input.json';
   end;
 

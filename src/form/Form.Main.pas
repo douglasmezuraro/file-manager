@@ -10,6 +10,7 @@ uses
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
+  FMX.Edit,
   FMX.Forms,
   FMX.ImgList,
   FMX.Layouts,
@@ -39,7 +40,7 @@ uses
   Types.Input,
   Types.Input.Item,
   Types.Utils,
-  Types.Validator, FMX.Edit;
+  Types.Validator;
 
 type
   TMain = class(TForm)
@@ -193,16 +194,12 @@ end;
 
 procedure TMain.LabelHelpMouseLeave(Sender: TObject);
 begin
-  TLabel(Sender).FontColor := TAlphaColorRec.Black;
-  TLabel(Sender).Font.Style := [];
-  Cursor := crDefault;
+  (Sender as TLabel).SetStyle(TLabel.TLabelStyle.lsNone);
 end;
 
 procedure TMain.LabelHelpMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
 begin
-  TLabel(Sender).FontColor := TAlphaColorRec.Blue;
-  TLabel(Sender).Font.Style := [TFontStyle.fsUnderline];
-  Cursor := crHandPoint;
+  (Sender as TLabel).SetStyle(TLabel.TLabelStyle.lsHyperLink);
 end;
 
 procedure TMain.MakeTree;
@@ -333,6 +330,8 @@ begin
   ControlView(FInput.Current.Source);
 
   ModelToView(FInput.Current.Model, TabControlFile);
+
+  TabControlFile.OrderTabs(FInput.Tabs);
 end;
 
 procedure TMain.ReadInput;
