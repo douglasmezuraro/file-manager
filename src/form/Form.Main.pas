@@ -39,7 +39,7 @@ uses
   Types.Input,
   Types.Input.Item,
   Types.Utils,
-  Types.Validator;
+  Types.Validator, FMX.Edit;
 
 type
   TMain = class(TForm)
@@ -59,6 +59,7 @@ type
     ImageListIcons: TImageList;
     StatusBar: TStatusBar;
     LabelHelp: TLabel;
+    EditFilter: TEdit;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveTargetExecute(Sender: TObject);
     procedure ActionSaveSourceExecute(Sender: TObject);
@@ -69,6 +70,8 @@ type
     procedure LabelHelpMouseLeave(Sender: TObject);
     procedure LabelHelpMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure LabelHelpClick(Sender: TObject);
+    procedure EditFilterKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
+      Shift: TShiftState);
   private
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
@@ -109,6 +112,11 @@ begin
   FInvoker.Free;
   FInput.Free;
   inherited;
+end;
+
+procedure TMain.EditFilterKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+begin
+  TreeViewItems.Filter((Sender as TEdit).Text);
 end;
 
 procedure TMain.ExecuteWithLock(const Proc: TProc);

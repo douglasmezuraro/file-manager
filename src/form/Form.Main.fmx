@@ -65,7 +65,7 @@ object Main: TMain
     Size.Width = 600.000000000000000000
     Size.Height = 533.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 0
     TabPosition = PlatformDefault
     Sizes = (
@@ -77,7 +77,7 @@ object Main: TMain
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 67.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -90,7 +90,7 @@ object Main: TMain
         Align = Client
         Locked = True
         Size.Width = 600.000000000000000000
-        Size.Height = 507.000000000000000000
+        Size.Height = 485.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         OnDblClick = TreeViewItemsDblClick
@@ -98,7 +98,16 @@ object Main: TMain
         Images = ImageListIcons
         Sorted = True
         Viewport.Width = 596.000000000000000000
-        Viewport.Height = 503.000000000000000000
+        Viewport.Height = 481.000000000000000000
+      end
+      object EditFilter: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 9
+        Size.Width = 600.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyUp = EditFilterKeyUp
       end
     end
     object TabItemSelectedFile: TTabItem

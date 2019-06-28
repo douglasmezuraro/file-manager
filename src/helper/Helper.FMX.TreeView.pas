@@ -22,6 +22,7 @@ type
   TTreeViewItemHelper = class Helper for TTreeViewItem
   public
     function HasChildren: Boolean;
+    function IsChildrenOf(const Node: TTreeViewItem): Boolean;
   end;
 
 implementation
@@ -52,7 +53,7 @@ procedure TTreeViewHelper.Filter(const Text: string);
       Exit(TTreeViewItem(Owner).Items[Index]);
   end;
 
-  procedure _Filter(const Owner: TFmxObject; const Text: string; out Found: Boolean);
+  procedure _Filter(const Owner: TFmxObject; const Text: string; var Last: TTreeViewItem);
   var
     Index: Integer;
     Item: TTreeViewItem;
@@ -62,21 +63,22 @@ procedure TTreeViewHelper.Filter(const Text: string);
       Item := _ItemByIndex(Owner, Index);
       if Item.HasChildren then
       begin
-        _Filter(Item, Text, Found);
-        Item.Visible := Found;
+        _Filter(Item, Text, Last);
+        Item.Visible := Assigned(Last) and Last.Visible and Last.IsChildrenOf(Item);
       end
       else
       begin
-        Found := Item.Text.Contains(Text);
-        Item.Visible := Found;
+        Item.Visible := Item.Text.ToUpper.Contains(Text.ToUpper) or Text.IsEmpty;
+        if Item.Visible then
+          Last := Item;
       end;
     end;
   end;
 
 var
-  Found: Boolean;
+  Last: TTreeViewItem;
 begin
-  _Filter(Self, Text, Found);
+  _Filter(Self, Text, Last);
 end;
 
 function TTreeViewHelper.GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
@@ -142,6 +144,27 @@ end;
 function TTreeViewItemHelper.HasChildren: Boolean;
 begin
   Result := Self.Count > 0;
+end;
+
+function TTreeViewItemHelper.IsChildrenOf(const Node: TTreeViewItem): Boolean;
+var
+  Index: Integer;
+begin
+  Result := False;
+
+  if not Assigned(Node) then
+    Exit;
+
+  for Index := 0 to Pred(Node.Count) do
+  begin
+    if Node.HasChildren then
+      Result := IsChildrenOf(Node.Items[Index]);
+
+    Result := Result or Self.Equals(Node.Items[Index]);
+
+    if Result then
+      Exit;
+  end;
 end;
 
 end.
