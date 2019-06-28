@@ -10,12 +10,15 @@ uses
 type
   TTreeViewHelper = class Helper for TTreeView
   private
-    function GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
+    function GetCount(const Owner: TFmxObject): Integer;
+    function GetNode(const Owner: TFmxObject; const Index: Integer): TTreeViewItem; overload;
+    function GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem; overload;
     function MakeNode(const Parent: TFmxObject; const Text: string; const Level: Integer): TTreeViewItem; overload;
+    procedure Filter(const Owner: TFmxObject; const Text: string; out FoundNode: TTreeViewItem); overload;
     const Root = 0;
   public
     function MakeNode(const Text: string): TTreeViewItem; overload;
-    procedure Filter(const Text: string);
+    procedure Filter(const Text: string); overload;
     const Separator = '>';
   end;
 
@@ -30,55 +33,54 @@ implementation
 { TTreeViewHelper }
 
 procedure TTreeViewHelper.Filter(const Text: string);
+var
+  Node: TTreeViewItem;
+begin
+  Filter(Self, Text, Node);
+end;
 
-  function _GetCount(const Owner: TFmxObject): Integer;
+procedure TTreeViewHelper.Filter(const Owner: TFmxObject; const Text: string; out FoundNode: TTreeViewItem);
+var
+  Index: Integer;
+  Node: TTreeViewItem;
+begin
+  for Index := 0 to Pred(GetCount(Owner)) do
   begin
-    Result := 0;
-
-    if Owner = Self then
-      Exit((Owner as TTreeView).Count);
-
-    if Owner is TTreeViewItem then
-      Exit((Owner as TTreeViewItem).Count);
-  end;
-
-  function _ItemByIndex(const Owner: TFmxObject; const Index: Integer): TTreeViewItem;
-  begin
-    Result := nil;
-
-    if Owner = Self then
-      Exit(ItemByIndex(Index));
-
-    if Owner is TTreeViewItem then
-      Exit(TTreeViewItem(Owner).Items[Index]);
-  end;
-
-  procedure _Filter(const Owner: TFmxObject; const Text: string; var Last: TTreeViewItem);
-  var
-    Index: Integer;
-    Item: TTreeViewItem;
-  begin
-    for Index := 0 to Pred(_GetCount(Owner)) do
+    Node := GetNode(Owner, Index);
+    if Node.HasChildren then
     begin
-      Item := _ItemByIndex(Owner, Index);
-      if Item.HasChildren then
-      begin
-        _Filter(Item, Text, Last);
-        Item.Visible := Assigned(Last) and Last.Visible and Last.IsChildrenOf(Item);
-      end
-      else
-      begin
-        Item.Visible := Item.Text.ToUpper.Contains(Text.ToUpper) or Text.IsEmpty;
-        if Item.Visible then
-          Last := Item;
-      end;
+      Filter(Node, Text, FoundNode);
+      Node.Visible := Assigned(FoundNode) and FoundNode.Visible and FoundNode.IsChildrenOf(Node);
+    end
+    else
+    begin
+      Node.Visible := Node.Text.ToUpper.Contains(Text.ToUpper) or Text.IsEmpty;
+      if Node.Visible then
+        FoundNode := Node;
     end;
   end;
+end;
 
-var
-  Last: TTreeViewItem;
+function TTreeViewHelper.GetCount(const Owner: TFmxObject): Integer;
 begin
-  _Filter(Self, Text, Last);
+  Result := 0;
+
+  if Owner = Self then
+    Exit((Owner as TTreeView).Count);
+
+  if Owner is TTreeViewItem then
+    Exit((Owner as TTreeViewItem).Count);
+end;
+
+function TTreeViewHelper.GetNode(const Owner: TFmxObject; const Index: Integer): TTreeViewItem;
+begin
+  Result := nil;
+
+  if Owner = Self then
+    Exit(ItemByIndex(Index));
+
+  if Owner is TTreeViewItem then
+    Exit((Owner as TTreeViewItem).Items[Index]);
 end;
 
 function TTreeViewHelper.GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
@@ -157,13 +159,14 @@ begin
 
   for Index := 0 to Pred(Node.Count) do
   begin
+    if Self.Equals(Node.Items[Index]) then
+      Exit(True);
+
     if Node.HasChildren then
-      Result := IsChildrenOf(Node.Items[Index]);
-
-    Result := Result or Self.Equals(Node.Items[Index]);
-
-    if Result then
-      Exit;
+    begin
+      if IsChildrenOf(Node.Items[Index]) then
+        Exit(True);
+    end;
   end;
 end;
 
