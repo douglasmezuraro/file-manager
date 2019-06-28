@@ -5,21 +5,24 @@ interface
 uses
   FMX.TreeView,
   FMX.Types,
+  System.RegularExpressions,
   System.SysUtils;
 
 type
   TTreeViewHelper = class Helper for TTreeView
+  private const
+    Root = 0;
   private
     function GetCount(const Owner: TFmxObject): Integer;
     function GetNode(const Owner: TFmxObject; const Index: Integer): TTreeViewItem; overload;
     function GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem; overload;
     function MakeNode(const Parent: TFmxObject; const Text: string; const Level: Integer): TTreeViewItem; overload;
     procedure Filter(const Owner: TFmxObject; const Text: string; out FoundNode: TTreeViewItem); overload;
-    const Root = 0;
+  public const
+    Separator = '>';
   public
-    function MakeNode(const Text: string): TTreeViewItem; overload;
     procedure Filter(const Text: string); overload;
-    const Separator = '>';
+    function MakeNode(const Text: string): TTreeViewItem; overload;
   end;
 
   TTreeViewItemHelper = class Helper for TTreeViewItem
@@ -54,7 +57,7 @@ begin
     end
     else
     begin
-      Node.Visible := Node.Text.ToUpper.Contains(Text.ToUpper) or Text.IsEmpty;
+      Node.Visible := Text.IsEmpty or TRegEx.Create(Text, [roIgnoreCase]).IsMatch(Node.Text);
       if Node.Visible then
         FoundNode := Node;
     end;
@@ -66,10 +69,10 @@ begin
   Result := 0;
 
   if Owner = Self then
-    Exit((Owner as TTreeView).Count);
+    Exit(TTreeView(Owner).Count);
 
   if Owner is TTreeViewItem then
-    Exit((Owner as TTreeViewItem).Count);
+    Exit(TTreeViewItem(Owner).Count);
 end;
 
 function TTreeViewHelper.GetNode(const Owner: TFmxObject; const Index: Integer): TTreeViewItem;
@@ -80,7 +83,7 @@ begin
     Exit(ItemByIndex(Index));
 
   if Owner is TTreeViewItem then
-    Exit((Owner as TTreeViewItem).Items[Index]);
+    Exit(TTreeViewItem(Owner).Items[Index]);
 end;
 
 function TTreeViewHelper.GetNode(const Owner: TFmxObject; const Text: string): TTreeViewItem;
