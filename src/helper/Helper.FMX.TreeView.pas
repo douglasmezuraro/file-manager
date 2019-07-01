@@ -10,8 +10,6 @@ uses
 
 type
   TTreeViewHelper = class Helper for TTreeView
-  private const
-    Root = 0;
   private
     function GetCount(const Owner: TFmxObject): Integer;
     function GetNode(const Owner: TFmxObject; const Index: Integer): TTreeViewItem; overload;
@@ -19,6 +17,7 @@ type
     function MakeNode(const Parent: TFmxObject; const Text: string; const Level: Integer): TTreeViewItem; overload;
     procedure Filter(const Owner: TFmxObject; const Text: string; out FoundNode: TTreeViewItem); overload;
   public const
+    Root = 0;
     Separator = '>';
   public
     procedure Filter(const Text: string); overload;
@@ -44,10 +43,11 @@ end;
 
 procedure TTreeViewHelper.Filter(const Owner: TFmxObject; const Text: string; out FoundNode: TTreeViewItem);
 var
-  Index: Integer;
+  Index, Count: Integer;
   Node: TTreeViewItem;
 begin
-  for Index := 0 to Pred(GetCount(Owner)) do
+  Count := GetCount(Owner);
+  for Index := 0 to Pred(Count) do
   begin
     Node := GetNode(Owner, Index);
     if Node.HasChildren then
@@ -100,7 +100,7 @@ begin
 
   for Index := 0 to Pred(TTreeViewItem(Owner).Count) do
   begin
-    if TTreeViewItem(Owner).Items[Index].Text = Text then
+    if TTreeViewItem(Owner).Items[Index].Text.ToUpper.Equals(Text.ToUpper) then
       Exit(TTreeViewItem(Owner).Items[Index]);
   end;
 end;

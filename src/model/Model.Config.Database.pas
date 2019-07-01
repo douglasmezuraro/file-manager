@@ -22,6 +22,26 @@ type
     FServer: string;
   public
     [StringAttribute(False)]
+    [ComboBox('Tipo de acesso', 'SQLd,FireDAC')]
+    [Key('TIPOACESSOBD')]
+    property AccessType: string read FAccessType write FAccessType;
+
+    [StringAttribute(False)]
+    [ComboBox('Tipo de banco', 'Oracle,SQLServer,DB2')]
+    [Key('TIPOBANCO')]
+    property DatabaseType: string read FDatabaseType write FDatabaseType;
+
+    [StringAttribute(False)]
+    [Edit('Alias')]
+    [Key('ALIAS')]
+    property Alias: string read FAlias write FAlias;
+
+    [StringAttribute]
+    [Edit('Server')]
+    [Key('SERVER')]
+    property Server: string read FServer write FServer;
+
+    [StringAttribute(False)]
     [Edit('Esquema')]
     [Key('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
@@ -50,26 +70,6 @@ type
     [Edit('Número de linhas para fetch')]
     [Key('NUMEROLINHASFETCH')]
     property FetchLines: Integer read FFetchLines write FFetchLines;
-
-    [StringAttribute(False)]
-    [ComboBox('Tipo de acesso', 'SQLd,FireDAC')]
-    [Key('TIPOACESSOBD')]
-    property AccessType: string read FAccessType write FAccessType;
-
-    [StringAttribute(False)]
-    [ComboBox('Tipo de banco', 'Oracle,SQLServer,DB2')]
-    [Key('TIPOBANCO')]
-    property DatabaseType: string read FDatabaseType write FDatabaseType;
-
-    [StringAttribute(False)]
-    [Edit('Alias')]
-    [Key('ALIAS')]
-    property Alias: string read FAlias write FAlias;
-
-    [StringAttribute]
-    [Edit('Server')]
-    [Key('SERVER')]
-    property Server: string read FServer write FServer;
   end;
 
 implementation

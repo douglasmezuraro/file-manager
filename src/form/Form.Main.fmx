@@ -1,7 +1,7 @@
 object Main: TMain
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biHelp]
+  BorderIcons = [biSystemMenu]
   Caption = 'FileManager'
   ClientHeight = 600
   ClientWidth = 600
@@ -33,20 +33,9 @@ object Main: TMain
       Size.Width = 100.000000000000000000
       Size.Height = 45.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 2
+      TabOrder = 1
     end
     object ButtonSaveTarget: TButton
-      Action = ActionSaveSource
-      Align = Left
-      Enabled = True
-      ImageIndex = 0
-      Locked = True
-      Size.Width = 100.000000000000000000
-      Size.Height = 45.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-    end
-    object ButtonSaveSource: TButton
       Action = ActionSaveTarget
       Align = Left
       Enabled = True
@@ -56,7 +45,18 @@ object Main: TMain
       Size.Width = 100.000000000000000000
       Size.Height = 45.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 1
+      TabOrder = 0
+    end
+    object ButtonSaveSource: TButton
+      Action = ActionSaveSource
+      Align = Left
+      Enabled = True
+      ImageIndex = 0
+      Locked = True
+      Size.Width = 100.000000000000000000
+      Size.Height = 45.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
     end
   end
   object TabControlView: TTabControl
@@ -94,7 +94,7 @@ object Main: TMain
         Size.Height = 485.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
-        OnDblClick = TreeViewItemsDblClick
+        OnDblClick = ActionEditExecute
         ItemHeight = 22.000000000000000000
         Images = ImageListIcons
         Sorted = True
@@ -130,6 +130,7 @@ object Main: TMain
       object TabControlFile: TTabControl
         Align = Client
         Locked = True
+        Padding.Bottom = 10.000000000000000000
         Size.Width = 600.000000000000000000
         Size.Height = 507.000000000000000000
         Size.PlatformDefault = False
@@ -141,7 +142,7 @@ object Main: TMain
   object StatusBar: TStatusBar
     Locked = True
     Position.Y = 578.000000000000000000
-    ShowSizeGrip = True
+    ShowSizeGrip = False
     Size.Width = 600.000000000000000000
     Size.Height = 22.000000000000000000
     Size.PlatformDefault = False
@@ -150,6 +151,7 @@ object Main: TMain
       Align = Left
       AutoSize = True
       StyledSettings = [Family, Size]
+      Locked = True
       HitTest = True
       Size.Width = 99.000000000000000000
       Size.Height = 22.000000000000000000
@@ -182,6 +184,10 @@ object Main: TMain
       Text = 'Salvar &destino'
       Hint = 'Salva o arquivo de destino'
       OnExecute = ActionSaveTargetExecute
+    end
+    object ActionEdit: TAction
+      Text = '&Editar'
+      OnExecute = ActionEditExecute
     end
   end
   object ImageListIcons: TImageList

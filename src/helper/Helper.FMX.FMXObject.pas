@@ -80,13 +80,15 @@ end;
 { TTabControlHelper }
 
 procedure TTabControlHelper.OrderTabs(const Values: TArray<string>);
+const
+  First = 0;
 var
   Index: Integer;
 begin
-  for Index := 0 to Pred(TabCount) do
-  begin
+  for Index := First to Pred(TabCount) do
     Tabs[Index].Index := TUtils.Methods.IndexOf(Tabs[Index].TagString, Values);
-  end;
+
+  TabIndex := First;
 end;
 
 end.

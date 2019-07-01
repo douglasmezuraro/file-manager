@@ -40,7 +40,7 @@ uses
   Types.Input,
   Types.Input.Item,
   Types.Utils,
-  Types.Validator;
+  Types.Validator, FMX.Menus, FMX.Ani;
 
 type
   TMain = class(TForm)
@@ -61,18 +61,18 @@ type
     StatusBar: TStatusBar;
     LabelHelp: TLabel;
     EditFilter: TEdit;
+    ActionEdit: TAction;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveTargetExecute(Sender: TObject);
     procedure ActionSaveSourceExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
-    procedure TreeViewItemsDblClick(Sender: TObject);
     procedure LabelHelpMouseLeave(Sender: TObject);
     procedure LabelHelpMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure LabelHelpClick(Sender: TObject);
-    procedure EditFilterKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
-      Shift: TShiftState);
+    procedure EditFilterKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+    procedure ActionEditExecute(Sender: TObject);
   private
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
@@ -138,6 +138,12 @@ end;
 procedure TMain.ActionSaveTargetExecute(Sender: TObject);
 begin
   Save(FInput.Current.Target);
+end;
+
+procedure TMain.ActionEditExecute(Sender: TObject);
+begin
+  if Assigned(TreeViewItems.Selected) then
+    SelectFile(TreeViewItems.Selected.TagObject);
 end;
 
 procedure TMain.ActionSaveSourceExecute(Sender: TObject);
@@ -315,10 +321,10 @@ begin
   if not Assigned(InputItem) then
     Exit;
 
-  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocar mesmo assim?') then
+  if Assigned(FInput.Current) and FInput.Current.Equals(InputItem) then
     Exit;
 
-  if Assigned(FInput.Current) and FInput.Current.Equals(InputItem) then
+  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocar mesmo assim?') then
     Exit;
 
   FInput.Current := InputItem as TInputItem<TConfig>;
@@ -371,12 +377,6 @@ begin
   TUtils.Dialogs.Information('O arquivo foi salvo com sucesso!');
 end;
 
-procedure TMain.TreeViewItemsDblClick(Sender: TObject);
-begin
-  if Assigned(TreeViewItems.Selected) then
-    SelectFile(TreeViewItems.Selected.TagObject);
-end;
-
 procedure TMain.ControlView(const Text: string);
 var
   LText: string;
@@ -387,9 +387,17 @@ begin
   if HasChanges and not LText.Contains(TUtils.Constants.ChangeIndicator) then
     LText := LText + TUtils.Constants.ChangeIndicator;
 
-  TabItemSelectedFile.Text := LText;
-
   ActionSaveSource.Enabled := Assigned(FInput.Current) and HasChanges and FInput.Current.CanOverride;
+  ActionSaveTarget.Enabled := Assigned(FInput.Current);
+
+  TabItemSelectedFile.Text := LText;
+  TabItemSelectedFile.Visible := Assigned(FInput.Current);
+
+  if Assigned(FInput.Current) then
+  begin
+    ButtonSaveSource.Hint := FInput.Current.Source;
+    ButtonSaveTarget.Hint := FInput.Current.Target;
+  end;
 end;
 
 end.
