@@ -110,7 +110,7 @@ object Main: TMain
         Size.Height = 22.000000000000000000
         Size.PlatformDefault = False
         TextPrompt = 'Filtrar aquivos...'
-        OnKeyUp = EditFilterKeyUp
+        OnChangeTracking = EditFilterChangeTracking
       end
     end
     object TabItemSelectedFile: TTabItem

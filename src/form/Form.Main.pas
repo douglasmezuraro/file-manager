@@ -71,8 +71,8 @@ type
     procedure LabelHelpMouseLeave(Sender: TObject);
     procedure LabelHelpMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure LabelHelpClick(Sender: TObject);
-    procedure EditFilterKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
     procedure ActionEditExecute(Sender: TObject);
+    procedure EditFilterChangeTracking(Sender: TObject);
   private
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
@@ -115,7 +115,7 @@ begin
   inherited;
 end;
 
-procedure TMain.EditFilterKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+procedure TMain.EditFilterChangeTracking(Sender: TObject);
 begin
   TreeViewItems.Filter((Sender as TEdit).Text);
 end;

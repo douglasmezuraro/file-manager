@@ -38,6 +38,7 @@ procedure TTreeViewHelper.Filter(const Text: string);
 var
   Node: TTreeViewItem;
 begin
+  Node := nil;
   Filter(Self, Text, Node);
 end;
 
