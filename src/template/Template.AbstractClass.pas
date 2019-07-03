@@ -92,9 +92,9 @@ end;
 
 function TControlTemplate.GetText: string;
 var
-  Attribute: TextAttribute;
+  Attribute: ComponentAttribute;
 begin
-  Attribute := FDTO.Prop.GetAttribute<TextAttribute>();
+  Attribute := FDTO.Prop.GetAttribute<ComponentAttribute>();
 
   Result := string.Empty;
   if Assigned(Attribute) then

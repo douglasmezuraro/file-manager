@@ -7,8 +7,7 @@ uses
   FMX.ListBox,
   Helper.FMX.FMXObject,
   Helper.Rtti,
-  Template.AbstractClass,
-  Types.DTO;
+  Template.AbstractClass;
 
 type
   TComboBoxTemplate = class(TLabeledTemplate)

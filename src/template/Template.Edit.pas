@@ -6,8 +6,7 @@ uses
   FMX.Edit,
   Helper.FMX.FMXObject,
   System.UITypes,
-  Template.AbstractClass,
-  Types.DTO;
+  Template.AbstractClass;
 
 type
   TEditTemplate = class(TLabeledTemplate)

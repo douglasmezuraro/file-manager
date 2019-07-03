@@ -6,8 +6,7 @@ uses
   FMX.Layouts,
   FMX.TabControl,
   FMX.Types,
-  Template.AbstractClass,
-  Types.DTO;
+  Template.AbstractClass;
 
 type
   TTabItemTemplate = class(TLayoutTemplate)

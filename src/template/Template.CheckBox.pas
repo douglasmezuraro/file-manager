@@ -5,8 +5,7 @@ interface
 uses
   FMX.StdCtrls,
   Helper.FMX.FMXObject,
-  Template.AbstractClass,
-  Types.DTO;
+  Template.AbstractClass;
 
 type
   TCheckBoxTemplate = class(TStylizedTemplate)

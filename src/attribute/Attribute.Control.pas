@@ -12,12 +12,12 @@ type
   end;
 
   HintAttribute = class(TextAttribute);
+  ComponentAttribute = class(TextAttribute);
+  TabAttribute = class(ComponentAttribute);
+  CheckBoxAttribute = class(ComponentAttribute);
+  EditAttribute = class(ComponentAttribute);
 
-  TabAttribute = class(TextAttribute);
-  CheckBoxAttribute = class(TextAttribute);
-  EditAttribute = class(TextAttribute);
-
-  ComboBoxAttribute = class(TextAttribute)
+  ComboBoxAttribute = class(ComponentAttribute)
   private
     FItems: string;
   public

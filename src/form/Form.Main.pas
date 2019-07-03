@@ -40,7 +40,7 @@ uses
   Types.Input,
   Types.Input.Item,
   Types.Utils,
-  Types.Validator, FMX.Menus, FMX.Ani;
+  Types.Validator;
 
 type
   TMain = class(TForm)
