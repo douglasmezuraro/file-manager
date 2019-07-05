@@ -236,7 +236,7 @@ var
   Template: TControlTemplate;
 begin
   FLock := True;
-  DTO := TControlDTO.Create;
+  DTO := TControlDTO.Create(TUtils.Constants.DefaultOffset, TUtils.Constants.DefaultOffset);
   try
     Context := TRttiContext.Create;
     for Prop in Context.GetType(Model.ClassType).GetProperties do
@@ -281,7 +281,7 @@ procedure TMain.Notify(Sender: TObject);
       Exit;
 
     Result := TValidator.Validate(Prop, Control.Value);
-    Error := TValidator.Error;
+    Error := TValidator.Message;
   end;
 
   procedure UpdateValue(const Control: TControl);

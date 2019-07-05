@@ -109,6 +109,7 @@ end;
 function TTreeViewHelper.MakeNode(const Text: string): TTreeViewItem;
 begin
   Result := MakeNode(Self, Text, Root);
+  ExpandAll;
 end;
 
 function TTreeViewHelper.MakeNode(const Parent: TFmxObject; const Text: string;
@@ -139,10 +140,7 @@ begin
   end;
 
   if Level < Pred(LastLevel) then
-  begin
     Result := MakeNode(Result, Text, Succ(Level));
-    ExpandAll;
-  end;
 end;
 
 { TTreeViewItemHelper }

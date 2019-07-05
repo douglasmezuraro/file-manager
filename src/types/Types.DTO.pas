@@ -7,8 +7,7 @@ uses
   Helper.Rtti,
   System.Classes,
   System.Rtti,
-  System.Types,
-  Types.Utils;
+  System.Types;
 
 type
   TControlDTO = class
@@ -20,7 +19,7 @@ type
     FPosition: TPointF;
     FProp: TRttiProperty;
   public
-    constructor Create;
+    constructor Create(const X, Y: Single);
     property Model: TObject read FModel write FModel;
     property OnNotify: TNotifyEvent read FOnNotify write FOnNotify;
     property Owner: TComponent read FOwner write FOwner;
@@ -33,10 +32,10 @@ implementation
 
 { TDTO }
 
-constructor TControlDTO.Create;
+constructor TControlDTO.Create(const X, Y: Single);
 begin
-  FPosition.X := TUtils.Constants.DefaultOffset;
-  FPosition.Y := TUtils.Constants.DefaultOffset;
+  FPosition.X := X;
+  FPosition.Y := Y;
 end;
 
 end.
