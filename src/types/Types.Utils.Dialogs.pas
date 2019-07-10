@@ -17,17 +17,14 @@ type
     class function Confirmation(const Message: string): Boolean; overload; static;
     class function Confirmation(const Message: string; const Args: array of const): Boolean; overload; static;
     {$ENDREGION}
-
-    {$REGION 'Information'}
+    {$REGION 'Error'}
     class procedure Error(const Message: string); overload; static;
     class procedure Error(const Message: string; const Args: array of const); overload; static;
     {$ENDREGION}
-
     {$REGION 'Information'}
     class procedure Information(const Message: string); overload; static;
     class procedure Information(const Message: string; const Args: array of const); overload; static;
     {$ENDREGION}
-
     {$REGION 'Warning'}
     class procedure Warning(const Message: string); overload; static;
     class procedure Warning(const Message: string; const Args: array of const); overload; static;
@@ -45,7 +42,7 @@ begin
   TDialogService.MessageDialog(Message, TMsgDlgType.mtConfirmation, FMX.Dialogs.mbYesNo, TMsgDlgBtn.mbNo, HelpCtx,
     procedure(const AResult: TModalResult)
     begin
-      LResult := AResult in [mrYes, mrYesToAll];
+      LResult := IsPositiveResult(AResult);
     end);
 
   Result := LResult;

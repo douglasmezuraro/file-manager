@@ -11,8 +11,9 @@ uses
 
 type
   TValidator = class
-  private
+  strict private
     class var FMessage: string;
+  private
     class function ValidateNull(const Attribute: ValidationAttribute; const Value: TValue): Boolean;
     class function ValidateDate(const Attribute: DateAttribute; const Value: TValue): Boolean;
     class function ValidateDateTime(const Attribute: DateTimeAttribute; const Value: TValue): Boolean;
