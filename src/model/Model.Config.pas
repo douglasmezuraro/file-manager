@@ -5,7 +5,9 @@ interface
 uses
   Attribute.Control,
   Attribute.Ini,
+  Attribute.Managed,
   Model.Base,
+  Model.Config.AlternativeBalancer,
   Model.Config.Application,
   Model.Config.Client,
   Model.Config.Database,
@@ -32,49 +34,42 @@ type
     FApplication: TApplication;
     FServer: TServer;
     FClient: TClient;
+    FAlternativeBalancer: TAlternativeBalancer;
   public
-    [Tab('Aplicação')]
-    [Section('APLICACAO')]
+    [Managed][Tab('Balanceador Alternativo')][Section('BALANCEADORALTERNATIVO')]
+    property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
+
+    [Managed][Tab('Aplicação')][Section('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
 
-    [Tab('Cliente')]
-    [Section('CLIENTE')]
+    [Managed][Tab('Cliente')][Section('CLIENTE')]
     property Client: TClient read FClient write FClient;
 
-    [Tab('Database')]
-    [Section('DATABASE')]
+    [Managed][Tab('Database')][Section('DATABASE')]
     property Database: TDatabase read FDatabase write FDatabase;
 
-    [Tab('DUnit')]
-    [Section('DUNIT')]
+    [Managed][Tab('DUnit')][Section('DUNIT')]
     property DUnit: TDUnit read FDUnit write FDUnit;
 
-    [Tab('LOG')]
-    [Section('LOG')]
+    [Managed][Tab('LOG')][Section('LOG')]
     property Log: TLog read FLog write FLog;
 
-    [Tab('Monitor')]
-    [Section('SPMONITOR')]
+    [Managed][Tab('Monitor')][Section('SPMONITOR')]
     property Monitor: TMonitor read FMonitor write FMonitor;
 
-    [Tab('Scanner')]
-    [Section('SCANNER')]
+    [Managed][Tab('Scanner')][Section('SCANNER')]
     property Scanner: TScanner read FScanner write FScanner;
 
-    [Tab('Servidor')]
-    [Section('SERVIDOR')]
+    [Managed][Tab('Servidor')][Section('SERVIDOR')]
     property Server: TServer read FServer write FServer;
 
-    [Tab('SPP')]
-    [Section('CLIENTESPP')]
+    [Managed][Tab('SPP')][Section('CLIENTESPP')]
     property SPP: TSPP read FSPP write FSPP;
 
-    [Tab('Update')]
-    [Section('SPUPDATE')]
+    [Managed][Tab('Update')][Section('SPUPDATE')]
     property Update: TUpdate read FUpdate write FUpdate;
 
-    [Tab('Fluxo de trabalho')]
-    [Section('FLUXOTRABALHO')]
+    [Managed][Tab('Fluxo de trabalho')][Section('FLUXOTRABALHO')]
     property Workflow: TWorkflow read FWorkflow write FWorkflow;
   end;
 

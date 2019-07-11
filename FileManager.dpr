@@ -48,7 +48,10 @@ uses
   Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas',
   Model.Base in 'src\model\Model.Base.pas',
   Types.Validator in 'src\types\Types.Validator.pas',
-  Types.Utils.RegEx in 'src\types\Types.Utils.RegEx.pas';
+  Types.Utils.RegEx in 'src\types\Types.Utils.RegEx.pas',
+  Model.Config.AlternativeBalancer in 'src\model\Model.Config.AlternativeBalancer.pas',
+  Attribute.Managed in 'src\attribute\Attribute.Managed.pas',
+  Template.Memo in 'src\template\Template.Memo.pas';
 
 {$R *.res}
 

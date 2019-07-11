@@ -4,6 +4,7 @@ interface
 
 uses
   FMX.ListBox,
+  FMX.Memo,
   FMX.StdCtrls,
   FMX.TabControl,
   FMX.Types,
@@ -39,9 +40,13 @@ implementation
 
 function TFmxObjectHelper.GetValue: TValue;
 begin
-  Result := Data;
   if Self is TComboBox then
-    Result := (Self as TComboBox).Selected.Text;
+    Exit((Self as TComboBox).Selected.Text);
+
+  if Self is TMemo then
+    Exit((Self as TMemo).Lines);
+
+  Result := Data;
 end;
 
 procedure TFMXObjectHelper.SetValue(const Value: TValue);

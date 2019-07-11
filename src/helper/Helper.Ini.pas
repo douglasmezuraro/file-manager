@@ -5,6 +5,7 @@ interface
 uses
   Attribute.Ini,
   Helper.Rtti,
+  System.Classes,
   System.IniFiles,
   System.Rtti,
   System.SysUtils,
@@ -16,6 +17,7 @@ type
   private type
     TExecuteMode = (emRead, emWrite);
   private
+    procedure WriteSectionValues(const Section: string; const Values: TStringList);
     procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: SectionAttribute);
     function InternalRead(var Value: TValue; const Section, Key: string): TValue;
     procedure InternalWrite(var Value: TValue; const Section, Key: string);
@@ -40,19 +42,19 @@ begin
 
   if Value.IsDate then
   begin
-    Value := ReadDate(Section, Key, TUtils.Constants.NullDate);
+    Value := ReadDate(Section, Key, MaxDateTime);
     Exit(Value);
   end;
 
   if Value.IsDateTime then
   begin
-    Value := ReadDateTime(Section, Key, TUtils.Constants.NullDate);
+    Value := ReadDateTime(Section, Key, MaxDateTime);
     Exit(Value);
   end;
 
   if Value.IsTime then
   begin
-    Value := ReadTime(Section, Key, TUtils.Constants.NullDate);
+    Value := ReadTime(Section, Key, MaxDateTime);
     Exit(Value);
   end;
 
@@ -71,6 +73,12 @@ begin
   if Value.IsString then
   begin
     Value := ReadString(Section, Key, string.Empty).Trim;
+    Exit(Value);
+  end;
+
+  if Value.IsObject and Key.IsEmpty then
+  begin
+    ReadSectionValues(Section, Value.AsType<TStringList>);
     Exit(Value);
   end;
 end;
@@ -129,11 +137,36 @@ begin
     WriteString(Section, Key, Value.AsString);
     Exit;
   end;
+
+  if Value.IsObject and Key.IsEmpty then
+  begin
+    WriteSectionValues(Section, Value.AsType<TStringList>);
+    Exit;
+  end;
 end;
 
 procedure TIniFileHelper.Write(Obj: TObject);
 begin
   Execute(Obj, emWrite, nil);
+end;
+
+procedure TIniFileHelper.WriteSectionValues(const Section: string; const Values: TStringList);
+var
+  Line, Key, Value: string;
+  SeparatorIndex: Word;
+  LValues: TArray<string>;
+begin
+  LValues := Values.ToStringArray;
+  for Line in LValues do
+  begin
+    SeparatorIndex := Line.IndexOf('=');
+
+    Key := Line.Substring(0, SeparatorIndex);
+    Value := Line.Substring(Succ(SeparatorIndex), Line.Length - SeparatorIndex);
+
+    if not Key.IsEmpty then
+      WriteString(Section, Key, Value);
+  end;
 end;
 
 procedure TIniFileHelper.Execute(Obj: TObject; const Mode: TExecuteMode;
@@ -154,7 +187,7 @@ begin
       Continue;
 
     Value := Prop.GetValue(Obj);
-    if Value.IsObject then
+    if Value.IsObject and (Prop.PropertyType.AsInstance.MetaclassType <> TSTringList) then
     begin
       Section := Prop.GetAttribute<SectionAttribute>();
       Execute(Value.AsObject, Mode, Section);

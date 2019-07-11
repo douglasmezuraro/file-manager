@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <MainSource>FileManager.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -148,6 +148,9 @@
         <DCCReference Include="src\model\Model.Base.pas"/>
         <DCCReference Include="src\types\Types.Validator.pas"/>
         <DCCReference Include="src\types\Types.Utils.RegEx.pas"/>
+        <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
+        <DCCReference Include="src\attribute\Attribute.Managed.pas"/>
+        <DCCReference Include="src\template\Template.Memo.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -2,6 +2,9 @@ unit Attribute.Control;
 
 interface
 
+uses
+  System.SysUtils;
+
 type
   TextAttribute = class abstract(TCustomAttribute)
   private
@@ -13,16 +16,18 @@ type
 
   HintAttribute = class(TextAttribute);
   ComponentAttribute = class(TextAttribute);
+
   TabAttribute = class(ComponentAttribute);
   CheckBoxAttribute = class(ComponentAttribute);
   EditAttribute = class(ComponentAttribute);
+  MemoAttribute = class(ComponentAttribute);
 
   ComboBoxAttribute = class(ComponentAttribute)
   private
-    FItems: string;
+    FItems: TArray<string>;
   public
     constructor Create(const Text, Items: string); overload;
-    property Items: string read FItems;
+    property Items: TArray<string> read FItems;
   end;
 
 implementation
@@ -37,9 +42,18 @@ end;
 { ComboBoxAttribute }
 
 constructor ComboBoxAttribute.Create(const Text, Items: string);
+const
+  Separator = ',';
+var
+  LItems: string;
 begin
   inherited Create(Text);
-  FItems := ',' + Items;
+
+  LItems := Items;
+  if not Items.StartsWith(Separator) then
+    LItems := Separator + Items;
+
+  FItems := LItems.Split([Separator]);
 end;
 
 end.

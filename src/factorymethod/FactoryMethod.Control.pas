@@ -10,6 +10,7 @@ uses
   Template.CheckBox,
   Template.ComboBox,
   Template.Edit,
+  Template.Memo,
   Template.TabItem,
   Types.DTO;
 
@@ -25,8 +26,6 @@ implementation
 
 class function TControlFactory.Fabricate(const DTO: TControlDTO): TControlTemplate;
 begin
-  Result := nil;
-
   if Assigned(DTO.Prop.GetAttribute<CheckBoxAttribute>()) then
     Exit(TCheckBoxTemplate.Create(DTO));
 
@@ -38,6 +37,11 @@ begin
 
   if Assigned(DTO.Prop.GetAttribute<EditAttribute>()) then
     Exit(TEditTemplate.Create(DTO));
+
+  if Assigned(DTO.Prop.GetAttribute<MemoAttribute>()) then
+    Exit(TMemoTemplate.Create(DTO));
+
+  Result := nil;
 end;
 
 end.

@@ -24,7 +24,7 @@ var
   Control: TComboBox;
 begin
   Control := TComboBox.Create(FDTO.Owner);
-  Control.Items.CommaText := FDTO.Prop.GetAttribute<ComboBoxAttribute>().Items;
+  Control.Items.AddStrings(FDTO.Prop.GetAttribute<ComboBoxAttribute>().Items);
   Control.OnChange := FDTO.OnNotify;
   Control.Value := GetValue;
 
