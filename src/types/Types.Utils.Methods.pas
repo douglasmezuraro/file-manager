@@ -27,15 +27,17 @@ begin
 end;
 
 class function TMethods.IndexOf(const Value: string; const Values: TArray<string>): Integer;
+const
+  NotFoundIndex = -1;
 var
   Index: Integer;
 begin
-  Result := -1;
-  for Index := 0 to Pred(Length(Values)) do
+  for Index := Low(Values) to High(Values) do
   begin
-    if Values[Index].ToUpper.Equals(Value.ToUpper) then
+    if SameText(Values[Index], Value) then
       Exit(Index);
   end;
+  Result := NotFoundIndex;
 end;
 
 class procedure TMethods.OpenURL(const URL: string);
