@@ -7,8 +7,7 @@ uses
   System.Classes,
   System.Rtti,
   System.SysUtils,
-  System.Variants,
-  Types.Utils;
+  System.Variants;
 
 type
   TRttiUtil = class
@@ -212,116 +211,112 @@ begin
 end;
 
 function TValueHelper.Assign(const Value: TValue): TValue;
-var
-  LValue: string;
 begin
-  LValue := Value.ToString;
-
   if Self.IsBoolean then
   begin
-    Self := LValue.ToBoolean;
+    Self := StrToBoolDef(Value.ToString, False);
     Exit(Self);
   end;
 
   if Self.IsByte then
   begin
-    Self := StrToIntDef(LValue, Byte.MaxValue);
+    Self := StrToIntDef(Value.ToString, Byte.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsCardinal then
   begin
-    Self := StrToUIntDef(LValue, Cardinal.MaxValue);
+    Self := StrToUIntDef(Value.ToString, Cardinal.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsCurrency then
   begin
-    Self := StrToCurrDef(LValue, Extended.MaxValue);
+    Self := StrToCurrDef(Value.ToString, Extended.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsDate then
   begin
-    Self := StrToDateDef(LValue, MaxDateTime);
+    Self := StrToDateDef(Value.ToString, MaxDateTime);
     Exit(Self);
   end;
 
   if Self.IsDateTime then
   begin
-    Self := StrToDateTimeDef(LValue, MaxDateTime);
+    Self := StrToDateTimeDef(Value.ToString, MaxDateTime);
     Exit(Self);
   end;
 
   if Self.IsDouble then
   begin
-    Self := StrToFloatDef(LValue, Double.MaxValue);
+    Self := StrToFloatDef(Value.ToString, Double.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsInt64 then
   begin
-    Self := StrToInt64Def(LValue, Int64.MaxValue);
+    Self := StrToInt64Def(Value.ToString, Int64.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsInteger then
   begin
-    Self := StrToIntDef(LValue, Integer.MaxValue);
+    Self := StrToIntDef(Value.ToString, Integer.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsPointer then
   begin
-    Self := &LValue;
+    Self := &Value;
     Exit(Self);
   end;
 
   if Self.IsShortInt then
   begin
-    Self := StrToIntDef(LValue, ShortInt.MaxValue);
+    Self := StrToIntDef(Value.ToString, ShortInt.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsSingle then
   begin
-    Self := StrToFloatDef(LValue, Single.MaxValue);
+    Self := StrToFloatDef(Value.ToString, Single.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsSmallInt then
   begin
-    Self := StrToIntDef(LValue, SmallInt.MaxValue);
+    Self := StrToIntDef(Value.ToString, SmallInt.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsString then
   begin
-    Self := LValue;
+    Self := Value.ToString;
     Exit(Self);
   end;
 
   if Self.IsTime then
   begin
-    Self := StrToTimeDef(LValue, MaxDateTime);
+    Self := StrToTimeDef(Value.ToString, MaxDateTime);
     Exit(Self);
   end;
 
   if Self.IsUInt64 then
   begin
-    Self := StrToUInt64Def(LValue, UInt64.MaxValue);
+    Self := StrToUInt64Def(Value.ToString, UInt64.MaxValue);
     Exit(Self);
   end;
 
   if Self.IsVariant then
   begin
-    Self := LValue;
+    Self := Value.ToString;
     Exit(Self);
   end;
 
   if Self.IsWord then
   begin
-    Self := StrToUIntDef(LValue, Word.MaxValue);
+    Self := StrToUIntDef(Value.ToString, Word.MaxValue);
     Exit(Self);
   end;
 

@@ -23,8 +23,8 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear;
     procedure Add(const Control: IControl; const Obj: TObject; const Prop: TRttiProperty);
+    procedure Clear;
     property Keys: TArray<IControl> read GetKeys;
     property Values[const Control: IControl]: TValue read GetValue write SetValue;
     property Prop[const Control: IControl]: TRttiProperty read GetProp;

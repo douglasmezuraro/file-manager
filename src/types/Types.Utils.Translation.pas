@@ -29,6 +29,7 @@ end;
 
 class procedure TTranslation.Translate;
 begin
+  { Dialogs }
   HookResourceString(@SMsgDlgWarning, 'Atenção');
   HookResourceString(@SMsgDlgError, 'Erro');
   HookResourceString(@SMsgDlgInformation, 'Informação');
@@ -46,6 +47,14 @@ begin
   HookResourceString(@SMsgDlgNoToAll, 'N&ao para Tudo');
   HookResourceString(@SMsgDlgYesToAll, 'Sim para &Tudo');
   HookResourceString(@SMsgDlgClose, '&Fechar');
+
+  { Edit }
+	HookResourceString(@SEditUndo, 'Desfazer');
+	HookResourceString(@SEditCopy, 'Copiar');
+	HookResourceString(@SEditCut, 'Recortar');
+	HookResourceString(@SEditPaste, 'Colar');
+	HookResourceString(@SEditDelete, 'Deletar');
+	HookResourceString(@SEditSelectAll, 'Selecionar tudo');
 end;
 
 end.

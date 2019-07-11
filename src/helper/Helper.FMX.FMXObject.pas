@@ -70,13 +70,13 @@ begin
     TLabelStyle.lsNone:
       begin
         FontColor := TAlphaColorRec.Black;
-        Font.Style := [];
+        Font.Style := Font.Style - [TFontStyle.fsUnderline];
         Cursor := crDefault;
       end;
     TLabelStyle.lsHyperLink:
       begin
         FontColor := TAlphaColorRec.Blue;
-        Font.Style := [TFontStyle.fsUnderline];
+        Font.Style := Font.Style + [TFontStyle.fsUnderline];
         Cursor := crHandPoint;
       end;
   end;

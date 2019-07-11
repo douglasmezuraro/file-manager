@@ -11,8 +11,8 @@ type
   TMethods = class abstract
   public
     class function FilePath(const FileName: TFileName): TFileName; static;
-    class procedure OpenURL(const URL: string); static;
     class function IndexOf(const Value: string; const Values: TArray<string>): Integer; static;
+    class procedure OpenURL(const URL: string); static;
   end;
 
 implementation

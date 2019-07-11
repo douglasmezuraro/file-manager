@@ -21,6 +21,8 @@ type
     procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: SectionAttribute);
     function InternalRead(var Value: TValue; const Section, Key: string): TValue;
     procedure InternalWrite(var Value: TValue; const Section, Key: string);
+  protected
+    const ValueSeparator = '=';
   public
     procedure Read(Obj: TObject);
     procedure Write(Obj: TObject);
@@ -152,17 +154,17 @@ end;
 
 procedure TIniFileHelper.WriteSectionValues(const Section: string; const Values: TStringList);
 var
-  Line, Key, Value: string;
   SeparatorIndex: Word;
+  Line, Key, Value: string;
   LValues: TArray<string>;
 begin
   LValues := Values.ToStringArray;
   for Line in LValues do
   begin
-    SeparatorIndex := Line.IndexOf('=');
+    SeparatorIndex := Line.IndexOf(ValueSeparator);
 
     Key := Line.Substring(0, SeparatorIndex);
-    Value := Line.Substring(Succ(SeparatorIndex), Line.Length - SeparatorIndex);
+    Value := Line.Substring(Succ(SeparatorIndex));
 
     if not Key.IsEmpty then
       WriteString(Section, Key, Value);

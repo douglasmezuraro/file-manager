@@ -25,12 +25,14 @@ var
   Control: TMemo;
 begin
   Control := TMemo.Create(FDTO.Parent.GetObject);
-  Control.Parent := FDTO.Parent.GetObject;
+
   Control.Align := TAlignLayout.Client;
-  Control.TextSettings.Font.SetSettings('Courier New', 10, TFontStyleExt.Default);
   Control.CharCase := TEditCharCase.ecUpperCase;
-  Control.Lines.CommaText := GetValue.AsType<TStringList>.CommaText;
+  Control.Lines.Assign(GetValue.AsType<TStringList>);
   Control.OnChange := FDTO.OnNotify;
+  Control.Parent := FDTO.Parent.GetObject;
+  Control.StyledSettings := Control.StyledSettings - [TStyledSetting.Family];
+  Control.TextSettings.Font.Family := TFontName('Courier New');
 
   FControl := Control;
 end;
