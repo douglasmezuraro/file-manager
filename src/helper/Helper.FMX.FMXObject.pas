@@ -10,6 +10,7 @@ uses
   FMX.Types,
   Helper.Rtti,
   System.Rtti,
+  System.StrUtils,
   System.UITypes,
   Types.Utils;
 
@@ -91,7 +92,7 @@ var
   Index: Integer;
 begin
   for Index := First to Pred(TabCount) do
-    Tabs[Index].Index := TUtils.Methods.IndexOf(Tabs[Index].TagString, Values);
+    Tabs[Index].Index := System.StrUtils.IndexStr(Tabs[Index].TagString, Values);
 
   TabIndex := First;
 end;
