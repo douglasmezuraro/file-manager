@@ -47,6 +47,7 @@ begin
     FIniFile.Free;
     FIniFile := TIniFile.Create(FileName);
   end;
+
   Write;
 end;
 

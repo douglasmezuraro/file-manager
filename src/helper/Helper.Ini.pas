@@ -158,6 +158,7 @@ var
   Line, Key, Value: string;
   LValues: TArray<string>;
 begin
+  EraseSection(Section);
   LValues := Values.ToStringArray;
   for Line in LValues do
   begin
