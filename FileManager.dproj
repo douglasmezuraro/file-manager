@@ -63,6 +63,8 @@
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
+        <DCC_ExeOutput>.\bin\</DCC_ExeOutput>
+        <DCC_DcuOutput>.\bin\dcu\</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -79,7 +81,7 @@
         <DCC_ExeOutput>.\bin\</DCC_ExeOutput>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <DCC_DcuOutput>.\bin\DCU\</DCC_DcuOutput>
+        <DCC_DcuOutput>.\bin\dcu\</DCC_DcuOutput>
         <Icon_MainIcon>FileManager_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -96,6 +98,8 @@
         <Icon_MainIcon>FileManager_Icon1.ico</Icon_MainIcon>
         <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.1;Comments=</VerInfo_Keys>
+        <DCC_ExeOutput>.\bin\</DCC_ExeOutput>
+        <DCC_DcuOutput>.\bin\dcu\</DCC_DcuOutput>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -172,11 +176,8 @@
                     <Source Name="MainSource">FileManager.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k250.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp250.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="C:\RTC_PIPELINE_DB1_BRASIL\pg5Dev\bin\edtCompletoDT.bpl">SAJ - EDT Componentes Design Time</Excluded_Packages>
-                    <Excluded_Packages Name="C:\RTC_PIPELINE_DB1_BRASIL\pg5Dev\bin\sggCompletoDT.bpl">SAJ - SGG Componentes Design Time</Excluded_Packages>
-                    <Excluded_Packages Name="C:\RTC_PIPELINE_DB1_BRASIL\pg5Dev\bin\digCompletoDT.bpl">DIG Componentes Design Time</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">

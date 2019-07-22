@@ -36,7 +36,7 @@ uses
   Template.AbstractClass,
   Template.Tab,
   Types.Binding,
-  Types.DTO,
+  Types.ControlDTO,
   Types.Input,
   Types.Input.Item,
   Types.Utils,
@@ -275,13 +275,12 @@ procedure TMain.Notify(Sender: TObject);
     Prop: TRttiProperty;
   begin
     Result := False;
-
     Prop := FBinding.Prop[Control];
-    if not Assigned(Prop) then
-      Exit;
-
-    Result := TValidator.Validate(Prop, Control.Value);
-    Error := TValidator.Message;
+    if Assigned(Prop) then
+    begin
+      Result := TValidator.Validate(Prop, Control.Value);
+      Error := TValidator.Message;
+    end;
   end;
 
   procedure UpdateValue(const Control: TControl);
@@ -358,15 +357,10 @@ begin
 end;
 
 procedure TMain.RestoreView;
-var
-  TabIndex: Integer;
 begin
   FBinding.Clear;
   FInvoker.Clear;
-  for TabIndex := Pred(TabControlFile.TabCount) downto 0 do
-  begin
-    TabControlFile.Delete(TabIndex);
-  end;
+  TabControlFile.Clear;
 end;
 
 procedure TMain.Save(const FileName: TFileName);

@@ -31,7 +31,10 @@ type
   end;
 
   TTabControlHelper = class Helper for TTabControl
+  private
+    const FirstTab = 0;
   public
+    procedure Clear;
     procedure OrderTabs(const Values: TArray<string>);
   end;
 
@@ -85,16 +88,22 @@ end;
 
 { TTabControlHelper }
 
-procedure TTabControlHelper.OrderTabs(const Values: TArray<string>);
-const
-  First = 0;
+procedure TTabControlHelper.Clear;
 var
   Index: Integer;
 begin
-  for Index := First to Pred(TabCount) do
+  for Index := Pred(TabCount) downto FirstTab do
+    Delete(Index);
+end;
+
+procedure TTabControlHelper.OrderTabs(const Values: TArray<string>);
+var
+  Index: Integer;
+begin
+  for Index := FirstTab to Pred(TabCount) do
     Tabs[Index].Index := System.StrUtils.IndexStr(Tabs[Index].TagString, Values);
 
-  TabIndex := First;
+  TabIndex := FirstTab;
 end;
 
 end.
