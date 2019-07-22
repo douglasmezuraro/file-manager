@@ -35,7 +35,7 @@ uses
   Template.Edit in 'src\template\Template.Edit.pas',
   Template.Tab in 'src\template\Template.Tab.pas',
   Types.Binding in 'src\types\Types.Binding.pas',
-  Types.DTO in 'src\types\Types.DTO.pas',
+  Types.ControlDTO in 'src\types\Types.ControlDTO.pas',
   Types.Input in 'src\types\Types.Input.pas',
   Types.IniObject in 'src\types\Types.IniObject.pas',
   Types.ObjectFileAPI in 'src\types\Types.ObjectFileAPI.pas',

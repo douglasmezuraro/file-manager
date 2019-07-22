@@ -1,4 +1,4 @@
-unit Types.DTO;
+unit Types.ControlDTO;
 
 interface
 

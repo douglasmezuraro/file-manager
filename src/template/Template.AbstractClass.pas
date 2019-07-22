@@ -13,7 +13,7 @@ uses
   System.StrUtils,
   System.SysUtils,
   System.Types,
-  Types.DTO,
+  Types.ControlDTO,
   Types.Utils;
 
 type

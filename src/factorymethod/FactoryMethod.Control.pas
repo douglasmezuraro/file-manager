@@ -12,7 +12,7 @@ uses
   Template.Edit,
   Template.Memo,
   Template.Tab,
-  Types.DTO;
+  Types.ControlDTO;
 
 type
   TControlFactory = class
