@@ -132,9 +132,9 @@ begin
   FControl.ShowHint   := True;
   FControl.Position.X := FDTO.Position.X;
   FControl.Position.Y := FDTO.Position.Y;
-  FControl.Width      := TUtils.Constants.DefaultWidth;
+  FControl.Width      := TUtils.Constants.Width;
 
-  Offset(FControl.Height + TUtils.Constants.DefaultOffset);
+  Offset(FControl.Height + TUtils.Constants.Offset);
 end;
 
 { TLabeledTemplate }
@@ -148,7 +148,7 @@ begin
   FLabel.Text       := GetText;
   FLabel.Position.X := FDTO.Position.X;
   FLabel.Position.Y := FDTO.Position.Y;
-  FLabel.Width      := TUtils.Constants.DefaultWidth;
+  FLabel.Width      := TUtils.Constants.Width;
 
   Offset(FLabel.Height);
 end;

@@ -236,7 +236,7 @@ var
   Template: TControlTemplate;
 begin
   FLock := True;
-  DTO := TControlDTO.Create(TUtils.Constants.DefaultOffset, TUtils.Constants.DefaultOffset);
+  DTO := TControlDTO.Create(TUtils.Constants.Offset, TUtils.Constants.Offset);
   try
     Context := TRttiContext.Create;
     for Prop in Context.GetType(Model.ClassType).GetProperties do

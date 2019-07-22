@@ -8,7 +8,7 @@ uses
   Types.IniObject;
 
 type
-  TModel = class(TIniObject)
+  TModel = class abstract(TIniObject)
   public
     constructor Create(const FileName: TFileName); override;
     destructor Destroy; override;

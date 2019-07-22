@@ -9,7 +9,7 @@ uses
   Types.ObjectFileAPI;
 
 type
-  TIniObject = class(TInterfacedObject, IObjectFile)
+  TIniObject = class abstract(TInterfacedObject, IObjectFile)
   private
     FIniFile: TIniFile;
   public
