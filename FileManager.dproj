@@ -132,7 +132,7 @@
         <DCCReference Include="src\template\Template.CheckBox.pas"/>
         <DCCReference Include="src\template\Template.ComboBox.pas"/>
         <DCCReference Include="src\template\Template.Edit.pas"/>
-        <DCCReference Include="src\template\Template.TabItem.pas"/>
+        <DCCReference Include="src\template\Template.Tab.pas"/>
         <DCCReference Include="src\types\Types.Binding.pas"/>
         <DCCReference Include="src\types\Types.DTO.pas"/>
         <DCCReference Include="src\types\Types.Input.pas"/>

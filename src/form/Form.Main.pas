@@ -34,7 +34,7 @@ uses
   System.TypInfo,
   System.UITypes,
   Template.AbstractClass,
-  Template.TabItem,
+  Template.Tab,
   Types.Binding,
   Types.DTO,
   Types.Input,
@@ -255,7 +255,7 @@ begin
 
           FBinding.Add(Control, Model, Prop);
 
-          if Template is TTabItemTemplate then
+          if Template is TTabTemplate then
             ModelToView(Prop.GetValue(Model).AsObject, Control);
         finally
           Template.Free;

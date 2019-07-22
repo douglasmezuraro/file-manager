@@ -11,7 +11,7 @@ uses
   Template.ComboBox,
   Template.Edit,
   Template.Memo,
-  Template.TabItem,
+  Template.Tab,
   Types.DTO;
 
 type
@@ -30,7 +30,7 @@ begin
     Exit(TCheckBoxTemplate.Create(DTO));
 
   if Assigned(DTO.Prop.GetAttribute<TabAttribute>()) then
-    Exit(TTabItemTemplate.Create(DTO));
+    Exit(TTabTemplate.Create(DTO));
 
   if Assigned(DTO.Prop.GetAttribute<ComboBoxAttribute>()) then
     Exit(TComboBoxTemplate.Create(DTO));

@@ -42,8 +42,11 @@ type
   end;
 
   TLabeledTemplate = class abstract(TStylizedTemplate)
+  private
+    FLabel: TLabel;
   protected
     procedure DoBefore; override;
+    procedure DoAfter; override;
   end;
 
 implementation
@@ -57,12 +60,10 @@ end;
 
 procedure TControlTemplate.DoAfter;
 begin
-  Exit;
 end;
 
 procedure TControlTemplate.DoBefore;
 begin
-  Exit;
 end;
 
 function TControlTemplate.GetHint: string;
@@ -139,19 +140,23 @@ end;
 { TLabeledTemplate }
 
 procedure TLabeledTemplate.DoBefore;
-var
-  ControlLabel: TLabel;
 begin
   inherited;
 
-  ControlLabel            := TLabel.Create(FDTO.Owner);
-  ControlLabel.Parent     := FDTO.Parent.GetObject;
-  ControlLabel.Text       := GetText;
-  ControlLabel.Position.X := FDTO.Position.X;
-  ControlLabel.Position.Y := FDTO.Position.Y;
-  ControlLabel.Width      := TUtils.Constants.DefaultWidth;
+  FLabel            := TLabel.Create(FDTO.Owner);
+  FLabel.Parent     := FDTO.Parent.GetObject;
+  FLabel.Text       := GetText;
+  FLabel.Position.X := FDTO.Position.X;
+  FLabel.Position.Y := FDTO.Position.Y;
+  FLabel.Width      := TUtils.Constants.DefaultWidth;
 
-  Offset(ControlLabel.Height);
+  Offset(FLabel.Height);
+end;
+
+procedure TLabeledTemplate.DoAfter;
+begin
+  inherited;
+  FLabel.FocusControl := FControl;
 end;
 
 end.

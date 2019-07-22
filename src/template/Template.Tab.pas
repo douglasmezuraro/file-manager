@@ -1,4 +1,4 @@
-unit Template.TabItem;
+unit Template.Tab;
 
 interface
 
@@ -9,16 +9,16 @@ uses
   Template.AbstractClass;
 
 type
-  TTabItemTemplate = class(TLayoutTemplate)
+  TTabTemplate = class(TLayoutTemplate)
   public
     procedure TemplateMethod; override;
   end;
 
 implementation
 
-{ TTabItemTemplate }
+{ TTabTemplate }
 
-procedure TTabItemTemplate.TemplateMethod;
+procedure TTabTemplate.TemplateMethod;
 var
   Tab: TTabItem;
   ScrollBox: TScrollBox;

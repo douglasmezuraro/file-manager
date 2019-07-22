@@ -33,7 +33,7 @@ uses
   Template.CheckBox in 'src\template\Template.CheckBox.pas',
   Template.ComboBox in 'src\template\Template.ComboBox.pas',
   Template.Edit in 'src\template\Template.Edit.pas',
-  Template.TabItem in 'src\template\Template.TabItem.pas',
+  Template.Tab in 'src\template\Template.Tab.pas',
   Types.Binding in 'src\types\Types.Binding.pas',
   Types.DTO in 'src\types\Types.DTO.pas',
   Types.Input in 'src\types\Types.Input.pas',

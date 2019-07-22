@@ -78,7 +78,7 @@ begin
     Exit(Value);
   end;
 
-  if Value.IsObject and Key.IsEmpty then
+  if Value.IsObject then
   begin
     ReadSectionValues(Section, Value.AsType<TStringList>);
     Exit(Value);
@@ -140,7 +140,7 @@ begin
     Exit;
   end;
 
-  if Value.IsObject and Key.IsEmpty then
+  if Value.IsObject then
   begin
     WriteSectionValues(Section, Value.AsType<TStringList>);
     Exit;
