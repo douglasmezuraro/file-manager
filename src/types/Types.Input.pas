@@ -18,6 +18,7 @@ type
     FItems: TInputItems;
     FCurrent: TInputItem<T>;
     FTabs: TArray<string>;
+    FLanguage: string;
   public const
     FileName = 'input.json';
   public
@@ -26,6 +27,7 @@ type
     property Current: TInputItem<T> read FCurrent write FCurrent;
     property Items: TInputItems read FItems write FItems;
     property Tabs: TArray<string> read FTabs;
+    property Language: string read FLanguage;
   end;
 
 implementation

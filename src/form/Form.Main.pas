@@ -38,6 +38,7 @@ uses
   Types.ControlDTO,
   Types.Input,
   Types.Input.Item,
+  Types.ResourceStrings,
   Types.Utils,
   Types.Validator;
 
@@ -53,7 +54,7 @@ type
     PanelButtons: TPanel;
     TabControlView: TTabControl;
     TabItemFiles: TTabItem;
-    TreeViewItems: TTreeView;
+    TreeViewFiles: TTreeView;
     TabItemSelectedFile: TTabItem;
     TabControlFile: TTabControl;
     ImageListIcons: TImageList;
@@ -61,6 +62,7 @@ type
     LabelHelp: TLabel;
     EditFilter: TEdit;
     ActionEdit: TAction;
+    Language: TLang;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveTargetExecute(Sender: TObject);
     procedure ActionSaveSourceExecute(Sender: TObject);
@@ -87,6 +89,7 @@ type
     procedure RestoreView;
     procedure Save(const FileName: TFileName);
     procedure SelectFile(const InputItem: TObject);
+    procedure Translate;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -116,7 +119,7 @@ end;
 
 procedure TMain.EditFilterChangeTracking(Sender: TObject);
 begin
-  TreeViewItems.Filter((Sender as TEdit).Text);
+  TreeViewFiles.Filter((Sender as TEdit).Text);
 end;
 
 procedure TMain.ExecuteWithLock(const Proc: TProc);
@@ -141,8 +144,8 @@ end;
 
 procedure TMain.ActionEditExecute(Sender: TObject);
 begin
-  if Assigned(TreeViewItems.Selected) then
-    SelectFile(TreeViewItems.Selected.TagObject);
+  if Assigned(TreeViewFiles.Selected) then
+    SelectFile(TreeViewFiles.Selected.TagObject);
 end;
 
 procedure TMain.ActionSaveSourceExecute(Sender: TObject);
@@ -155,12 +158,13 @@ begin
   inherited;
   ReadInput;
   MakeTree;
+  Translate;
   TabControlView.ActiveTab := TabItemFiles;
 end;
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja sair mesmo assim?') then
+  if HasChanges and not TUtils.Dialogs.Confirmation(SUnsavedChangesWantToExitAnyway) then
     Abort;
 
   inherited;
@@ -215,9 +219,9 @@ var
 begin
   for Item in FInput.Items do
   begin
-    Text := IfThen(Item.Group.IsEmpty, 'Sem grupo', Item.Group) + TTreeView.Separator + Item.Name;
+    Text := IfThen(Item.Group.IsEmpty, SUngrouped, Item.Group) + TTreeView.Separator + Item.Name;
 
-    Node := TreeViewItems.MakeNode(Text);
+    Node := TreeViewFiles.MakeNode(Text);
     if Assigned(Node) then
     begin
       Node.TagObject := Item;
@@ -322,7 +326,7 @@ begin
   if Assigned(FInput.Current) and FInput.Current.Equals(InputItem) then
     Exit;
 
-  if HasChanges and not TUtils.Dialogs.Confirmation('Existem alterações não salvas, deseja trocar mesmo assim?') then
+  if HasChanges and not TUtils.Dialogs.Confirmation(SUnsavedChangesWantToChangeFileAnyway) then
     Exit;
 
   FInput.Current := InputItem as TInputItem<TConfig>;
@@ -338,6 +342,15 @@ begin
   TabControlFile.OrderTabs(FInput.Tabs);
 end;
 
+procedure TMain.Translate;
+var
+  LLanguage: string;
+begin
+  LLanguage := IfThen(FInput.Language.IsEmpty, 'en', FInput.Language);
+  LoadLangFromStrings(Language.LangStr[LLanguage]);
+  TUtils.Translation.Translate(LLanguage);
+end;
+
 procedure TMain.ReadInput;
 var
   FileName: TFileName;
@@ -349,7 +362,7 @@ begin
   except
     on Exception: EFileNotFoundException do
     begin
-      TUtils.Dialogs.Warning('Arquivo não encontrado: %s.', [Exception.Message]);
+      TUtils.Dialogs.Warning(SFileNotFound, [Exception.Message]);
       Halt;
     end;
   end;
@@ -367,7 +380,7 @@ begin
   FInput.Current.Model.Write(FileName);
   FInvoker.Clear;
   ControlView;
-  TUtils.Dialogs.Information('O arquivo foi salvo com sucesso!');
+  TUtils.Dialogs.Information(SFileSuccessfullySaved);
 end;
 
 procedure TMain.ControlView(const Text: string);

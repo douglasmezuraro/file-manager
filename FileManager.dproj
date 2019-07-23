@@ -154,6 +154,7 @@
         <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
         <DCCReference Include="src\attribute\Attribute.Managed.pas"/>
         <DCCReference Include="src\template\Template.Memo.pas"/>
+        <DCCReference Include="src\types\Types.ResourceStrings.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

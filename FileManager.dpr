@@ -50,7 +50,8 @@ uses
   Types.Utils.RegEx in 'src\types\Types.Utils.RegEx.pas',
   Model.Config.AlternativeBalancer in 'src\model\Model.Config.AlternativeBalancer.pas',
   Attribute.Managed in 'src\attribute\Attribute.Managed.pas',
-  Template.Memo in 'src\template\Template.Memo.pas';
+  Template.Memo in 'src\template\Template.Memo.pas',
+  Types.ResourceStrings in 'src\types\Types.ResourceStrings.pas';
 
 {$R *.res}
 
@@ -60,9 +61,10 @@ var
 begin
   Application.Initialize;
   Application.CreateForm(TMain, Main);
-  TUtils.Translation.Translate;
   Application.Run;
 
-  ReportMemoryLeaksOnShutdown := True;
+{$WARN SYMBOL_PLATFORM OFF}
+  ReportMemoryLeaksOnShutdown := DebugHook > 0;
+{$WARN SYMBOL_PLATFORM ON}
 end.
 
