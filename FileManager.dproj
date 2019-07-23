@@ -116,8 +116,7 @@
         <DCCReference Include="src\form\Form.Main.pas">
             <Form>Main</Form>
         </DCCReference>
-        <DCCReference Include="src\helper\Helper.FMX.FMXObject.pas"/>
-        <DCCReference Include="src\helper\Helper.FMX.TreeView.pas"/>
+        <DCCReference Include="src\helper\Helper.FMX.pas"/>
         <DCCReference Include="src\helper\Helper.Ini.pas"/>
         <DCCReference Include="src\helper\Helper.Rtti.pas"/>
         <DCCReference Include="src\model\Model.Config.pas"/>
