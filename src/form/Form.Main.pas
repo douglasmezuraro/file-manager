@@ -1,4 +1,4 @@
-﻿unit Form.Main;
+unit Form.Main;
 
 interface
 
@@ -275,14 +275,14 @@ procedure TMain.Notify(Sender: TObject);
 
   function Validate(const Control: TControl; out Error: string): Boolean;
   var
-    Prop: TRttiProperty;
+    Validator: TValidator;
   begin
-    Result := False;
-    Prop := FBinding.Prop[Control];
-    if Assigned(Prop) then
-    begin
-      Result := TValidator.Validate(Prop, Control.Value);
-      Error := TValidator.Message;
+    Validator := TValidator.Create(FBinding.Prop[Control], Control.Value);
+    try
+      Result := Validator.Validate;
+      Error := Validator.Message;
+    finally
+      Validator.Free
     end;
   end;
 

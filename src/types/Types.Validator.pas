@@ -3,205 +3,207 @@ unit Types.Validator;
 interface
 
 uses
-  Attribute.Validation,
-  Helper.Rtti,
-  System.RegularExpressions,
-  System.Rtti,
-  System.SysUtils;
+  System.SysUtils, System.Rtti, System.RegularExpressions, Attribute.Validation, Helper.Rtti,
+  Types.ResourceStrings;
 
 type
-  TValidator = class
+  TValidator = class sealed
   strict private
-    class var FMessage: string;
+    FMessage: string;
+    FAttribute: ValidationAttribute;
+    FValue: TValue;
   private
-    class function ValidateNull(const Attribute: ValidationAttribute; const Value: TValue): Boolean;
-    class function ValidateDate(const Attribute: DateAttribute; const Value: TValue): Boolean;
-    class function ValidateDateTime(const Attribute: DateTimeAttribute; const Value: TValue): Boolean;
-    class function ValidateFloat(const Attribute: FloatAttribute; const Value: TValue): Boolean;
-    class function ValidateInteger(const Attribute: IntegerAttribute; const Value: TValue): Boolean;
-    class function ValidateRegEx(const Attribute: RegExAttribute; const Value: TValue): Boolean;
-    class function ValidateString(const Attribute: StringAttribute; const Value: TValue): Boolean;
-    class function ValidateTime(const Attribute: TimeAttribute; const Value: TValue): Boolean;
+    function ValidateNull: Boolean;
+    function ValidateDate: Boolean;
+    function ValidateDateTime: Boolean;
+    function ValidateFloat: Boolean;
+    function ValidateInteger: Boolean;
+    function ValidateRegEx: Boolean;
+    function ValidateString: Boolean;
+    function ValidateTime: Boolean;
   public
-    class function Validate(const Prop: TRttiProperty; const Value: TValue): Boolean;
-    class property Message: string read FMessage;
+    constructor Create(const Prop: TRttiProperty; const Value: TValue);
+    function Validate: Boolean;
+    property Message: string read FMessage;
   end;
 
 implementation
 
 { TValidator }
 
-class function TValidator.Validate(const Prop: TRttiProperty; const Value: TValue): Boolean;
-var
-  Attribute: ValidationAttribute;
+constructor TValidator.Create(const Prop: TRttiProperty; const Value: TValue);
+begin
+  FMessage := string.Empty;
+  FAttribute := Prop.GetAttribute<ValidationAttribute>();
+  FValue := Value;
+end;
+
+function TValidator.Validate: Boolean;
 begin
   Result := True;
 
-  Attribute := Prop.GetAttribute<ValidationAttribute>();
-
-  if not Assigned(Attribute) then
+  if not Assigned(FAttribute) then
     Exit;
 
-  if not ValidateNull(Attribute, Value) then
+  if not ValidateNull then
     Exit(False);
 
-  if Attribute is DateAttribute then
-    Exit(ValidateDate((Attribute as DateAttribute), Value));
+  if FAttribute is DateAttribute then
+    Exit(ValidateDate);
 
-  if Attribute is DateTimeAttribute then
-    Exit(ValidateDateTime((Attribute as DateTimeAttribute), Value));
+  if FAttribute is DateTimeAttribute then
+    Exit(ValidateDateTime);
 
-  if Attribute is FloatAttribute then
-    Exit(ValidateFloat((Attribute as FloatAttribute), Value));
+  if FAttribute is FloatAttribute then
+    Exit(ValidateFloat);
 
-  if Attribute is IntegerAttribute then
-    Exit(ValidateInteger((Attribute as IntegerAttribute), Value));
+  if FAttribute is IntegerAttribute then
+    Exit(ValidateInteger);
 
-  if Attribute is RegExAttribute then
-    Exit(ValidateRegEx((Attribute as RegExAttribute), Value));
+  if FAttribute is RegExAttribute then
+    Exit(ValidateRegEx);
 
-  if Attribute is StringAttribute then
-    Exit(ValidateString((Attribute as StringAttribute), Value));
+  if FAttribute is StringAttribute then
+    Exit(ValidateString);
 
-  if Attribute is TimeAttribute then
-    Exit(ValidateTime((Attribute as TimeAttribute), Value));
+  if FAttribute is TimeAttribute then
+    Exit(ValidateTime);
 end;
 
-class function TValidator.ValidateDate(const Attribute: DateAttribute; const Value: TValue): Boolean;
+function TValidator.ValidateDate: Boolean;
 var
   LValue: TDateTime;
 begin
   Result := True;
-  if not Value.IsValidDate(LValue) then
+  if not FValue.IsValidDate(LValue) then
   begin
-    FMessage := Format('O valor "%s" não é um "TDate" válido.', [Value.ToString]);
+    FMessage := Format(SValueIsNotAValid, [FValue.ToString, 'TDate']);
     Result := False;
   end;
 end;
 
-class function TValidator.ValidateDateTime(const Attribute: DateTimeAttribute; const Value: TValue): Boolean;
+function TValidator.ValidateDateTime: Boolean;
 var
   LValue: TDateTime;
 begin
   Result := True;
-  if not Value.IsValidDateTime(LValue) then
+  if not FValue.IsValidDateTime(LValue) then
   begin
-    FMessage := Format('O valor "%s" não é um "TDateTime" válido.', [Value.ToString]);
+    FMessage := Format(SValueIsNotAValid, [FValue.ToString, 'TDateTime']);
     Result := False;
   end;
 end;
 
-class function TValidator.ValidateFloat(const Attribute: FloatAttribute; const Value: TValue): Boolean;
+function TValidator.ValidateFloat: Boolean;
 var
   LValue: Double;
 begin
   Result := False;
 
-  if not Value.IsValidFloat(LValue) then
+  if not FValue.IsValidFloat(LValue) then
   begin
-    FMessage := Format('O valor "%s" não é um ponto-flutuante válido.', [Value.ToString]);
+    FMessage := Format(SValueIsNotAValid, [FValue.ToString, 'Double']);
     Exit;
   end;
 
-  if LValue < Attribute.MinValue then
+  if LValue < (FAttribute as FloatAttribute).MinValue then
   begin
-    FMessage := Format('O valor atual "%f" é menor que o valor mínimo permitido "%f".', [LValue, Attribute.MinValue]);
+    FMessage := Format(SValueIsLessThenMinimumAllowedFloat, [LValue, (FAttribute as FloatAttribute).MinValue]);
     Exit;
   end;
 
-  if LValue > Attribute.MaxValue then
+  if LValue > (FAttribute as FloatAttribute).MaxValue then
   begin
-    FMessage := Format('O valor atual "%f" é maior que o valor máximo permitido "%f".', [LValue, Attribute.MaxValue]);
+    FMessage := Format(SValueIsGreaterLessThenMaximumAllowedFloat, [LValue, (FAttribute as FloatAttribute).MaxValue]);
     Exit;
   end;
 
   Result := True;
 end;
 
-class function TValidator.ValidateInteger(const Attribute: IntegerAttribute; const Value: TValue): Boolean;
+function TValidator.ValidateInteger: Boolean;
 var
   LValue: Integer;
 begin
   Result := False;
 
-  if not Value.IsValidInteger(LValue) then
+  if not FValue.IsValidInteger(LValue) then
   begin
-    FMessage := Format('O valor "%s" não é um inteiro válido.', [Value.ToString]);
+    FMessage := Format(SValueIsNotAValid, [FValue.ToString, 'Integer']);
     Exit;
   end;
 
-  if LValue < Attribute.MinValue then
+  if LValue < (FAttribute as IntegerAttribute).MinValue then
   begin
-    FMessage := Format('O valor atual "%d" é menor que o valor mínimo permitido "%d".', [LValue, Attribute.MinValue]);
+    FMessage := Format(SValueIsLessThenMinimumAllowedInteger, [LValue, (FAttribute as IntegerAttribute).MinValue]);
     Exit;
   end;
 
-  if LValue > Attribute.MaxValue then
+  if LValue > (FAttribute as IntegerAttribute).MaxValue then
   begin
-    FMessage := Format('O valor atual "%d" é maior que o valor máximo permitido "%d".', [LValue, Attribute.MaxValue]);
+    FMessage := Format(SValueIsGreaterLessThenMaximumAllowedInteger, [LValue, (FAttribute as IntegerAttribute).MaxValue]);
     Exit;
   end;
 
   Result := True;
 end;
 
-class function TValidator.ValidateNull(const Attribute: ValidationAttribute; const Value: TValue): Boolean;
+function TValidator.ValidateNull: Boolean;
 begin
   Result := True;
-  if (not Attribute.Nullable) and Value.ToString.IsEmpty then
+  if (not FAttribute.Nullable) and FValue.ToString.IsEmpty then
   begin
-    FMessage := 'O valor não pode ser vazio.';
+    FMessage := SValueCannotBeEmpty;
     Result := False;
   end;
 end;
 
-class function TValidator.ValidateRegEx(const Attribute: RegExAttribute; const Value: TValue): Boolean;
+function TValidator.ValidateRegEx: Boolean;
 var
   LValue: string;
 begin
   Result := True;
-  LValue := Value.ToString;
+  LValue := FValue.ToString;
 
-  if not TRegEx.Create(Attribute.Pattern, [roIgnoreCase, roNotEmpty]).IsMatch(LValue) then
+  if not TRegEx.Create((FAttribute as RegExAttribute).Pattern, [roIgnoreCase, roNotEmpty]).IsMatch(LValue) then
   begin
-    FMessage := Format('O valor atual "%s" não atende a expressão regular "%s".', [LValue, Attribute.Pattern]);
+    FMessage := SValueDoesNotMatchRegEx;
     Result := False;
   end;
 end;
 
-class function TValidator.ValidateString(const Attribute: StringAttribute; const Value: TValue): Boolean;
+function TValidator.ValidateString: Boolean;
 var
   LValue: string;
 begin
   Result := False;
-  LValue := Value.ToString;
+  LValue := FValue.ToString;
 
-  if LValue.Length < Attribute.MinLength then
+  if LValue.Length < (FAttribute as StringAttribute).MinLength then
   begin
-    FMessage := Format('O tamanho do valor atual "%d" é menor que o tamanho mínimo permitido "%d".', [LValue.Length, Attribute.MinLength]);
+    FMessage := Format(SLengthOfValueIsLessThanMinimumAllowed, [LValue.Length, (FAttribute as StringAttribute).MinLength]);
     Exit;
   end;
 
-  if LValue.Length > Attribute.MaxLength then
+  if LValue.Length > (FAttribute as StringAttribute).MaxLength then
   begin
-    FMessage := Format('O tamanho do valor atual "%d" é maior que o tamanho máximo permitido "%d".', [LValue.Length, Attribute.MaxLength]);
+    FMessage := Format(SLengthOfValueIsGreaterThanMaximumAllowed, [LValue.Length, (FAttribute as StringAttribute).MaxLength]);
     Exit;
   end;
 
   Result := True;
 end;
 
-class function TValidator.ValidateTime(const Attribute: TimeAttribute; const Value: TValue): Boolean;
+function TValidator.ValidateTime: Boolean;
 var
   LValue: TDateTime;
 begin
   Result := True;
-  if not Value.IsValidTime(LValue) then
+  if not FValue.IsValidTime(LValue) then
   begin
-    FMessage := Format('O valor "%s" não é um "TTime" válido.', [Value.ToString]);
+    FMessage := Format(SValueIsNotAValid, [FValue.ToString, 'TTime']);
     Result := False;
   end;
 end;
 
 end.
-

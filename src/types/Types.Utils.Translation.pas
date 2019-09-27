@@ -11,7 +11,7 @@ uses
 type
   TTranslation = class
   private
-    class procedure HookResourceString(const Source: PResStringRec; const Value: PChar); static;
+    class procedure Hook(const Source: PResStringRec; const Value: PChar); static;
     class procedure ToPortuguese; static;
   public
     class procedure Translate(const Language: string); static;
@@ -21,7 +21,7 @@ implementation
 
 { TTranslation }
 
-class procedure TTranslation.HookResourceString(const Source: PResStringRec; const Value: PChar);
+class procedure TTranslation.Hook(const Source: PResStringRec; const Value: PChar);
 var
   POldProtect: DWORD;
 begin
@@ -32,34 +32,48 @@ end;
 
 class procedure TTranslation.ToPortuguese;
 begin
-  HookResourceString(@SMsgDlgWarning, 'Atenção');
-  HookResourceString(@SMsgDlgError, 'Erro');
-  HookResourceString(@SMsgDlgInformation, 'Informação');
-  HookResourceString(@SMsgDlgConfirm, 'Confirme');
-  HookResourceString(@SMsgDlgYes, '&Sim');
-  HookResourceString(@SMsgDlgNo, '&Não');
-  HookResourceString(@SMsgDlgOK, 'OK');
-  HookResourceString(@SMsgDlgCancel, 'Cancelar');
-  HookResourceString(@SMsgDlgHelp, '&Ajuda');
-  HookResourceString(@SMsgDlgHelpHelp, 'Ajuda');
-  HookResourceString(@SMsgDlgAbort, '&Abortar');
-  HookResourceString(@SMsgDlgRetry, '&Repetir');
-  HookResourceString(@SMsgDlgIgnore, '&Ignorar');
-  HookResourceString(@SMsgDlgAll, '&Tudo');
-  HookResourceString(@SMsgDlgNoToAll, 'N&ão para Tudo');
-  HookResourceString(@SMsgDlgYesToAll, 'Sim para &Tudo');
-  HookResourceString(@SMsgDlgClose, '&Fechar');
-  HookResourceString(@SEditUndo, 'Desfazer');
-  HookResourceString(@SEditCopy, 'Copiar');
-  HookResourceString(@SEditCut, 'Recortar');
-  HookResourceString(@SEditPaste, 'Colar');
-  HookResourceString(@SEditDelete, 'Deletar');
-  HookResourceString(@SEditSelectAll, 'Selecionar tudo');
-  HookResourceString(@SUnsavedChangesWantToExitAnyway, 'Existem alterações não salvas, deseja sair mesmo assim?');
-  HookResourceString(@SUnsavedChangesWantToChangeFileAnyway, 'Existem alterações não salvas, deseja trocar o arquivo mesmo assim?');
-  HookResourceString(@SFileNotFound, 'Arquivo não encontrado: %s.');
-  HookResourceString(@SFileSuccessfullySaved, 'Arquivo salvo com sucesso!');
-  HookResourceString(@SUngrouped, 'Desagrupado');
+  {$REGION 'System'}
+  Hook(@SMsgDlgWarning, 'Atenção');
+  Hook(@SMsgDlgError, 'Erro');
+  Hook(@SMsgDlgInformation, 'Informação');
+  Hook(@SMsgDlgConfirm, 'Confirme');
+  Hook(@SMsgDlgYes, '&Sim');
+  Hook(@SMsgDlgNo, '&Não');
+  Hook(@SMsgDlgOK, 'OK');
+  Hook(@SMsgDlgCancel, 'Cancelar');
+  Hook(@SMsgDlgHelp, '&Ajuda');
+  Hook(@SMsgDlgHelpHelp, 'Ajuda');
+  Hook(@SMsgDlgAbort, '&Abortar');
+  Hook(@SMsgDlgRetry, '&Repetir');
+  Hook(@SMsgDlgIgnore, '&Ignorar');
+  Hook(@SMsgDlgAll, '&Tudo');
+  Hook(@SMsgDlgNoToAll, 'N&ão para Tudo');
+  Hook(@SMsgDlgYesToAll, 'Sim para &Tudo');
+  Hook(@SMsgDlgClose, '&Fechar');
+  Hook(@SEditUndo, 'Desfazer');
+  Hook(@SEditCopy, 'Copiar');
+  Hook(@SEditCut, 'Recortar');
+  Hook(@SEditPaste, 'Colar');
+  Hook(@SEditDelete, 'Deletar');
+  Hook(@SEditSelectAll, 'Selecionar tudo');
+  {$ENDREGION}
+
+  {$REGION 'Custom'}
+  Hook(@SUnsavedChangesWantToExitAnyway, 'Existem alterações não salvas, deseja sair mesmo assim?');
+  Hook(@SUnsavedChangesWantToChangeFileAnyway, 'Existem alterações não salvas, deseja trocar o arquivo mesmo assim?');
+  Hook(@SFileNotFound, 'Arquivo não encontrado: %s.');
+  Hook(@SFileSuccessfullySaved, 'Arquivo salvo com sucesso!');
+  Hook(@SUngrouped, 'Desagrupado');
+  Hook(@SValueIsNotAValid, 'O valor "%s" não é um "%s". válido.');
+  Hook(@SValueCannotBeEmpty, 'O valor não pode ser vazio.');
+  Hook(@SValueDoesNotMatchRegEx, 'O valor não atende a expresão regular.');
+  Hook(@SValueIsLessThenMinimumAllowedFloat, 'O valor "%f" é menor que o mínimo permitido "%f".');
+  Hook(@SValueIsGreaterLessThenMaximumAllowedFloat, 'O valor "%f" é maior que o máximo permitido "%f".');
+  Hook(@SValueIsLessThenMinimumAllowedInteger, 'O valor "%d" é menor que o mínimo permitido "%d".');
+  Hook(@SValueIsGreaterLessThenMaximumAllowedInteger, 'O valor "%d" é maior que o máximo permitido "%d".');
+  Hook(@SLengthOfValueIsLessThanMinimumAllowed, 'O comprimento do valor atual "%d" é menor que o mínimo permitido "%d".');
+  Hook(@SLengthOfValueIsGreaterThanMaximumAllowed, 'O comprimento do valor atual "%d" é maior que o máximo permitido "%d".');
+  {$ENDREGION}
 end;
 
 class procedure TTranslation.Translate(const Language: string);
