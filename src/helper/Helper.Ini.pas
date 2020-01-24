@@ -5,7 +5,8 @@ interface
 uses
   Attribute.Ini.Key,
   Attribute.Ini.Section,
-  Helper.Rtti,
+  Helper.Rtti.RttiProperty,
+  Helper.Rtti.Value,
   System.Classes,
   System.IniFiles,
   System.Rtti,

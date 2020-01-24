@@ -12,7 +12,6 @@ uses
   FactoryMethod.Control in 'src\factorymethod\FactoryMethod.Control.pas',
   Form.Main in 'src\form\Form.Main.pas' {Main},
   Helper.Ini in 'src\helper\Helper.Ini.pas',
-  Helper.Rtti in 'src\helper\Helper.Rtti.pas',
   Model.Config in 'src\model\Model.Config.pas',
   Model.Config.Application in 'src\model\Model.Config.Application.pas',
   Model.Config.Client in 'src\model\Model.Config.Client.pas',
@@ -71,7 +70,11 @@ uses
   Helper.FMX.Hyperlink in 'src\helper\FMX\Helper.FMX.Hyperlink.pas',
   Helper.FMX.TabControl in 'src\helper\FMX\Helper.FMX.TabControl.pas',
   Helper.FMX.TreeView in 'src\helper\FMX\Helper.FMX.TreeView.pas',
-  Helper.FMX.TreeViewItem in 'src\helper\FMX\Helper.FMX.TreeViewItem.pas';
+  Helper.FMX.TreeViewItem in 'src\helper\FMX\Helper.FMX.TreeViewItem.pas',
+  Helper.Rtti.Value in 'src\helper\Rtti\Helper.Rtti.Value.pas',
+  Helper.Rtti.Util in 'src\helper\Rtti\Helper.Rtti.Util.pas',
+  Helper.Rtti.RttiType in 'src\helper\Rtti\Helper.Rtti.RttiType.pas',
+  Helper.Rtti.RttiProperty in 'src\helper\Rtti\Helper.Rtti.RttiProperty.pas';
 
 {$R *.res}
 

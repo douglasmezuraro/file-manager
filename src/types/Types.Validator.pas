@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils, System.Rtti, System.RegularExpressions, Attribute.Validation, Attribute.Validation.Date,
   Attribute.Validation.DateTime, Attribute.Validation.Time, Attribute.Validation.Float, Attribute.Validation.Integer,
-  Attribute.Validation.RegEx, Attribute.Validation.Text, Helper.Rtti, Types.ResourceStrings;
+  Attribute.Validation.RegEx, Attribute.Validation.Text, Helper.Rtti.RttiProperty, Helper.Rtti.Value,
+  Types.ResourceStrings;
 
 type
   TValidator = class sealed

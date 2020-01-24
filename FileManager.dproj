@@ -115,7 +115,6 @@
             <Form>Main</Form>
         </DCCReference>
         <DCCReference Include="src\helper\Helper.Ini.pas"/>
-        <DCCReference Include="src\helper\Helper.Rtti.pas"/>
         <DCCReference Include="src\model\Model.Config.pas"/>
         <DCCReference Include="src\model\Model.Config.Application.pas"/>
         <DCCReference Include="src\model\Model.Config.Client.pas"/>
@@ -175,6 +174,10 @@
         <DCCReference Include="src\helper\FMX\Helper.FMX.TabControl.pas"/>
         <DCCReference Include="src\helper\FMX\Helper.FMX.TreeView.pas"/>
         <DCCReference Include="src\helper\FMX\Helper.FMX.TreeViewItem.pas"/>
+        <DCCReference Include="src\helper\Rtti\Helper.Rtti.Value.pas"/>
+        <DCCReference Include="src\helper\Rtti\Helper.Rtti.Util.pas"/>
+        <DCCReference Include="src\helper\Rtti\Helper.Rtti.RttiType.pas"/>
+        <DCCReference Include="src\helper\Rtti\Helper.Rtti.RttiProperty.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

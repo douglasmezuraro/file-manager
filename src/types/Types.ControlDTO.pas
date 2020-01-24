@@ -3,7 +3,7 @@ unit Types.ControlDTO;
 interface
 
 uses
-  FMX.Types, Helper.Rtti, System.Classes, System.Rtti, System.Types;
+  FMX.Types, System.Classes, System.Rtti, System.Types;
 
 type
   TControlDTO = class sealed

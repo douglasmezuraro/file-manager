@@ -22,7 +22,6 @@ uses
   Helper.FMX.Hyperlink,
   Helper.FMX.TabControl,
   Helper.FMX.TreeView,
-  Helper.Rtti,
   Model.Config,
   Rest.Json,
   System.Actions,

@@ -4,8 +4,8 @@ interface
 
 uses
   Attribute.Component.CheckBox, Attribute.Component.ComboBox, Attribute.Component.Edit, Attribute.Component.Memo,
-  Attribute.Component.Tab, Helper.Rtti, System.Rtti, Template.AbstractClass, Template.CheckBox, Template.ComboBox,
-  Template.Edit, Template.Memo, Template.Tab, Types.ControlDTO;
+  Attribute.Component.Tab, Helper.Rtti.RttiProperty, System.Rtti, Template.AbstractClass, Template.CheckBox,
+  Template.ComboBox, Template.Edit, Template.Memo, Template.Tab, Types.ControlDTO;
 
 type
   TControlFactory = class

@@ -1,33 +1,11 @@
-unit Helper.Rtti;
+unit Helper.Rtti.Value;
 
 interface
 
 uses
-  Attribute.Managed,
-  System.Classes,
-  System.Rtti,
-  System.SysUtils,
-  System.Variants;
+  System.Classes, System.Rtti, System.SysUtils, System.Variants;
 
 type
-  TRttiUtil = class
-  public
-    class procedure CreateProperties(const Obj: TObject); overload;
-    class procedure CreateProperties(const Obj: TObject; const Args: TArray<TValue>); overload;
-    class procedure DestroyProperties(const Obj: TObject);
-  end;
-
-  TRttiTypeHelper = class Helper for TRttiType
-  public
-    function GetConstructor: TRttiMethod;
-    function GetDestructor: TRttiMethod;
-  end;
-
-  TRttiPropertyHelper = class Helper for TRttiProperty
-  public
-    function GetAttribute<T: class>(): T;
-  end;
-
   TValueHelper = record Helper for TValue
   public
     {$REGION 'Assign-Methods'}
@@ -74,22 +52,6 @@ type
   end;
 
 implementation
-
-{ TRttiPropertyHelper }
-
-function TRttiPropertyHelper.GetAttribute<T>: T;
-var
-  Attribute: TCustomAttribute;
-begin
-  Result := nil;
-  for Attribute in Self.GetAttributes do
-  begin
-    if Attribute is T then
-      Exit(Attribute as T);
-  end;
-end;
-
-{ TValueHelper }
 
 function TValueHelper.AsDate: TDate;
 begin
@@ -416,93 +378,4 @@ begin
   Result := System.SysUtils.TryStrToTime(ToString, Value);
 end;
 
-{ TRttiTypeHelper }
-
-function TRttiTypeHelper.GetConstructor: TRttiMethod;
-var
-  Method: TRttiMethod;
-begin
-  Method := GetMethod('Create');
-
-  if Assigned(Method) and (not Method.IsConstructor) then
-    Method := nil;
-
-  Result := Method;
-end;
-
-function TRttiTypeHelper.GetDestructor: TRttiMethod;
-var
-  Method: TRttiMethod;
-begin
-  Method := GetMethod('Destroy');
-
-  if Assigned(Method) and (not Method.IsDestructor) then
-    Method := nil;
-
-  Result := Method;
-end;
-
-{ TRttiUtil }
-
-class procedure TRttiUtil.CreateProperties(const Obj: TObject);
-begin
-  TRttiUtil.CreateProperties(Obj, []);
-end;
-
-class procedure TRttiUtil.CreateProperties(const Obj: TObject; const Args: TArray<TValue>);
-var
-  Context: TRttiContext;
-  Prop: TRttiProperty;
-  Method: TRttiMethod;
-  Instance: TObject;
-begin
-  if not Assigned(Obj) then
-    Exit;
-
-  Context := TRttiContext.Create;
-  for Prop in Context.GetType(Obj.ClassType).GetProperties do
-  begin
-    Method := Prop.PropertyType.GetConstructor;
-
-    if not Assigned(Method) then
-      Continue;
-
-    if not Assigned(Prop.GetAttribute<ManagedAttribute>()) then
-      Continue;
-
-    Instance := Method.Invoke(Prop.PropertyType.AsInstance.MetaclassType, Args).AsObject;
-    Prop.SetValue(Obj, Instance);
-
-    CreateProperties(Instance, Args);
-  end;
-end;
-
-class procedure TRttiUtil.DestroyProperties(const Obj: TObject);
-var
-  Context: TRttiContext;
-  Prop: TRttiProperty;
-  Method: TRttiMethod;
-begin
-  if not Assigned(Obj) then
-    Exit;
-
-  Context := TRttiContext.Create;
-  for Prop in Context.GetType(Obj.ClassType).GetProperties do
-  begin
-    Method := Prop.PropertyType.GetDestructor;
-
-    if not Assigned(Method) then
-      Continue;
-
-    if not Assigned(Prop.GetAttribute<ManagedAttribute>()) then
-      Continue;
-
-    DestroyProperties(Prop.GetValue(Obj).AsObject);
-
-    Method.Invoke(Prop.GetValue(Obj), []);
-    Prop.SetValue(Obj, nil);
-  end;
-end;
-
 end.
-

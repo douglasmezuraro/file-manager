@@ -6,7 +6,7 @@ uses
   Attribute.Component.ComboBox,
   FMX.ListBox,
   Helper.FMX.FMXObject,
-  Helper.Rtti,
+  Helper.Rtti.RttiProperty,
   Template.AbstractClass;
 
 type

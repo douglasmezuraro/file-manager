@@ -3,7 +3,7 @@ unit Model.Base;
 interface
 
 uses
-  Helper.Rtti, System.SysUtils, Types.IniObject;
+  Helper.Rtti.Util, System.SysUtils, Types.IniObject;
 
 type
   TModel = class abstract(TIniObject)

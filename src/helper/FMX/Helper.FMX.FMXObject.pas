@@ -3,7 +3,7 @@ unit Helper.FMX.FMXObject;
 interface
 
 uses
-  FMX.ListBox, FMX.Memo, FMX.Types, Helper.Rtti, System.Rtti;
+  FMX.ListBox, FMX.Memo, FMX.Types, Helper.Rtti.Value, System.Rtti;
 
 type
   TFmxObjectHelper = class Helper for TFmxObject

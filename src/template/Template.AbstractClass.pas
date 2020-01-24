@@ -9,7 +9,7 @@ uses
   FMX.Controls,
   FMX.StdCtrls,
   FMX.Types,
-  Helper.Rtti,
+  Helper.Rtti.RttiProperty,
   System.Rtti,
   System.StrUtils,
   System.SysUtils,
