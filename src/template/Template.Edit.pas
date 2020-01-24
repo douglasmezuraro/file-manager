@@ -4,7 +4,7 @@ interface
 
 uses
   FMX.Edit,
-  Helper.FMX,
+  Helper.FMX.FMXObject,
   System.UITypes,
   Template.AbstractClass;
 

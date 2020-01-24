@@ -11,7 +11,6 @@ uses
   Command.Undoable in 'src\command\Command.Undoable.pas',
   FactoryMethod.Control in 'src\factorymethod\FactoryMethod.Control.pas',
   Form.Main in 'src\form\Form.Main.pas' {Main},
-  Helper.FMX in 'src\helper\Helper.FMX.pas',
   Helper.Ini in 'src\helper\Helper.Ini.pas',
   Helper.Rtti in 'src\helper\Helper.Rtti.pas',
   Model.Config in 'src\model\Model.Config.pas',
@@ -67,7 +66,12 @@ uses
   Attribute.Validation.Float in 'src\attribute\Validation\Attribute.Validation.Float.pas',
   Attribute.Validation.Integer in 'src\attribute\Validation\Attribute.Validation.Integer.pas',
   Attribute.Validation.RegEx in 'src\attribute\Validation\Attribute.Validation.RegEx.pas',
-  Attribute.Validation.Text in 'src\attribute\Validation\Attribute.Validation.Text.pas';
+  Attribute.Validation.Text in 'src\attribute\Validation\Attribute.Validation.Text.pas',
+  Helper.FMX.FMXObject in 'src\helper\FMX\Helper.FMX.FMXObject.pas',
+  Helper.FMX.Hyperlink in 'src\helper\FMX\Helper.FMX.Hyperlink.pas',
+  Helper.FMX.TabControl in 'src\helper\FMX\Helper.FMX.TabControl.pas',
+  Helper.FMX.TreeView in 'src\helper\FMX\Helper.FMX.TreeView.pas',
+  Helper.FMX.TreeViewItem in 'src\helper\FMX\Helper.FMX.TreeViewItem.pas';
 
 {$R *.res}
 

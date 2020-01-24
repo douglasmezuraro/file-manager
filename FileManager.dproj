@@ -114,7 +114,6 @@
         <DCCReference Include="src\form\Form.Main.pas">
             <Form>Main</Form>
         </DCCReference>
-        <DCCReference Include="src\helper\Helper.FMX.pas"/>
         <DCCReference Include="src\helper\Helper.Ini.pas"/>
         <DCCReference Include="src\helper\Helper.Rtti.pas"/>
         <DCCReference Include="src\model\Model.Config.pas"/>
@@ -171,6 +170,11 @@
         <DCCReference Include="src\attribute\Validation\Attribute.Validation.Integer.pas"/>
         <DCCReference Include="src\attribute\Validation\Attribute.Validation.RegEx.pas"/>
         <DCCReference Include="src\attribute\Validation\Attribute.Validation.Text.pas"/>
+        <DCCReference Include="src\helper\FMX\Helper.FMX.FMXObject.pas"/>
+        <DCCReference Include="src\helper\FMX\Helper.FMX.Hyperlink.pas"/>
+        <DCCReference Include="src\helper\FMX\Helper.FMX.TabControl.pas"/>
+        <DCCReference Include="src\helper\FMX\Helper.FMX.TreeView.pas"/>
+        <DCCReference Include="src\helper\FMX\Helper.FMX.TreeViewItem.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

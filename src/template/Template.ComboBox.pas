@@ -5,7 +5,7 @@ interface
 uses
   Attribute.Component.ComboBox,
   FMX.ListBox,
-  Helper.FMX,
+  Helper.FMX.FMXObject,
   Helper.Rtti,
   Template.AbstractClass;
 

@@ -3,11 +3,7 @@ unit Types.Binding;
 interface
 
 uses
-  FMX.Types,
-  Helper.Rtti,
-  System.Generics.Collections,
-  System.Rtti,
-  System.Types;
+  FMX.Types, Helper.Rtti, System.Generics.Collections, System.Rtti, System.Types;
 
 type
   TBinding = class sealed

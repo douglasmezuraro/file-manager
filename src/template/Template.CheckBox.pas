@@ -4,7 +4,7 @@ interface
 
 uses
   FMX.StdCtrls,
-  Helper.FMX,
+  Helper.FMX.FMXObject,
   Template.AbstractClass;
 
 type
