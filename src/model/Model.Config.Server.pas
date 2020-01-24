@@ -7,7 +7,9 @@ uses
   Attribute.Component.ComboBox,
   Attribute.Component.Edit,
   Attribute.Ini.Key,
-  Attribute.Validation,
+  Attribute.Validation.Integer,
+  Attribute.Validation.RegEx,
+  Attribute.Validation.Text,
   Types.Utils;
 
 type
@@ -25,7 +27,7 @@ type
     FIPAddress: string;
     FPort: Integer;
   public
-    [StringAttribute(False)]
+    [TextAttribute(False)]
     [Edit('Nome')]
     [Key('NOMESERVIDOR')]
     property Name: string read FName write FName;
@@ -35,12 +37,12 @@ type
     [Key('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
 
-    [StringAttribute]
+    [TextAttribute]
     [Edit('Nome do computador')]
     [Key('NOMECOMPUTADOR')]
     property ComputerName: string read FComputerName write FComputerName;
 
-    [StringAttribute]
+    [TextAttribute]
     [Edit('IP')]
     [Key('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
@@ -50,7 +52,7 @@ type
     [Key('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
-    [StringAttribute(False)]
+    [TextAttribute(False)]
     [ComboBox('Tipo de conexão', 'Socket')]
     [Key('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
@@ -59,7 +61,7 @@ type
     [Key('PODEBALANCEAR')]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
-    [StringAttribute]
+    [TextAttribute]
     [Edit('Nome do executável')]
     [Key('NOMEEXECUTAVELSERVIDOR')]
     property ExeName: string read FExeName write FExeName;

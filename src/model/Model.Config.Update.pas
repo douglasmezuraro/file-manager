@@ -6,7 +6,8 @@ uses
   Attribute.Component.CheckBox,
   Attribute.Component.Edit,
   Attribute.Ini.Key,
-  Attribute.Validation;
+  Attribute.Validation.Integer,
+  Attribute.Validation.Text;
 
 type
   TUpdate = class
@@ -16,7 +17,7 @@ type
     FLocalUpdate: Integer;
     FSystemCode: Integer;
   public
-    [StringAttribute]
+    [TextAttribute]
     [Edit('Tipo')]
     [Key('TIPOSERVIDOR')]
     property ServidorType: string read FServidorType write FServidorType;

@@ -6,7 +6,8 @@ uses
   Attribute.Component.CheckBox,
   Attribute.Component.Edit,
   Attribute.Ini.Key,
-  Attribute.Validation;
+  Attribute.Validation.Integer,
+  Attribute.Validation.Text;
 
 type
   TSPP = class
@@ -22,7 +23,7 @@ type
     [Key('USARSPP')]
     property UseSPP: Boolean read FUseSPP write FUseSPP;
 
-    [StringAttribute]
+    [TextAttribute]
     [Edit('Nome do sistema')]
     [Key('NOMESISTEMA')]
     property SystemName: string read FSystemName write FSystemName;

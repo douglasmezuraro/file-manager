@@ -4,7 +4,7 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   MidasLib,
-  Attribute.Validation in 'src\attribute\Attribute.Validation.pas',
+  Attribute.Validation in 'src\attribute\Validation\Attribute.Validation.pas',
   Command.API in 'src\command\Command.API.pas',
   Command.Invoker in 'src\command\Command.Invoker.pas',
   Command.Receiver in 'src\command\Command.Receiver.pas',
@@ -60,7 +60,14 @@ uses
   Attribute.Component.Memo in 'src\attribute\Component\Attribute.Component.Memo.pas',
   Attribute.Ini.Key in 'src\attribute\Ini\Attribute.Ini.Key.pas',
   Attribute.Ini in 'src\attribute\Ini\Attribute.Ini.pas',
-  Attribute.Ini.Section in 'src\attribute\Ini\Attribute.Ini.Section.pas';
+  Attribute.Ini.Section in 'src\attribute\Ini\Attribute.Ini.Section.pas',
+  Attribute.Validation.Date in 'src\attribute\Validation\Attribute.Validation.Date.pas',
+  Attribute.Validation.DateTime in 'src\attribute\Validation\Attribute.Validation.DateTime.pas',
+  Attribute.Validation.Time in 'src\attribute\Validation\Attribute.Validation.Time.pas',
+  Attribute.Validation.Float in 'src\attribute\Validation\Attribute.Validation.Float.pas',
+  Attribute.Validation.Integer in 'src\attribute\Validation\Attribute.Validation.Integer.pas',
+  Attribute.Validation.RegEx in 'src\attribute\Validation\Attribute.Validation.RegEx.pas',
+  Attribute.Validation.Text in 'src\attribute\Validation\Attribute.Validation.Text.pas';
 
 {$R *.res}
 

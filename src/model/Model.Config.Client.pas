@@ -6,7 +6,8 @@ uses
   Attribute.Component.CheckBox,
   Attribute.Component.Edit,
   Attribute.Ini.Key,
-  Attribute.Validation;
+  Attribute.Validation.Integer,
+  Attribute.Validation.Text;
 
 type
   TClient = class
@@ -15,7 +16,7 @@ type
     FDisableMenuBackground: Boolean;
     FTimeOut: Integer;
   public
-    [StringAttribute]
+    [TextAttribute]
     [Edit('Login automático')]
     [Key('LOGINAUTOMATICO')]
     property AutoLogin: string read FAutoLogin write FAutoLogin;

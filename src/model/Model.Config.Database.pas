@@ -6,7 +6,8 @@ uses
   Attribute.Component.ComboBox,
   Attribute.Component.Edit,
   Attribute.Ini.Key,
-  Attribute.Validation;
+  Attribute.Validation.Integer,
+  Attribute.Validation.Text;
 
 type
   TDatabase = class
@@ -22,27 +23,27 @@ type
     FSchema: string;
     FServer: string;
   public
-    [StringAttribute(False)]
+    [TextAttribute(False)]
     [ComboBox('Tipo de acesso', 'SQLd,FireDAC')]
     [Key('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [StringAttribute(False)]
+    [TextAttribute(False)]
     [ComboBox('Tipo de banco', 'Oracle,SQLServer,DB2')]
     [Key('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 
-    [StringAttribute(False)]
+    [TextAttribute(False)]
     [Edit('Alias')]
     [Key('ALIAS')]
     property Alias: string read FAlias write FAlias;
 
-    [StringAttribute]
+    [TextAttribute]
     [Edit('Server')]
     [Key('SERVER')]
     property Server: string read FServer write FServer;
 
-    [StringAttribute(False)]
+    [TextAttribute(False)]
     [Edit('Esquema')]
     [Key('ESQUEMA')]
     property Schema: string read FSchema write FSchema;

@@ -3,8 +3,9 @@ unit Types.Validator;
 interface
 
 uses
-  System.SysUtils, System.Rtti, System.RegularExpressions, Attribute.Validation, Helper.Rtti,
-  Types.ResourceStrings;
+  System.SysUtils, System.Rtti, System.RegularExpressions, Attribute.Validation, Attribute.Validation.Date,
+  Attribute.Validation.DateTime, Attribute.Validation.Time, Attribute.Validation.Float, Attribute.Validation.Integer,
+  Attribute.Validation.RegEx, Attribute.Validation.Text, Helper.Rtti, Types.ResourceStrings;
 
 type
   TValidator = class sealed
@@ -63,7 +64,7 @@ begin
   if FAttribute is RegExAttribute then
     Exit(ValidateRegEx);
 
-  if FAttribute is StringAttribute then
+  if FAttribute is TextAttribute then
     Exit(ValidateString);
 
   if FAttribute is TimeAttribute then
@@ -179,15 +180,15 @@ begin
   Result := False;
   LValue := FValue.ToString;
 
-  if LValue.Length < (FAttribute as StringAttribute).MinLength then
+  if LValue.Length < (FAttribute as TextAttribute).MinLength then
   begin
-    FMessage := Format(SLengthOfValueIsLessThanMinimumAllowed, [LValue.Length, (FAttribute as StringAttribute).MinLength]);
+    FMessage := Format(SLengthOfValueIsLessThanMinimumAllowed, [LValue.Length, (FAttribute as TextAttribute).MinLength]);
     Exit;
   end;
 
-  if LValue.Length > (FAttribute as StringAttribute).MaxLength then
+  if LValue.Length > (FAttribute as TextAttribute).MaxLength then
   begin
-    FMessage := Format(SLengthOfValueIsGreaterThanMaximumAllowed, [LValue.Length, (FAttribute as StringAttribute).MaxLength]);
+    FMessage := Format(SLengthOfValueIsGreaterThanMaximumAllowed, [LValue.Length, (FAttribute as TextAttribute).MaxLength]);
     Exit;
   end;
 
