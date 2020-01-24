@@ -7,6 +7,8 @@ uses
 
 type
   TInput<T: TModel> = class sealed
+  public const
+    FileName = 'input.json';
   private type
     TInputItems = TArray<TInputItem<T>>;
   private
@@ -14,8 +16,6 @@ type
     FCurrent: TInputItem<T>;
     FTabs: TArray<string>;
     FLanguage: string;
-  public const
-    FileName = 'input.json';
   public
     destructor Destroy; override;
     procedure Read;
@@ -56,6 +56,7 @@ begin
     if Assigned(Method) then
     begin
       Item.Model := Method.Invoke(T, [Item.Source]).AsType<T>;
+
       if Assigned(Item.Model) then
         Item.Model.Read;
     end;

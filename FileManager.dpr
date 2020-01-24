@@ -11,19 +11,19 @@ uses
   Command.Undoable in 'src\command\Command.Undoable.pas',
   FactoryMethod.Control in 'src\factorymethod\FactoryMethod.Control.pas',
   Form.Main in 'src\form\Form.Main.pas' {Main},
-  Helper.Ini in 'src\helper\Helper.Ini.pas',
-  Model.Config in 'src\model\Model.Config.pas',
-  Model.Config.Application in 'src\model\Model.Config.Application.pas',
-  Model.Config.Client in 'src\model\Model.Config.Client.pas',
-  Model.Config.Database in 'src\model\Model.Config.Database.pas',
-  Model.Config.DUnit in 'src\model\Model.Config.DUnit.pas',
-  Model.Config.Log in 'src\model\Model.Config.Log.pas',
-  Model.Config.Monitor in 'src\model\Model.Config.Monitor.pas',
-  Model.Config.Scanner in 'src\model\Model.Config.Scanner.pas',
-  Model.Config.Server in 'src\model\Model.Config.Server.pas',
-  Model.Config.SPP in 'src\model\Model.Config.SPP.pas',
-  Model.Config.Update in 'src\model\Model.Config.Update.pas',
-  Model.Config.Workflow in 'src\model\Model.Config.Workflow.pas',
+  Helper.Ini in 'src\helper\Ini\Helper.Ini.pas',
+  Model.Config in 'src\model\Config\Model.Config.pas',
+  Model.Config.Application in 'src\model\Config\Model.Config.Application.pas',
+  Model.Config.Client in 'src\model\Config\Model.Config.Client.pas',
+  Model.Config.Database in 'src\model\Config\Model.Config.Database.pas',
+  Model.Config.DUnit in 'src\model\Config\Model.Config.DUnit.pas',
+  Model.Config.Log in 'src\model\Config\Model.Config.Log.pas',
+  Model.Config.Monitor in 'src\model\Config\Model.Config.Monitor.pas',
+  Model.Config.Scanner in 'src\model\Config\Model.Config.Scanner.pas',
+  Model.Config.Server in 'src\model\Config\Model.Config.Server.pas',
+  Model.Config.SPP in 'src\model\Config\Model.Config.SPP.pas',
+  Model.Config.Update in 'src\model\Config\Model.Config.Update.pas',
+  Model.Config.Workflow in 'src\model\Config\Model.Config.Workflow.pas',
   Template.AbstractClass in 'src\template\Template.AbstractClass.pas',
   Template.CheckBox in 'src\template\Template.CheckBox.pas',
   Template.ComboBox in 'src\template\Template.ComboBox.pas',
@@ -41,10 +41,10 @@ uses
   Types.Utils.Dialogs in 'src\types\Types.Utils.Dialogs.pas',
   Types.Utils.Methods in 'src\types\Types.Utils.Methods.pas',
   Types.Utils.Translation in 'src\types\Types.Utils.Translation.pas',
-  Model.Base in 'src\model\Model.Base.pas',
+  Model.Base in 'src\model\Base\Model.Base.pas',
   Types.Validator in 'src\types\Types.Validator.pas',
   Types.Utils.RegEx in 'src\types\Types.Utils.RegEx.pas',
-  Model.Config.AlternativeBalancer in 'src\model\Model.Config.AlternativeBalancer.pas',
+  Model.Config.AlternativeBalancer in 'src\model\Config\Model.Config.AlternativeBalancer.pas',
   Attribute.Managed in 'src\attribute\Attribute.Managed.pas',
   Template.Memo in 'src\template\Template.Memo.pas',
   Types.ResourceStrings in 'src\types\Types.ResourceStrings.pas',
@@ -87,7 +87,7 @@ begin
   Application.Run;
 
 {$WARN SYMBOL_PLATFORM OFF}
-  ReportMemoryLeaksOnShutdown := DebugHook > 0;
+  ReportMemoryLeaksOnShutdown := WordBool(DebugHook);
 {$WARN SYMBOL_PLATFORM ON}
 end.
 

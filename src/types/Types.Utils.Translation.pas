@@ -27,7 +27,7 @@ end;
 
 class procedure TTranslation.ToPortuguese;
 begin
-  {$REGION 'System'}
+  {$REGION 'System ResourceStrings'}
   Hook(@SMsgDlgWarning, 'Atenção');
   Hook(@SMsgDlgError, 'Erro');
   Hook(@SMsgDlgInformation, 'Informação');
@@ -53,7 +53,7 @@ begin
   Hook(@SEditSelectAll, 'Selecionar tudo');
   {$ENDREGION}
 
-  {$REGION 'Custom'}
+  {$REGION 'Custom ResourceStrings'}
   Hook(@SUnsavedChangesWantToExitAnyway, 'Existem alterações não salvas, deseja sair mesmo assim?');
   Hook(@SUnsavedChangesWantToChangeFileAnyway, 'Existem alterações não salvas, deseja trocar o arquivo mesmo assim?');
   Hook(@SFileNotFound, 'Arquivo não encontrado: %s.');

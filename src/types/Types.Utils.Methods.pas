@@ -23,7 +23,7 @@ end;
 
 class procedure TMethods.OpenURL(const URL: string);
 begin
-  if not URL.IsEmpty then
+  if not URL.Trim.IsEmpty then
     HlinkNavigateString(nil, PWideChar(URL));
 end;
 

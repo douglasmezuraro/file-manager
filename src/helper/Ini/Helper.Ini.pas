@@ -3,19 +3,13 @@ unit Helper.Ini;
 interface
 
 uses
-  Attribute.Ini.Key,
-  Attribute.Ini.Section,
-  Helper.Rtti.RttiProperty,
-  Helper.Rtti.Value,
-  System.Classes,
-  System.IniFiles,
-  System.Rtti,
-  System.SysUtils,
-  System.TypInfo,
-  Types.Utils;
+  Attribute.Ini.Key, Attribute.Ini.Section, Helper.Rtti.RttiProperty, Helper.Rtti.Value, System.Classes,
+  System.IniFiles, System.Rtti, System.SysUtils, System.TypInfo, Types.Utils;
 
 type
   TIniFileHelper = class Helper for TIniFile
+  protected const
+    ValueSeparator = '=';
   private type
     TExecuteMode = (emRead, emWrite);
   private
@@ -23,16 +17,12 @@ type
     procedure Execute(Obj: TObject; const Mode: TExecuteMode; Section: SectionAttribute);
     function InternalRead(var Value: TValue; const Section, Key: string): TValue;
     procedure InternalWrite(var Value: TValue; const Section, Key: string);
-  protected
-    const ValueSeparator = '=';
   public
     procedure Read(Obj: TObject);
     procedure Write(Obj: TObject);
   end;
 
 implementation
-
-{ TIniFileHelper }
 
 function TIniFileHelper.InternalRead(var Value: TValue; const Section, Key: string): TValue;
 begin

@@ -114,19 +114,19 @@
         <DCCReference Include="src\form\Form.Main.pas">
             <Form>Main</Form>
         </DCCReference>
-        <DCCReference Include="src\helper\Helper.Ini.pas"/>
-        <DCCReference Include="src\model\Model.Config.pas"/>
-        <DCCReference Include="src\model\Model.Config.Application.pas"/>
-        <DCCReference Include="src\model\Model.Config.Client.pas"/>
-        <DCCReference Include="src\model\Model.Config.Database.pas"/>
-        <DCCReference Include="src\model\Model.Config.DUnit.pas"/>
-        <DCCReference Include="src\model\Model.Config.Log.pas"/>
-        <DCCReference Include="src\model\Model.Config.Monitor.pas"/>
-        <DCCReference Include="src\model\Model.Config.Scanner.pas"/>
-        <DCCReference Include="src\model\Model.Config.Server.pas"/>
-        <DCCReference Include="src\model\Model.Config.SPP.pas"/>
-        <DCCReference Include="src\model\Model.Config.Update.pas"/>
-        <DCCReference Include="src\model\Model.Config.Workflow.pas"/>
+        <DCCReference Include="src\helper\Ini\Helper.Ini.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Application.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Client.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Database.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.DUnit.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Log.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Monitor.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Scanner.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Server.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.SPP.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Update.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.Workflow.pas"/>
         <DCCReference Include="src\template\Template.AbstractClass.pas"/>
         <DCCReference Include="src\template\Template.CheckBox.pas"/>
         <DCCReference Include="src\template\Template.ComboBox.pas"/>
@@ -144,10 +144,10 @@
         <DCCReference Include="src\types\Types.Utils.Dialogs.pas"/>
         <DCCReference Include="src\types\Types.Utils.Methods.pas"/>
         <DCCReference Include="src\types\Types.Utils.Translation.pas"/>
-        <DCCReference Include="src\model\Model.Base.pas"/>
+        <DCCReference Include="src\model\Base\Model.Base.pas"/>
         <DCCReference Include="src\types\Types.Validator.pas"/>
         <DCCReference Include="src\types\Types.Utils.RegEx.pas"/>
-        <DCCReference Include="src\model\Model.Config.AlternativeBalancer.pas"/>
+        <DCCReference Include="src\model\Config\Model.Config.AlternativeBalancer.pas"/>
         <DCCReference Include="src\attribute\Attribute.Managed.pas"/>
         <DCCReference Include="src\template\Template.Memo.pas"/>
         <DCCReference Include="src\types\Types.ResourceStrings.pas"/>
