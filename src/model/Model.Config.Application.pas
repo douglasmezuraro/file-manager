@@ -3,7 +3,8 @@ unit Model.Config.Application;
 interface
 
 uses
-  Attribute.Ini,
+  Attribute.Component.Edit,
+  Attribute.Ini.Key,
   Attribute.Validation;
 
 type

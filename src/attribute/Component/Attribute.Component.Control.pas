@@ -3,7 +3,7 @@ unit Attribute.Component.Control;
 interface
 
 uses
-  Attribute.Component.Text;
+  Attribute.Text;
 
 type
   ControlAttribute = class abstract(TextAttribute);

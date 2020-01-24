@@ -3,7 +3,7 @@ unit Attribute.Component.Hint;
 interface
 
 uses
-  Attribute.Component.Text;
+  Attribute.Text;
 
 type
   HintAttribute = class sealed(TextAttribute);

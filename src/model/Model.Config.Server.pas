@@ -3,7 +3,10 @@ unit Model.Config.Server;
 interface
 
 uses
-  Attribute.Ini,
+  Attribute.Component.CheckBox,
+  Attribute.Component.ComboBox,
+  Attribute.Component.Edit,
+  Attribute.Ini.Key,
   Attribute.Validation,
   Types.Utils;
 

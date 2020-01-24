@@ -4,7 +4,6 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   MidasLib,
-  Attribute.Ini in 'src\attribute\Attribute.Ini.pas',
   Attribute.Validation in 'src\attribute\Attribute.Validation.pas',
   Command.API in 'src\command\Command.API.pas',
   Command.Invoker in 'src\command\Command.Invoker.pas',
@@ -52,13 +51,16 @@ uses
   Template.Memo in 'src\template\Template.Memo.pas',
   Types.ResourceStrings in 'src\types\Types.ResourceStrings.pas',
   Attribute.Component.ComboBox in 'src\attribute\Component\Attribute.Component.ComboBox.pas',
-  Attribute.Component.Text in 'src\attribute\Component\Attribute.Component.Text.pas',
+  Attribute.Text in 'src\attribute\Attribute.Text.pas',
   Attribute.Component.Control in 'src\attribute\Component\Attribute.Component.Control.pas',
   Attribute.Component.Hint in 'src\attribute\Component\Attribute.Component.Hint.pas',
   Attribute.Component.Tab in 'src\attribute\Component\Attribute.Component.Tab.pas',
   Attribute.Component.CheckBox in 'src\attribute\Component\Attribute.Component.CheckBox.pas',
   Attribute.Component.Edit in 'src\attribute\Component\Attribute.Component.Edit.pas',
-  Attribute.Component.Memo in 'src\attribute\Component\Attribute.Component.Memo.pas';
+  Attribute.Component.Memo in 'src\attribute\Component\Attribute.Component.Memo.pas',
+  Attribute.Ini.Key in 'src\attribute\Ini\Attribute.Ini.Key.pas',
+  Attribute.Ini in 'src\attribute\Ini\Attribute.Ini.pas',
+  Attribute.Ini.Section in 'src\attribute\Ini\Attribute.Ini.Section.pas';
 
 {$R *.res}
 

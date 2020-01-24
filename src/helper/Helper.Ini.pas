@@ -3,7 +3,8 @@ unit Helper.Ini;
 interface
 
 uses
-  Attribute.Ini,
+  Attribute.Ini.Key,
+  Attribute.Ini.Section,
   Helper.Rtti,
   System.Classes,
   System.IniFiles,

@@ -3,7 +3,9 @@ unit Model.Config.Database;
 interface
 
 uses
-  Attribute.Ini,
+  Attribute.Component.ComboBox,
+  Attribute.Component.Edit,
+  Attribute.Ini.Key,
   Attribute.Validation;
 
 type

@@ -3,7 +3,9 @@ unit Model.Config.Monitor;
 interface
 
 uses
-  Attribute.Ini;
+  Attribute.Component.CheckBox,
+  Attribute.Component.Edit,
+  Attribute.Ini.Key;
 
 type
   TMonitor = class

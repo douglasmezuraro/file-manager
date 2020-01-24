@@ -4,7 +4,7 @@ interface
 
 uses
   Attribute.Component.Tab,
-  Attribute.Ini,
+  Attribute.Ini.Section,
   Attribute.Managed,
   Model.Base,
   Model.Config.AlternativeBalancer,

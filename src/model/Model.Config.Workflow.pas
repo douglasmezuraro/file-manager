@@ -4,7 +4,7 @@ interface
 
 uses
   Attribute.Component.CheckBox,
-  Attribute.Ini;
+  Attribute.Ini.Key;
 
 type
   TWorkflow = class

@@ -3,7 +3,9 @@ unit Model.Config.SPP;
 interface
 
 uses
-  Attribute.Ini,
+  Attribute.Component.CheckBox,
+  Attribute.Component.Edit,
+  Attribute.Ini.Key,
   Attribute.Validation;
 
 type

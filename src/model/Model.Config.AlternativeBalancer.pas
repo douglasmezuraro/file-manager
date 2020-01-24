@@ -4,8 +4,8 @@ interface
 
 uses
   Attribute.Component.Memo,
+  Attribute.Ini.Key,
   Attribute.Managed,
-  Attribute.Ini,
   System.Classes;
 
 type

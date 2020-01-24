@@ -3,7 +3,9 @@ unit Model.Config.Scanner;
 interface
 
 uses
-  Attribute.Ini;
+  Attribute.Component.CheckBox,
+  Attribute.Component.Edit,
+  Attribute.Ini.Key;
 
 type
   TScanner = class
