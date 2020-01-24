@@ -19,8 +19,6 @@ type
 
 implementation
 
-{ TConversions }
-
 class function TConversions.BoolToStr(const Value: Boolean): string;
 begin
   Result := FBooleanString[Value];

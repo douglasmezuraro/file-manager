@@ -10,7 +10,7 @@ uses
   System.Types;
 
 type
-  TBinding = class
+  TBinding = class sealed
   private type
     TBindingPair = TPair<TObject, TRttiProperty>;
     TBindingDictionary = TDictionary<IControl, TBindingPair>;
@@ -31,8 +31,6 @@ type
   end;
 
 implementation
-
-{ TBinding }
 
 procedure TBinding.Add(const Control: IControl; const Obj: TObject; const Prop: TRttiProperty);
 begin

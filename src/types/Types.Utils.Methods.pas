@@ -3,9 +3,7 @@ unit Types.Utils.Methods;
 interface
 
 uses
-  System.IOUtils,
-  System.SysUtils,
-  Winapi.UrlMon;
+  System.IOUtils, System.SysUtils, Winapi.UrlMon;
 
 type
   TMethods = class abstract
@@ -15,8 +13,6 @@ type
   end;
 
 implementation
-
-{ TMethods }
 
 class function TMethods.FilePath(const FileName: TFileName): TFileName;
 const

@@ -30,8 +30,6 @@ type
 
 implementation
 
-{ TValidator }
-
 constructor TValidator.Create(const Prop: TRttiProperty; const Value: TValue);
 begin
   FMessage := string.Empty;

@@ -3,14 +3,10 @@ unit Types.ControlDTO;
 interface
 
 uses
-  FMX.Types,
-  Helper.Rtti,
-  System.Classes,
-  System.Rtti,
-  System.Types;
+  FMX.Types, Helper.Rtti, System.Classes, System.Rtti, System.Types;
 
 type
-  TControlDTO = class
+  TControlDTO = class sealed
   private
     FModel: TObject;
     FOnNotify: TNotifyEvent;
@@ -29,8 +25,6 @@ type
   end;
 
 implementation
-
-{ TDTO }
 
 constructor TControlDTO.Create(const X, Y: Single);
 begin

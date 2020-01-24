@@ -3,14 +3,11 @@ unit Model.Config.Update;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
+  Attribute.Component.CheckBox, Attribute.Component.Edit, Attribute.Ini.Key, Attribute.Validation.Integer,
   Attribute.Validation.Text;
 
 type
-  TUpdate = class
+  TUpdate = class sealed
   private
     FCanUpdate: Boolean;
     FServidorType: string;

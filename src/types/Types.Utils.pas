@@ -3,12 +3,8 @@ unit Types.Utils;
 interface
 
 uses
-  Types.Utils.Constants,
-  Types.Utils.Conversions,
-  Types.Utils.Dialogs,
-  Types.Utils.Methods,
-  Types.Utils.RegEx,
-  Types.Utils.Translation;
+  Types.Utils.Constants, Types.Utils.Conversions, Types.Utils.Dialogs, Types.Utils.Methods,
+  Types.Utils.RegEx, Types.Utils.Translation;
 
 type
   TUtils = class abstract

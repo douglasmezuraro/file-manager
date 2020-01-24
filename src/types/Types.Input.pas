@@ -3,15 +3,10 @@ unit Types.Input;
 interface
 
 uses
-  Helper.Rtti,
-  Model.Base,
-  System.IOUtils,
-  System.Rtti,
-  System.SysUtils,
-  Types.Input.Item;
+  Helper.Rtti, Model.Base, System.IOUtils, System.Rtti, System.SysUtils, Types.Input.Item;
 
 type
-  TInput<T: TModel> = class
+  TInput<T: TModel> = class sealed
   private type
     TInputItems = TArray<TInputItem<T>>;
   private
@@ -31,8 +26,6 @@ type
   end;
 
 implementation
-
-{ TInput }
 
 destructor TInput<T>.Destroy;
 var

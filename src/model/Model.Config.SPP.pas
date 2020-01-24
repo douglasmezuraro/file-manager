@@ -3,14 +3,11 @@ unit Model.Config.SPP;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
+  Attribute.Component.CheckBox, Attribute.Component.Edit, Attribute.Ini.Key, Attribute.Validation.Integer,
   Attribute.Validation.Text;
 
 type
-  TSPP = class
+  TSPP = class sealed
   private
     FRegisterLog: Boolean;
     FExecutionsWithoutProcess: Integer;

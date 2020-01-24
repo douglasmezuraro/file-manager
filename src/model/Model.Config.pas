@@ -3,25 +3,13 @@ unit Model.Config;
 interface
 
 uses
-  Attribute.Component.Tab,
-  Attribute.Ini.Section,
-  Attribute.Managed,
-  Model.Base,
-  Model.Config.AlternativeBalancer,
-  Model.Config.Application,
-  Model.Config.Client,
-  Model.Config.Database,
-  Model.Config.DUnit,
-  Model.Config.Log,
-  Model.Config.Monitor,
-  Model.Config.Scanner,
-  Model.Config.Server,
-  Model.Config.SPP,
-  Model.Config.Update,
+  Attribute.Component.Tab, Attribute.Ini.Section, Attribute.Managed, Model.Base, Model.Config.AlternativeBalancer,
+  Model.Config.Application, Model.Config.Client, Model.Config.Database, Model.Config.DUnit, Model.Config.Log,
+  Model.Config.Monitor, Model.Config.Scanner, Model.Config.Server, Model.Config.SPP, Model.Config.Update,
   Model.Config.Workflow;
 
 type
-  TConfig = class(TModel)
+  TConfig = class sealed(TModel)
   private
     FWorkflow: TWorkflow;
     FMonitor: TMonitor;

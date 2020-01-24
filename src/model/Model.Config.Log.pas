@@ -3,11 +3,10 @@ unit Model.Config.Log;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Ini.Key;
+  Attribute.Component.CheckBox, Attribute.Ini.Key;
 
 type
-  TLog = class
+  TLog = class sealed
   private
     FRegisterSQLLog: Boolean;
     FRegisterSignatureLog: Boolean;

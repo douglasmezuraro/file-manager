@@ -3,10 +3,7 @@ unit Types.Utils.Dialogs;
 interface
 
 uses
-  FMX.Dialogs,
-  FMX.DialogService,
-  System.SysUtils,
-  System.UITypes;
+  FMX.Dialogs, FMX.DialogService, System.SysUtils, System.UITypes;
 
 type
   TDialogs = class abstract
@@ -32,8 +29,6 @@ type
   end;
 
 implementation
-
-{ TDialogs }
 
 class function TDialogs.Confirmation(const Message: string): Boolean;
 var

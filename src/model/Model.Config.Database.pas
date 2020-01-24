@@ -3,14 +3,11 @@ unit Model.Config.Database;
 interface
 
 uses
-  Attribute.Component.ComboBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
+  Attribute.Component.ComboBox, Attribute.Component.Edit, Attribute.Ini.Key, Attribute.Validation.Integer,
   Attribute.Validation.Text;
 
 type
-  TDatabase = class
+  TDatabase = class sealed
   private
     FConnectionLogUpdateTime: Integer;
     FMaxConnections: Integer;

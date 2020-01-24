@@ -3,10 +3,7 @@ unit Command.Undoable;
 interface
 
 uses
-  FMX.Controls,
-  Command.API,
-  Command.Receiver,
-  Helper.FMX;
+  FMX.Controls, Command.API, Command.Receiver, Helper.FMX;
 
 type
   TUndoableCommand = class(TInterfacedObject, ICommand)
@@ -18,8 +15,6 @@ type
   end;
 
 implementation
-
-{ TUndoableCommand }
 
 constructor TUndoableCommand.Create(const Receiver: TReceiver);
 begin

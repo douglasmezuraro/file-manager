@@ -3,14 +3,11 @@ unit Model.Config.Client;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
+  Attribute.Component.CheckBox, Attribute.Component.Edit, Attribute.Ini.Key, Attribute.Validation.Integer,
   Attribute.Validation.Text;
 
 type
-  TClient = class
+  TClient = class sealed
   private
     FAutoLogin: string;
     FDisableMenuBackground: Boolean;

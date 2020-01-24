@@ -3,10 +3,7 @@ unit Types.IniObject;
 interface
 
 uses
-  Helper.Ini,
-  System.IniFiles,
-  System.SysUtils,
-  Types.ObjectFileAPI;
+  Helper.Ini, System.IniFiles, System.SysUtils, Types.ObjectFileAPI;
 
 type
   TIniObject = class abstract(TInterfacedObject, IObjectFile)
@@ -21,8 +18,6 @@ type
   end;
 
 implementation
-
-{ TIniObject }
 
 constructor TIniObject.Create(const FileName: TFileName);
 begin
