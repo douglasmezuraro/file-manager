@@ -20,8 +20,6 @@ type
 
 implementation
 
-{ TIniAttribute }
-
 constructor IniAttribute.Create(const Text: string);
 begin
   FText := Text;

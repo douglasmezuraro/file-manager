@@ -3,7 +3,6 @@ unit Model.Config.Client;
 interface
 
 uses
-  Attribute.Control,
   Attribute.Ini,
   Attribute.Validation;
 

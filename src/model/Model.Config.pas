@@ -3,7 +3,7 @@ unit Model.Config;
 interface
 
 uses
-  Attribute.Control,
+  Attribute.Component.Tab,
   Attribute.Ini,
   Attribute.Managed,
   Model.Base,

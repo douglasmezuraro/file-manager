@@ -3,7 +3,6 @@ unit Model.Config.Monitor;
 interface
 
 uses
-  Attribute.Control,
   Attribute.Ini;
 
 type

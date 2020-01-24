@@ -3,7 +3,7 @@ unit Template.ComboBox;
 interface
 
 uses
-  Attribute.Control,
+  Attribute.Component.ComboBox,
   FMX.ListBox,
   Helper.FMX,
   Helper.Rtti,
@@ -16,8 +16,6 @@ type
   end;
 
 implementation
-
-{ TComboBoxTemplate }
 
 procedure TComboBoxTemplate.TemplateMethod;
 var

@@ -3,7 +3,8 @@ unit Template.AbstractClass;
 interface
 
 uses
-  Attribute.Control,
+  Attribute.Component.Control,
+  Attribute.Component.Hint,
   Attribute.Ini,
   FMX.Controls,
   FMX.StdCtrls,
@@ -93,9 +94,9 @@ end;
 
 function TControlTemplate.GetText: string;
 var
-  Attribute: ComponentAttribute;
+  Attribute: ControlAttribute;
 begin
-  Attribute := FDTO.Prop.GetAttribute<ComponentAttribute>();
+  Attribute := FDTO.Prop.GetAttribute<ControlAttribute>();
 
   Result := string.Empty;
   if Assigned(Attribute) then

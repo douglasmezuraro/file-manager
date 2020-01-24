@@ -3,7 +3,7 @@ unit Model.Config.Workflow;
 interface
 
 uses
-  Attribute.Control,
+  Attribute.Component.CheckBox,
   Attribute.Ini;
 
 type

@@ -3,7 +3,11 @@ unit FactoryMethod.Control;
 interface
 
 uses
-  Attribute.Control,
+  Attribute.Component.CheckBox,
+  Attribute.Component.Tab,
+  Attribute.Component.ComboBox,
+  Attribute.Component.Edit,
+  Attribute.Component.Memo,
   Helper.Rtti,
   System.Rtti,
   Template.AbstractClass,
@@ -21,8 +25,6 @@ type
   end;
 
 implementation
-
-{ TControlFactory }
 
 class function TControlFactory.Fabricate(const DTO: TControlDTO): TControlTemplate;
 begin

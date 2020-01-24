@@ -3,7 +3,6 @@ unit Model.Config.Log;
 interface
 
 uses
-  Attribute.Control,
   Attribute.Ini;
 
 type

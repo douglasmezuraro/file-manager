@@ -3,7 +3,7 @@ unit Model.Config.AlternativeBalancer;
 interface
 
 uses
-  Attribute.Control,
+  Attribute.Component.Memo,
   Attribute.Managed,
   Attribute.Ini,
   System.Classes;

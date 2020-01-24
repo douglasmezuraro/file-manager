@@ -3,7 +3,6 @@ unit Model.Config.Scanner;
 interface
 
 uses
-  Attribute.Control,
   Attribute.Ini;
 
 type

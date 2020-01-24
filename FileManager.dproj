@@ -105,7 +105,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="src\attribute\Attribute.Control.pas"/>
         <DCCReference Include="src\attribute\Attribute.Ini.pas"/>
         <DCCReference Include="src\attribute\Attribute.Validation.pas"/>
         <DCCReference Include="src\command\Command.API.pas"/>
@@ -155,6 +154,14 @@
         <DCCReference Include="src\attribute\Attribute.Managed.pas"/>
         <DCCReference Include="src\template\Template.Memo.pas"/>
         <DCCReference Include="src\types\Types.ResourceStrings.pas"/>
+        <DCCReference Include="src\attribute\Component\Attribute.Component.ComboBox.pas"/>
+        <DCCReference Include="src\attribute\Component\Attribute.Component.Text.pas"/>
+        <DCCReference Include="src\attribute\Component\Attribute.Component.Control.pas"/>
+        <DCCReference Include="src\attribute\Component\Attribute.Component.Hint.pas"/>
+        <DCCReference Include="src\attribute\Component\Attribute.Component.Tab.pas"/>
+        <DCCReference Include="src\attribute\Component\Attribute.Component.CheckBox.pas"/>
+        <DCCReference Include="src\attribute\Component\Attribute.Component.Edit.pas"/>
+        <DCCReference Include="src\attribute\Component\Attribute.Component.Memo.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -3,7 +3,6 @@ unit Model.Config.Database;
 interface
 
 uses
-  Attribute.Control,
   Attribute.Ini,
   Attribute.Validation;
 
