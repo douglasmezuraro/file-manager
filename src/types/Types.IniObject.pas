@@ -3,23 +3,21 @@ unit Types.IniObject;
 interface
 
 uses
-  Attribute.Ini.Key, Attribute.Ini.Section, Helper.Rtti.RttiProperty, Helper.Rtti.Value, System.Classes,
-  System.IniFiles, System.Rtti, System.SysUtils, System.TypInfo, Types.ObjectFileAPI, Types.Utils;
+  Attribute.Ini.Key, Attribute.Ini.Section, Helper.Ini, Helper.Rtti.RttiProperty, Helper.Rtti.Value,
+  System.Classes, System.IniFiles, System.Rtti, System.SysUtils, System.TypInfo, Types.ObjectFileAPI,
+  Types.Utils;
 
 type
+  TFileMode = (Read, Write);
+
   TIniObject = class abstract(TInterfacedObject, IObjectFile)
-  private type
-    TFileMode = (Read, Write);
   strict private
     FFile: TIniFile;
     FMode: TFileMode;
   private
     procedure Execute(const Obj: TObject; Section: SectionAttribute);
-
-    function InternalRead(var Value: TValue; const Section, Key: string): TValue;
-    procedure InternalWrite(var Value: TValue; const Section, Key: string);
-
-    procedure WriteSectionValues(const Section: string; const Values: TStringList);
+    function ReadValue(var Value: TValue; const Section, Key: string): TValue;
+    procedure WriteValue(var Value: TValue; const Section, Key: string);
   public
     constructor Create(const FileName: TFileName); virtual;
     destructor Destroy; override;
@@ -101,13 +99,13 @@ begin
     end;
 
     case FMode of
-      TFileMode.Read: Prop.SetValue(Obj, InternalRead(Value, Section.Text, Key.Text));
-      TFileMode.Write: InternalWrite(Value, Section.Text, Key.Text);
+      TFileMode.Read: Prop.SetValue(Obj, ReadValue(Value, Section.Text, Key.Text));
+      TFileMode.Write: WriteValue(Value, Section.Text, Key.Text);
     end;
   end;
 end;
 
-function TIniObject.InternalRead(var Value: TValue; const Section, Key: string): TValue;
+function TIniObject.ReadValue(var Value: TValue; const Section, Key: string): TValue;
 begin
   Result := Value;
 
@@ -160,7 +158,7 @@ begin
   end;
 end;
 
-procedure TIniObject.InternalWrite(var Value: TValue; const Section, Key: string);
+procedure TIniObject.WriteValue(var Value: TValue; const Section, Key: string);
 begin
   if not Value.Assigned then
   begin
@@ -212,28 +210,8 @@ begin
 
   if Value.IsObject then
   begin
-    WriteSectionValues(Section, Value.AsType<TStringList>);
+    FFile.WriteSectionValues(Section, Value.AsType<TStringList>);
     Exit;
-  end;
-end;
-
-procedure TIniObject.WriteSectionValues(const Section: string; const Values: TStringList);
-var
-  SeparatorIndex: Word;
-  Line, Key, Value: string;
-  LValues: TArray<string>;
-begin
-  FFile.EraseSection(Section);
-  LValues := Values.ToStringArray;
-  for Line in LValues do
-  begin
-    SeparatorIndex := Line.IndexOf('=');
-
-    Key := Line.Substring(0, SeparatorIndex);
-    Value := Line.Substring(Succ(SeparatorIndex));
-
-    if not Key.IsEmpty then
-      FFile.WriteString(Section, Key, Value);
   end;
 end;
 
