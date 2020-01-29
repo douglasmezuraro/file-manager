@@ -21,6 +21,7 @@ type
     destructor Destroy; override;
     procedure Add(const Control: IControl; const Obj: TObject; const Prop: TRttiProperty);
     procedure Clear;
+  public
     property Keys: TArray<IControl> read GetKeys;
     property Values[const Control: IControl]: TValue read GetValue write SetValue;
     property Prop[const Control: IControl]: TRttiProperty read GetProp;
@@ -56,9 +57,10 @@ end;
 
 function TBinding.GetProp(const Control: IControl): TRttiProperty;
 begin
-  Result := nil;
   if FDictionary.ContainsKey(Control) then
-    Result := FDictionary.Items[Control].Value;
+    Exit(FDictionary.Items[Control].Value);
+
+  Result := nil;
 end;
 
 function TBinding.GetValue(const Control: IControl): TValue;

@@ -3,10 +3,7 @@ unit Template.Edit;
 interface
 
 uses
-  FMX.Edit,
-  Helper.FMX.FMXObject,
-  System.UITypes,
-  Template.AbstractClass;
+  FMX.Edit, Helper.FMX.FMXObject, System.UITypes, Template.AbstractClass;
 
 type
   TEditTemplate = class(TLabeledTemplate)
@@ -15,8 +12,6 @@ type
   end;
 
 implementation
-
-{ TEditTemplate }
 
 procedure TEditTemplate.TemplateMethod;
 var

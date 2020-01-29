@@ -3,10 +3,7 @@ unit Template.Tab;
 interface
 
 uses
-  FMX.Layouts,
-  FMX.TabControl,
-  FMX.Types,
-  Template.AbstractClass;
+  FMX.Layouts, FMX.TabControl, FMX.Types, Template.AbstractClass;
 
 type
   TTabTemplate = class(TLayoutTemplate)
@@ -15,8 +12,6 @@ type
   end;
 
 implementation
-
-{ TTabTemplate }
 
 procedure TTabTemplate.TemplateMethod;
 var

@@ -6,7 +6,7 @@ uses
   Attribute.Validation, System.SysUtils;
 
 type
-  RegExAttribute = class(ValidationAttribute)
+  RegExAttribute = class sealed(ValidationAttribute)
   private
     FPattern: string;
   public

@@ -35,8 +35,10 @@ begin
   begin
     if Assigned(Item.Model) then
       Item.Model.Free;
+
     Item.Free;
   end;
+
   inherited Destroy;
 end;
 
@@ -50,7 +52,9 @@ begin
   for Item in Items do
   begin
     if not TFile.Exists(Item.Source) then
+    begin
       raise EFileNotFoundException.Create(Item.Source);
+    end;
 
     Method := Context.GetType(TypeInfo(T)).GetConstructor;
     if Assigned(Method) then

@@ -3,9 +3,7 @@ unit Template.CheckBox;
 interface
 
 uses
-  FMX.StdCtrls,
-  Helper.FMX.FMXObject,
-  Template.AbstractClass;
+  FMX.StdCtrls, Helper.FMX.FMXObject, Template.AbstractClass;
 
 type
   TCheckBoxTemplate = class(TStylizedTemplate)
@@ -14,8 +12,6 @@ type
   end;
 
 implementation
-
-{ TCheckBoxTemplate }
 
 procedure TCheckBoxTemplate.TemplateMethod;
 var

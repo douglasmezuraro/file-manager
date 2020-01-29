@@ -18,8 +18,6 @@ type
 
 implementation
 
-{ TMemoTemplate }
-
 procedure TMemoTemplate.TemplateMethod;
 var
   Control: TMemo;
