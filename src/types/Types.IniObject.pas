@@ -3,8 +3,17 @@ unit Types.IniObject;
 interface
 
 uses
-  Attribute.Ini.Key, Attribute.Ini.Section, Helper.Ini, Helper.Rtti.RttiProperty, Helper.Rtti.Value,
-  System.Classes, System.IniFiles, System.Rtti, System.SysUtils, System.TypInfo, Types.ObjectFileAPI,
+  Attribute.Ini.Key,
+  Attribute.Ini.Section,
+  Helper.Ini,
+  Helper.Rtti.RttiProperty,
+  Helper.Rtti.Value,
+  System.Classes,
+  System.IniFiles,
+  System.Rtti,
+  System.SysUtils,
+  System.TypInfo,
+  Types.ObjectFileAPI,
   Types.Utils;
 
 type

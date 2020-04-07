@@ -3,8 +3,14 @@ unit Model.Config.Server;
 interface
 
 uses
-  Attribute.Component.CheckBox, Attribute.Component.ComboBox, Attribute.Component.Edit, Attribute.Ini.Key,
-  Attribute.Validation.Integer, Attribute.Validation.RegEx, Attribute.Validation.Text, Types.Utils;
+  Attribute.Component.CheckBox,
+  Attribute.Component.ComboBox,
+  Attribute.Component.Edit,
+  Attribute.Ini.Key,
+  Attribute.Validation.Integer,
+  Attribute.Validation.RegEx,
+  Attribute.Validation.Text,
+  Types.Utils;
 
 type
   TServer = class sealed

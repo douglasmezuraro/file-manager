@@ -3,7 +3,10 @@ unit Model.Config.AlternativeBalancer;
 interface
 
 uses
-  Attribute.Component.Memo, Attribute.Ini.Key, Attribute.Managed, System.Classes;
+  Attribute.Component.Memo,
+  Attribute.Ini.Key,
+  Attribute.Managed,
+  System.Classes;
 
 type
   TAlternativeBalancer = class sealed

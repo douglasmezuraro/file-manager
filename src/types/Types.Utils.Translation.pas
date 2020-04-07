@@ -3,7 +3,10 @@ unit Types.Utils.Translation;
 interface
 
 uses
-  FMX.Consts, System.SysUtils, Types.ResourceStrings, Winapi.Windows;
+  FMX.Consts,
+  System.SysUtils,
+  Types.ResourceStrings,
+  Winapi.Windows;
 
 type
   TTranslation = class

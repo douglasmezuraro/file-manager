@@ -3,7 +3,10 @@ unit Helper.Rtti.Util;
 interface
 
 uses
-  Attribute.Managed, Helper.Rtti.RttiProperty, Helper.Rtti.RttiType, System.Rtti;
+  Attribute.Managed,
+  Helper.Rtti.RttiProperty,
+  Helper.Rtti.RttiType,
+  System.Rtti;
 
 type
   TRttiUtil = class abstract
@@ -76,3 +79,4 @@ begin
 end;
 
 end.
+

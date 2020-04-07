@@ -3,10 +3,14 @@ unit Template.ComboBox;
 interface
 
 uses
-  Attribute.Component.ComboBox, FMX.ListBox, Helper.FMX.FMXObject, Helper.Rtti.RttiProperty, Template.AbstractClass;
+  Attribute.Component.ComboBox,
+  FMX.ListBox,
+  Helper.FMX.FMXObject,
+  Helper.Rtti.RttiProperty,
+  Template.AbstractClass;
 
 type
-  TComboBoxTemplate = class(TLabeledTemplate)
+  TComboBoxTemplate = class sealed(TLabeledTemplate)
   public
     procedure TemplateMethod; override;
   end;

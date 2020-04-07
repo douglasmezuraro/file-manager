@@ -3,9 +3,19 @@ unit Types.Validator;
 interface
 
 uses
-  Attribute.Validation, Attribute.Validation.Date, Attribute.Validation.DateTime, Attribute.Validation.Time,
-  Attribute.Validation.Float, Attribute.Validation.Integer, Attribute.Validation.RegEx, Attribute.Validation.Text,
-  Helper.Rtti.RttiProperty, Helper.Rtti.Value, System.SysUtils, System.Rtti, System.RegularExpressions,
+  Attribute.Validation,
+  Attribute.Validation.Date,
+  Attribute.Validation.DateTime,
+  Attribute.Validation.Time,
+  Attribute.Validation.Float,
+  Attribute.Validation.Integer,
+  Attribute.Validation.RegEx,
+  Attribute.Validation.Text,
+  Helper.Rtti.RttiProperty,
+  Helper.Rtti.Value,
+  System.SysUtils,
+  System.Rtti,
+  System.RegularExpressions,
   Types.ResourceStrings;
 
 type

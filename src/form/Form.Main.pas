@@ -76,11 +76,12 @@ type
     procedure LabelHelpClick(Sender: TObject);
     procedure ActionEditExecute(Sender: TObject);
     procedure EditFilterChangeTracking(Sender: TObject);
-  private
+  strict private
     FBinding: TBinding;
     FInvoker: TCommandInvoker;
     FInput: TInput<TConfig>;
     FLock: Boolean;
+  private
     function HasChanges: Boolean;
     procedure ControlView(const Text: string = string.Empty);
     procedure ExecuteWithLock(const Proc: TProc);
@@ -317,6 +318,7 @@ begin
     ExecuteWithLock(FInvoker.Execute);
     Abort;
   end;
+
   ControlView;
 end;
 

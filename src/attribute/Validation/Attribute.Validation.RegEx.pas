@@ -3,7 +3,8 @@ unit Attribute.Validation.RegEx;
 interface
 
 uses
-  Attribute.Validation, System.SysUtils;
+  Attribute.Validation,
+  System.SysUtils;
 
 type
   RegExAttribute = class sealed(ValidationAttribute)

@@ -3,12 +3,23 @@ unit FactoryMethod.Control;
 interface
 
 uses
-  Attribute.Component.CheckBox, Attribute.Component.ComboBox, Attribute.Component.Edit, Attribute.Component.Memo,
-  Attribute.Component.Tab, Helper.Rtti.RttiProperty, System.Rtti, Template.AbstractClass, Template.CheckBox,
-  Template.ComboBox, Template.Edit, Template.Memo, Template.Tab, Types.ControlDTO;
+  Attribute.Component.CheckBox,
+  Attribute.Component.ComboBox,
+  Attribute.Component.Edit,
+  Attribute.Component.Memo,
+  Attribute.Component.Tab,
+  Helper.Rtti.RttiProperty,
+  System.Rtti,
+  Template.AbstractClass,
+  Template.CheckBox,
+  Template.ComboBox,
+  Template.Edit,
+  Template.Memo,
+  Template.Tab,
+  Types.ControlDTO;
 
 type
-  TControlFactory = class
+  TControlFactory = class sealed
   public
     class function Fabricate(const DTO: TControlDTO): TControlTemplate;
   end;

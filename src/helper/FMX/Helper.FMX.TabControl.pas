@@ -3,7 +3,8 @@ unit Helper.FMX.TabControl;
 interface
 
 uses
-  FMX.TabControl, System.StrUtils;
+  FMX.TabControl,
+  System.StrUtils;
 
 type
   TTabControlHelper = class Helper for TTabControl
@@ -35,3 +36,4 @@ begin
 end;
 
 end.
+

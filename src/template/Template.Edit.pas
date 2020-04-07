@@ -3,10 +3,13 @@ unit Template.Edit;
 interface
 
 uses
-  FMX.Edit, Helper.FMX.FMXObject, System.UITypes, Template.AbstractClass;
+  FMX.Edit,
+  Helper.FMX.FMXObject,
+  System.UITypes,
+  Template.AbstractClass;
 
 type
-  TEditTemplate = class(TLabeledTemplate)
+  TEditTemplate = class sealed(TLabeledTemplate)
   public
     procedure TemplateMethod; override;
   end;

@@ -3,7 +3,9 @@ unit Types.Utils.Methods;
 interface
 
 uses
-  System.IOUtils, System.SysUtils, Winapi.UrlMon;
+  System.IOUtils,
+  System.SysUtils,
+  Winapi.UrlMon;
 
 type
   TMethods = class abstract

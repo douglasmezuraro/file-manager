@@ -3,7 +3,8 @@ unit Command.Invoker;
 interface
 
 uses
-  Command.API, System.Generics.Collections;
+  Command.API,
+  System.Generics.Collections;
 
 type
   TCommandInvoker = class

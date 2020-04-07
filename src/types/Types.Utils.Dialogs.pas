@@ -3,7 +3,10 @@ unit Types.Utils.Dialogs;
 interface
 
 uses
-  FMX.Dialogs, FMX.DialogService, System.SysUtils, System.UITypes;
+  FMX.Dialogs,
+  FMX.DialogService,
+  System.SysUtils,
+  System.UITypes;
 
 type
   TDialogs = class abstract

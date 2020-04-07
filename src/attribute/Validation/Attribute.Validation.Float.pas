@@ -3,7 +3,8 @@ unit Attribute.Validation.Float;
 interface
 
 uses
-  Attribute.Validation, System.SysUtils;
+  Attribute.Validation,
+  System.SysUtils;
 
 type
   FloatAttribute = class sealed(ValidationAttribute)

@@ -11,7 +11,7 @@ uses
   Template.AbstractClass;
 
 type
-  TMemoTemplate = class(TLayoutTemplate)
+  TMemoTemplate = class sealed(TLayoutTemplate)
   public
     procedure TemplateMethod; override;
   end;

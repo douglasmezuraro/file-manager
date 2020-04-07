@@ -3,7 +3,8 @@ unit Helper.FMX.Hyperlink;
 interface
 
 uses
-  FMX.StdCtrls, System.UITypes;
+  FMX.StdCtrls,
+  System.UITypes;
 
 type
   THyperlinkHelper = class Helper for TLabel
@@ -34,3 +35,4 @@ begin
 end;
 
 end.
+

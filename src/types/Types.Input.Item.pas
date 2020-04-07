@@ -3,7 +3,8 @@ unit Types.Input.Item;
 interface
 
 uses
-  Model.Base, System.SysUtils;
+  Model.Base,
+  System.SysUtils;
 
 type
   TInputItem<T: TModel> = class sealed

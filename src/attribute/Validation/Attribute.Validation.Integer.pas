@@ -3,7 +3,8 @@ unit Attribute.Validation.Integer;
 interface
 
 uses
-  Attribute.Validation, System.SysUtils;
+  Attribute.Validation,
+  System.SysUtils;
 
 type
   IntegerAttribute = class sealed(ValidationAttribute)

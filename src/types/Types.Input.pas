@@ -3,7 +3,12 @@ unit Types.Input;
 interface
 
 uses
-  Helper.Rtti.RttiType, Model.Base, System.IOUtils, System.Rtti, System.SysUtils, Types.Input.Item;
+  Helper.Rtti.RttiType,
+  Model.Base,
+  System.IOUtils,
+  System.Rtti,
+  System.SysUtils,
+  Types.Input.Item;
 
 type
   TInput<T: TModel> = class sealed

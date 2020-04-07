@@ -3,7 +3,11 @@ unit Helper.FMX.TreeView;
 interface
 
 uses
-  FMX.TreeView, FMX.Types, Helper.FMX.TreeViewItem,   System.RegularExpressions, System.SysUtils;
+  FMX.TreeView,
+  FMX.Types,
+  Helper.FMX.TreeViewItem,
+  System.RegularExpressions,
+  System.SysUtils;
 
 type
   TTreeViewHelper = class Helper for TTreeView
@@ -132,5 +136,5 @@ begin
     Result := MakeNode(Result, Text, Succ(Level));
 end;
 
-
 end.
+

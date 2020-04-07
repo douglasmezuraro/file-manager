@@ -3,7 +3,8 @@ unit Attribute.Validation.Text;
 interface
 
 uses
-  Attribute.Validation, System.SysUtils;
+  Attribute.Validation,
+  System.SysUtils;
 
 type
   TextAttribute = class(ValidationAttribute)

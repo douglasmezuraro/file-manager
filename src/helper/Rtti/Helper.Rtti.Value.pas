@@ -3,7 +3,10 @@ unit Helper.Rtti.Value;
 interface
 
 uses
-  System.Classes, System.Rtti, System.SysUtils, System.Variants;
+  System.Classes,
+  System.Rtti,
+  System.SysUtils,
+  System.Variants;
 
 type
   TValueHelper = record Helper for TValue
@@ -379,3 +382,4 @@ begin
 end;
 
 end.
+

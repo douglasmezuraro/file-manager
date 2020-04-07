@@ -3,7 +3,9 @@ unit Model.Config.Application;
 interface
 
 uses
-  Attribute.Component.Edit, Attribute.Ini.Key, Attribute.Validation.Text;
+  Attribute.Component.Edit,
+  Attribute.Ini.Key,
+  Attribute.Validation.Text;
 
 type
   TApplication = class sealed

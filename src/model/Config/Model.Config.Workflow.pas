@@ -3,7 +3,8 @@ unit Model.Config.Workflow;
 interface
 
 uses
-  Attribute.Component.CheckBox, Attribute.Ini.Key;
+  Attribute.Component.CheckBox,
+  Attribute.Ini.Key;
 
 type
   TWorkflow = class sealed
