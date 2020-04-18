@@ -40,8 +40,8 @@ uses
   Types.ControlDTO,
   Types.Input,
   Types.Input.Item,
-  Types.ResourceStrings,
   Types.Utils,
+  Types.Utils.ResourceStrings,
   Types.Validator;
 
 type
@@ -84,7 +84,7 @@ type
   private
     function HasChanges: Boolean;
     procedure ControlView(const Text: string = string.Empty);
-    procedure ExecuteWithLock(const Proc: TProc);
+    procedure ExecuteWithLock(const Method: TProc);
     procedure MakeTree;
     procedure ModelToView(const Model: TObject; const Parent: IControl);
     procedure Notify(Sender: TObject);
@@ -125,11 +125,11 @@ begin
   TreeViewFiles.Filter((Sender as TEdit).Text);
 end;
 
-procedure TMain.ExecuteWithLock(const Proc: TProc);
+procedure TMain.ExecuteWithLock(const Method: TProc);
 begin
   FLock := True;
   try
-    Proc;
+    Method;
   finally
     FLock := False;
   end;

@@ -16,7 +16,7 @@ uses
   System.SysUtils,
   System.Rtti,
   System.RegularExpressions,
-  Types.ResourceStrings;
+  Types.Utils.ResourceStrings;
 
 type
   TValidator = class sealed

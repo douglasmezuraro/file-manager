@@ -1,4 +1,4 @@
-unit Types.ResourceStrings;
+unit Types.Utils.ResourceStrings;
 
 interface
 

@@ -66,15 +66,15 @@ uses
   Types.Input in 'src\Types\Types.Input.pas',
   Types.Input.Item in 'src\Types\Types.Input.Item.pas',
   Types.ObjectFileAPI in 'src\Types\Types.ObjectFileAPI.pas',
-  Types.ResourceStrings in 'src\Types\Types.ResourceStrings.pas',
-  Types.Utils in 'src\Types\Types.Utils.pas',
-  Types.Utils.Constants in 'src\Types\Types.Utils.Constants.pas',
-  Types.Utils.Conversions in 'src\Types\Types.Utils.Conversions.pas',
-  Types.Utils.Dialogs in 'src\Types\Types.Utils.Dialogs.pas',
-  Types.Utils.Methods in 'src\Types\Types.Utils.Methods.pas',
-  Types.Utils.RegEx in 'src\Types\Types.Utils.RegEx.pas',
-  Types.Utils.Translation in 'src\Types\Types.Utils.Translation.pas',
-  Types.Validator in 'src\Types\Types.Validator.pas';
+  Types.Validator in 'src\Types\Types.Validator.pas',
+  Types.Utils.Constants in 'src\types\Utils\Types.Utils.Constants.pas',
+  Types.Utils.Conversions in 'src\types\Utils\Types.Utils.Conversions.pas',
+  Types.Utils.Dialogs in 'src\types\Utils\Types.Utils.Dialogs.pas',
+  Types.Utils.Methods in 'src\types\Utils\Types.Utils.Methods.pas',
+  Types.Utils in 'src\types\Utils\Types.Utils.pas',
+  Types.Utils.RegEx in 'src\types\Utils\Types.Utils.RegEx.pas',
+  Types.Utils.Translation in 'src\types\Utils\Types.Utils.Translation.pas',
+  Types.Utils.ResourceStrings in 'src\types\Utils\Types.Utils.ResourceStrings.pas';
 
 {$R *.res}
 
@@ -87,7 +87,7 @@ begin
   Application.Run;
 
 {$WARN SYMBOL_PLATFORM OFF}
-  ReportMemoryLeaksOnShutdown := WordBool(DebugHook);
+  ReportMemoryLeaksOnShutdown := Boolean(DebugHook);
 {$WARN SYMBOL_PLATFORM ON}
 end.
 

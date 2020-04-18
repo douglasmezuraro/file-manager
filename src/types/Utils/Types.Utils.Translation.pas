@@ -5,7 +5,7 @@ interface
 uses
   FMX.Consts,
   System.SysUtils,
-  Types.ResourceStrings,
+  Types.Utils.ResourceStrings,
   Winapi.Windows;
 
 type

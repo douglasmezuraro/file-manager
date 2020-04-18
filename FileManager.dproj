@@ -169,17 +169,17 @@
         <DCCReference Include="src\Types\Types.Input.pas"/>
         <DCCReference Include="src\Types\Types.Input.Item.pas"/>
         <DCCReference Include="src\Types\Types.ObjectFileAPI.pas"/>
-        <DCCReference Include="src\Types\Types.ResourceStrings.pas"/>
-        <DCCReference Include="src\Types\Types.Utils.pas"/>
-        <DCCReference Include="src\Types\Types.Utils.Constants.pas"/>
-        <DCCReference Include="src\Types\Types.Utils.Conversions.pas"/>
-        <DCCReference Include="src\Types\Types.Utils.Dialogs.pas"/>
-        <DCCReference Include="src\Types\Types.Utils.Methods.pas"/>
-        <DCCReference Include="src\Types\Types.Utils.RegEx.pas"/>
-        <DCCReference Include="src\Types\Types.Utils.Translation.pas"/>
         <DCCReference Include="src\Types\Types.Validator.pas">
             <Form>$R *.res</Form>
         </DCCReference>
+        <DCCReference Include="src\types\Utils\Types.Utils.Constants.pas"/>
+        <DCCReference Include="src\types\Utils\Types.Utils.Conversions.pas"/>
+        <DCCReference Include="src\types\Utils\Types.Utils.Dialogs.pas"/>
+        <DCCReference Include="src\types\Utils\Types.Utils.Methods.pas"/>
+        <DCCReference Include="src\types\Utils\Types.Utils.pas"/>
+        <DCCReference Include="src\types\Utils\Types.Utils.RegEx.pas"/>
+        <DCCReference Include="src\types\Utils\Types.Utils.Translation.pas"/>
+        <DCCReference Include="src\types\Utils\Types.Utils.ResourceStrings.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
