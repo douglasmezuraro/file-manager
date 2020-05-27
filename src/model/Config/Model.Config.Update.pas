@@ -3,11 +3,10 @@ unit Model.Config.Update;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
-  Attribute.Validation.Text;
+  Component.Attribute.CheckBox,
+  Component.Attribute.Edit,
+  Ini.Attribute.Key,
+  Validation.Attribute;
 
 type
   TUpdate = class sealed
@@ -17,23 +16,23 @@ type
     FLocalUpdate: Integer;
     FSystemCode: Integer;
   public
-    [TextAttribute]
-    [Edit('Tipo')]
-    [Key('TIPOSERVIDOR')]
+    [TTextAttribute]
+    [TEdit('Tipo')]
+    [TKey('TIPOSERVIDOR')]
     property ServidorType: string read FServidorType write FServidorType;
 
-    [IntegerAttribute]
-    [Edit('Código do sistema')]
-    [Key('CDSISTEMA')]
+    [TIntegerAttribute]
+    [TEdit('Código do sistema')]
+    [TKey('CDSISTEMA')]
     property SystemCode: Integer read FSystemCode write FSystemCode;
 
-    [CheckBox('Pode atualizar?')]
-    [Key('PODEATUALIZAR')]
+    [TCheckBox('Pode atualizar?')]
+    [TKey('PODEATUALIZAR')]
     property CanUpdate: Boolean read FCanUpdate write FCanUpdate;
 
-    [IntegerAttribute]
-    [Edit('Update local')]
-    [Key('LOCALUPDATE')]
+    [TIntegerAttribute]
+    [TEdit('Update local')]
+    [TKey('LOCALUPDATE')]
     property LocalUpdate: Integer read FLocalUpdate write FLocalUpdate;
   end;
 

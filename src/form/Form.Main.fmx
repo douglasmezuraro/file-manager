@@ -13,7 +13,7 @@ object Main: TMain
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   DesignerMasterStyle = 0
-  object PanelButtons: TPanel
+  object Panel: TPanel
     Align = Bottom
     Locked = True
     Position.Y = 533.000000000000000000
@@ -59,7 +59,7 @@ object Main: TMain
       TabOrder = 3
     end
   end
-  object TabControlView: TTabControl
+  object TabControl: TTabControl
     Align = Client
     Locked = True
     Size.Width = 600.000000000000000000
@@ -73,7 +73,7 @@ object Main: TMain
       507s
       600s
       507s)
-    object TabItemFiles: TTabItem
+    object TabTreeView: TTabItem
       CustomIcon = <
         item
         end>
@@ -87,16 +87,16 @@ object Main: TMain
       Text = 'Arquivos'
       ExplicitSize.cx = 67.000000000000000000
       ExplicitSize.cy = 26.000000000000000000
-      object TreeViewFiles: TTreeView
+      object TreeView: TTreeView
         Align = Client
         Locked = True
         Size.Width = 600.000000000000000000
         Size.Height = 485.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
-        OnDblClick = ActionEditExecute
+        OnDblClick = ActionSelectFileExecute
         ItemHeight = 22.000000000000000000
-        Images = ImageListIcons
+        Images = ImageList
         Sorted = True
         Viewport.Width = 596.000000000000000000
         Viewport.Height = 481.000000000000000000
@@ -113,7 +113,7 @@ object Main: TMain
         OnChangeTracking = EditFilterChangeTracking
       end
     end
-    object TabItemSelectedFile: TTabItem
+    object TabFile: TTabItem
       CustomIcon = <
         item
         end>
@@ -214,12 +214,12 @@ object Main: TMain
       Hint = 'Salva o arquivo de destino'
       OnExecute = ActionSaveTargetExecute
     end
-    object ActionEdit: TAction
-      Text = '&Editar'
-      OnExecute = ActionEditExecute
+    object ActionSelectFile: TAction
+      Text = '&Selecionar arquivo'
+      OnExecute = ActionSelectFileExecute
     end
   end
-  object ImageListIcons: TImageList
+  object ImageList: TImageList
     Source = <
       item
         MultiResBitmap.TransparentColor = 16777215

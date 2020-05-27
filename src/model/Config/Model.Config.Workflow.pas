@@ -3,16 +3,16 @@ unit Model.Config.Workflow;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Ini.Key;
+  Component.Attribute.CheckBox,
+  Ini.Attribute.Key;
 
 type
   TWorkflow = class sealed
   private
     FCanChangeCurrentVersion: Boolean;
   public
-    [CheckBox('Pode alterar o fluxo?')]
-    [Key('PODEALTERARVERSAOATUALFLUXO')]
+    [TCheckBox('Pode alterar o fluxo?')]
+    [TKey('PODEALTERARVERSAOATUALFLUXO')]
     property CanChangeCurrentVersion: Boolean read FCanChangeCurrentVersion write FCanChangeCurrentVersion;
   end;
 

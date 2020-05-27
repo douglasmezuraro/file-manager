@@ -3,14 +3,11 @@ unit Model.Config.Server;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.ComboBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
-  Attribute.Validation.RegEx,
-  Attribute.Validation.Text,
-  Types.Utils;
+  Component.Attribute.CheckBox,
+  Component.Attribute.ComboBox,
+  Component.Attribute.Edit,
+  Ini.Attribute.Key,
+  Validation.Attribute;
 
 type
   TServer = class sealed
@@ -27,57 +24,57 @@ type
     FIPAddress: string;
     FPort: Integer;
   public
-    [TextAttribute(False)]
-    [Edit('Nome')]
-    [Key('NOMESERVIDOR')]
+    [TTextAttribute(False)]
+    [TEdit('Nome')]
+    [TKey('NOMESERVIDOR')]
     property Name: string read FName write FName;
 
-    [RegExAttribute(False, TUtils.RegEx.GUID)]
-    [Edit('GUID')]
-    [Key('GUIDSERVIDOR')]
+    [TRegExAttribute(False, '\{([0-9A-z]){8}(\-([0-9A-z]){4}){3}\-([0-9A-z]){12}\}')]
+    [TEdit('GUID')]
+    [TKey('GUIDSERVIDOR')]
     property GUID: string read FGUID write FGUID;
 
-    [TextAttribute]
-    [Edit('Nome do computador')]
-    [Key('NOMECOMPUTADOR')]
+    [TTextAttribute]
+    [TEdit('Nome do computador')]
+    [TKey('NOMECOMPUTADOR')]
     property ComputerName: string read FComputerName write FComputerName;
 
-    [TextAttribute]
-    [Edit('IP')]
-    [Key('IPSERVIDOR')]
+    [TTextAttribute]
+    [TEdit('IP')]
+    [TKey('IPSERVIDOR')]
     property IPServer: string read FIPServer write FIPServer;
 
-    [RegExAttribute(False, TUtils.RegEx.IP)]
-    [Edit('Endereço de IP')]
-    [Key('ENDERECOIP')]
+    [TRegExAttribute(False, '(([0-9]{1,3}.){3}[0-9]{1,3})|localhost\b')]
+    [TEdit('Endereço de IP')]
+    [TKey('ENDERECOIP')]
     property IPAddress: string read FIPAddress write FIPAddress;
 
-    [TextAttribute(False)]
-    [ComboBox('Tipo de conexão', 'Socket')]
-    [Key('TIPOCONEXAO')]
+    [TTextAttribute(False)]
+    [TComboBox('Tipo de conexão', 'Socket')]
+    [TKey('TIPOCONEXAO')]
     property ConnectionType: string read FConnectionType write FConnectionType;
 
-    [CheckBox('Pode balancear?')]
-    [Key('PODEBALANCEAR')]
+    [TCheckBox('Pode balancear?')]
+    [TKey('PODEBALANCEAR')]
     property CanBalance: Boolean read FCanBalance write FCanBalance;
 
-    [TextAttribute]
-    [Edit('Nome do executável')]
-    [Key('NOMEEXECUTAVELSERVIDOR')]
+    [TTextAttribute]
+    [TEdit('Nome do executável')]
+    [TKey('NOMEEXECUTAVELSERVIDOR')]
     property ExeName: string read FExeName write FExeName;
 
-    [IntegerAttribute]
-    [Edit('Timeout de execução')]
-    [Key('TIMEOUTEXECUCAO')]
+    [TIntegerAttribute]
+    [TEdit('Timeout de execução')]
+    [TKey('TIMEOUTEXECUCAO')]
     property TimeOut: Integer read FTimeOut write FTimeOut;
 
-    [CheckBox('Habilitar gerenciador de integração?')]
-    [Key('HABILITAGERENCIADORINTEGRACAO')]
+    [TCheckBox('Habilitar gerenciador de integração?')]
+    [TKey('HABILITAGERENCIADORINTEGRACAO')]
     property IntegrationManager: Boolean read FIntegrationManager write FIntegrationManager;
 
-    [IntegerAttribute]
-    [Edit('Porta')]
-    [Key('PORTA')]
+    [TIntegerAttribute]
+    [TEdit('Porta')]
+    [TKey('PORTA')]
     property Port: Integer read FPort write FPort;
   end;
 

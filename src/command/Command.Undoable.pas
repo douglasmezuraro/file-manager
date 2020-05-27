@@ -3,37 +3,38 @@ unit Command.Undoable;
 interface
 
 uses
-  FMX.Controls,
-  Command.API,
-  Command.Receiver,
-  Helper.FMX.FMXObject;
+  FMX.Types, Command.API, Command.Receiver, Helper.FMX.FMXObject;
 
 type
-  TUndoableCommand = class(TInterfacedObject, ICommand)
+  TUndoableCommand = class sealed(TInterfacedObject, ICommand)
   private
     FReceiver: TReceiver;
   public
-    constructor Create(const Receiver: TReceiver);
+    /// <summary>
+    ///  Constructor of class
+    /// </summary>
+    /// <param name="AReceiver">
+    /// </param>
+    constructor Create(const AReceiver: TReceiver);
+
+    /// <summary>
+    ///  Executes the command
+    /// </summary>
     procedure Execute;
   end;
 
 implementation
 
-constructor TUndoableCommand.Create(const Receiver: TReceiver);
+constructor TUndoableCommand.Create(const AReceiver: TReceiver);
 begin
-  FReceiver := Receiver;
+  FReceiver := AReceiver;
 end;
 
 procedure TUndoableCommand.Execute;
-var
-  Control: TControl;
 begin
-  Control := FReceiver.Key;
-
-  Control.Value := FReceiver.Value;
-
-  if Control.CanFocus then
-    Control.SetFocus;
+  FReceiver.Key.GetObject.Value := FReceiver.Value;
+  if FReceiver.Key.GetCanFocus then
+    FReceiver.Key.SetFocus;
 end;
 
 end.

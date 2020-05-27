@@ -3,9 +3,10 @@ unit Model.Config.DUnit;
 interface
 
 uses
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Text;
+  Component.Attribute.ComboBox,
+  Component.Attribute.Edit,
+  Ini.Attribute.Key,
+  Validation.Attribute;
 
 type
   TDUnit = class sealed
@@ -18,39 +19,38 @@ type
     FPassword: string;
     FUser: string;
   public
-    [TextAttribute]
-    [Edit('Usuário')]
-    [Key('USUARIO')]
+    [TTextAttribute]
+    [TEdit('Usuário')]
+    [TKey('USUARIO')]
     property User: string read FUser write FUser;
 
-    [TextAttribute]
-    [Edit('Senha')]
-    [Key('SENHA')]
+    [TTextAttribute]
+    [TEdit('Senha')]
+    [TKey('SENHA')]
     property Password: string read FPassword write FPassword;
 
-    [TextAttribute(False)]
-    [Edit('Build')]
-    [Key('BUILD')]
+    [TComboBox('Build', 'Continuo,Delphi,Noturno')]
+    [TKey('BUILD')]
     property BuildType: string read FBuildType write FBuildType;
 
-    [TextAttribute]
-    [Edit('Método de teste')]
-    [Key('METODOTEST')]
+    [TTextAttribute]
+    [TEdit('Método de teste')]
+    [TKey('METODOTEST')]
     property TestMethod: string read FTestMethod write FTestMethod;
 
-    [TextAttribute]
-    [Edit('Suite')]
-    [Key('SUITE')]
+    [TTextAttribute]
+    [TEdit('Suite')]
+    [TKey('SUITE')]
     property Suit: string read FSuit write FSuit;
 
-    [TextAttribute]
-    [Edit('URL de gerenciador de teste')]
-    [Key('TEST_MANAGER_URL')]
+    [TTextAttribute]
+    [TEdit('URL de gerenciador de teste')]
+    [TKey('TEST_MANAGER_URL')]
     property TestManagerURL: string read FTestManagerURL write FTestManagerURL;
 
-    [TextAttribute]
-    [Edit('Registro de teste')]
-    [Key('TEST_RECORD')]
+    [TTextAttribute]
+    [TEdit('Registro de teste')]
+    [TKey('TEST_RECORD')]
     property TestRecord: string read FTestRecord write FTestRecord;
   end;
 

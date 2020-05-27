@@ -3,11 +3,7 @@ unit Types.Binding;
 interface
 
 uses
-  FMX.Types,
-  Helper.Rtti.Value,
-  System.Generics.Collections,
-  System.Rtti,
-  System.Types;
+  FMX.Types, Helper.Rtti.Value, System.Generics.Collections, System.Rtti, System.Types;
 
 type
   TBinding = class sealed
@@ -18,7 +14,6 @@ type
     FDictionary: TBindingDictionary;
     function GetValue(const Control: IControl): TValue;
     procedure SetValue(const Control: IControl; const Value: TValue);
-    function GetKeys: TArray<IControl>;
     function GetProp(const Control: IControl): TRttiProperty;
   public
     constructor Create;
@@ -26,8 +21,7 @@ type
     procedure Add(const Control: IControl; const Obj: TObject; const Prop: TRttiProperty);
     procedure Clear;
   public
-    property Keys: TArray<IControl> read GetKeys;
-    property Values[const Control: IControl]: TValue read GetValue write SetValue;
+    property Value[const Control: IControl]: TValue read GetValue write SetValue;
     property Prop[const Control: IControl]: TRttiProperty read GetProp;
   end;
 
@@ -52,11 +46,6 @@ end;
 procedure TBinding.Clear;
 begin
   FDictionary.Clear;
-end;
-
-function TBinding.GetKeys: TArray<IControl>;
-begin
-  Result := FDictionary.Keys.ToArray;
 end;
 
 function TBinding.GetProp(const Control: IControl): TRttiProperty;

@@ -3,8 +3,8 @@ unit Model.Config.Log;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Ini.Key;
+  Component.Attribute.CheckBox,
+  Ini.Attribute.Key;
 
 type
   TLog = class sealed
@@ -13,16 +13,16 @@ type
     FRegisterSignatureLog: Boolean;
     FRegisterMethodLog: Boolean;
   public
-    [CheckBox('Registar log de métodos?')]
-    [Key('REGISTRALOGMETODO')]
+    [TCheckBox('Registar log de métodos?')]
+    [TKey('REGISTRALOGMETODO')]
     property RegisterMethodLog: Boolean read FRegisterMethodLog write FRegisterMethodLog;
 
-    [CheckBox('Registrar log de SQLs?')]
-    [Key('REGISTRALOGSQL')]
+    [TCheckBox('Registrar log de SQLs?')]
+    [TKey('REGISTRALOGSQL')]
     property RegisterSQLLog: Boolean read FRegisterSQLLog write FRegisterSQLLog;
 
-    [CheckBox('Registrar log de assinaturas?')]
-    [Key('GRAVARLOGASSINATURA')]
+    [TCheckBox('Registrar log de assinaturas?')]
+    [TKey('GRAVARLOGASSINATURA')]
     property RegisterSignatureLog: Boolean read FRegisterSignatureLog write FRegisterSignatureLog;
   end;
 

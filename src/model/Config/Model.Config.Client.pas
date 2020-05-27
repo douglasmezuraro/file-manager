@@ -3,11 +3,10 @@ unit Model.Config.Client;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
-  Attribute.Validation.Text;
+  Component.Attribute.CheckBox,
+  Component.Attribute.Edit,
+  Ini.Attribute.Key,
+  Validation.Attribute;
 
 type
   TClient = class sealed
@@ -16,18 +15,18 @@ type
     FDisableMenuBackground: Boolean;
     FTimeOut: Integer;
   public
-    [TextAttribute]
-    [Edit('Login automático')]
-    [Key('LOGINAUTOMATICO')]
+    [TTextAttribute]
+    [TEdit('Login automático')]
+    [TKey('LOGINAUTOMATICO')]
     property AutoLogin: string read FAutoLogin write FAutoLogin;
 
-    [IntegerAttribute]
-    [Edit('Timeout de execução')]
-    [Key('TIMEOUTEXECUCAO')]
+    [TIntegerAttribute]
+    [TEdit('Timeout de execução')]
+    [TKey('TIMEOUTEXECUCAO')]
     property TimeOut: Integer read FTimeOut write FTimeOut;
 
-    [CheckBox('Desabilita fundo menu')]
-    [Key('DESABILITAFUNDOMENU')]
+    [TCheckBox('Desabilita fundo menu')]
+    [TKey('DESABILITAFUNDOMENU')]
     property DisableMenuBackground: Boolean read FDisableMenuBackground write FDisableMenuBackground;
   end;
 

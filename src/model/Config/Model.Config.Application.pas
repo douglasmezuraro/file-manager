@@ -3,18 +3,18 @@ unit Model.Config.Application;
 interface
 
 uses
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Text;
+  Component.Attribute.Edit,
+  Ini.Attribute.Key,
+  Validation.Attribute.Text;
 
 type
   TApplication = class sealed
   private
     FName: string;
   public
-    [Text]
-    [Edit('Nome de aplicação para monitoramento')]
-    [Key('NOMEAPLICACAOPARAMONITORAMENTO')]
+    [TText]
+    [TEdit('Nome de aplicação para monitoramento')]
+    [TKey('NOMEAPLICACAOPARAMONITORAMENTO')]
     property Name: string read FName write FName;
   end;
 

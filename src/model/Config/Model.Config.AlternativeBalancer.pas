@@ -3,9 +3,9 @@ unit Model.Config.AlternativeBalancer;
 interface
 
 uses
-  Attribute.Component.Memo,
-  Attribute.Ini.Key,
-  Attribute.Managed,
+  Component.Attribute.Memo,
+  Ini.Attribute.Key,
+  Component.Attribute.Managed,
   System.Classes;
 
 type
@@ -13,7 +13,7 @@ type
   private
     FValues: TStringList;
   public
-    [Managed][Key][Memo]
+    [TManaged][TKey('')][TMemo]
     property Values: TStringList read FValues write FValues;
   end;
 

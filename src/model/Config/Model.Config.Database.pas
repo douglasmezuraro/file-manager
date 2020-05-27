@@ -3,11 +3,10 @@ unit Model.Config.Database;
 interface
 
 uses
-  Attribute.Component.ComboBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
-  Attribute.Validation.Text;
+  Component.Attribute.ComboBox,
+  Component.Attribute.Edit,
+  Ini.Attribute.Key,
+  Validation.Attribute;
 
 type
   TDatabase = class sealed
@@ -23,54 +22,54 @@ type
     FSchema: string;
     FServer: string;
   public
-    [TextAttribute(False)]
-    [ComboBox('Tipo de acesso', 'SQLd,FireDAC')]
-    [Key('TIPOACESSOBD')]
+    [TTextAttribute(False)]
+    [TComboBox('Tipo de acesso', 'SQLd,FireDAC')]
+    [TKey('TIPOACESSOBD')]
     property AccessType: string read FAccessType write FAccessType;
 
-    [TextAttribute(False)]
-    [ComboBox('Tipo de banco', 'Oracle,SQLServer,DB2')]
-    [Key('TIPOBANCO')]
+    [TTextAttribute(False)]
+    [TComboBox('Tipo de banco', 'Oracle,SQLServer,DB2')]
+    [TKey('TIPOBANCO')]
     property DatabaseType: string read FDatabaseType write FDatabaseType;
 
-    [TextAttribute(False)]
-    [Edit('Alias')]
-    [Key('ALIAS')]
+    [TTextAttribute(False)]
+    [TEdit('Alias')]
+    [TKey('ALIAS')]
     property Alias: string read FAlias write FAlias;
 
-    [TextAttribute]
-    [Edit('Server')]
-    [Key('SERVER')]
+    [TTextAttribute]
+    [TEdit('Server')]
+    [TKey('SERVER')]
     property Server: string read FServer write FServer;
 
-    [TextAttribute(False)]
-    [Edit('Esquema')]
-    [Key('ESQUEMA')]
+    [TTextAttribute(False)]
+    [TEdit('Esquema')]
+    [TKey('ESQUEMA')]
     property Schema: string read FSchema write FSchema;
 
-    [IntegerAttribute(False)]
-    [Edit('Número máximo de conexões')]
-    [Key('NUMEROMAXIMOCONEXOES')]
+    [TIntegerAttribute(False)]
+    [TEdit('Número máximo de conexões')]
+    [TKey('NUMEROMAXIMOCONEXOES')]
     property MaxConnections: Integer read FMaxConnections write FMaxConnections;
 
-    [IntegerAttribute(False)]
-    [Edit('Número mínimo de conexões')]
-    [Key('NUMEROMINIMOCONEXOES')]
+    [TIntegerAttribute(False)]
+    [TEdit('Número mínimo de conexões')]
+    [TKey('NUMEROMINIMOCONEXOES')]
     property MinConnections: Integer read FMinConnections write FMinConnections;
 
-    [IntegerAttribute(False)]
-    [Edit('Tempo de desconexão quando inativa')]
-    [Key('TEMPODESCONEXAOCONEXAOINATIVA')]
+    [TIntegerAttribute(False)]
+    [TEdit('Tempo de desconexão quando inativa')]
+    [TKey('TEMPODESCONEXAOCONEXAOINATIVA')]
     property DisconnectionTimeIdleConnection: Integer read FDisconnectionTimeIdleConnection write FDisconnectionTimeIdleConnection;
 
-    [IntegerAttribute(False)]
-    [Edit('Tempo de atualização de log de conexões')]
-    [Key('TEMPOATUALIZACAOLOGCONEXOES')]
+    [TIntegerAttribute(False)]
+    [TEdit('Tempo de atualização de log de conexões')]
+    [TKey('TEMPOATUALIZACAOLOGCONEXOES')]
     property ConnectionLogUpdateTime: Integer read FConnectionLogUpdateTime write FConnectionLogUpdateTime;
 
-    [IntegerAttribute(False)]
-    [Edit('Número de linhas para fetch')]
-    [Key('NUMEROLINHASFETCH')]
+    [TIntegerAttribute(False)]
+    [TEdit('Número de linhas para fetch')]
+    [TKey('NUMEROLINHASFETCH')]
     property FetchLines: Integer read FFetchLines write FFetchLines;
   end;
 

@@ -3,9 +3,9 @@ unit Model.Config.Scanner;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key;
+  Component.Attribute.CheckBox,
+  Component.Attribute.Edit,
+  Ini.Attribute.Key;
 
 type
   TScanner = class sealed
@@ -24,56 +24,56 @@ type
     FDocumentPerfil: Integer;
     FScannerModel: Integer;
   public
-    [CheckBox('Gravar log da pasta digital?')]
-    [Key('GRAVARLOGPASTADIGITAL')]
+    [TCheckBox('Gravar log da pasta digital?')]
+    [TKey('GRAVARLOGPASTADIGITAL')]
     property RegisterLogDigitalFolder: Boolean read FRegisterLogDigitalFolder write FRegisterLogDigitalFolder;
 
-    [Edit('Tempo de espera (Ms)')]
-    [Key('TEMPOESPERAEMMILISEGUNDOS')]
+    [TEdit('Tempo de espera (Ms)')]
+    [TKey('TEMPOESPERAEMMILISEGUNDOS')]
     property WaitTimeMS: Integer read FWaitTimeMS write FWaitTimeMS;
 
-    [Edit('Tempo de espera')]
-    [Key('TEMPOESPERA')]
+    [TEdit('Tempo de espera')]
+    [TKey('TEMPOESPERA')]
     property WaitTime: Integer read FWaitTime write FWaitTime;
 
-    [CheckBox('Duplex')]
-    [Key('DUPLEX')]
+    [TCheckBox('Duplex')]
+    [TKey('DUPLEX')]
     property Duplex: Boolean read FDuplex write FDuplex;
 
-    [CheckBox('AcquireFrame')]
-    [Key('ACQUIREFRAME')]
+    [TCheckBox('AcquireFrame')]
+    [TKey('ACQUIREFRAME')]
     property AcquireFrame: Boolean read FAcquireFrame write FAcquireFrame;
 
-    [CheckBox('Detectar papel alimentador?')]
-    [Key('DETECTARPAPELALIMENTADOR')]
+    [TCheckBox('Detectar papel alimentador?')]
+    [TKey('DETECTARPAPELALIMENTADOR')]
     property DetectFeederPaper: Boolean read FDetectFeederPaper write FDetectFeederPaper;
 
-    [Edit('Tamanho da página')]
-    [Key('TAMPAGINA')]
+    [TEdit('Tamanho da página')]
+    [TKey('TAMPAGINA')]
     property PageSize: Integer read FPageSize write FPageSize;
 
-    [Edit('Resolução')]
-    [Key('RESOLUCAO')]
+    [TEdit('Resolução')]
+    [TKey('RESOLUCAO')]
     property Resolution: Integer read FResolution write FResolution;
 
-    [Edit('Resolução (cores)')]
-    [Key('RESOLUCAOCORES')]
+    [TEdit('Resolução (cores)')]
+    [TKey('RESOLUCAOCORES')]
     property ColorResolution: Integer read FColorResolution write FColorResolution;
 
-    [Edit('Modelo')]
-    [Key('MODELOSCANNER')]
+    [TEdit('Modelo')]
+    [TKey('MODELOSCANNER')]
     property ScannerModel: Integer read FScannerModel write FScannerModel;
 
-    [Edit('Perfil documento')]
-    [Key('PERFILDOC')]
+    [TEdit('Perfil documento')]
+    [TKey('PERFILDOC')]
     property DocumentPerfil: Integer read FDocumentPerfil write FDocumentPerfil;
 
-    [Edit('Limiar preto e branco')]
-    [Key('LIMIARPRETOEBRANCO')]
+    [TEdit('Limiar preto e branco')]
+    [TKey('LIMIARPRETOEBRANCO')]
     property BlackAndWhiteThreshold: Integer read FBlackAndWhiteThreshold write FBlackAndWhiteThreshold;
 
-    [CheckBox('Processa preto e branco?')]
-    [Key('PROCESSAPRETOEBRANCO')]
+    [TCheckBox('Processa preto e branco?')]
+    [TKey('PROCESSAPRETOEBRANCO')]
     property BlackAndWhiteProcessing: Boolean read FBlackAndWhiteProcessing write FBlackAndWhiteProcessing;
   end;
 

@@ -3,29 +3,42 @@ unit Helper.FMX.Hyperlink;
 interface
 
 uses
-  FMX.StdCtrls,
-  System.UITypes;
+  FMX.StdCtrls, System.UITypes;
 
 type
+  /// <summary>
+  ///  Styles of label.
+  /// </summary>
+  TLabelStyle = (None, HyperLink);
+
+  /// <summary>
+  ///  Class helper for class <c>TLabel<c>.
+  /// </summary>
   THyperlinkHelper = class Helper for TLabel
-  public type
-    TLabelStyle = (lsNone, lsHyperLink);
+  private
+    procedure SetStyle(const Value: TLabelStyle);
   public
-    procedure SetStyle(const Style: TLabelStyle);
+    /// <summary>
+    ///  Defines the style of label.
+    /// </summary>
+    /// <value>
+    ///  TLabelStyle
+    /// </value>
+    property Style: TLabelStyle write SetStyle;
   end;
 
 implementation
 
-procedure THyperlinkHelper.SetStyle(const Style: TLabelStyle);
+procedure THyperlinkHelper.SetStyle(const Value: TLabelStyle);
 begin
-  case Style of
-    TLabelStyle.lsNone:
+  case Value of
+    TLabelStyle.None:
       begin
         FontColor := TAlphaColorRec.Black;
         Font.Style := Font.Style - [TFontStyle.fsUnderline];
         Cursor := crDefault;
       end;
-    TLabelStyle.lsHyperLink:
+    TLabelStyle.HyperLink:
       begin
         FontColor := TAlphaColorRec.Blue;
         Font.Style := Font.Style + [TFontStyle.fsUnderline];

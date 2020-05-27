@@ -3,10 +3,12 @@ unit Form.Main;
 interface
 
 uses
+  Command.API,
   Command.Invoker,
   Command.Receiver,
   Command.Undoable,
-  FactoryMethod.Control,
+  Component.Factory.Method,
+  Component.Factory.API,
   FMX.ActnList,
   FMX.Controls,
   FMX.Controls.Presentation,
@@ -18,11 +20,11 @@ uses
   FMX.TabControl,
   FMX.TreeView,
   FMX.Types,
+  Helper.FMX.Lang,
   Helper.FMX.FMXObject,
   Helper.FMX.Hyperlink,
   Helper.FMX.TabControl,
   Helper.FMX.TreeView,
-  Model.Config,
   Rest.Json,
   System.Actions,
   System.Classes,
@@ -32,20 +34,22 @@ uses
   System.Rtti,
   System.StrUtils,
   System.SysUtils,
-  System.TypInfo,
   System.UITypes,
-  Template.AbstractClass,
-  Template.Tab,
   Types.Binding,
-  Types.ControlDTO,
-  Types.Input,
-  Types.Input.Item,
+  Component.DTO,
+  Input.Config,
+  Input.Item,
+  Types.Dialogs,
   Types.Utils,
-  Types.Utils.ResourceStrings,
-  Types.Validator;
+  Types.Lock,
+  Types.Consts,
+  Validation.Validator,
+  Types.RegisterClass,
+  Ini.Base,
+  Ini.API;
 
 type
-  TMain = class(TForm)
+  TMain = class sealed(TForm)
     ActionCancel: TAction;
     ActionList: TActionList;
     ActionSaveTarget: TAction;
@@ -53,17 +57,17 @@ type
     ButtonCancel: TButton;
     ButtonSaveSource: TButton;
     ButtonSaveTarget: TButton;
-    PanelButtons: TPanel;
-    TabControlView: TTabControl;
-    TabItemFiles: TTabItem;
-    TreeViewFiles: TTreeView;
-    TabItemSelectedFile: TTabItem;
+    Panel: TPanel;
+    TabControl: TTabControl;
+    TabTreeView: TTabItem;
+    TreeView: TTreeView;
+    TabFile: TTabItem;
     TabControlFile: TTabControl;
-    ImageListIcons: TImageList;
+    ImageList: TImageList;
     StatusBar: TStatusBar;
     LabelHelp: TLabel;
     EditFilter: TEdit;
-    ActionEdit: TAction;
+    ActionSelectFile: TAction;
     Language: TLang;
     procedure ActionCancelExecute(Sender: TObject);
     procedure ActionSaveTargetExecute(Sender: TObject);
@@ -74,25 +78,31 @@ type
     procedure LabelHelpMouseLeave(Sender: TObject);
     procedure LabelHelpMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure LabelHelpClick(Sender: TObject);
-    procedure ActionEditExecute(Sender: TObject);
+    procedure ActionSelectFileExecute(Sender: TObject);
     procedure EditFilterChangeTracking(Sender: TObject);
   strict private
+    FFiles: TDictionary<TTreeViewItem, TItem>;
+    FModel: IIniMappedObject;
+    FInvoker: ICommandInvoker;
     FBinding: TBinding;
-    FInvoker: TCommandInvoker;
-    FInput: TInput<TConfig>;
-    FLock: Boolean;
+    FLock: TLock;
+    FCurrent: TItem;
+    FInput: TInput;
   private
     function HasChanges: Boolean;
-    procedure ControlView(const Text: string = string.Empty);
-    procedure ExecuteWithLock(const Method: TProc);
+    function CanSelectFile(const Item: TItem): Boolean;
+    function ValidateValue(const Control: IControl; out Error: string): Boolean;
+    procedure ControlView;
     procedure MakeTree;
-    procedure ModelToView(const Model: TObject; const Parent: IControl);
-    procedure Notify(Sender: TObject);
+    procedure ModelToView; overload;
+    procedure ModelToView(const Model: TObject; const Owner: IControl); overload;
+    procedure OnNotify(Sender: TObject);
     procedure ReadInput;
-    procedure RestoreView;
-    procedure Save(const FileName: TFileName);
-    procedure SelectFile(const InputItem: TObject);
+    procedure ClearView;
+    procedure WriteFile(const FileName: TFileName);
+    procedure AfterSelectCurrent;
     procedure Translate;
+    procedure UpdateValue(const Control: IControl);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -107,32 +117,26 @@ implementation
 constructor TMain.Create(AOwner: TComponent);
 begin
   inherited;
-  TUtils.Conversions.DefineBoolean('N', 'S');
+  TUtils.DefineBoolStrs('N', 'S');
+
   FInvoker := TCommandInvoker.Create;
   FBinding := TBinding.Create;
+  FLock := TLock.Create;
+  FFiles := TDictionary<TTreeViewItem, TItem>.Create;
 end;
 
 destructor TMain.Destroy;
 begin
-  FBinding.Free;
-  FInvoker.Free;
   FInput.Free;
+  FFiles.Free;
+  FLock.Free;
+  FBinding.Free;
   inherited;
 end;
 
 procedure TMain.EditFilterChangeTracking(Sender: TObject);
 begin
-  TreeViewFiles.Filter((Sender as TEdit).Text);
-end;
-
-procedure TMain.ExecuteWithLock(const Method: TProc);
-begin
-  FLock := True;
-  try
-    Method;
-  finally
-    FLock := False;
-  end;
+  TreeView.Filter((Sender as TEdit).Text);
 end;
 
 procedure TMain.ActionCancelExecute(Sender: TObject);
@@ -140,20 +144,39 @@ begin
   Close;
 end;
 
-procedure TMain.ActionSaveTargetExecute(Sender: TObject);
+procedure TMain.ActionSelectFileExecute(Sender: TObject);
+var
+  Item: TItem;
 begin
-  Save(FInput.Current.Target);
-end;
+  if not FFiles.ContainsKey(TreeView.Selected) then
+  begin
+    Exit;
+  end;
 
-procedure TMain.ActionEditExecute(Sender: TObject);
-begin
-  if Assigned(TreeViewFiles.Selected) then
-    SelectFile(TreeViewFiles.Selected.TagObject);
+  Item := FFiles.Items[TreeView.Selected];
+  if CanSelectFile(Item) then
+  begin
+    FCurrent := Item;
+    try
+      FModel := TIniMappedObjectClass(RegisteredClasses.FindClass(FCurrent.ClassName)).Create(FCurrent.Source);
+      AfterSelectCurrent;
+    except
+      on Exception: EClassNotFound do
+      begin
+        TDialogs.Warning(SClassShouldBeRegistrated, [FCurrent.ClassName]);
+      end;
+    end;
+  end;
 end;
 
 procedure TMain.ActionSaveSourceExecute(Sender: TObject);
 begin
-  Save(FInput.Current.Source);
+  WriteFile(FCurrent.Source);
+end;
+
+procedure TMain.ActionSaveTargetExecute(Sender: TObject);
+begin
+  WriteFile(FCurrent.Target);
 end;
 
 procedure TMain.AfterConstruction;
@@ -162,12 +185,12 @@ begin
   ReadInput;
   MakeTree;
   Translate;
-  TabControlView.ActiveTab := TabItemFiles;
+  TabControl.ActiveTab := TabTreeView;
 end;
 
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if HasChanges and not TUtils.Dialogs.Confirmation(SUnsavedChangesWantToExitAnyway) then
+  if HasChanges and not TDialogs.Confirmation(SUnsavedChangesWantToExitAnyway) then
     Abort;
 
   inherited;
@@ -175,18 +198,15 @@ end;
 
 procedure TMain.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
 begin
-  if Shift <> [ssCtrl] then
-    Exit;
-
-  if Key <> vkZ then
-    Exit;
-
-  ExecuteWithLock(
-    procedure
-    begin
-      FInvoker.Execute;
-      ControlView;
-    end);
+  if (Shift = [ssCtrl]) and (Key = vkZ) then
+  begin
+    FLock.Execute(
+      procedure
+      begin
+        FInvoker.Execute;
+        ControlView;
+      end);
+  end;
 end;
 
 procedure TMain.FormShow(Sender: TObject);
@@ -201,22 +221,22 @@ end;
 
 procedure TMain.LabelHelpClick(Sender: TObject);
 begin
-  TUtils.Methods.OpenURL(TUtils.Constants.HelpURL);
+  TUtils.OpenURL(FInput.HelpURL);
 end;
 
 procedure TMain.LabelHelpMouseLeave(Sender: TObject);
 begin
-  (Sender as TLabel).SetStyle(TLabel.TLabelStyle.lsNone);
+  (Sender as TLabel).Style := TLabelStyle.None;
 end;
 
 procedure TMain.LabelHelpMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
 begin
-  (Sender as TLabel).SetStyle(TLabel.TLabelStyle.lsHyperLink);
+  (Sender as TLabel).Style := TLabelStyle.HyperLink;
 end;
 
 procedure TMain.MakeTree;
 var
-  Item: TInputItem<TConfig>;
+  Item: TItem;
   Node: TTreeViewItem;
   Text: string;
 begin
@@ -224,190 +244,196 @@ begin
   begin
     Text := IfThen(Item.Group.IsEmpty, SUngrouped, Item.Group) + TTreeView.Separator + Item.Name;
 
-    Node := TreeViewFiles.MakeNode(Text);
-    if Assigned(Node) then
-    begin
-      Node.TagObject := Item;
-      Node.ImageIndex := Item.CanOverride.ToInteger;
-    end;
+    Node := TreeView.MakeNode(Text);
+    Node.ImageIndex := Item.CanOverride.ToInteger;
+
+    FFiles.AddOrSetValue(Node, Item);
   end;
 end;
 
-procedure TMain.ModelToView(const Model: TObject; const Parent: IControl);
-var
-  Context: TRttiContext;
-  Control: IControl;
-  DTO: TControlDTO;
-  Prop: TRttiProperty;
-  Template: TControlTemplate;
+procedure TMain.ModelToView;
 begin
-  FLock := True;
-  DTO := TControlDTO.Create(TUtils.Constants.Offset, TUtils.Constants.Offset);
-  try
-    Context := TRttiContext.Create;
-    for Prop in Context.GetType(Model.ClassType).GetProperties do
-    begin
-      DTO.Model    := Model;
-      DTO.OnNotify := Notify;
-      DTO.Owner    := Self;
-      DTO.Parent   := Parent;
-      DTO.Prop     := Prop;
-
-      Template := TControlFactory.Fabricate(DTO);
-      if Assigned(Template) then
-      begin
-        try
-          Control := Template.New;
-
-          FBinding.Add(Control, Model, Prop);
-
-          if Template is TTabTemplate then
-            ModelToView(Prop.GetValue(Model).AsObject, Control);
-        finally
-          Template.Free;
-        end;
-      end;
-    end;
-  finally
-    DTO.Free;
-    FLock := False;
-  end;
+  ModelToView(FModel.GetObject, TabControlFile);
 end;
 
-procedure TMain.Notify(Sender: TObject);
+procedure TMain.ModelToView(const Model: TObject; const Owner: IControl);
+begin
+  FLock.Execute<TObject, IControl>(
+    procedure(Model: TObject; Owner: IControl)
+    var
+      Context: TRttiContext;
+      Factory: IComponentFactory;
+      Component: IControl;
+      DTO: TComponentDTO;
+      Prop: TRttiProperty;
+    begin
+      DTO := TComponentDTO.Create(DEFAULT_COMPONENT_OFFSET);
+      try
+        Context := TRttiContext.Create;
+        for Prop in Context.GetType(Model.ClassType).GetProperties do
+        begin
+          DTO.OnNotify := OnNotify;
+          DTO.Owner := Owner;
+          DTO.Prop := Prop;
 
-  function Validate(const Control: TControl; out Error: string): Boolean;
-  var
-    Validator: TValidator;
-  begin
-    Validator := TValidator.Create(FBinding.Prop[Control], Control.Value);
-    try
-      Result := Validator.Validate;
-      Error := Validator.Message;
-    finally
-      Validator.Free
-    end;
-  end;
+          Factory := TComponentFactoryMethod.Fabricate(DTO);
+          if not Assigned(Factory) then
+          begin
+            Continue;
+          end;
 
-  procedure UpdateValue(const Control: TControl);
-  var
-    Receiver: TReceiver;
-    Old, New: TValue;
-  begin
-    Old := FBinding.Values[Control];
-    New := Control.Value;
+          Component := Factory.New;
+          Component.GetObject.Value := Prop.GetValue(Model);
+          FBinding.Add(Component, Model, Prop);
 
-    Receiver := TReceiver.Create(Control, Old);
-    FInvoker.Add(TUndoableCommand.Create(Receiver));
-    FBinding.Values[Control] := New;
-  end;
+          if Component is TScrollBox then
+          begin
+            ModelToView(Prop.GetValue(Model).AsObject, Component);
+          end;
+        end;
+      finally
+        DTO.Free;
+      end;
+    end, Model, Owner);
+end;
 
+procedure TMain.OnNotify(Sender: TObject);
 var
-  Control: TControl;
+  Control: IControl;
   Error: string;
 begin
-  if FLock then
+  if FLock.Locked then
     Exit;
 
   Control := Sender as TControl;
 
   UpdateValue(Control);
-  if not Validate(Control, Error) then
+  if ValidateValue(Control, Error) then
   begin
-    TUtils.Dialogs.Warning(Error);
-    ExecuteWithLock(FInvoker.Execute);
-    Abort;
+    ControlView;
+    Exit;
   end;
 
-  ControlView;
+  FLock.Execute(procedure
+                begin
+                  FInvoker.Execute;
+                  TDialogs.Warning(Error);
+                  Abort;
+                end);
 end;
 
-procedure TMain.SelectFile(const InputItem: TObject);
+procedure TMain.AfterSelectCurrent;
 begin
-  if not Assigned(InputItem) then
-    Exit;
+  ClearView;
+  ControlView;
+  ModelToView;
 
-  if Assigned(FInput.Current) and FInput.Current.Equals(InputItem) then
-    Exit;
-
-  if HasChanges and not TUtils.Dialogs.Confirmation(SUnsavedChangesWantToChangeFileAnyway) then
-    Exit;
-
-  FInput.Current := InputItem as TInputItem<TConfig>;
-
-  TabControlView.ActiveTab := TabItemSelectedFile;
-
-  RestoreView;
-
-  ControlView(FInput.Current.Source);
-
-  ModelToView(FInput.Current.Model, TabControlFile);
-
-  TabControlFile.OrderTabs(FInput.Tabs);
+  TabControl.ActiveTab := TabFile;
+  TabControlFile.OrderTabs(FCurrent.Tabs);
 end;
 
 procedure TMain.Translate;
-var
-  LLanguage: string;
 begin
-  LLanguage := IfThen(FInput.Language.IsEmpty, 'en', FInput.Language);
-  LoadLangFromStrings(Language.LangStr[LLanguage]);
-  TUtils.Translation.Translate(LLanguage);
+  Language.Translate(FInput.Language);
+end;
+
+procedure TMain.UpdateValue(const Control: IControl);
+var
+  Old, New: TValue;
+begin
+  Old := FBinding.Value[Control];
+  New := Control.GetObject.Value;
+
+  FInvoker.Add(TUndoableCommand.Create(TReceiver.Create(Control, Old)));
+
+  FBinding.Value[Control] := New;
+end;
+
+function TMain.ValidateValue(const Control: IControl; out Error: string): Boolean;
+var
+  Validator: TValidator;
+  ValidationResult: TValidationResult;
+begin
+  Validator := TValidator.Create(FBinding.Prop[Control], Control.GetObject.Value);
+  try
+    ValidationResult := Validator.Validate;
+
+    Error := ValidationResult.Value;
+    Result := ValidationResult.Key;
+  finally
+    Validator.Free
+  end;
 end;
 
 procedure TMain.ReadInput;
-var
-  FileName: TFileName;
 begin
   try
-    FileName := TUtils.Methods.FilePath(TInput<TConfig>.FileName);
-    FInput := TJson.JsonToObject<TInput<TConfig>>(TFile.ReadAllText(FileName));
-    FInput.Read;
+    FInput := TJson.JsonToObject<TInput>(TFile.ReadAllText(TInput.Path));
   except
     on Exception: EFileNotFoundException do
     begin
-      TUtils.Dialogs.Warning(SFileNotFound, [Exception.Message]);
+      TDialogs.Warning(SFileNotFound, [Exception.Message]);
       Halt;
     end;
   end;
 end;
 
-procedure TMain.RestoreView;
+procedure TMain.ClearView;
 begin
   FBinding.Clear;
   FInvoker.Clear;
   TabControlFile.Clear;
 end;
 
-procedure TMain.Save(const FileName: TFileName);
+procedure TMain.WriteFile(const FileName: TFileName);
 begin
-  FInput.Current.Model.Write(FileName);
+  FModel.Write(FileName);
+  TDialogs.Information(SFileSuccessfullySaved);
+
   FInvoker.Clear;
   ControlView;
-  TUtils.Dialogs.Information(SFileSuccessfullySaved);
 end;
 
-procedure TMain.ControlView(const Text: string);
-var
-  LText: string;
+function TMain.CanSelectFile(const Item: TItem): Boolean;
 begin
-  LText := IfThen(Text.IsEmpty, TabItemSelectedFile.Text, Text);
-  LText := LText.Replace(TUtils.Constants.ChangeIndicator, string.Empty);
+  Result := False;
 
-  if HasChanges and not LText.Contains(TUtils.Constants.ChangeIndicator) then
-    LText := LText + TUtils.Constants.ChangeIndicator;
-
-  ActionSaveSource.Enabled := Assigned(FInput.Current) and HasChanges and FInput.Current.CanOverride;
-  ActionSaveTarget.Enabled := Assigned(FInput.Current);
-
-  TabItemSelectedFile.Text := LText;
-  TabItemSelectedFile.Visible := Assigned(FInput.Current);
-
-  if Assigned(FInput.Current) then
+  if not Assigned(Item) then
   begin
-    ButtonSaveSource.Hint := FInput.Current.Source;
-    ButtonSaveTarget.Hint := FInput.Current.Target;
+    Exit;
   end;
+
+  if Item.Equals(FCurrent) then
+  begin
+    Exit;
+  end;
+
+  if HasChanges and not TDialogs.Confirmation(SUnsavedChangesWantToChangeFileAnyway) then
+  begin
+    Exit;
+  end;
+
+  if not TFile.Exists(Item.Source) then
+  begin
+    TDialogs.Warning(SFileNotFound, [Item.Source]);
+    Exit;
+  end;
+
+  Result := True;
+end;
+
+procedure TMain.ControlView;
+begin
+  TabFile.Visible := Assigned(FCurrent);
+
+  if not TabFile.Visible then
+    Exit;
+
+  TabFile.Text := FCurrent.Source + CHANGE_INDICATOR[HasChanges];
+  ActionSaveSource.Enabled := Assigned(FCurrent) and FCurrent.CanOverride;
+  ActionSaveTarget.Enabled := Assigned(FCurrent);
+  ButtonSaveSource.Hint := FCurrent.Source;
+  ButtonSaveTarget.Hint := FCurrent.Target;
 end;
 
 end.

@@ -3,10 +3,10 @@ unit Model.Config;
 interface
 
 uses
-  Attribute.Component.Tab,
-  Attribute.Ini.Section,
-  Attribute.Managed,
-  Model.Base,
+  Types.RegisterClass,
+  Ini.Attribute.Section,
+  Component.Attribute,
+  Ini.Base,
   Model.Config.AlternativeBalancer,
   Model.Config.Application,
   Model.Config.Client,
@@ -21,7 +21,7 @@ uses
   Model.Config.Workflow;
 
 type
-  TConfig = class sealed(TModel)
+  TConfig = class sealed(TIniMappedObject)
   private
     FWorkflow: TWorkflow;
     FMonitor: TMonitor;
@@ -36,44 +36,50 @@ type
     FClient: TClient;
     FAlternativeBalancer: TAlternativeBalancer;
   public
-    [Managed][Tab('Balanceador Alternativo')][Section('BALANCEADORALTERNATIVO')]
+    [TManaged][TTabItem('Balanceador Alternativo')][TSection('BALANCEADORALTERNATIVO')]
     property AlternativeBalancer: TAlternativeBalancer read FAlternativeBalancer write FAlternativeBalancer;
 
-    [Managed][Tab('Aplicação')][Section('APLICACAO')]
+    [TManaged][TTabItem('Aplicação')][TSection('APLICACAO')]
     property Application: TApplication read FApplication write FApplication;
 
-    [Managed][Tab('Cliente')][Section('CLIENTE')]
+    [TManaged][TTabItem('Cliente')][TSection('CLIENTE')]
     property Client: TClient read FClient write FClient;
 
-    [Managed][Tab('Database')][Section('DATABASE')]
+    [TManaged][TTabItem('Database')][TSection('DATABASE')]
     property Database: TDatabase read FDatabase write FDatabase;
 
-    [Managed][Tab('DUnit')][Section('DUNIT')]
+    [TManaged][TTabItem('DUnit')][TSection('DUNIT')]
     property DUnit: TDUnit read FDUnit write FDUnit;
 
-    [Managed][Tab('LOG')][Section('LOG')]
+    [TManaged][TTabItem('LOG')][TSection('LOG')]
     property Log: TLog read FLog write FLog;
 
-    [Managed][Tab('Monitor')][Section('SPMONITOR')]
+    [TManaged][TTabItem('Monitor')][TSection('SPMONITOR')]
     property Monitor: TMonitor read FMonitor write FMonitor;
 
-    [Managed][Tab('Scanner')][Section('SCANNER')]
+    [TManaged][TTabItem('Scanner')][TSection('SCANNER')]
     property Scanner: TScanner read FScanner write FScanner;
 
-    [Managed][Tab('Servidor')][Section('SERVIDOR')]
+    [TManaged][TTabItem('Servidor')][TSection('SERVIDOR')]
     property Server: TServer read FServer write FServer;
 
-    [Managed][Tab('SPP')][Section('CLIENTESPP')]
+    [TManaged][TTabItem('SPP')][TSection('CLIENTESPP')]
     property SPP: TSPP read FSPP write FSPP;
 
-    [Managed][Tab('Update')][Section('SPUPDATE')]
+    [TManaged][TTabItem('Update')][TSection('SPUPDATE')]
     property Update: TUpdate read FUpdate write FUpdate;
 
-    [Managed][Tab('Fluxo de trabalho')][Section('FLUXOTRABALHO')]
+    [TManaged][TTabItem('Fluxo de trabalho')][TSection('FLUXOTRABALHO')]
     property Workflow: TWorkflow read FWorkflow write FWorkflow;
   end;
 
 implementation
+
+initialization
+  RegisteredClasses.RegisterClass(TConfig);
+
+finalization
+  RegisteredClasses.UnRegisterClass(TConfig);
 
 end.
 

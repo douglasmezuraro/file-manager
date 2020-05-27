@@ -3,11 +3,10 @@ unit Model.Config.SPP;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key,
-  Attribute.Validation.Integer,
-  Attribute.Validation.Text;
+  Component.Attribute.CheckBox,
+  Component.Attribute.Edit,
+  Ini.Attribute.Key,
+  Validation.Attribute;
 
 type
   TSPP = class sealed
@@ -19,32 +18,32 @@ type
     FProcessBlock: Integer;
     FSystemName: string;
   public
-    [CheckBox('Usar SPP?')]
-    [Key('USARSPP')]
+    [TCheckBox('Usar SPP?')]
+    [TKey('USARSPP')]
     property UseSPP: Boolean read FUseSPP write FUseSPP;
 
-    [TextAttribute]
-    [Edit('Nome do sistema')]
-    [Key('NOMESISTEMA')]
+    [TTextAttribute]
+    [TEdit('Nome do sistema')]
+    [TKey('NOMESISTEMA')]
     property SystemName: string read FSystemName write FSystemName;
 
-    [CheckBox('Gravar log?')]
-    [Key('GRAVARLOG')]
+    [TCheckBox('Gravar log?')]
+    [TKey('GRAVARLOG')]
     property RegisterLog: Boolean read FRegisterLog write FRegisterLog;
 
-    [IntegerAttribute]
-    [Edit('Bloco de processamento')]
-    [Key('BLOCOPROCESSAMENTO')]
+    [TIntegerAttribute]
+    [TEdit('Bloco de processamento')]
+    [TKey('BLOCOPROCESSAMENTO')]
     property ProcessBlock: Integer read FProcessBlock write FProcessBlock;
 
-    [IntegerAttribute]
-    [Edit('Bytes por bloco de processamento')]
-    [Key('BYTESBLOCOPROCESSAMENTO')]
+    [TIntegerAttribute]
+    [TEdit('Bytes por bloco de processamento')]
+    [TKey('BYTESBLOCOPROCESSAMENTO')]
     property ProcessBlockSize: Integer read FProcessBlockSize write FProcessBlockSize;
 
-    [IntegerAttribute]
-    [Edit('Quantidade de execuções sem processamento')]
-    [Key('QTDEXECUCOESSEMPROCESSAMENTO')]
+    [TIntegerAttribute]
+    [TEdit('Quantidade de execuções sem processamento')]
+    [TKey('QTDEXECUCOESSEMPROCESSAMENTO')]
     property ExecutionsWithoutProcess: Integer read FExecutionsWithoutProcess write FExecutionsWithoutProcess;
   end;
 

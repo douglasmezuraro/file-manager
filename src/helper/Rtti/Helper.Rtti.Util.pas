@@ -3,78 +3,120 @@ unit Helper.Rtti.Util;
 interface
 
 uses
-  Attribute.Managed,
-  Helper.Rtti.RttiProperty,
-  Helper.Rtti.RttiType,
-  System.Rtti;
+  Component.Attribute.Managed, Helper.Rtti.RttiProperty, Helper.Rtti.RttiType, System.Rtti;
 
 type
+  /// <summary>
+  ///  Class with util RTTI methods.
+  /// </summary>
   TRttiUtil = class abstract
   public
-    class procedure CreateProperties(const Obj: TObject); overload;
-    class procedure CreateProperties(const Obj: TObject; const Args: TArray<TValue>); overload;
-    class procedure DestroyProperties(const Obj: TObject);
+    /// <summary>
+    ///  Create the class properties.
+    /// </summary>
+    /// <param name="AObject">
+    /// </param>
+    /// <remarks>
+    ///  Creates the property only if the property has the "TManaged" attribute.
+    /// </remarks>
+    class procedure CreateProperties(const AObject: TObject); overload;
+
+    /// <summary>
+    ///  Create the class properties.
+    /// </summary>
+    /// <param name="AObject">
+    /// </param>
+    /// <param name="Args">
+    /// </param>
+    /// <remarks>
+    ///  Creates the property only if the property has the "TManaged" attribute.
+    /// </remarks>
+    class procedure CreateProperties(const AObject: TObject; const Args: TArray<TValue>); overload;
+
+    /// <summary>
+    ///  Destroy the class properties.
+    /// </summary>
+    /// <param name="AObject">
+    /// </param>
+    /// <param name="Args">
+    /// </param>
+    /// <remarks>
+    ///  Destroy the property only if the property has the "TManaged" attribute.
+    /// </remarks>
+    class procedure DestroyProperties(const AObject: TObject);
   end;
 
 implementation
 
-class procedure TRttiUtil.CreateProperties(const Obj: TObject);
+class procedure TRttiUtil.CreateProperties(const AObject: TObject);
 begin
-  TRttiUtil.CreateProperties(Obj, []);
+  TRttiUtil.CreateProperties(AObject, []);
 end;
 
-class procedure TRttiUtil.CreateProperties(const Obj: TObject; const Args: TArray<TValue>);
+class procedure TRttiUtil.CreateProperties(const AObject: TObject; const Args: TArray<TValue>);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
   Method: TRttiMethod;
   Instance: TObject;
 begin
-  if not Assigned(Obj) then
+  if not Assigned(AObject) then
+  begin
     Exit;
+  end;
 
   Context := TRttiContext.Create;
-  for Prop in Context.GetType(Obj.ClassType).GetProperties do
+  for Prop in Context.GetType(AObject.ClassType).GetProperties do
   begin
     Method := Prop.PropertyType.GetConstructor;
 
     if not Assigned(Method) then
+    begin
       Continue;
+    end;
 
-    if not Assigned(Prop.GetAttribute<ManagedAttribute>()) then
+    if not Assigned(Prop.GetAttribute<TManagedAttribute>()) then
+    begin
       Continue;
+    end;
 
     Instance := Method.Invoke(Prop.PropertyType.AsInstance.MetaclassType, Args).AsObject;
-    Prop.SetValue(Obj, Instance);
+    Prop.SetValue(AObject, Instance);
 
     CreateProperties(Instance, Args);
   end;
 end;
 
-class procedure TRttiUtil.DestroyProperties(const Obj: TObject);
+class procedure TRttiUtil.DestroyProperties(const AObject: TObject);
 var
   Context: TRttiContext;
   Prop: TRttiProperty;
   Method: TRttiMethod;
 begin
-  if not Assigned(Obj) then
+  if not Assigned(AObject) then
+  begin
     Exit;
+  end;
 
   Context := TRttiContext.Create;
-  for Prop in Context.GetType(Obj.ClassType).GetProperties do
+  for Prop in Context.GetType(AObject.ClassType).GetProperties do
   begin
     Method := Prop.PropertyType.GetDestructor;
 
     if not Assigned(Method) then
+    begin
       Continue;
+    end;
 
-    if not Assigned(Prop.GetAttribute<ManagedAttribute>()) then
+    if not Assigned(Prop.GetAttribute<TManagedAttribute>()) then
+    begin
       Continue;
+    end;
 
-    DestroyProperties(Prop.GetValue(Obj).AsObject);
+    DestroyProperties(Prop.GetValue(AObject).AsObject);
 
-    Method.Invoke(Prop.GetValue(Obj), []);
-    Prop.SetValue(Obj, nil);
+    Method.Invoke(Prop.GetValue(AObject), []);
+    Prop.SetValue(AObject, nil);
   end;
 end;
 

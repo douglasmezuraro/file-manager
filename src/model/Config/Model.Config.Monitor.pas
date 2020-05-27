@@ -3,9 +3,9 @@ unit Model.Config.Monitor;
 interface
 
 uses
-  Attribute.Component.CheckBox,
-  Attribute.Component.Edit,
-  Attribute.Ini.Key;
+  Component.Attribute.CheckBox,
+  Component.Attribute.Edit,
+  Ini.Attribute.Key;
 
 type
   TMonitor = class sealed
@@ -42,128 +42,128 @@ type
     FAutoRereadLog: Boolean;
     FLogTimer: Integer;
   public
-    [Edit('Timer do log')]
-    [Key('TIMERLOG')]
+    [TEdit('Timer do log')]
+    [TKey('TIMERLOG')]
     property LogTimer: Integer read FLogTimer write FLogTimer;
 
-    [Edit('Timer dos usuários')]
-    [Key('TIMERUSUARIOS')]
+    [TEdit('Timer dos usuários')]
+    [TKey('TIMERUSUARIOS')]
     property UserTimer: Integer read FUserTimer write FUserTimer;
 
-    [CheckBox('Releitura automática?')]
-    [Key('RELEITURAAUTOMATICALOG')]
+    [TCheckBox('Releitura automática?')]
+    [TKey('RELEITURAAUTOMATICALOG')]
     property AutoRereadLog: Boolean read FAutoRereadLog write FAutoRereadLog;
 
-    [CheckBox('Avaliar travamento automático?')]
-    [Key('AVALIATRAVAMENTOAUTOMATICO')]
+    [TCheckBox('Avaliar travamento automático?')]
+    [TKey('AVALIATRAVAMENTOAUTOMATICO')]
     property AutoEvalueCrash: Boolean read FAutoEvalueCrash write FAutoEvalueCrash;
 
-    [CheckBox('Posicionar automaticamente no último log?')]
-    [Key('POSICIONAULTIMOLOGAUTOMATICO')]
+    [TCheckBox('Posicionar automaticamente no último log?')]
+    [TKey('POSICIONAULTIMOLOGAUTOMATICO')]
     property AutoGotoLastLog: Boolean read FAutoGotoLastLog write FAutoGotoLastLog;
 
-    [CheckBox('Atualização automática de usuários')]
-    [Key('ATUALIZACAOAUTOMATICAUSUARIOS')]
+    [TCheckBox('Atualização automática de usuários')]
+    [TKey('ATUALIZACAOAUTOMATICAUSUARIOS')]
     property AutoUpdateUsers: Boolean read FAutoUpdateUsers write FAutoUpdateUsers;
 
-    [CheckBox('Carregar log mais recente?')]
-    [Key('CARREGARLOGMAISRECENTE')]
+    [TCheckBox('Carregar log mais recente?')]
+    [TKey('CARREGARLOGMAISRECENTE')]
     property LoadLatestLog: Boolean read FLoadLatestLog write FLoadLatestLog;
 
-    [Edit('Diretório do log')]
-    [Key('DIRETORIOLOG')]
+    [TEdit('Diretório do log')]
+    [TKey('DIRETORIOLOG')]
     property LogPath: string read FLogPath write FLogPath;
 
-    [Edit('Timer de métodos pendentes')]
-    [Key('TIMERMETODOSPENDENTES')]
+    [TEdit('Timer de métodos pendentes')]
+    [TKey('TIMERMETODOSPENDENTES')]
     property DependentMethodTimer: Integer read FDependentMethodTimer write FDependentMethodTimer;
 
-    [CheckBox('Atualizar automaticamente log de métodos pendentes?')]
-    [Key('ATUALIZACAOAUTOMATICAMETODOSPENDENTES')]
+    [TCheckBox('Atualizar automaticamente log de métodos pendentes?')]
+    [TKey('ATUALIZACAOAUTOMATICAMETODOSPENDENTES')]
     property AutoUpdateDependentMethods: Boolean read FAutoUpdateDependentMethods write FAutoUpdateDependentMethods;
 
-    [Edit('Timet de seções críticas')]
-    [Key('TIMERSECOESCRITICAS')]
+    [TEdit('Timet de seções críticas')]
+    [TKey('TIMERSECOESCRITICAS')]
     property CriticalSectionTimer: Integer read FCriticalSectionTimer write FCriticalSectionTimer;
 
-    [CheckBox('Atualiza')]
-    [Key('ATUALIZACAOAUTOMATICASECOESCRITICAS')]
+    [TCheckBox('Atualiza')]
+    [TKey('ATUALIZACAOAUTOMATICASECOESCRITICAS')]
     property AutoUpdateCriticalSections: Boolean read FAutoUpdateCriticalSections write FAutoUpdateCriticalSections;
 
-    [Edit('Timer pool')]
-    [Key('TIMERPOOL')]
+    [TEdit('Timer pool')]
+    [TKey('TIMERPOOL')]
     property PoolTimer: Integer read FPoolTimer write FPoolTimer;
 
-    [CheckBox('Atualizar pool automaticamente?')]
-    [Key('ATUALIZACAOAUTOMATICAPOOL')]
+    [TCheckBox('Atualizar pool automaticamente?')]
+    [TKey('ATUALIZACAOAUTOMATICAPOOL')]
     property AutoUpdatePool: Boolean read FAutoUpdatePool write FAutoUpdatePool;
 
-    [CheckBox('Janelas sempre no topo?')]
-    [Key('JANELASEMPRENOTOPO')]
+    [TCheckBox('Janelas sempre no topo?')]
+    [TKey('JANELASEMPRENOTOPO')]
     property WindowsAlwaysOnTop: Boolean read FWindowsAlwaysOnTop write FWindowsAlwaysOnTop;
 
-    [CheckBox('Posicionar no último log?')]
-    [Key('POSICIONAULTIMOLOG')]
+    [TCheckBox('Posicionar no último log?')]
+    [TKey('POSICIONAULTIMOLOG')]
     property GotoLastLog: Boolean read FGotoLastLog write FGotoLastLog;
 
-    [CheckBox('Ignorar log extra?')]
-    [Key('IGNORARLOGEXTRA')]
+    [TCheckBox('Ignorar log extra?')]
+    [TKey('IGNORARLOGEXTRA')]
     property IgnoreExtraLog: Boolean read FIgnoreExtraLog write FIgnoreExtraLog;
 
-    [CheckBox('Carregar somente linhas níveis zero?')]
-    [Key('CARREGARSOMENTELINHASLOGNIVELZERO')]
+    [TCheckBox('Carregar somente linhas níveis zero?')]
+    [TKey('CARREGARSOMENTELINHASLOGNIVELZERO')]
     property LoadOnlyLevelZeroLogs: Boolean read FLoadOnlyLevelZeroLogs write FLoadOnlyLevelZeroLogs;
 
-    [CheckBox('Utilizar RegEx nos filtros do SQL?')]
-    [Key('UTILIZAREXPRESSOESREGULARESFILTROSQL')]
+    [TCheckBox('Utilizar RegEx nos filtros do SQL?')]
+    [TKey('UTILIZAREXPRESSOESREGULARESFILTROSQL')]
     property UseRegExFilters: Boolean read FUseRegExFilters write FUseRegExFilters;
 
-    [Edit('Tempo mínimo para análise de desemprenho')]
-    [Key('TEMPOMINIMOPARAANALISEDESEMPENHO')]
+    [TEdit('Tempo mínimo para análise de desemprenho')]
+    [TKey('TEMPOMINIMOPARAANALISEDESEMPENHO')]
     property MinTimeForPerformanceAnalysis: Integer read FMinTimeForPerformanceAnalysis write FMinTimeForPerformanceAnalysis;
 
-    [Edit('Tempo mínimo para usuário inativo')]
-    [Key('TEMPOMINIMOPARAUSUARIOINATIVO')]
+    [TEdit('Tempo mínimo para usuário inativo')]
+    [TKey('TEMPOMINIMOPARAUSUARIOINATIVO')]
     property MinTimeForInactiveUser: Integer read FMinTimeForInactiveUser write FMinTimeForInactiveUser;
 
-    [Edit('Unidade de tempo mínimo para usuário inativo')]
-    [Key('UNIDADETEMPOMINIMOPARAUSUARIOINATIVO')]
+    [TEdit('Unidade de tempo mínimo para usuário inativo')]
+    [TKey('UNIDADETEMPOMINIMOPARAUSUARIOINATIVO')]
     property MinTimeUnitForInactiveUser: string read FMinTimeUnitForInactiveUser write FMinTimeUnitForInactiveUser;
 
-    [Edit('Tempo mínimo para métodos pendentes')]
-    [Key('TEMPOMINIMOPARAMETODOSPENDENTES')]
+    [TEdit('Tempo mínimo para métodos pendentes')]
+    [TKey('TEMPOMINIMOPARAMETODOSPENDENTES')]
     property MinTimeForDependentMethods: Integer read FMinTimeForDependentMethods write FMinTimeForDependentMethods;
 
-    [CheckBox('Registrar memória do pool do servidor de aplicação?')]
-    [Key('REGISTRARMEMORIASERVIDORAPLICACAOPOOL')]
+    [TCheckBox('Registrar memória do pool do servidor de aplicação?')]
+    [TKey('REGISTRARMEMORIASERVIDORAPLICACAOPOOL')]
     property RegisterServerPoolAplicationMemory: Boolean read FRegisterServerPoolAplicationMemory write FRegisterServerPoolAplicationMemory;
 
-    [Edit('Cor inicial de desempenho')]
-    [Key('CORINICIALDESEMPENHO')]
+    [TEdit('Cor inicial de desempenho')]
+    [TKey('CORINICIALDESEMPENHO')]
     property InitialPerformanceColor: Integer read FInitialPerformanceColor write FInitialPerformanceColor;
 
-    [Edit('Cor final de desempenho')]
-    [Key('CORFINALDESEMPENHO')]
+    [TEdit('Cor final de desempenho')]
+    [TKey('CORFINALDESEMPENHO')]
     property FinalPerformanceColor: Integer read FFinalPerformanceColor write FFinalPerformanceColor;
 
-    [CheckBox('Utilizar cores ao travar?')]
-    [Key('UTILIZARCORESERROTRAVADO')]
+    [TCheckBox('Utilizar cores ao travar?')]
+    [TKey('UTILIZARCORESERROTRAVADO')]
     property UseCrashErrorColor: Boolean read FUseCrashErrorColor write FUseCrashErrorColor;
 
-    [Edit('Cor de erro')]
-    [Key('CORERRO')]
+    [TEdit('Cor de erro')]
+    [TKey('CORERRO')]
     property ErrorColor: Integer read FErrorColor write FErrorColor;
 
-    [Edit('Cor de transação aberta')]
-    [Key('CORTRANSACAOABERTA')]
+    [TEdit('Cor de transação aberta')]
+    [TKey('CORTRANSACAOABERTA')]
     property OpenTransactionColor: Integer read FOpenTransactionColor write FOpenTransactionColor;
 
-    [CheckBox('Identar automáticamente SQLs?')]
-    [Key('INDENTARAUTOMATICAMENTESQLS')]
+    [TCheckBox('Identar automáticamente SQLs?')]
+    [TKey('INDENTARAUTOMATICAMENTESQLS')]
     property AutoIndentSQL: Boolean read FAutoIndentSQL write FAutoIndentSQL;
 
-    [Edit('Colunas vísiveis no log de métodos')]
-    [Key('COLUNASVISIVEISLOGMETODOS')]
+    [TEdit('Colunas vísiveis no log de métodos')]
+    [TKey('COLUNASVISIVEISLOGMETODOS')]
     property VisibleColumns: string read FVisibleColumns write FVisibleColumns;
   end;
 

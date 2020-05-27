@@ -3,55 +3,215 @@ unit Helper.Rtti.Value;
 interface
 
 uses
-  System.Classes,
-  System.Rtti,
-  System.SysUtils,
-  System.Variants;
+  System.Classes, System.Rtti, System.SysUtils, System.Variants;
 
 type
+  /// <summary>
+  ///  Class helper for class <c>TValue<c>.
+  /// </summary>
   TValueHelper = record Helper for TValue
   public
-    {$REGION 'Assign-Methods'}
+    /// <summary>
+    ///  Assign the value passed as parametter.
+    /// </summary>
+    /// <param name="Value">
+    /// </param>
+    /// <returns>
+    ///  TValue - Returns itself.
+    /// </returns>
     function Assign(const Value: TValue): TValue;
+
+    /// <summary>
+    ///  Returns whether the instance has an assigned value.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
     function Assigned: Boolean;
-    {$ENDREGION}
 
-    {$REGION 'As-Methods'}
+    /// <summary>
+    ///  Returns the value as a <c>TDate<c>.
+    /// </summary>
+    /// <returns>
+    ///  TDate
+    /// </returns>
     function AsDate: TDate;
+
+    /// <summary>
+    ///  Returns the value as a <c>TDateTime<c>.
+    /// </summary>
+    /// <returns>
+    ///  TDateTime
+    /// </returns>
     function AsDateTime: TDateTime;
+
+    /// <summary>
+    ///  Returns the value as a <c>TTime<c>.
+    /// </summary>
+    /// <returns>
+    ///  TTime
+    /// </returns>
     function AsTime: TTime;
-    {$ENDREGION}
 
-    {$REGION 'Is-Methods'}
+    /// <summary>
+    ///  Returns whether the value is a <c>Boolean<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
     function IsBoolean: Boolean;
-    function IsByte: Boolean;
-    function IsCardinal: Boolean;
-    function IsCurrency: Boolean;
-    function IsDate: Boolean;
-    function IsDateTime: Boolean;
-    function IsDouble: Boolean;
-    function IsInt64: Boolean;
-    function IsInteger: Boolean;
-    function IsPointer: Boolean;
-    function IsShortInt: Boolean;
-    function IsSingle: Boolean;
-    function IsSmallInt: Boolean;
-    function IsTime: Boolean;
-    function IsUInt64: Boolean;
-    function IsVariant: Boolean;
-    function IsWord: Boolean;
-    function IsFloat: Boolean;
-    function IsString: Boolean;
-    function IsNumeric: Boolean;
-    {$ENDREGION}
 
-    {$REGION 'Validation-Methods'}
-    function IsValidInteger(out Value: Integer): Boolean;
-    function IsValidFloat(out Value: Double): Boolean;
-    function IsValidDate(out Value: TDateTime): Boolean;
-    function IsValidTime(out Value: TDateTime): Boolean;
-    function IsValidDateTime(out Value: TDateTime): Boolean;
-    {$ENDREGION}
+    /// <summary>
+    ///  Returns whether the value is a <c>Byte<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsByte: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Cardinal<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsCardinal: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Currency<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsCurrency: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>TDate<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsDate: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>TDateTime<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsDateTime: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Double<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsDouble: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Int64<c>
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsInt64: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Integer<c>
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsInteger: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Pointer<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsPointer: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>ShortInt<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsShortInt: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Single<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsSingle: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>SmallInt<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsSmallInt: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>TTime<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsTime: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>UInt64<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsUInt64: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Variant<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsVariant: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a <c>Word<c>.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsWord: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a float-pointer.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsFloat: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a string.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsString: Boolean;
+
+    /// <summary>
+    ///  Returns whether the value is a numeric.
+    /// </summary>
+    /// <returns>
+    ///  Boolean
+    /// </returns>
+    function IsNumeric: Boolean;
   end;
 
 implementation
@@ -177,115 +337,115 @@ end;
 
 function TValueHelper.Assign(const Value: TValue): TValue;
 begin
-  if Self.IsBoolean then
+  if IsBoolean then
   begin
     Self := StrToBoolDef(Value.ToString, False);
     Exit(Self);
   end;
 
-  if Self.IsByte then
+  if IsByte then
   begin
     Self := StrToIntDef(Value.ToString, Byte.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsCardinal then
+  if IsCardinal then
   begin
     Self := StrToUIntDef(Value.ToString, Cardinal.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsCurrency then
+  if IsCurrency then
   begin
     Self := StrToCurrDef(Value.ToString, Extended.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsDate then
+  if IsDate then
   begin
     Self := StrToDateDef(Value.ToString, MaxDateTime);
     Exit(Self);
   end;
 
-  if Self.IsDateTime then
+  if IsDateTime then
   begin
     Self := StrToDateTimeDef(Value.ToString, MaxDateTime);
     Exit(Self);
   end;
 
-  if Self.IsDouble then
+  if IsDouble then
   begin
     Self := StrToFloatDef(Value.ToString, Double.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsInt64 then
+  if IsInt64 then
   begin
     Self := StrToInt64Def(Value.ToString, Int64.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsInteger then
+  if IsInteger then
   begin
     Self := StrToIntDef(Value.ToString, Integer.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsPointer then
+  if IsPointer then
   begin
     Self := &Value;
     Exit(Self);
   end;
 
-  if Self.IsShortInt then
+  if IsShortInt then
   begin
     Self := StrToIntDef(Value.ToString, ShortInt.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsSingle then
+  if IsSingle then
   begin
     Self := StrToFloatDef(Value.ToString, Single.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsSmallInt then
+  if IsSmallInt then
   begin
     Self := StrToIntDef(Value.ToString, SmallInt.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsString then
+  if IsString then
   begin
     Self := Value.ToString;
     Exit(Self);
   end;
 
-  if Self.IsTime then
+  if IsTime then
   begin
     Self := StrToTimeDef(Value.ToString, MaxDateTime);
     Exit(Self);
   end;
 
-  if Self.IsUInt64 then
+  if IsUInt64 then
   begin
     Self := StrToUInt64Def(Value.ToString, UInt64.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsVariant then
+  if IsVariant then
   begin
     Self := Value.ToString;
     Exit(Self);
   end;
 
-  if Self.IsWord then
+  if IsWord then
   begin
     Self := StrToUIntDef(Value.ToString, Word.MaxValue);
     Exit(Self);
   end;
 
-  if Self.IsObject then
+  if IsObject then
   begin
     (Self.AsObject as TPersistent).Assign(Value.AsObject as TPersistent);
     Exit(Self);
@@ -354,31 +514,6 @@ begin
     Exit(Self.AsObject <> nil);
 
   Result := not ToString.IsEmpty;
-end;
-
-function TValueHelper.IsValidDate(out Value: TDateTime): Boolean;
-begin
-  Result := System.SysUtils.TryStrToDate(ToString, Value);
-end;
-
-function TValueHelper.IsValidDateTime(out Value: TDateTime): Boolean;
-begin
-  Result := System.SysUtils.TryStrToDateTime(ToString, Value);
-end;
-
-function TValueHelper.IsValidFloat(out Value: Double): Boolean;
-begin
-  Result := System.SysUtils.TryStrToFloat(ToString, Value);
-end;
-
-function TValueHelper.IsValidInteger(out Value: Integer): Boolean;
-begin
-  Result := System.SysUtils.TryStrToInt(ToString, Value);
-end;
-
-function TValueHelper.IsValidTime(out Value: TDateTime): Boolean;
-begin
-  Result := System.SysUtils.TryStrToTime(ToString, Value);
 end;
 
 end.
